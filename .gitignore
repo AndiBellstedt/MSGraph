@@ -1,0 +1,16 @@
+﻿
+# ignore the settings folder and files for VSCode and PSS
+.vscode/*
+*.psproj
+*TempPoint*
+
+# Ignore staging info from Visual Studio
+library/MSGraph/.vs/*
+library/MSGraph/MSGraph/bin/*
+library/MSGraph/MSGraph/obj/*
+
+# ignore PowerShell Studio MetaData
+MSGraph/MSGraph.psproj
+MSGraph/MSGraph.psproj.bak
+MSGraph/MSGraph.psprojs
+MSGraph/MSGraph.psproj
