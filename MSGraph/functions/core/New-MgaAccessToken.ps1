@@ -35,7 +35,9 @@
 		PS C:\> New-MgaAccessToken -MailboxName 'max.musterman@contoso.com' -Credential $cred
 	
 		Generates a token to a session as max.mustermann@contoso.com under the credentials specified in $cred.
-#>	
+#>
+	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSAvoidUsingConvertToSecureStringWithPlainText", "")]
+	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseShouldProcessForStateChangingFunctions", "")]
 	[CmdletBinding()]
 	param
 	(

@@ -15,6 +15,7 @@
 	
 		Resolves $User into a legitimate user targeting string element.
 #>
+	[OutputType([System.String])]
 	[CmdletBinding()]
 	param (
 		[string]
