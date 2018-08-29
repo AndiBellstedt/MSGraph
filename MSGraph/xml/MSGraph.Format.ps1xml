@@ -1,15 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-16"?>
 <Configuration>
 	<ViewDefinitions>
-		<!-- Foo.Bar -->
+		<!-- MSGraph.Core.AzureAccessToken -->
 		<View>
-			<Name>Foo.Bar</Name>
+			<Name>MSGraph.Core.AzureAccessToken</Name>
 			<ViewSelectedBy>
-				<TypeName>Foo.Bar</TypeName>
+				<TypeName>MSGraph.Core.AzureAccessToken</TypeName>
 			</ViewSelectedBy>
 			<TableControl>
 				<AutoSize/>
 				<TableHeaders>
+					<TableColumnHeader/>
+					<TableColumnHeader/>
+					<TableColumnHeader/>
 					<TableColumnHeader/>
 					<TableColumnHeader/>
 				</TableHeaders>
@@ -17,10 +20,19 @@
 					<TableRowEntry>
 						<TableColumnItems>
 							<TableColumnItem>
-								<PropertyName>Foo</PropertyName>
+								<PropertyName>IsValid</PropertyName>
 							</TableColumnItem>
 							<TableColumnItem>
-								<PropertyName>Bar</PropertyName>
+								<PropertyName>TokenType</PropertyName>
+							</TableColumnItem>
+							<TableColumnItem>
+								<PropertyName>ValidUntil</PropertyName>
+							</TableColumnItem>
+							<TableColumnItem>
+								<PropertyName>MailboxName</PropertyName>
+							</TableColumnItem>
+							<TableColumnItem>
+								<PropertyName>Scope</PropertyName>
 							</TableColumnItem>
 						</TableColumnItems>
 					</TableRowEntry>
@@ -28,4 +40,4 @@
 			</TableControl>
 		</View>
 	</ViewDefinitions>
-<Configuration>
+</Configuration>

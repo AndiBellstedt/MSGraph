@@ -45,7 +45,7 @@
 	)
 	
 	# Assemblies that must be loaded prior to importing this module
-	# RequiredAssemblies = @()
+	RequiredAssemblies = @('bin\MSGraph.dll')
 	
 	# Script files (.ps1) that are run in the caller's environment prior to
 	# importing this module
@@ -55,7 +55,7 @@
 	# TypesToProcess = @('xml\MSGraph.Types.ps1xml')
 	
 	# Format files (.ps1xml) to be loaded when importing this module
-	# FormatsToProcess = @('xml\MSGraph.Format.ps1xml')
+	FormatsToProcess = @('xml\MSGraph.Format.ps1xml')
 	
 	# Modules to import as nested modules of the module specified in
 	# ModuleToProcess

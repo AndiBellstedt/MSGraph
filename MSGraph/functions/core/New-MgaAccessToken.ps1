@@ -79,8 +79,7 @@
 	$jsonResponse = ConvertFrom-Json -InputObject $clientResult.Result.Content.ReadAsStringAsync().Result
 	$baselineTimestamp = [datetime]"1970-01-01Z00:00:00"
 	
-	$resultObject = [pscustomobject]@{
-		PSTypeName = "MSGraph.Azure.GraphApi.Token"
+	$resultObject = New-Object MSGraph.Core.AzureAccessToken -Property @{
 		TokenType  = $jsonResponse.token_type
 		MailboxName = $MailboxName
 		Scope	   = $jsonResponse.scope -split " "
@@ -99,18 +98,11 @@
 	if ($jsonResponse.id_token) { $resultObject.IDToken = ($jsonResponse.id_token | ConvertTo-SecureString -AsPlainText -Force) }
 	if ((Get-Date).IsDaylightSavingTime())
 	{
-		$resultObject.ValidUntilUtc = $resultObject.ValidUntilUtc.AddHours(1)
-		$resultObject.ValidFromUtc = $resultObject.ValidFromUtc.AddHours(1)
+		#$resultObject.ValidUntilUtc = $resultObject.ValidUntilUtc.AddHours(1)
+		#$resultObject.ValidFromUtc = $resultObject.ValidFromUtc.AddHours(1)
 		
 		$resultObject.ValidUntil = $resultObject.ValidUntil.AddHours(1)
 		$resultObject.ValidFrom = $resultObject.ValidFrom.AddHours(1)
-	}
-	$resultObject | Add-Member -MemberType ScriptProperty -Name IsValid -Value {
-		if (-not ($this.TokenType -eq "Bearer")) { return $false }
-		if ((Get-Date) -gt $this.ValidUntil) { return $false }
-		if (-not $this.Scope) { return $false }
-		if ($null -eq $this.AccessToken) { return $fale }
-		return $true
 	}
 	if ($resultObject.IsValid -and $Register)
 	{
