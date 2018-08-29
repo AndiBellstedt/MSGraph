@@ -15,6 +15,7 @@
 	
 		Creates a Http Client for connecting as 'foo@contoso.onmicrosoft.com'
 #>
+	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseShouldProcessForStateChangingFunctions", "")]
 	[CmdletBinding()]
 	param (
 		[Parameter(Mandatory = $true)]
