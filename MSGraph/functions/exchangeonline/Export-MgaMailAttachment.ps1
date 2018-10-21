@@ -1,4 +1,4 @@
-function Export-MgaMailAttachment {
+﻿function Export-MgaMailAttachment {
     <#
     .SYNOPSIS
         Export a mail attachment to a file

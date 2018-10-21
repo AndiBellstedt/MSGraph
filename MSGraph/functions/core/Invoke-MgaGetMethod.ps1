@@ -52,10 +52,10 @@
         }
         $data.Value
         $i = $i + $data.Value.Count
-        if($i -lt $ResultSize ) { 
-            $restLink = $data.'@odata.nextLink' 
-        } 
-        else { 
+        if($i -lt $ResultSize ) {
+            $restLink = $data.'@odata.nextLink'
+        }
+        else {
             $restLink = ""
             Write-PSFMessage -Level Warning -Message "Too many items. Reaching maximum ResultSize before finishing query. You may want to increase the ResultSize. Current ResultSize: $($ResultSize)" -Tag "GetData" -FunctionName $PSCmdlet
         }

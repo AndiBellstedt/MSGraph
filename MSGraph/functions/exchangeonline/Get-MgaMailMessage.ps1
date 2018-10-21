@@ -6,7 +6,7 @@
     .DESCRIPTION
         Retrieves messages from a email folder from Exchange Online using the graph api.
     
-    .PARAMETER FolderName
+    .PARAMETER Name
         The display name of the folder to search.
         Defaults to the inbox.
     
