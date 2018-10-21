@@ -43,7 +43,10 @@
         $PassThru
     )
 
-    if (-not $Token) { $Token = $script:msgraph_Token }
+    if (-not $Token) {
+        $Token = $script:msgraph_Token
+        $Register = $true
+    }
     if (-not $Token) { Stop-PSFFunction -Message "Not connected! Use New-MgaAccessToken to create a Token and either register it or specifs it." -EnableException $true -Category AuthenticationError -Cmdlet $PSCmdlet }
 
     if (-not $Token.IsValid) {
