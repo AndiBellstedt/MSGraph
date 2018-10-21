@@ -35,13 +35,13 @@
 	)
 	
 	if (-not $Token) { $Token = $script:msgraph_Token }
-	if (-not $Token) { Stop-PSFFunction -Message "Not connected! Use New-EORAccessToken to create a Token and either register it or specifs it" -EnableException $true -Category AuthenticationError -Cmdlet $PSCmdlet }
+	if (-not $Token) { Stop-PSFFunction -Message "Not connected! Use New-MgaAccessToken to create a Token and either register it or specifs it" -EnableException $true -Category AuthenticationError -Cmdlet $PSCmdlet }
 	
 	$restLink = "https://graph.microsoft.com/v1.0/$(Resolve-UserString -User $User)/$($Field)"
 	do
 	{
 		$data = Invoke-RestMethod -Method Get -UseBasicParsing -Uri $restLink -Headers @{
-			"Authorization" = "Bearer $($Token.AccessToken | ConvertFrom-SecureString)"
+			"Authorization" = "Bearer $( [System.Runtime.InteropServices.Marshal]::PtrToStringAuto([System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($token.AccessToken)) )"
 			"Prefer"	    = "outlook.timezone=`"$((Get-Timezone).Id)`""
 		}
 		$data.Value

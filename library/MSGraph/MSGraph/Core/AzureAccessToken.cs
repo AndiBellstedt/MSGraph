@@ -15,9 +15,14 @@ namespace MSGraph.Core
         public string TokenType;
 
         /// <summary>
-        /// Name of the mailbox connected to
+        /// The service uri where to connect
         /// </summary>
-        public string MailboxName;
+        public string Resource;
+
+        /// <summary>
+        /// The service uri where to connect
+        /// </summary>
+        public string AppRedirectUrl;
 
         /// <summary>
         /// The permission scopes contained on the token
@@ -89,5 +94,31 @@ namespace MSGraph.Core
                 return true;
             }
         }
+
+        /// <summary>
+        /// Informationen from JWT access token
+        /// </summary>
+        public JWTAccessTokenInfo AccessTokenInfo;
+    }
+
+    /// <summary>
+    /// Token informationen from a JWT access token
+    /// </summary>
+    public class JWTAccessTokenInfo
+    {
+        /// <summary>
+        /// The type of token. Generally, only when the token is of type "Bearer" is a valid connection established.
+        /// </summary>
+        public String Header;
+
+        /// <summary>
+        /// The type of token. Generally, only when the token is of type "Bearer" is a valid connection established.
+        /// </summary>
+        public String Payload;
+
+        /// <summary>
+        /// The type of token. Generally, only when the token is of type "Bearer" is a valid connection established.
+        /// </summary>
+        public Byte[] Signature;
     }
 }

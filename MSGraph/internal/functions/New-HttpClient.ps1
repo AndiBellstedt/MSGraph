@@ -18,7 +18,7 @@
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseShouldProcessForStateChangingFunctions", "")]
 	[CmdletBinding()]
 	param (
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $false)]
 		[string]
 		$MailboxName
 	)
@@ -33,10 +33,13 @@
 		$httpClient.DefaultRequestHeaders.Accept.Add($header)
 		$httpClient.Timeout = New-Object System.TimeSpan(0, 0, 90)
 		$httpClient.DefaultRequestHeaders.TransferEncodingChunked = $false
-		if (-not $httpClient.DefaultRequestHeaders.Contains("X-AnchorMailbox"))
-		{
-			$httpClient.DefaultRequestHeaders.Add("X-AnchorMailbox", $MailboxName)
-		}
+        if($MailboxName) {
+            if (-not $httpClient.DefaultRequestHeaders.Contains("X-AnchorMailbox"))
+            {
+                $httpClient.DefaultRequestHeaders.Add("X-AnchorMailbox", $MailboxName)
+                Write-Verbose "mailbox specified - $MailboxName" -Verbose
+            }
+        }
 		$header = New-Object System.Net.Http.Headers.ProductInfoHeaderValue("RestClient", "1.1")
 		$httpClient.DefaultRequestHeaders.UserAgent.Add($header)
 		
