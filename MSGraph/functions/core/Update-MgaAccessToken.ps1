@@ -18,13 +18,13 @@
 
     .EXAMPLE
         PS C:\> New-MgaAccessToken -MailboxName 'max.musterman@contoso.com'
-    
+
         Registers an application to run under 'max.mustermann@contoso.com'.
         Requires an interactive session with a user handling the web UI.
-    
+
     .EXAMPLE
         PS C:\> New-MgaAccessToken -MailboxName 'max.musterman@contoso.com' -Credential $cred
-    
+
         Generates a token to a session as max.mustermann@contoso.com under the credentials specified in $cred.
     #>
     [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSAvoidUsingConvertToSecureStringWithPlainText", "")]
@@ -47,7 +47,7 @@
     if (-not $Token) { Stop-PSFFunction -Message "Not connected! Use New-MgaAccessToken to create a Token and either register it or specifs it." -EnableException $true -Category AuthenticationError -Cmdlet $PSCmdlet }
 
     if (-not $Token.IsValid) {
-        Write-PSFMessage -Level Warning -Message "Token lifetime already expired and can't be newed. New authentication is required. Calling New-MgaAccessToken..." -Tag "Authorization" 
+        Write-PSFMessage -Level Warning -Message "Token lifetime already expired and can't be newed. New authentication is required. Calling New-MgaAccessToken..." -Tag "Authorization"
         $paramsNewToken = @{
             ClientId = $Token.ClientId
             RedirectUrl = $Token.AppRedirectUrl
@@ -61,7 +61,7 @@
     $resourceUri = "https://graph.microsoft.com"
     $endpointUri = "https://login.windows.net/common/oauth2"
     $endpointUriToken = "$($endpointUri)/token "
-                   
+
     $baselineTimestamp = [datetime]"1970-01-01Z00:00:00"
     $httpClient = New-HttpClient
 
@@ -103,7 +103,7 @@
     # Insert token data into output object. done as secure string to prevent text output of tokens
     if ($jsonResponse.psobject.Properties.name -contains "refresh_token") { $resultObject.RefreshToken = ($jsonResponse.refresh_token | ConvertTo-SecureString -AsPlainText -Force) }
     if ($jsonResponse.psobject.Properties.name -contains "id_token") { $resultObject.IDToken = ($jsonResponse.id_token | ConvertTo-SecureString -AsPlainText -Force) }
-    if ($jsonResponse.psobject.Properties.name -contains "access_token") { 
+    if ($jsonResponse.psobject.Properties.name -contains "access_token") {
         $resultObject.AccessToken = ($jsonResponse.access_token | ConvertTo-SecureString -AsPlainText -Force)
         $resultObject.AccessTokenInfo = ConvertFrom-JWTtoken -Token $jsonResponse.access_token
     }
