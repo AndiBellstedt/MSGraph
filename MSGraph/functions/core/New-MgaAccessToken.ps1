@@ -32,13 +32,13 @@
 
     .EXAMPLE
         PS C:\> New-MgaAccessToken -MailboxName 'max.musterman@contoso.com'
-    
+
         Registers an application to run under 'max.mustermann@contoso.com'.
         Requires an interactive session with a user handling the web UI.
-    
+
     .EXAMPLE
         PS C:\> New-MgaAccessToken -MailboxName 'max.musterman@contoso.com' -Credential $cred
-    
+
         Generates a token to a session as max.mustermann@contoso.com under the credentials specified in $cred.
     #>
     [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSAvoidUsingConvertToSecureStringWithPlainText", "")]
@@ -145,7 +145,7 @@
     # Insert token data into output object. done as secure string to prevent text output of tokens
     if ($jsonResponse.psobject.Properties.name -contains "refresh_token") { $resultObject.RefreshToken = ($jsonResponse.refresh_token | ConvertTo-SecureString -AsPlainText -Force) }
     if ($jsonResponse.psobject.Properties.name -contains "id_token") { $resultObject.IDToken = ($jsonResponse.id_token | ConvertTo-SecureString -AsPlainText -Force) }
-    if ($jsonResponse.psobject.Properties.name -contains "access_token") { 
+    if ($jsonResponse.psobject.Properties.name -contains "access_token") {
         $resultObject.AccessToken = ($jsonResponse.access_token | ConvertTo-SecureString -AsPlainText -Force)
         $resultObject.AccessTokenInfo = ConvertFrom-JWTtoken -Token $jsonResponse.access_token
     }

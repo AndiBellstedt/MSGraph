@@ -30,14 +30,14 @@
     $tokenParts = $Token.Split(".")
 
     # Work on header
-    $tokenHeader = [System.Text.Encoding]::UTF8.GetString( (ConvertFrom-Base64StringWithNoPadding $tokenParts[0]) ) #| ConvertFrom-Json
+    $tokenHeader = [System.Text.Encoding]::UTF8.GetString( (ConvertFrom-Base64StringWithNoPadding $tokenParts[0]) )
 
     # Work on payload
-    $tokenPayload = [System.Text.Encoding]::UTF8.GetString( (ConvertFrom-Base64StringWithNoPadding $tokenParts[1]) ) #| ConvertFrom-Json
+    $tokenPayload = [System.Text.Encoding]::UTF8.GetString( (ConvertFrom-Base64StringWithNoPadding $tokenParts[1]) )
 
     # Work on signature
     $tokenSignature = ConvertFrom-Base64StringWithNoPadding $tokenParts[2]
-    
+
     # Output
     $resultObject = New-Object MSGraph.Core.JWTAccessTokenInfo -Property @{
         Header    = $tokenHeader
@@ -46,5 +46,5 @@
     }
 
     #$output
-    $resultObject 
+    $resultObject
 }

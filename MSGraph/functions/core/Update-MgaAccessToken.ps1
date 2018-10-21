@@ -1,4 +1,4 @@
-function Update-MgaAccessToken {
+﻿function Update-MgaAccessToken {
     <#
     .SYNOPSIS
         Updates an existing access token
@@ -27,6 +27,7 @@ function Update-MgaAccessToken {
     
         Generates a token to a session as max.mustermann@contoso.com under the credentials specified in $cred.
     #>
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSAvoidUsingConvertToSecureStringWithPlainText", "")]
     [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseShouldProcessForStateChangingFunctions", "")]
     [CmdletBinding(DefaultParameterSetName="Default")]
     param (
