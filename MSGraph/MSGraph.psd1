@@ -65,10 +65,11 @@
     FunctionsToExport = @(
         'Get-MgaMailFolder',
         'Get-MgaMailMessage',
-        'Get-MgaRegisteredAccessToken',
         'Invoke-MgaGetMethod',
         'New-MgaAccessToken',
-        'Update-MgaAccessToken'
+        'Update-MgaAccessToken',
+        'Get-MgaRegisteredAccessToken',
+        'Register-MgaAccessToken'
     )
     
     # Cmdlets to export from this module
