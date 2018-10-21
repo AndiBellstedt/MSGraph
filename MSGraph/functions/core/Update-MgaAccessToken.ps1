@@ -52,7 +52,7 @@
     if (-not $Token.IsValid) {
         Write-PSFMessage -Level Warning -Message "Token lifetime already expired and can't be newed. New authentication is required. Calling New-MgaAccessToken..." -Tag "Authorization"
         $paramsNewToken = @{
-            ClientId = $Token.ClientId
+            ClientId = $Token.AccessTokenInfo.ApplicationID.Guid
             RedirectUrl = $Token.AppRedirectUrl
         }
         if ($Token.Credential) { $paramsNewToken.Add("Credential", $Token.Credential ) }

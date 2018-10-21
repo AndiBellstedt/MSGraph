@@ -65,6 +65,8 @@
     FunctionsToExport = @(
         'Get-MgaMailFolder',
         'Get-MgaMailMessage',
+        'Get-MgaMailAttachment',
+        'Export-MgaMailAttachment',
         'Invoke-MgaGetMethod',
         'New-MgaAccessToken',
         'Update-MgaAccessToken',

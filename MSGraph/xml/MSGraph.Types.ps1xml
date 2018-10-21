@@ -196,7 +196,28 @@
         </Members>
     </Type>
 
-    <!-- Foo.Bar 
+    <Type>
+        <Name>MSGraph.Exchange.MailFolder</Name>
+        <Members>
+            <AliasProperty>
+                <Name>Name</Name>
+                <ReferencedMemberName>
+                    displayName
+                </ReferencedMemberName>
+            </AliasProperty>
+
+            <ScriptProperty>
+                <Name>UnreadInPercent</Name>
+                <GetScriptBlock>
+                    [math]::Round( [double]( $this.unreadItemCount / $this.totalItemCount * 100 ), 2)
+                </GetScriptBlock>
+            </ScriptProperty>
+
+        </Members>
+    </Type>
+
+
+    <!-- Foo.Bar
     <Type>
     <Name>Deserialized.Foo.Bar</Name>
     <Members>

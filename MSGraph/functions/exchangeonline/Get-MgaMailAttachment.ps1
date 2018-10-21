@@ -1,18 +1,21 @@
-﻿function Get-MgaMailMessage {
+﻿function Get-MgaMailAttachment {
     <#
     .SYNOPSIS
-        Retrieves messages from a email folder from Exchange Online using the graph api.
+        Retrieves the attachment object from a email message in Exchange Online using the graph api.
     
     .DESCRIPTION
-        Retrieves messages from a email folder from Exchange Online using the graph api.
+        Retrieves the attachment object from a email message in Exchange Online using the graph api.
     
-    .PARAMETER FolderName
+    .PARAMETER MailId
         The display name of the folder to search.
         Defaults to the inbox.
     
     .PARAMETER User
         The user-account to access. Defaults to the main user connected as.
         Can be any primary email name of any user the connected token has access to.
+
+    .PARAMETER IncludeInlineAttachment
+        This will retrieve also attachments like pictures in the html body of the mail.
 
     .PARAMETER ResultSize
         The user to execute this under. Defaults to the user the token belongs to.
@@ -29,13 +32,17 @@
     #>
     [CmdletBinding()]
     param (
-        [Parameter(ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName='ByName')]
-        [Alias('DisplayName', 'FolderName')]
+        [Parameter(ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName='ById')]
+        [Alias('Id')]
         [string[]]
-        $Name = 'Inbox',
+        $MailId,
 
+        [Parameter(ParameterSetName='ById')]
         [string]
         $User = 'me',
+
+        [switch]
+        $IncludeInlineAttachment,
 
         [Int64]
         $ResultSize = (Get-PSFConfigValue -FullName 'MSGraph.Query.ResultSize' -Fallback 100),
@@ -44,19 +51,20 @@
         $Token
     )
     begin {
-        #[Parameter(ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName='ByInputObject')]
-        #[MSGraph.Exchange.MailFolder]
+        #[Parameter(ValueFromPipeline = $true,ParameterSetName='ByInputObject')]
+        #[Alias('Mail', 'MailMessage', 'Message')]
+        #[PSCustomObject]
         #$InputObject,
 
         $objectBaseType = "MSGraph.Exchange"
-        $objectType = "MailMessage"
+        $objectType = "MailAttachment"
     }
 
     process {
-        foreach ($folder in $Name) {
-            Write-PSFMessage -Level Verbose -Message "Searching $folder"
-            #$data = Invoke-MgaGetMethod -Field "mailFolders('$($folder)')/messages" -User $User -Token $Token
-            $data = Invoke-MgaGetMethod -Field "mailFolders/$($folder)/messages" -User $User -Token $Token -ResultSize $ResultSize
+        foreach ($mail in $MailId) {
+            Write-PSFMessage -Level Verbose -Message "Getting attachment from mail"
+            $data = Invoke-MgaGetMethod -Field "messages/$($mail)/attachments" -User $User -Token $Token -ResultSize $ResultSize
+            if(-not $IncludeInlineAttachment) { $data = $data | Where-Object isInline -eq $false}
             foreach ($output in $data) {
                 $output.pstypenames.Insert(0, $objectBaseType)
                 $output.pstypenames.Insert(0, "$($objectBaseType).$($objectType)")
@@ -65,4 +73,6 @@
         }
     }
 
+    end {
+    }
 }
