@@ -193,6 +193,37 @@
                 </GetScriptBlock>
             </ScriptProperty>
 
+            <ScriptProperty>
+                <Name>AccessTokenLifeTime</Name>
+                <GetScriptBlock>
+                    $this.ValidUntil - $this.ValidFrom
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>TimeRemaining</Name>
+                <GetScriptBlock>
+                    if ($this.ValidUntil -gt (Get-Date)) {
+                        [timespan]::parse( "{0:hh}:{0:mm}:{0:ss}" -f ($this.ValidUntil - (Get-Date)) )
+                    }
+                    else {
+                        [timespan]::Zero
+                    }
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>PercentRemaining</Name>
+                <GetScriptBlock>
+                    if ($this.ValidUntil -gt (Get-Date)) {
+                        [System.Math]::Round( ($this.AccessTokenTimeRemaining.TotalMilliseconds / $this.AccessTokenLifeTime.TotalMilliseconds * 100), 0)
+                    }
+                    else {
+                        [int]0
+                    }
+                </GetScriptBlock>
+            </ScriptProperty>
+
         </Members>
     </Type>
 
@@ -216,40 +247,4 @@
         </Members>
     </Type>
 
-
-    <!-- Foo.Bar
-    <Type>
-    <Name>Deserialized.Foo.Bar</Name>
-    <Members>
-        <MemberSet>
-        <Name>PSStandardMembers</Name>
-        <Members>
-            <NoteProperty>
-            <Name>
-                TargetTypeForDeserialization
-            </Name>
-            <Value>
-                Foo.Bar
-            </Value>
-            </NoteProperty>
-        </Members>
-        </MemberSet>
-    </Members>
-    </Type>
-    <Type>
-    <Name>Foo.Bar</Name>
-    <Members>
-        <CodeProperty IsHidden="true">
-        <Name>SerializationData</Name>
-        <GetCodeReference>
-            <TypeName>PSFramework.Serialization.SerializationTypeConverter</TypeName>
-            <MethodName>GetSerializationData</MethodName>
-        </GetCodeReference>
-        </CodeProperty>
-    </Members>
-    <TypeConverter>
-        <TypeName>PSFramework.Serialization.SerializationTypeConverter</TypeName>
-    </TypeConverter>
-    </Type>
-    -->
 </Types>

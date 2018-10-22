@@ -56,7 +56,7 @@
             RedirectUrl = $Token.AppRedirectUrl
         }
         if ($Token.Credential) { $paramsNewToken.Add("Credential", $Token.Credential ) }
-        if ($Register -or $script:msgraph_Token.AccessTokenInfo.Payload -like $Token.AccessTokenInfo.Payload ) { $paramsNewToken.Add("Register", $true) }
+        if ($Register -or ($script:msgraph_Token.AccessTokenInfo.Payload -eq $Token.AccessTokenInfo.Payload) ) { $paramsNewToken.Add("Register", $true) }
         $resultObject = New-MgaAccessToken -PassThru @paramsNewToken
         if ($PassThru) { return $resultObject } else { return }
     }

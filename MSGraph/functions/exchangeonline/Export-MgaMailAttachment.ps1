@@ -18,6 +18,7 @@
         Export the attement to the users profile base directory
     #>
     [CmdletBinding ()]
+    [Alias('Save-MgaMailAttachment')]
     param (
         [Parameter(ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,ValueFromRemainingArguments=$false)]
         [ValidateNotNullOrEmpty()]

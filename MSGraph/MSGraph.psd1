@@ -3,22 +3,22 @@
     ModuleToProcess = 'MSGraph.psm1'
     
     # Version number of this module.
-    ModuleVersion = '1.0.0'
+    ModuleVersion = '1.2.0'
     
     # ID used to uniquely identify this module
     GUID = '5f61c229-95d0-4423-ab50-938c0723ad21'
     
     # Author of this module
-    Author = 'Friedrich Weinmann'
+    Author = 'Friedrich Weinmann, Andreas Bellstedt'
     
     # Company or vendor of this module
     CompanyName = ''
     
     # Copyright statement for this module
-    Copyright = 'Copyright (c) 2018 Friedrich Weinmann'
+    Copyright = 'Copyright (c) 2018 Friedrich Weinmann, Andreas Bellstedt'
     
     # Description of the functionality provided by this module
-    Description = 'Tools for interactign with the Microsoft Graph Api'
+    Description = 'Tools for interacting with the Microsoft Graph Api'
     
     # Minimum version of the Windows PowerShell engine required by this module
     PowerShellVersion = '5.0'
@@ -81,7 +81,9 @@
     VariablesToExport = ''
     
     # Aliases to export from this module
-    AliasesToExport = ''
+    AliasesToExport = @(
+        'Save-MgaMailAttachment'
+    )
     
     # List of all modules packaged with this module
     ModuleList = @()
