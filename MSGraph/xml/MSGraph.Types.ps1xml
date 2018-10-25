@@ -1,37 +1,250 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Types>
-  <!-- Foo.Bar -->
-  <Type>
-    <Name>Deserialized.Foo.Bar</Name>
-    <Members>
-      <MemberSet>
-        <Name>PSStandardMembers</Name>
+    <Type>
+        <Name>MSGraph.Core.JWTAccessTokenInfo</Name>
         <Members>
-          <NoteProperty>
-            <Name>
-              TargetTypeForDeserialization
-            </Name>
-            <Value>
-              Foo.Bar
-            </Value>
-          </NoteProperty>
+            <ScriptProperty>
+                <Name>Type</Name>
+                <GetScriptBlock>
+                    [System.String]( ($this.Header | ConvertFrom-Json).typ )
+                </GetScriptBlock>
+            </ScriptProperty>
+            
+            <ScriptProperty>
+                <Name>Algorithm</Name>
+                <GetScriptBlock>
+                    [System.String]( ($this.Header | ConvertFrom-Json).alg )
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>Audience</Name>
+                <GetScriptBlock>
+                    [System.String]( ($this.Payload | ConvertFrom-Json).aud )
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>Issuer</Name>
+                <GetScriptBlock>
+                    [System.String]( ($this.Payload | ConvertFrom-Json).aud )
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>IssuedAt</Name>
+                <GetScriptBlock>
+                    [datetime]( ([datetime]"1970-01-01Z00:00:00").AddSeconds(($this.Payload | ConvertFrom-Json).iat).ToUniversalTime() )
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>NotBefore</Name>
+                <GetScriptBlock>
+                    [datetime]( ([datetime]"1970-01-01Z00:00:00").AddSeconds(($this.Payload | ConvertFrom-Json).nbf).ToUniversalTime() )
+                    #[System.String]( ($this.Payload | ConvertFrom-Json).nbf )
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>ExpirationTime</Name>
+                <GetScriptBlock>
+                    [datetime]( ([datetime]"1970-01-01Z00:00:00").AddSeconds(($this.Payload | ConvertFrom-Json).exp).ToUniversalTime() )
+                    #[System.String]( ($this.Payload | ConvertFrom-Json).exp )
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>AuthenticationMethod</Name>
+                <GetScriptBlock>
+                    ($this.Payload | ConvertFrom-Json).amr
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>ApplicationName</Name>
+                <GetScriptBlock>
+                    [System.String]( ($this.Payload | ConvertFrom-Json).app_displayname )
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>ApplicationID</Name>
+                <GetScriptBlock>
+                    [GUID]($this.Payload | ConvertFrom-Json).appid
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>SureName</Name>
+                <GetScriptBlock>
+                    [System.String]($this.Payload | ConvertFrom-Json).family_name
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>GivenName</Name>
+                <GetScriptBlock>
+                    [System.String]($this.Payload | ConvertFrom-Json).given_name
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>Name</Name>
+                <GetScriptBlock>
+                    [System.String]($this.Payload | ConvertFrom-Json).name
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>SourceIPAddr</Name>
+                <GetScriptBlock>
+                    [ipaddress]($this.Payload | ConvertFrom-Json).ipaddr
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>OID</Name>
+                <GetScriptBlock>
+                    [GUID]($this.Payload | ConvertFrom-Json).oid
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>SID</Name>
+                <GetScriptBlock>
+                    [System.Security.Principal.SecurityIdentifier]($this.Payload | ConvertFrom-Json).onprem_sid
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>Plattform</Name>
+                <GetScriptBlock>
+                    [int]($this.Payload | ConvertFrom-Json).platf
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>Scope</Name>
+                <GetScriptBlock>
+                    [System.String]($this.Payload | ConvertFrom-Json).scp
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>TenantID</Name>
+                <GetScriptBlock>
+                    [GUID]($this.Payload | ConvertFrom-Json).tid
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>UniqueName</Name>
+                <GetScriptBlock>
+                    [System.String]($this.Payload | ConvertFrom-Json).unique_name
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>UPN</Name>
+                <GetScriptBlock>
+                    [System.String]($this.Payload | ConvertFrom-Json).upn
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>Version</Name>
+                <GetScriptBlock>
+                    [version]($this.Payload | ConvertFrom-Json).ver
+                </GetScriptBlock>
+            </ScriptProperty>
+
         </Members>
-      </MemberSet>
-    </Members>
-  </Type>
-  <Type>
-    <Name>Foo.Bar</Name>
-    <Members>
-      <CodeProperty IsHidden="true">
-        <Name>SerializationData</Name>
-        <GetCodeReference>
-          <TypeName>PSFramework.Serialization.SerializationTypeConverter</TypeName>
-          <MethodName>GetSerializationData</MethodName>
-        </GetCodeReference>
-      </CodeProperty>
-    </Members>
-    <TypeConverter>
-      <TypeName>PSFramework.Serialization.SerializationTypeConverter</TypeName>
-    </TypeConverter>
-  </Type>
+    </Type>
+
+    <Type>
+        <Name>MSGraph.Core.AzureAccessToken</Name>
+        <Members>
+            <ScriptProperty>
+                <Name>TokenOwner</Name>
+                <GetScriptBlock>
+                    $this.AccessTokenInfo.Name
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>UserprincipalName</Name>
+                <GetScriptBlock>
+                    $this.AccessTokenInfo.UPN
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>TenantID</Name>
+                <GetScriptBlock>
+                    $this.AccessTokenInfo.TenantID
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>AppName</Name>
+                <GetScriptBlock>
+                    $this.AccessTokenInfo.ApplicationName
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>AccessTokenLifeTime</Name>
+                <GetScriptBlock>
+                    $this.ValidUntil - $this.ValidFrom
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>TimeRemaining</Name>
+                <GetScriptBlock>
+                    if ($this.ValidUntil -gt (Get-Date)) {
+                        [timespan]::parse( "{0:hh}:{0:mm}:{0:ss}" -f ($this.ValidUntil - (Get-Date)) )
+                    }
+                    else {
+                        [timespan]::Zero
+                    }
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>PercentRemaining</Name>
+                <GetScriptBlock>
+                    if ($this.ValidUntil -gt (Get-Date)) {
+                        [System.Math]::Round( ($this.AccessTokenTimeRemaining.TotalMilliseconds / $this.AccessTokenLifeTime.TotalMilliseconds * 100), 0)
+                    }
+                    else {
+                        [int]0
+                    }
+                </GetScriptBlock>
+            </ScriptProperty>
+
+        </Members>
+    </Type>
+
+    <Type>
+        <Name>MSGraph.Exchange.MailFolder</Name>
+        <Members>
+            <AliasProperty>
+                <Name>Name</Name>
+                <ReferencedMemberName>
+                    displayName
+                </ReferencedMemberName>
+            </AliasProperty>
+
+            <ScriptProperty>
+                <Name>UnreadInPercent</Name>
+                <GetScriptBlock>
+                    [math]::Round( [double]( $this.unreadItemCount / $this.totalItemCount * 100 ), 2)
+                </GetScriptBlock>
+            </ScriptProperty>
+
+        </Members>
+    </Type>
+
 </Types>

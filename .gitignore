@@ -1,4 +1,4 @@
-﻿
+
 # ignore the settings folder and files for VSCode and PSS
 .vscode/*
 *.psproj
@@ -14,3 +14,9 @@ MSGraph/MSGraph.psproj
 MSGraph/MSGraph.psproj.bak
 MSGraph/MSGraph.psprojs
 MSGraph/MSGraph.psproj
+
+# ignore the TestResults
+TestResults/*
+
+# ignore the publishing Directory
+publish/*
