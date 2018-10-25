@@ -1,5 +1,4 @@
 ﻿# Add all things you want to run before importing the main code
 
-Add-Type -AssemblyName System.Net.Http
-Add-Type -AssemblyName System.Web
-Add-Type -AssemblyName System.Windows.Forms
+# Load the required assemblies
+. Import-ModuleFile -Path "$ModuleRoot\bin\types.ps1"
