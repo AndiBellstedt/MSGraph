@@ -14,9 +14,14 @@
             The type of token. Generally, only when the token is of type "Bearer" is a valid connection established.
             </summary>
         </member>
-        <member name="F:MSGraph.Core.AzureAccessToken.MailboxName">
+        <member name="F:MSGraph.Core.AzureAccessToken.Resource">
             <summary>
-            Name of the mailbox connected to
+            The service uri where to connect
+            </summary>
+        </member>
+        <member name="F:MSGraph.Core.AzureAccessToken.AppRedirectUrl">
+            <summary>
+            The service uri where to connect
             </summary>
         </member>
         <member name="F:MSGraph.Core.AzureAccessToken.Scope">
@@ -72,6 +77,31 @@
         <member name="P:MSGraph.Core.AzureAccessToken.IsValid">
             <summary>
             Whether the token is valid for connections
+            </summary>
+        </member>
+        <member name="F:MSGraph.Core.AzureAccessToken.AccessTokenInfo">
+            <summary>
+            Informationen from JWT access token
+            </summary>
+        </member>
+        <member name="T:MSGraph.Core.JWTAccessTokenInfo">
+            <summary>
+            Token informationen from a JWT access token
+            </summary>
+        </member>
+        <member name="F:MSGraph.Core.JWTAccessTokenInfo.Header">
+            <summary>
+            The type of token. Generally, only when the token is of type "Bearer" is a valid connection established.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Core.JWTAccessTokenInfo.Payload">
+            <summary>
+            The type of token. Generally, only when the token is of type "Bearer" is a valid connection established.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Core.JWTAccessTokenInfo.Signature">
+            <summary>
+            The type of token. Generally, only when the token is of type "Bearer" is a valid connection established.
             </summary>
         </member>
     </members>
