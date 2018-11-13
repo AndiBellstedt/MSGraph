@@ -53,9 +53,9 @@
         </View>
 
         <View>
-            <Name>MSGraph.Exchange.MailFolder_table</Name>
+            <Name>MSGraph.Exchange.Mail.Folder_table</Name>
             <ViewSelectedBy>
-                <TypeName>MSGraph.Exchange.MailFolder</TypeName>
+                <TypeName>MSGraph.Exchange.Mail.Folder</TypeName>
             </ViewSelectedBy>
             <TableControl>
                 <AutoSize/>
@@ -91,9 +91,9 @@
         </View>
 
         <View>
-            <Name>MSGraph.Exchange.MailFolder_list</Name>
+            <Name>MSGraph.Exchange.Mail.Folder_list</Name>
             <ViewSelectedBy>
-                <TypeName>MSGraph.Exchange.MailFolder</TypeName>
+                <TypeName>MSGraph.Exchange.Mail.Folder</TypeName>
             </ViewSelectedBy>
             <ListControl>
                 <ListEntries>
@@ -121,9 +121,9 @@
         </View>
 
         <View>
-            <Name>MSGraph.Exchange.MailFolder_wide</Name>
+            <Name>MSGraph.Exchange.Mail.Folder_wide</Name>
             <ViewSelectedBy>
-                <TypeName>MSGraph.Exchange.MailFolder</TypeName>
+                <TypeName>MSGraph.Exchange.Mail.Folder</TypeName>
             </ViewSelectedBy>
 
             <WideControl>
@@ -139,9 +139,9 @@
         </View>
 
         <View>
-            <Name>MSGraph.Exchange.MailAttachment_table</Name>
+            <Name>MSGraph.Exchange.Mail.Attachment_table</Name>
             <ViewSelectedBy>
-                <TypeName>MSGraph.Exchange.MailAttachment</TypeName>
+                <TypeName>MSGraph.Exchange.Mail.Attachment</TypeName>
             </ViewSelectedBy>
             <TableControl>
                 <AutoSize/>
@@ -159,7 +159,7 @@
                                 <PropertyName>Name</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
-                                <PropertyName>Size</PropertyName>
+                                <PropertyName>SizeKB</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
                                 <PropertyName>ContentType</PropertyName>

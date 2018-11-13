@@ -228,8 +228,15 @@
     </Type>
 
     <Type>
-        <Name>MSGraph.Exchange.MailFolder</Name>
+        <Name>MSGraph.Exchange.Mail.Folder</Name>
         <Members>
+            <ScriptProperty>
+                <Name>DisplayName</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.displayName
+                </GetScriptBlock>
+            </ScriptProperty>
+
             <AliasProperty>
                 <Name>Name</Name>
                 <ReferencedMemberName>
@@ -238,13 +245,355 @@
             </AliasProperty>
 
             <ScriptProperty>
+                <Name>Id</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.id
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>ParentFolderId</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.parentFolderId
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>childFolderCount</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.childFolderCount
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>UnreadItemCount</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.unreadItemCount
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>TotalItemCount</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.totalItemCount
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
                 <Name>UnreadInPercent</Name>
                 <GetScriptBlock>
-                    [math]::Round( [double]( $this.unreadItemCount / $this.totalItemCount * 100 ), 2)
+                    [math]::Round( [double]( $this.BaseObject.unreadItemCount / $this.BaseObject.totalItemCount * 100 ), 2)
                 </GetScriptBlock>
             </ScriptProperty>
 
         </Members>
     </Type>
+
+    <Type>
+        <Name>MSGraph.Exchange.Mail.Message</Name>
+        <Members>
+            <ScriptProperty>
+                <Name>bccRecipients</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.bccRecipients
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>body</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.body
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>bodyPreview</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.bodyPreview
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>categories</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.categories
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>ccRecipients</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.ccRecipients
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>changeKey</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.changeKey
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>conversationId</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.conversationId
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>createdDateTime</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.createdDateTime
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>flag</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.flag
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>from</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.from
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>hasAttachments</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.hasAttachments
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>id</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.id
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>importance</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.importance
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>inferenceClassification</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.inferenceClassification
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>internetMessageId</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.internetMessageId
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>isDeliveryReceiptRequested</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.isDeliveryReceiptRequested
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>isDraft</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.isDraft
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>isRead</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.isRead
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>isReadReceiptRequested</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.isReadReceiptRequested
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>lastModifiedDateTime</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.lastModifiedDateTime
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>meetingMessageType</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.meetingMessageType
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>parentFolderId</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.parentFolderId
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>receivedDateTime</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.receivedDateTime
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>replyTo</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.replyTo
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>sender</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.sender
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>sentDateTime</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.sentDateTime
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>111</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.111
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>subject</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.subject
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>toRecipients</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.toRecipients
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>webLink</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.webLink
+                </GetScriptBlock>
+            </ScriptProperty>
+
+        </Members>
+    </Type>
+
+    <Type>
+        <Name>MSGraph.Exchange.Mail.Attachment</Name>
+        <Members>
+            <ScriptProperty>
+                <Name>Name</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.name
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <AliasProperty>
+                <Name>DisplayName</Name>
+                <ReferencedMemberName>
+                    Name
+                </ReferencedMemberName>
+            </AliasProperty>
+
+            <ScriptProperty>
+                <Name>Id</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.id
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>ContentId</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.contentId
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>ContentBytes</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.contentBytes
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>contentLocation</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.contentLocation
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>contentType</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.contentType
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>IsInline</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.isInline
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>LastModifiedDateTime</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.lastModifiedDateTime
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>Size</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.size
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>SizeKB</Name>
+                <GetScriptBlock>
+                    [math]::Round( ($this.BaseObject.size / 1KB), 2)
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>SizeMB</Name>
+                <GetScriptBlock>
+                    [math]::Round( ($this.BaseObject.size / 1MB), 2)
+                </GetScriptBlock>
+            </ScriptProperty>
+
+        </Members>
+    </Type>
+
 
 </Types>
