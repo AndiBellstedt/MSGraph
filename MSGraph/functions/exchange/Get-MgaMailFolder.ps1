@@ -39,19 +39,28 @@
         $Filter = "*",
         
         [string]
-        $User = 'me',
+        $User,
 
         [Int64]
         $ResultSize = (Get-PSFConfigValue -FullName 'MSGraph.Query.ResultSize' -Fallback 100),
 
-        [MSGraph.Core.AzureAccessToken]
+        #[MSGraph.Core.AzureAccessToken]
         $Token
     )
 
-    $data = Invoke-MgaGetMethod -Field 'mailFolders' -Token $Token -User (Resolve-UserString -User $User) -ResultSize $ResultSize | Where-Object displayName -Like $Filter
-    foreach ($output in $data) {
+    $invokeParam = @{
+        "Field"        = 'mailFolders'
+        "Token"        = $Token
+        "User"         = Resolve-UserString -User $User
+        "ResultSize"   = $ResultSize
+        "FunctionName" = $MyInvocation.MyCommand
+    }
+
+    #Write-PSFMessage -Level Verbose -Message "--- $($invokeParam.Keys) | $($invokeParam.Values) ---" -FunctionName $MyInvocation.MyCommand
+    $folderData = Invoke-MgaGetMethod @invokeParam | Where-Object displayName -Like $Filter
+    foreach ($folderOutput in $folderData) {
         [MSGraph.Exchange.Mail.Folder]@{
-            BaseObject = $output
+            BaseObject = $folderOutput
         }
     }
 }

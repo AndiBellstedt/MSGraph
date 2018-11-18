@@ -4,9 +4,6 @@ using System.Security;
 
 namespace MSGraph.Exchange
 {
-    /// <summary>
-    /// Mail related objects in exchange online
-    /// </summary>
     namespace Mail
     {
         /// <summary>

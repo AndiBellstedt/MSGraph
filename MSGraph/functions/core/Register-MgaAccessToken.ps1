@@ -23,7 +23,7 @@
     param (
         [Parameter(ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,ValueFromRemainingArguments=$false)]
         [ValidateNotNullOrEmpty()]
-        [MSGraph.Core.AzureAccessToken]
+        #[MSGraph.Core.AzureAccessToken]
         $Token,
 
         [switch]

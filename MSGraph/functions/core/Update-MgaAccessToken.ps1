@@ -31,7 +31,8 @@
     [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseShouldProcessForStateChangingFunctions", "")]
     [CmdletBinding(DefaultParameterSetName="Default")]
     param (
-        [MSGraph.Core.AzureAccessToken]
+        [Parameter(ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
+        #[MSGraph.Core.AzureAccessToken]
         $Token,
 
         [Parameter(ParameterSetName='Register')]
