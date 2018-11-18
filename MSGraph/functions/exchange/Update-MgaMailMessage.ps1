@@ -26,12 +26,18 @@
         Can be created by using New-EORAccessToken.
         Can be omitted if a connection has been registered using the -Register parameter on New-EORAccessToken.
 
+    .PARAMETER Confirm
+        If this switch is enabled, you will be prompted for confirmation before executing any operations that change state.
+
+    .PARAMETER WhatIf
+        If this switch is enabled, no actions are performed but informational messages will be displayed that explain what would happen if the command were to run.
+
     .EXAMPLE
         PS C:\> Update-MgaMailMessage
 
         Update emails
     #>
-    [CmdletBinding(DefaultParameterSetName='ByInputObject')]
+    [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', DefaultParameterSetName='ByInputObject')]
     param (
         [Parameter(ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName='ByInputObject')]
         [MSGraph.Exchange.Mail.Message]
@@ -55,15 +61,10 @@
     }
 
     process {
-        foreach ($folder in $Name) {
-            #Write-PSFMessage -Level Verbose -Message "Searching $folder"
-            #$data = Invoke-MgaGetMethod -Field "mailFolders('$($folder)')/messages" -User $User -Token $Token
-            #$data = Invoke-MgaGetMethod -Field "mailFolders/$($folder)/messages" -User $User -Token $Token -ResultSize $ResultSize
-            #foreach ($output in $data) {
-            #    $output.pstypenames.Insert(0, $objectBaseType)
-            #    $output.pstypenames.Insert(0, "$($objectBaseType).$($objectType)")
-            #    $output
-            #}
+        foreach ($Item in $Name) {
+            if ($pscmdlet.ShouldProcess("Target", "Operation")) {
+
+            }
         }
     }
 

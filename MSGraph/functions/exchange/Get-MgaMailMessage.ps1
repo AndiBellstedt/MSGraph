@@ -2,10 +2,10 @@
     <#
     .SYNOPSIS
         Retrieves messages from a email folder from Exchange Online using the graph api.
-    
+
     .DESCRIPTION
         Retrieves messages from a email folder from Exchange Online using the graph api.
-    
+
     .PARAMETER InputObject
         Carrier object for Pipeline input
         Accepts messages or folders from other Mga-functions
@@ -13,7 +13,7 @@
     .PARAMETER Folder
         The display name of the folder to search.
         Defaults to the inbox.
-    
+
     .PARAMETER User
         The user-account to access. Defaults to the main user connected as.
         Can be any primary email name of any user the connected token has access to.
@@ -35,10 +35,10 @@
         The token representing an established connection to the Microsoft Graph Api.
         Can be created by using New-MgaAccessToken.
         Can be omitted if a connection has been registered using the -Register parameter on New-MgaAccessToken.
-    
+
     .EXAMPLE
         PS C:\> Get-MgaMailMessage
-    
+
         Return emails in the inbox of the user connected to through a token
 
     .EXAMPLE
@@ -67,14 +67,13 @@
 
         .EXAMPLE
         PS C:\> Get-MgaMailFolder -Filter "MyFolder*" | Get-MgaMailMessage
-    
+
         Return emails in the folders "MyFolder*" of the user connected to through a token
 
         .EXAMPLE
         PS C:\> Get-MgaMailMessage
-    
-        Return emails in the folders "MyFolder*" of the user connected to through a token
 
+        Return emails in the folders "MyFolder*" of the user connected to through a token
 #>
     [CmdletBinding(DefaultParameterSetName = 'ByFolderName')]
     [OutputType([MSGraph.Exchange.Mail.Message])]
@@ -122,7 +121,7 @@
                                 # retreive delta messages
                                 [array]$deltaMessages = $messages | Where-Object { '@odata.deltaLink' -in $_.BaseObject.psobject.Properties.Name }
                                 [array]$deltaLinks = $deltaMessages.BaseObject | Select-Object -ExpandProperty '@odata.deltaLink' -Unique
-                                
+
                                 Write-PSFMessage -Level VeryVerbose -Message "Delta parameter specified. Checking on $($deltaLinks.Count) deltalink(s) in $($deltaMessages.Count) message(s) from the pipeline"
                                 # build hashtable for Invoke-MgaGetMethod parameter splatting
                                 foreach($deltaLink in $deltaLinks) {
@@ -204,7 +203,7 @@
     end {
         $invokeParams = $invokeParams | Select-Object -Unique
         Write-PSFMessage -Level Verbose -Message "Invoking $( ($invokeParams | Measure-Object).Count ) REST calls for gettings messages" #-FunctionName $MyInvocation.MyCommand
-        
+
         # run the message query and process the output
         foreach($invokeParam in $InvokeParams) {
             $data = Invoke-MgaGetMethod @invokeParam | Where-Object { $_.subject -like $Subject }
