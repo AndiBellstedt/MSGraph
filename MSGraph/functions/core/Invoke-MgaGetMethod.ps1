@@ -54,7 +54,7 @@
         $ResultSize = (Get-PSFConfigValue -FullName 'MSGraph.Query.ResultSize' -Fallback 100),
 
         #[MSGraph.Core.AzureAccessToken]
-        $Token, 
+        $Token,
 
         [string]
         $FunctionName = $MyInvocation.MyCommand
@@ -118,8 +118,8 @@
                 $overResult = $ResultSize - ($i - $value.Count)
                 Write-PSFMessage -Level Verbose -Message "Resultsize ($ResultSize) exeeded. Output $($overResult) object(s) in record set." -Tag "ResultSize"
             }
-        } 
-        else { 
+        }
+        else {
             Write-PSFMessage -Level Verbose -Message "Single item retrived. Outputting data." -Tag "RestData"
             [array]$value = $data
             $restLink = ""

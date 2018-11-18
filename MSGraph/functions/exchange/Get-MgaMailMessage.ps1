@@ -6,6 +6,10 @@
     .DESCRIPTION
         Retrieves messages from a email folder from Exchange Online using the graph api.
     
+    .PARAMETER InputObject
+        Carrier object for Pipeline input
+        Accepts messages or folders from other Mga-functions
+
     .PARAMETER Folder
         The display name of the folder to search.
         Defaults to the inbox.
@@ -19,7 +23,7 @@
 
     .PARAMETER Delta
         Indicates a "delta-query" for incremental changes on mails.
-        The switch allows you to query mutliple times against the same user and folder while only getting additional, 
+        The switch allows you to query mutliple times against the same user and folder while only getting additional,
         updated or deleted messages.
 
         Please notice, that delta queries needs to be handeled right. See the examples for correct usage.
@@ -41,7 +45,7 @@
         PS C:\> $mails = Get-MgaMailMessage -Delta
 
         Return emails in the inbox of the user connected to through a token and write the output in the variable $mails.
-        IMPORTANT, the -Delta switch needs to be specified on the first call, because the outputobject will has to be piped 
+        IMPORTANT, the -Delta switch needs to be specified on the first call, because the outputobject will has to be piped
         into the next delta query.
 
         The content of $mails can be used and processed:
@@ -50,7 +54,7 @@
         So the second Get-MgaMailMessage call has to be:
         PS C:\> $deltaMails = Get-MgaMailMessage -InputObject $mails -Delta
 
-        This return only unqueried, updated, or new messages from the previous call and writes the result in the 
+        This return only unqueried, updated, or new messages from the previous call and writes the result in the
         variable $deltaMails.
 
         The content of the $deltaMails variable can be used as output and should only overwrites the $mail variable if there is content in $deltaMails:
@@ -67,7 +71,7 @@
         Return emails in the folders "MyFolder*" of the user connected to through a token
 
         .EXAMPLE
-        PS C:\> Get-MgaMailMessage 
+        PS C:\> Get-MgaMailMessage
     
         Return emails in the folders "MyFolder*" of the user connected to through a token
 

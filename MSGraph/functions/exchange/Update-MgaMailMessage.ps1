@@ -1,15 +1,19 @@
-function Update-MgaMailMessage {
+﻿function Update-MgaMailMessage {
     <#
     .SYNOPSIS
+        *** UNDER CONSTRUCTION ***
         Updates messages from a email folder
-    
+
     .DESCRIPTION
         Update messages from Exchange Online using the graph api.
-    
+
+    .PARAMETER InputObject
+        Carrier object for Pipeline input. Accepts messages.
+
     .PARAMETER Name
         The display name of the folder to search.
         Defaults to the inbox.
-    
+
     .PARAMETER User
         The user-account to access. Defaults to the main user connected as.
         Can be any primary email name of any user the connected token has access to.
@@ -21,11 +25,11 @@ function Update-MgaMailMessage {
         The token representing an established connection to the Microsoft Graph Api.
         Can be created by using New-EORAccessToken.
         Can be omitted if a connection has been registered using the -Register parameter on New-EORAccessToken.
-    
+
     .EXAMPLE
-        PS C:\> Get-MgaMailMessage
-    
-        Return all emails in the inbox of the user connected to through a token
+        PS C:\> Update-MgaMailMessage
+
+        Update emails
     #>
     [CmdletBinding(DefaultParameterSetName='ByInputObject')]
     param (
@@ -37,11 +41,6 @@ function Update-MgaMailMessage {
         [Alias('DisplayName')]
         [string[]]
         $Name = '',
-
-        [Parameter(ParameterSetName='ByName')]
-        [Alias('FolderName')]
-        [string[]]
-        $Folder = 'Inbox',
 
         [string]
         $User = 'me',
