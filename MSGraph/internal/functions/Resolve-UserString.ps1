@@ -22,7 +22,7 @@
 		$User
 	)
 	
-	if ($User -eq 'me') { return 'me' }
+	if ($User -eq 'me' -or (-not $User)) { return 'me' }
 	elseif ($User -like "users/*") { return $User }
 	else { return "users/$($User)" }
 }

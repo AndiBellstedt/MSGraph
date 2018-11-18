@@ -8,7 +8,7 @@
 
     .EXAMPLE
         PS C:\> Get-MgaRegisteredAccessToken
-    
+
         Output the registered access token
     #>
     [CmdletBinding()]

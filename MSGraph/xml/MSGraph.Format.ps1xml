@@ -53,9 +53,9 @@
         </View>
 
         <View>
-            <Name>MSGraph.Exchange.MailFolder_table</Name>
+            <Name>MSGraph.Exchange.Mail.Folder_table</Name>
             <ViewSelectedBy>
-                <TypeName>MSGraph.Exchange.MailFolder</TypeName>
+                <TypeName>MSGraph.Exchange.Mail.Folder</TypeName>
             </ViewSelectedBy>
             <TableControl>
                 <AutoSize/>
@@ -91,14 +91,17 @@
         </View>
 
         <View>
-            <Name>MSGraph.Exchange.MailFolder_list</Name>
+            <Name>MSGraph.Exchange.Mail.Folder_list</Name>
             <ViewSelectedBy>
-                <TypeName>MSGraph.Exchange.MailFolder</TypeName>
+                <TypeName>MSGraph.Exchange.Mail.Folder</TypeName>
             </ViewSelectedBy>
             <ListControl>
                 <ListEntries>
                     <ListEntry>
                         <ListItems>
+                            <ListItem>
+                                <PropertyName>Id</PropertyName>
+                            </ListItem>
                             <ListItem>
                                 <PropertyName>Name</PropertyName>
                             </ListItem>
@@ -121,9 +124,9 @@
         </View>
 
         <View>
-            <Name>MSGraph.Exchange.MailFolder_wide</Name>
+            <Name>MSGraph.Exchange.Mail.Folder_wide</Name>
             <ViewSelectedBy>
-                <TypeName>MSGraph.Exchange.MailFolder</TypeName>
+                <TypeName>MSGraph.Exchange.Mail.Folder</TypeName>
             </ViewSelectedBy>
 
             <WideControl>
@@ -139,9 +142,9 @@
         </View>
 
         <View>
-            <Name>MSGraph.Exchange.MailAttachment_table</Name>
+            <Name>MSGraph.Exchange.Mail.Attachment_table</Name>
             <ViewSelectedBy>
-                <TypeName>MSGraph.Exchange.MailAttachment</TypeName>
+                <TypeName>MSGraph.Exchange.Mail.Attachment</TypeName>
             </ViewSelectedBy>
             <TableControl>
                 <AutoSize/>
@@ -159,7 +162,7 @@
                                 <PropertyName>Name</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
-                                <PropertyName>Size</PropertyName>
+                                <PropertyName>SizeKB</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
                                 <PropertyName>ContentType</PropertyName>
@@ -176,6 +179,156 @@
             </TableControl>
         </View>
 
+        <View>
+            <Name>MSGraph.Exchange.Mail.Message_table</Name>
+            <ViewSelectedBy>
+                <TypeName>MSGraph.Exchange.Mail.Message</TypeName>
+            </ViewSelectedBy>
+            <TableControl>
+                <AutoSize/>
+                <TableHeaders>
+                    <TableColumnHeader/>
+                    <TableColumnHeader/>
+                    <TableColumnHeader/>
+                    <TableColumnHeader/>
+                    <TableColumnHeader/>
+                    <TableColumnHeader/>
+                    <TableColumnHeader/>
+                </TableHeaders>
+                <TableRowEntries>
+                    <TableRowEntry>
+                        <TableColumnItems>
+                            <TableColumnItem>
+                                <PropertyName>ReceivedDateTime</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>Importance</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>Unread</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>HasAttachments</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>Subject</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>SenderDisplayname</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>RecipientsDisplayname</PropertyName>
+                            </TableColumnItem>
+                        </TableColumnItems>
+                    </TableRowEntry>
+                </TableRowEntries>
+            </TableControl>
+        </View>
+
+        <View>
+            <Name>MSGraph.Exchange.Mail.Message_list</Name>
+            <ViewSelectedBy>
+                <TypeName>MSGraph.Exchange.Mail.Message</TypeName>
+            </ViewSelectedBy>
+            <ListControl>
+                <ListEntries>
+                    <ListEntry>
+                        <ListItems>
+                            <ListItem>
+                                <PropertyName>Id</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>Subject</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>SentDateTime</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>CreatedDateTime</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>ReceivedDateTime</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>lastModifiedDateTime</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>SenderDisplayName</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>Sender</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>RecipientsDisplayName</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>Recipients</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>CCRecipientsDisplayName</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>CCRecipients</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>BCCRecipientsDisplayName</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>BCCRecipients</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>ReplyToDisplayName</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>ReplyTo</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>Importance</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>Unread</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>HasAttachments</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>ReadReceiptRequested</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>DeliveryReceiptRequested</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>IsDraft</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>FlagStatus</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>MeetingMessageType</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>BodyPreview</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>InternetMessageId</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>ConversationId</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>ChangeKey</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>ParentFolderId</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>WebLink</PropertyName>
+                            </ListItem>
+                        </ListItems>
+                    </ListEntry>
+                </ListEntries>
+            </ListControl>
+        </View>
 
     </ViewDefinitions>
 </Configuration>

@@ -104,5 +104,35 @@
             The type of token. Generally, only when the token is of type "Bearer" is a valid connection established.
             </summary>
         </member>
+        <member name="T:MSGraph.Exchange.Mail.Message">
+            <summary>
+            Mail message in exchange online
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Message.BaseObject">
+            <summary>
+            data carrier object
+            </summary>
+        </member>
+        <member name="T:MSGraph.Exchange.Mail.Folder">
+            <summary>
+            Mail folder in exchange online
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Folder.BaseObject">
+            <summary>
+            data carrier object
+            </summary>
+        </member>
+        <member name="T:MSGraph.Exchange.Mail.Attachment">
+            <summary>
+            Mail attachments in exchange online
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Attachment.BaseObject">
+            <summary>
+            data carrier object
+            </summary>
+        </member>
     </members>
 </doc>
