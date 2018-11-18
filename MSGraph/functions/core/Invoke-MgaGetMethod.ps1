@@ -95,7 +95,7 @@
 
     do {
         Write-PSFMessage -Level Verbose -Message "Get REST data: $($restLink)" -Tag "RestData"
-        Clear-Variable -Name data -Force -WhatIf:$false -Confirm:$false -Verbose:$false
+        Clear-Variable -Name data -Force -WhatIf:$false -Confirm:$false -Verbose:$false -ErrorAction Ignore
         $data = Invoke-RestMethod -ErrorVariable restError -Verbose:$false -Method Get -UseBasicParsing -Uri $restLink -Headers @{
             "Authorization" = "Bearer $( [System.Runtime.InteropServices.Marshal]::PtrToStringAuto([System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($token.AccessToken)) )"
             "Prefer"        = "outlook.timezone=`"$((Get-Timezone).Id)`", odata.maxpagesize=$($ResultSize)"
