@@ -59,21 +59,7 @@
         [string]
         $FunctionName = $MyInvocation.MyCommand
     )
-    if (-not $Token) { $Token = $script:msgraph_Token }
-    if (-not $Token) { Stop-PSFFunction -Message "Not connected! Use New-MgaAccessToken to create a Token and either register it or specifs it" -EnableException $true -Category AuthenticationError -Cmdlet $PSCmdlet -FunctionName $FunctionName }
-    if ( (-not $Token.IsValid) -or ($Token.PercentRemaining -lt 15) ) {
-        # if token is invalid or less then 15 percent of lifetime -> go and refresh the token
-        $paramsTokenRefresh = @{
-            Token = $Token
-            PassThru = $true
-        }
-        if ($script:msgraph_Token.AccessTokenInfo.Payload -eq $Token.AccessTokenInfo.Payload) { $paramsTokenRefresh.Add("Register", $true) }
-        if ($Token.Credential) { $paramsTokenRefresh.Add("Credential", $Token.Credential) }
-        $Token = Update-MgaAccessToken @paramsTokenRefresh
-    }
-    else {
-        Write-PSFMessage -Level Verbose -Message "Valid token for user $($Token.UserprincipalName) - Time remaining $($Token.TimeRemaining)" -Tag "Authentication"
-    }
+    $Token = Resolve-Token -Token $Token -FunctionName $FunctionName
 
     if($PSCmdlet.ParameterSetName -like "DeltaLink") {
         Write-PSFMessage -Level Verbose -Message "ParameterSet $($PSCmdlet.ParameterSetName) - constructing delta query" -Tag "ParameterSetHandling"

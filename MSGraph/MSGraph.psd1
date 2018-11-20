@@ -3,7 +3,7 @@
     ModuleToProcess = 'MSGraph.psm1'
     
     # Version number of this module.
-    ModuleVersion = '1.2.3'
+    ModuleVersion = '1.2.4'
     
     # ID used to uniquely identify this module
     GUID = '5f61c229-95d0-4423-ab50-938c0723ad21'
@@ -70,6 +70,7 @@
         'Update-MgaMailMessage',
 
         'Invoke-MgaGetMethod',
+        'Invoke-MgaPatchMethod',
         'New-MgaAccessToken',
         'Update-MgaAccessToken',
         'Get-MgaRegisteredAccessToken',
