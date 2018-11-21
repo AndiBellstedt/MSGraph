@@ -113,10 +113,10 @@
         [string]
         $Subject,
 
-        [mailaddress[]]
+        [mailaddress]
         $Sender,
 
-        [mailaddress[]]
+        [mailaddress]
         $From,
 
         [mailaddress[]]
@@ -164,49 +164,40 @@
 
     process {
         $messages = @()
-        switch  ($PSCmdlet.ParameterSetName) {
+        $bodyHash = @{}
+        $boundParameters = @()
+
+        switch ($PSCmdlet.ParameterSetName) {
             "ByInputObject" { $messages = $InputObject.Id }
             "ById" { $messages = $Id }
             Default { stop-PSFMessage -Message "Unhandled parameter set. ($($PSCmdlet.ParameterSetName)) Developer mistage." -EnableException $true -Category "ParameterSetHandling" -FunctionName $MyInvocation.MyCommand }
         }
+        
+        $names = @("sender", "from", "toRecipients", "ccRecipients", "bccRecipients", "replyTo")
+        foreach ( $name in $names ) {
+            if (Test-PSFParameterBinding -ParameterName $name) {
+                $boundParameters = $boundParameters + $name
+                Write-PSFMessage -Level Verbose -Message "Parsing mailaddress parameter $($name)"
+                $address = foreach ($item in (Get-Variable $name -Scope 0).Value) {
+                    @{
+                        "emailAddress" = @{
+                            address = $item.Address
+                            name    = $item.DisplayName
+                        }
+                    }
+                }
+                $bodyHash.Add($name, $address)
+            }
+        }
 
-        $bodyHash = @{}
-        #$defaultParameterList = @( "Verbose", "Debug", "ErrorAction", "WarningAction", "InformationAction", 
-        #    "ErrorVariable", "WarningVariable", "InformationVariable", "OutVariable", "OutBuffer", 
-        #    "PipelineVariable", "Confirm", "WhatIf" , "InputObject", "Id", "User", "Token", "Token"
-        #)
-        #$boundParameters = $PSBoundParameters.keys | Where-Object { $_ -NotIn $defaultParameterList }
-        #foreach ($boundParameter in $boundParameters) {
-        #    $bodyHash.Add($boundParameter, $PSBoundParameters["$boundParameter"])
-        #}
-
-# not implemented yet:
-#        [mailaddress[]]
-#        $Sender
-#        
-#        [mailaddress[]]
-#        $From
-#
-#        [mailaddress[]]
-#        $ToRecipients
-#
-#        [mailaddress[]]
-#        $CCRecipients
-#
-#        [mailaddress[]]
-#        $BCCRecipients
-#
-#        [mailaddress[]]
-#        $ReplyTo
-        if(Test-PSFParameterBinding -ParameterName "IsRead") { $bodyHash.Add("IsRead", $IsRead) }
-        if(Test-PSFParameterBinding -ParameterName "Subject") { $bodyHash.Add("Subject", $Subject) }
-        if(Test-PSFParameterBinding -ParameterName "Body") { $bodyHash.Add("Body", $Body) }
-        if(Test-PSFParameterBinding -ParameterName "Categories") { $bodyHash.Add("Categories", $Categories) }
-        if(Test-PSFParameterBinding -ParameterName "Importance") { $bodyHash.Add("Importance", $Importance) }
-        if(Test-PSFParameterBinding -ParameterName "InferenceClassification") { $bodyHash.Add("InferenceClassification", $InferenceClassification) }
-        if(Test-PSFParameterBinding -ParameterName "InternetMessageId") { $bodyHash.Add("InternetMessageId", $InternetMessageId) }
-        if(Test-PSFParameterBinding -ParameterName "IsDeliveryReceiptRequested") { $bodyHash.Add("IsDeliveryReceiptRequested", $IsDeliveryReceiptRequested) }
-        if(Test-PSFParameterBinding -ParameterName "IsReadReceiptRequested") { $bodyHash.Add("IsReadReceiptRequested", $IsReadReceiptRequested) }
+        $names = @("IsRead", "Subject", "Body", "Categories", "Importance", "InferenceClassification", "InternetMessageId", "IsDeliveryReceiptRequested", "IsReadReceiptRequested")
+        foreach ( $name in $names ) {
+            if (Test-PSFParameterBinding -ParameterName $name) {
+                $boundParameters = $boundParameters + $name
+                Write-PSFMessage -Level Verbose -Message "Parsing text parameter $($name)"
+                $bodyHash.Add($name, (Get-Variable $name -Scope 0).Value)
+            }
+        }
 
         foreach ($messageId in $messages) {
             if ($pscmdlet.ShouldProcess("messageId $($messageId)", "Update properties '$([string]::Join("', '", $boundParameters))'")) {
