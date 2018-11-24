@@ -208,6 +208,7 @@
         $bodyHash = @{}
 
         # Get input from pipeable objects
+        Write-PSFMessage -Level Debug -Message "Gettings messages by parameter set $($PSCmdlet.ParameterSetName)" -Tag "ParameterSetHandling"
         switch ($PSCmdlet.ParameterSetName) {
             "ByInputObject" {
                 $messages = $InputObject.Id
@@ -216,7 +217,7 @@
             "ById" {
                 $messages = $Id
             }
-            Default { stop-PSFMessage -Message "Unhandled parameter set. ($($PSCmdlet.ParameterSetName)) Developer mistage." -EnableException $true -Category "ParameterSetHandling" -FunctionName $MyInvocation.MyCommand }
+            Default { Stop-PSFFunction -Tag "ParameterSetHandling" -Message "Unhandled parameter set. ($($PSCmdlet.ParameterSetName)) Developer mistage." -EnableException $true -Exception ([System.Management.Automation.RuntimeException]::new("Unhandled parameter set. ($($PSCmdlet.ParameterSetName)) Developer mistage.")) -FunctionName $MyInvocation.MyCommand }
         }
 
         #region Parsing string and boolean parameters to json data parts

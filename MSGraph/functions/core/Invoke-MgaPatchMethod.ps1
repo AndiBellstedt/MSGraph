@@ -29,7 +29,8 @@
     .EXAMPLE
         PS C:\> Invoke-MgaPatchMethod -Field "messages/$($id)" -Body '{ "isRead": true }' -Token $Token
 
-        Set a message as readed, using the token stored in $Token
+        Set a message as readed.
+        The token stored in $Token is used for the api call.
     #>
     [CmdletBinding(DefaultParameterSetName = 'Default')]
     param (
@@ -54,19 +55,26 @@
     )
 
     $Token = Resolve-Token -Token $Token -FunctionName $FunctionName
-    if(-not $User) { $User = $Token.UserprincipalName }
+    if (-not $User) { $User = $Token.UserprincipalName }
+    $restUri = "https://graph.microsoft.com/v1.0/$(Resolve-UserString -User $User)/$($Field)"
 
-    $restLink = "https://graph.microsoft.com/v1.0/$(Resolve-UserString -User $User)/$($Field)"
-
-    Write-PSFMessage -Level Verbose -Message "Invoking REST PATCH to uri: $($restLink)" -Tag "RestData" -FunctionName $FunctionName
-    Write-PSFMessage -Level Debug -Message "REST body data: $($Body)" -Tag "RestData" -FunctionName $FunctionName
+    Write-PSFMessage -Tag "RestData" -Level VeryVerbose -Message "Invoking REST PATCH to uri: $($restUri)"
+    Write-PSFMessage -Tag "RestData" -Level Debug -Message "REST body data: $($Body)"
+    
     Clear-Variable -Name data -Force -WhatIf:$false -Confirm:$false -Verbose:$false -ErrorAction Ignore
-    $data = Invoke-RestMethod -ErrorVariable restError -Verbose:$false -Method Patch -UseBasicParsing -Uri $restLink -Body $Body -Headers @{
-        "Authorization" = "Bearer $( [System.Runtime.InteropServices.Marshal]::PtrToStringAuto([System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($token.AccessToken)) )"
-        "Content-Type"  = "application/json"
+    $invokeParam = @{
+        Method          = "Patch"
+        Uri             = $restUri
+        Body            = $Body
+        Headers         = @{
+            "Authorization" = "Bearer $( [System.Runtime.InteropServices.Marshal]::PtrToStringAuto([System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($token.AccessToken)) )"
+            "Content-Type"  = "application/json"
+        }
     }
-    if($restError) {
-        Stop-PSFFunction -Message $parseError[0].Exception -EnableException $false -Category ConnectionError -Tag "RestData" -Exception $parseError[0].Exception -FunctionName $FunctionName
+    $data = Invoke-RestMethod @invokeParam -ErrorVariable "restError" -Verbose:$false -UseBasicParsing
+    
+    if ($restError) {
+        Stop-PSFFunction -Tag "RestData" -Message $parseError[0].Exception -Exception $parseError[0].Exception -EnableException $false -Category ConnectionError -FunctionName $FunctionName
         return
     }
 
