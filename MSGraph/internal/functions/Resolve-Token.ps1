@@ -1,4 +1,4 @@
-function Resolve-Token {
+﻿function Resolve-Token {
     <#
     .SYNOPSIS
         Test for specified Token, or receives registered token
@@ -16,7 +16,7 @@ function Resolve-Token {
 
     .EXAMPLE
         PS C:\> Resolve-Token -User $Token
-    
+
         Test Token for lifetime, or receives registered token from script variable
     #>
     [OutputType([MSGraph.Core.AzureAccessToken])]
@@ -30,7 +30,7 @@ function Resolve-Token {
     )
 
     if (-not $Token) { $Token = $script:msgraph_Token }
-    if (-not $Token) { 
+    if (-not $Token) {
         Stop-PSFFunction -Message "Not connected! Use New-MgaAccessToken to create a Token and either register it or specifs it" -EnableException $true -Category AuthenticationError -FunctionName $FunctionName
     }
     if ( (-not $Token.IsValid) -or ($Token.PercentRemaining -lt 15) ) {
