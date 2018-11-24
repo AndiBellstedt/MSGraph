@@ -7,6 +7,7 @@ namespace MSGraph.Core
     /// <summary>
     /// Token used to authenticate against azure with
     /// </summary>
+    [Serializable]
     public class AzureAccessToken
     {
         /// <summary>
@@ -93,32 +94,15 @@ namespace MSGraph.Core
                     return false;
                 return true;
             }
+
+            set
+            {
+            }
         }
 
         /// <summary>
         /// Informationen from JWT access token
         /// </summary>
         public JWTAccessTokenInfo AccessTokenInfo;
-    }
-
-    /// <summary>
-    /// Token informationen from a JWT access token
-    /// </summary>
-    public class JWTAccessTokenInfo
-    {
-        /// <summary>
-        /// The type of token. Generally, only when the token is of type "Bearer" is a valid connection established.
-        /// </summary>
-        public String Header;
-
-        /// <summary>
-        /// The type of token. Generally, only when the token is of type "Bearer" is a valid connection established.
-        /// </summary>
-        public String Payload;
-
-        /// <summary>
-        /// The type of token. Generally, only when the token is of type "Bearer" is a valid connection established.
-        /// </summary>
-        public Byte[] Signature;
     }
 }
