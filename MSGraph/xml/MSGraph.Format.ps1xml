@@ -214,10 +214,10 @@
                                 <PropertyName>Subject</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
-                                <PropertyName>SenderDisplayname</PropertyName>
+                                <PropertyName>Sender</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
-                                <PropertyName>RecipientsDisplayname</PropertyName>
+                                <PropertyName>Recipients</PropertyName>
                             </TableColumnItem>
                         </TableColumnItems>
                     </TableRowEntry>
@@ -253,31 +253,19 @@
                                 <PropertyName>lastModifiedDateTime</PropertyName>
                             </ListItem>
                             <ListItem>
-                                <PropertyName>SenderDisplayName</PropertyName>
+                                <PropertyName>From</PropertyName>
                             </ListItem>
                             <ListItem>
                                 <PropertyName>Sender</PropertyName>
                             </ListItem>
                             <ListItem>
-                                <PropertyName>RecipientsDisplayName</PropertyName>
-                            </ListItem>
-                            <ListItem>
                                 <PropertyName>Recipients</PropertyName>
-                            </ListItem>
-                            <ListItem>
-                                <PropertyName>CCRecipientsDisplayName</PropertyName>
                             </ListItem>
                             <ListItem>
                                 <PropertyName>CCRecipients</PropertyName>
                             </ListItem>
                             <ListItem>
-                                <PropertyName>BCCRecipientsDisplayName</PropertyName>
-                            </ListItem>
-                            <ListItem>
                                 <PropertyName>BCCRecipients</PropertyName>
-                            </ListItem>
-                            <ListItem>
-                                <PropertyName>ReplyToDisplayName</PropertyName>
                             </ListItem>
                             <ListItem>
                                 <PropertyName>ReplyTo</PropertyName>

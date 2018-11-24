@@ -333,14 +333,7 @@
             <ScriptProperty>
                 <Name>BCCRecipients</Name>
                 <GetScriptBlock>
-                    $this.BaseObject.bccRecipients.emailAddress.address
-                </GetScriptBlock>
-            </ScriptProperty>
-
-            <ScriptProperty>
-                <Name>BCCRecipientsDisplayName</Name>
-                <GetScriptBlock>
-                    ($this.BaseObject.bccRecipients.emailAddress | Select-Object @{n="SenderDisplayName"; e={ "$($_.Name) ($($_.address))"}}).SenderDisplayName
+                    $this.BaseObject.bccRecipients.emailAddress | ForEach-Object { [mailaddress]"$($_.name) $($_.address)"}
                 </GetScriptBlock>
             </ScriptProperty>
 
@@ -368,14 +361,7 @@
             <ScriptProperty>
                 <Name>CCRecipients</Name>
                 <GetScriptBlock>
-                    $this.BaseObject.ccRecipients.emailAddress.address
-                </GetScriptBlock>
-            </ScriptProperty>
-
-            <ScriptProperty>
-                <Name>CCRecipientsDisplayName</Name>
-                <GetScriptBlock>
-                    ($this.BaseObject.ccRecipients.emailAddress | Select-Object @{n="SenderDisplayName"; e={ "$($_.Name) ($($_.address))"}}).SenderDisplayName
+                    $this.BaseObject.ccRecipients.emailAddress | ForEach-Object { [mailaddress]"$($_.name) $($_.address)"}
                 </GetScriptBlock>
             </ScriptProperty>
 
@@ -417,30 +403,16 @@
             <ScriptProperty>
                 <Name>From</Name>
                 <GetScriptBlock>
-                    $this.BaseObject.from.emailAddress.address
+                    $this.BaseObject.from.emailAddress | ForEach-Object { [mailaddress]"$($_.name) $($_.address)"}
                 </GetScriptBlock>
             </ScriptProperty>
-
-            <AliasProperty>
-                <Name>Sender</Name>
-                <ReferencedMemberName>
-                    From
-                </ReferencedMemberName>
-            </AliasProperty>
 
             <ScriptProperty>
-                <Name>SenderDisplayName</Name>
+                <Name>Sender</Name>
                 <GetScriptBlock>
-                    ($this.BaseObject.from.emailAddress | Select-Object @{n="SenderDisplayName"; e={ "$($_.Name) ($($_.address))"}}).SenderDisplayName
+                    $this.BaseObject.Sender.emailAddress | ForEach-Object { [mailaddress]"$($_.name) $($_.address)"}
                 </GetScriptBlock>
             </ScriptProperty>
-
-            <AliasProperty>
-                <Name>FromDisplayName</Name>
-                <ReferencedMemberName>
-                    SenderDisplayName
-                </ReferencedMemberName>
-            </AliasProperty>
 
             <ScriptProperty>
                 <Name>HasAttachments</Name>
@@ -564,7 +536,7 @@
             <ScriptProperty>
                 <Name>ReplyTo</Name>
                 <GetScriptBlock>
-                    $this.BaseObject.replyTo.emailAddress.address
+                    $this.BaseObject.replyTo.emailAddress | ForEach-Object { [mailaddress]"$($_.name) $($_.address)"}
                 </GetScriptBlock>
             </ScriptProperty>
 
@@ -606,7 +578,7 @@
             <ScriptProperty>
                 <Name>ToRecipients</Name>
                 <GetScriptBlock>
-                    $this.BaseObject.toRecipients.emailAddress.address
+                    $this.BaseObject.toRecipients.emailAddress | ForEach-Object { [mailaddress]"$($_.name) $($_.address)"}
                 </GetScriptBlock>
             </ScriptProperty>
 

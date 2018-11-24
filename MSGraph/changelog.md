@@ -1,4 +1,11 @@
 # Changelog
+## 1.2.5 (2018-11-24)
+- New: Command Move-MgaMailMessage
+- Upd: Command Update-MgaMailMessage
+    - Rename command to *Set-MgaMailMessage*
+    - Add alias *Update-MgaMailMessage* on *Set-MgaMailMessage*
+- Fix: some minor bugfixes and code refactoring
+
 ## 1.2.2 (2018-11-18)
 - New: Classes for output from cmdlets for better support on pipeline
     - Get-MgaMailAttachment -> [MSGraph.Exchange.Mail.Attachment]

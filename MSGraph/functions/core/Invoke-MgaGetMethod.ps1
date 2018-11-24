@@ -36,7 +36,7 @@
     #>
     [CmdletBinding(DefaultParameterSetName = 'Default')]
     param (
-        [string[]]
+        [string]
         $Field,
 
         [string]
@@ -53,79 +53,77 @@
         [Int64]
         $ResultSize = (Get-PSFConfigValue -FullName 'MSGraph.Query.ResultSize' -Fallback 100),
 
-        #[MSGraph.Core.AzureAccessToken]
+        [MSGraph.Core.AzureAccessToken]
         $Token,
 
         [string]
         $FunctionName = $MyInvocation.MyCommand
     )
-    if (-not $Token) { $Token = $script:msgraph_Token }
-    if (-not $Token) { Stop-PSFFunction -Message "Not connected! Use New-MgaAccessToken to create a Token and either register it or specifs it" -EnableException $true -Category AuthenticationError -Cmdlet $PSCmdlet -FunctionName $FunctionName }
-    if ( (-not $Token.IsValid) -or ($Token.PercentRemaining -lt 15) ) {
-        # if token is invalid or less then 15 percent of lifetime -> go and refresh the token
-        $paramsTokenRefresh = @{
-            Token = $Token
-            PassThru = $true
-        }
-        if ($script:msgraph_Token.AccessTokenInfo.Payload -eq $Token.AccessTokenInfo.Payload) { $paramsTokenRefresh.Add("Register", $true) }
-        if ($Token.Credential) { $paramsTokenRefresh.Add("Credential", $Token.Credential) }
-        $Token = Update-MgaAccessToken @paramsTokenRefresh
-    }
-    else {
-        Write-PSFMessage -Level Verbose -Message "Valid token for user $($Token.UserprincipalName) - Time remaining $($Token.TimeRemaining)" -Tag "Authentication"
-    }
 
+    #region variable definition
+    $Token = Resolve-Token -Token $Token -FunctionName $FunctionName
     if($PSCmdlet.ParameterSetName -like "DeltaLink") {
-        Write-PSFMessage -Level Verbose -Message "ParameterSet $($PSCmdlet.ParameterSetName) - constructing delta query" -Tag "ParameterSetHandling"
-        $restLink = $DeltaLink
+        Write-PSFMessage -Level VeryVerbose -Message "ParameterSet $($PSCmdlet.ParameterSetName) - constructing delta query" -Tag "ParameterSetHandling"
+        $restUri = $DeltaLink
         $Delta = $true
-        $User = ([uri]$restLink).AbsolutePath.split('/')[2]
+        $User = ([uri]$restUri).AbsolutePath.split('/')[2]
     }
     else {
         if(-not $User) { $User = $Token.UserprincipalName }
-        $restLink = "https://graph.microsoft.com/v1.0/$(Resolve-UserString -User $User)/$($Field)"
-        if($Delta) { $restLink = $restLink + "/delta" }
+        $restUri = "https://graph.microsoft.com/v1.0/$(Resolve-UserString -User $User)/$($Field)"
+        if($Delta) { $restUri = $restUri + "/delta" }
     }
     if ($ResultSize -eq 0) { $ResultSize = [Int64]::MaxValue }
-    #if ($ResultSize -le 10 -and $restLink -notmatch '\$top=') { $restLink = $restLink + "?`$top=$($ResultSize)" }
+    #if ($ResultSize -le 10 -and $restUri -notmatch '\$top=') { $restUri = $restUri + "?`$top=$($ResultSize)" }
     [Int64]$i = 0
     [Int64]$overResult = 0
     $tooManyItems = $false
     $output = @()
+    #endregion variable definition
 
+    #region query data
     do {
-        Write-PSFMessage -Level Verbose -Message "Get REST data: $($restLink)" -Tag "RestData"
+        Write-PSFMessage -Tag "RestData" -Level VeryVerbose -Message "Get REST data: $($restUri)"
+
         Clear-Variable -Name data -Force -WhatIf:$false -Confirm:$false -Verbose:$false -ErrorAction Ignore
-        $data = Invoke-RestMethod -ErrorVariable restError -Verbose:$false -Method Get -UseBasicParsing -Uri $restLink -Headers @{
-            "Authorization" = "Bearer $( [System.Runtime.InteropServices.Marshal]::PtrToStringAuto([System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($token.AccessToken)) )"
-            "Prefer"        = "outlook.timezone=`"$((Get-Timezone).Id)`", odata.maxpagesize=$($ResultSize)"
+        $invokeParam = @{
+            Method          = "Get"
+            Uri             = $restUri
+            Headers         = @{
+                "Authorization" = "Bearer $( [System.Runtime.InteropServices.Marshal]::PtrToStringAuto([System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($token.AccessToken)) )"
+                "Content-Type"  = "application/json"
+            }
         }
+        $data = Invoke-RestMethod @invokeParam -ErrorVariable "restError" -Verbose:$false -UseBasicParsing
         if($restError) {
-            Stop-PSFFunction -Message $restError -EnableException $false -Category ConnectionError -Tag "RestData"
+            Stop-PSFFunction -Tag "RestData" -Message $parseError[0].Exception -Exception $parseError[0].Exception -EnableException $false -Category ConnectionError -FunctionName $FunctionName
             return
         }
 
         if("Value" -in $data.psobject.Properties.Name) {
+            # Multi object with value property returned by api call
             [array]$value = $data.Value
-            Write-PSFMessage -Level Verbose -Message "Retrieving $($value.Count) records from query" -Tag "RestData"
+            Write-PSFMessage -Tag "RestData" -Level VeryVerbose -Message "Retrieving $($value.Count) records from query"
             $i = $i + $value.Count
             if($i -lt $ResultSize) {
-                $restLink = $data.'@odata.nextLink'
+                $restUri = $data.'@odata.nextLink'
             }
             else {
-                $restLink = ""
+                $restUri = ""
                 $tooManyItems = $true
                 $overResult = $ResultSize - ($i - $value.Count)
-                Write-PSFMessage -Level Verbose -Message "Resultsize ($ResultSize) exeeded. Output $($overResult) object(s) in record set." -Tag "ResultSize"
+                Write-PSFMessage -Tag "ResultSize" -Level Verbose -Message "Resultsize ($ResultSize) exeeded. Output $($overResult) object(s) in record set."
             }
         }
         else {
-            Write-PSFMessage -Level Verbose -Message "Single item retrived. Outputting data." -Tag "RestData"
+            # Multi object with value property returned by api call
+            Write-PSFMessage -Tag "RestData" -Level VeryVerbose -Message "Single item retrived. Outputting data."
             [array]$value = $data
-            $restLink = ""
+            $restUri = ""
         }
 
         if((-not $tooManyItems) -or ($overResult -gt 0)) {
+            # check if resultsize is reached
             if($overResult -gt 0) {
                 $output = $output + $Value[0..($overResult-1)]
             }
@@ -134,8 +132,10 @@
             }
         }
     }
-    while ($restLink)
+    while ($restUri)
+    #endregion query data
 
+    #region output data
     $output | Add-Member -MemberType NoteProperty -Name 'User' -Value $User -Force
     if($Delta) {
         if('@odata.deltaLink' -in $data.psobject.Properties.Name) {
@@ -150,11 +150,13 @@
     }
 
     if($tooManyItems) {
+        # write information to console if resultsize exceeds
         if($Delta) {
-            Write-PSFMessage -Level Host -Message "Reaching maximum ResultSize before finishing delta query. Next delta query will continue on pending objects. Current ResultSize: $($ResultSize)" -Tag "GetData" -FunctionName $FunctionName
+            Write-PSFMessage -Tag "GetData" -Level Host -Message "Reaching maximum ResultSize before finishing delta query. Next delta query will continue on pending objects. Current ResultSize: $($ResultSize)" -FunctionName $FunctionName
         }
         else {
-            Write-PSFMessage -Level Warning -Message "Too many items. Reaching maximum ResultSize before finishing query. You may want to increase the ResultSize. Current ResultSize: $($ResultSize)" -Tag "GetData" -FunctionName $FunctionName
+            Write-PSFMessage -Tag "GetData" -Level Warning -Message "Too many items. Reaching maximum ResultSize before finishing query. You may want to increase the ResultSize. Current ResultSize: $($ResultSize)" -FunctionName $FunctionName
         }
     }
+    #endregion output data
 }

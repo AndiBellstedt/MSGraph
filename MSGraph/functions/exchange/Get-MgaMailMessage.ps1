@@ -99,7 +99,7 @@
         [Int64]
         $ResultSize = (Get-PSFConfigValue -FullName 'MSGraph.Query.ResultSize' -Fallback 100),
 
-        #[MSGraph.Core.AzureAccessToken]
+        [MSGraph.Core.AzureAccessToken]
         $Token
     )
     begin {
@@ -201,11 +201,18 @@
     }
 
     end {
-        $invokeParams = $invokeParams | Select-Object -Unique
-        Write-PSFMessage -Level Verbose -Message "Invoking $( ($invokeParams | Measure-Object).Count ) REST calls for gettings messages" #-FunctionName $MyInvocation.MyCommand
+        $fielList = @()
+        $InvokeParamsUniqueList = @()
+        foreach($invokeParam in $InvokeParams) {
+            if($invokeParam.Field -notin $fielList) {
+                $InvokeParamsUniqueList = $InvokeParamsUniqueList + $invokeParam
+                $fielList = $fielList + $invokeParam.Field
+            }
+        }
+        Write-PSFMessage -Level Verbose -Message "Invoking $( ($InvokeParamsUniqueList | Measure-Object).Count ) REST calls for gettings messages" #-FunctionName $MyInvocation.MyCommand
 
         # run the message query and process the output
-        foreach($invokeParam in $InvokeParams) {
+        foreach($invokeParam in $InvokeParamsUniqueList) {
             $data = Invoke-MgaGetMethod @invokeParam | Where-Object { $_.subject -like $Subject }
             foreach ($output in $data) {
                 [MSGraph.Exchange.Mail.Message]@{

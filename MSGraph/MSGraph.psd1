@@ -3,7 +3,7 @@
     ModuleToProcess = 'MSGraph.psm1'
     
     # Version number of this module.
-    ModuleVersion = '1.2.3'
+    ModuleVersion = '1.2.5'
     
     # ID used to uniquely identify this module
     GUID = '5f61c229-95d0-4423-ab50-938c0723ad21'
@@ -67,9 +67,12 @@
         'Get-MgaMailMessage',
         'Get-MgaMailAttachment',
         'Export-MgaMailAttachment',
-        'Update-MgaMailMessage',
+        'Set-MgaMailMessage',
+        'Move-MgaMailMessage',
 
         'Invoke-MgaGetMethod',
+        'Invoke-MgaPatchMethod',
+        'Invoke-MgaPostMethod',
         'New-MgaAccessToken',
         'Update-MgaAccessToken',
         'Get-MgaRegisteredAccessToken',
@@ -84,7 +87,8 @@
     
     # Aliases to export from this module
     AliasesToExport = @(
-        'Save-MgaMailAttachment'
+        'Save-MgaMailAttachment', 
+        'Update-MgaMailMessage'
     )
     
     # List of all modules packaged with this module
