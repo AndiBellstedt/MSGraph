@@ -58,15 +58,15 @@
 
     $restLink = "https://graph.microsoft.com/v1.0/$(Resolve-UserString -User $User)/$($Field)"
 
-    Write-PSFMessage -Level Verbose -Message "Invoking REST PATCH to uri: $($restLink)" -Tag "RestData"
-    Write-PSFMessage -Level Debug -Message "REST body data: $($Body)" -Tag "RestData"
+    Write-PSFMessage -Level Verbose -Message "Invoking REST PATCH to uri: $($restLink)" -Tag "RestData" -FunctionName $FunctionName
+    Write-PSFMessage -Level Debug -Message "REST body data: $($Body)" -Tag "RestData" -FunctionName $FunctionName
     Clear-Variable -Name data -Force -WhatIf:$false -Confirm:$false -Verbose:$false -ErrorAction Ignore
     $data = Invoke-RestMethod -ErrorVariable restError -Verbose:$false -Method Patch -UseBasicParsing -Uri $restLink -Body $Body -Headers @{
         "Authorization" = "Bearer $( [System.Runtime.InteropServices.Marshal]::PtrToStringAuto([System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($token.AccessToken)) )"
         "Content-Type"  = "application/json"
     }
     if($restError) {
-        Stop-PSFFunction -Message $parseError[0].Exception -EnableException $false -Category ConnectionError -Tag "RestData" -Exception $parseError[0].Exception
+        Stop-PSFFunction -Message $parseError[0].Exception -EnableException $false -Category ConnectionError -Tag "RestData" -Exception $parseError[0].Exception -FunctionName $FunctionName
         return
     }
 
