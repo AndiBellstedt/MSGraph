@@ -27,7 +27,7 @@
         Name of the higher function which is calling this function.
 
     .EXAMPLE
-        PS C:\> Invoke-MgaPatchMethod -Field "messages/$($id)" -Body @{"isRead" = $true} -Token $Token
+        PS C:\> Invoke-MgaPatchMethod -Field "messages/$($id)" -Body '{ "isRead": true }' -Token $Token
 
         Retrieves a list of email folders for the user $User, using the token stored in $Token
     #>
