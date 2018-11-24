@@ -67,7 +67,7 @@
         'Get-MgaMailMessage',
         'Get-MgaMailAttachment',
         'Export-MgaMailAttachment',
-        'Update-MgaMailMessage',
+        'Set-MgaMailMessage',
 
         'Invoke-MgaGetMethod',
         'Invoke-MgaPatchMethod',
@@ -85,7 +85,8 @@
     
     # Aliases to export from this module
     AliasesToExport = @(
-        'Save-MgaMailAttachment'
+        'Save-MgaMailAttachment', 
+        'Update-MgaMailMessage'
     )
     
     # List of all modules packaged with this module
