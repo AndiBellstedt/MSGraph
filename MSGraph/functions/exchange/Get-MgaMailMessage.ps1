@@ -99,7 +99,7 @@
         [Int64]
         $ResultSize = (Get-PSFConfigValue -FullName 'MSGraph.Query.ResultSize' -Fallback 100),
 
-        #[MSGraph.Core.AzureAccessToken]
+        [MSGraph.Core.AzureAccessToken]
         $Token
     )
     begin {
