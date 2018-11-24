@@ -285,8 +285,8 @@
 
         #region Update messages
         foreach ($messageId in $messages) {
-            Write-PSFMessage -Level Verbose -Message "Update properties '$([string]::Join("', '", $boundParameters))' on messageId $($messageId)"  -Tag "MessageUpdate"
             if ($pscmdlet.ShouldProcess("messageId $($messageId)", "Update properties '$([string]::Join("', '", $boundParameters))'")) {
+                Write-PSFMessage -Level Verbose -Message "Update properties '$([string]::Join("', '", $boundParameters))' on messageId $($messageId)"  -Tag "MessageUpdate"
                 $invokeParam = @{
                     "Field"        = "messages/$($messageId)"
                     "User"         = $User
