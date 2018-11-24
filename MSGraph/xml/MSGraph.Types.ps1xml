@@ -163,6 +163,25 @@
     </Type>
 
     <Type>
+        <Name>Deserialized.MSGraph.Core.AzureAccessToken</Name>
+        <Members>
+            <MemberSet>
+                <Name>PSStandardMembers</Name>
+                <Members>
+                    <NoteProperty>
+                        <Name>
+                            TargetTypeForDeserialization
+                        </Name>
+                        <Value>
+                            MSGraph.Core.AzureAccessToken
+                        </Value>
+                    </NoteProperty>
+                </Members>
+            </MemberSet>
+        </Members>
+    </Type>
+
+    <Type>
         <Name>MSGraph.Core.AzureAccessToken</Name>
         <Members>
             <ScriptProperty>
@@ -216,7 +235,7 @@
                 <Name>PercentRemaining</Name>
                 <GetScriptBlock>
                     if ($this.ValidUntil -gt (Get-Date)) {
-                        [System.Math]::Round( ($this.AccessTokenTimeRemaining.TotalMilliseconds / $this.AccessTokenLifeTime.TotalMilliseconds * 100), 0)
+                        [System.Math]::Round( ($this.TimeRemaining.TotalMilliseconds / $this.AccessTokenLifeTime.TotalMilliseconds * 100), 0)
                     }
                     else {
                         [int]0
@@ -224,12 +243,31 @@
                 </GetScriptBlock>
             </ScriptProperty>
 
+            <CodeProperty IsHidden="true">
+                <Name>SerializationData</Name>
+                <GetCodeReference>
+                    <TypeName>PSFramework.Serialization.SerializationTypeConverter</TypeName>
+                    <MethodName>GetSerializationData</MethodName>
+                </GetCodeReference>
+            </CodeProperty>
+
         </Members>
+
+        <TypeConverter>
+            <TypeName>PSFramework.Serialization.SerializationTypeConverter</TypeName>
+        </TypeConverter>
     </Type>
 
     <Type>
-        <Name>MSGraph.Exchange.MailFolder</Name>
+        <Name>MSGraph.Exchange.Mail.Folder</Name>
         <Members>
+            <ScriptProperty>
+                <Name>DisplayName</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.displayName
+                </GetScriptBlock>
+            </ScriptProperty>
+
             <AliasProperty>
                 <Name>Name</Name>
                 <ReferencedMemberName>
@@ -237,14 +275,433 @@
                 </ReferencedMemberName>
             </AliasProperty>
 
+            <AliasProperty>
+                <Name>Folder</Name>
+                <ReferencedMemberName>
+                    displayName
+                </ReferencedMemberName>
+            </AliasProperty>
+
+            <ScriptProperty>
+                <Name>Id</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.id
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>ParentFolderId</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.parentFolderId
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>childFolderCount</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.childFolderCount
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>UnreadItemCount</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.unreadItemCount
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>TotalItemCount</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.totalItemCount
+                </GetScriptBlock>
+            </ScriptProperty>
+
             <ScriptProperty>
                 <Name>UnreadInPercent</Name>
                 <GetScriptBlock>
-                    [math]::Round( [double]( $this.unreadItemCount / $this.totalItemCount * 100 ), 2)
+                    [math]::Round( [double]( $this.BaseObject.unreadItemCount / $this.BaseObject.totalItemCount * 100 ), 2)
                 </GetScriptBlock>
             </ScriptProperty>
 
         </Members>
     </Type>
+
+    <Type>
+        <Name>MSGraph.Exchange.Mail.Message</Name>
+        <Members>
+            <ScriptProperty>
+                <Name>BCCRecipients</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.bccRecipients.emailAddress | ForEach-Object { [mailaddress]"$($_.name) $($_.address)"}
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>Body</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.body
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>BodyPreview</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.bodyPreview
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>Categories</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.categories
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>CCRecipients</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.ccRecipients.emailAddress | ForEach-Object { [mailaddress]"$($_.name) $($_.address)"}
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>ChangeKey</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.changeKey
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>ConversationId</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.conversationId
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>CreatedDateTime</Name>
+                <GetScriptBlock>
+                    [datetime]::Parse($this.BaseObject.createdDateTime)
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <AliasProperty>
+                <Name>Created</Name>
+                <ReferencedMemberName>
+                    createdDateTime
+                </ReferencedMemberName>
+            </AliasProperty>
+
+            <ScriptProperty>
+                <Name>FlagStatus</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.flag.flagStatus
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>From</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.from.emailAddress | ForEach-Object { [mailaddress]"$($_.name) $($_.address)"}
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>Sender</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.Sender.emailAddress | ForEach-Object { [mailaddress]"$($_.name) $($_.address)"}
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>HasAttachments</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.hasAttachments
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>Id</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.id
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>Importance</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.importance
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>InferenceClassification</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.inferenceClassification
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>InternetMessageId</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.internetMessageId
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>IsDeliveryReceiptRequested</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.isDeliveryReceiptRequested
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <AliasProperty>
+                <Name>DeliveryReceiptRequested</Name>
+                <ReferencedMemberName>
+                    IsDeliveryReceiptRequested
+                </ReferencedMemberName>
+            </AliasProperty>
+
+            <ScriptProperty>
+                <Name>IsDraft</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.isDraft
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>IsRead</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.isRead
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>UnRead</Name>
+                <GetScriptBlock>
+                    (-not $this.BaseObject.isRead)
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>isReadReceiptRequested</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.isReadReceiptRequested
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <AliasProperty>
+                <Name>ReadReceiptRequested</Name>
+                <ReferencedMemberName>
+                    isReadReceiptRequested
+                </ReferencedMemberName>
+            </AliasProperty>
+
+            <ScriptProperty>
+                <Name>lastModifiedDateTime</Name>
+                <GetScriptBlock>
+                    [datetime]::Parse($this.BaseObject.lastModifiedDateTime)
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>MeetingMessageType</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.meetingMessageType
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>ParentFolderId</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.parentFolderId
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>ReceivedDateTime</Name>
+                <GetScriptBlock>
+                    [datetime]::Parse($this.BaseObject.receivedDateTime)
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <AliasProperty>
+                <Name>Received</Name>
+                <ReferencedMemberName>
+                    ReceivedDateTime
+                </ReferencedMemberName>
+            </AliasProperty>
+
+            <ScriptProperty>
+                <Name>ReplyTo</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.replyTo.emailAddress | ForEach-Object { [mailaddress]"$($_.name) $($_.address)"}
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>ReplyToDisplayName</Name>
+                <GetScriptBlock>
+                    ($this.BaseObject.replyTo.emailAddress | Select-Object @{n="SenderDisplayName"; e={ "$($_.Name) ($($_.address))"}}).SenderDisplayName
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>SentDateTime</Name>
+                <GetScriptBlock>
+                    [datetime]::Parse($this.BaseObject.sentDateTime)
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <AliasProperty>
+                <Name>Sent</Name>
+                <ReferencedMemberName>
+                    SentDateTime
+                </ReferencedMemberName>
+            </AliasProperty>
+
+            <ScriptProperty>
+                <Name>Subject</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.subject
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <AliasProperty>
+                <Name>Name</Name>
+                <ReferencedMemberName>
+                    Subject
+                </ReferencedMemberName>
+            </AliasProperty>
+
+            <ScriptProperty>
+                <Name>ToRecipients</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.toRecipients.emailAddress | ForEach-Object { [mailaddress]"$($_.name) $($_.address)"}
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <AliasProperty>
+                <Name>To</Name>
+                <ReferencedMemberName>
+                    ToRecipients
+                </ReferencedMemberName>
+            </AliasProperty>
+
+            <AliasProperty>
+                <Name>Recipients</Name>
+                <ReferencedMemberName>
+                    ToRecipients
+                </ReferencedMemberName>
+            </AliasProperty>
+
+            <ScriptProperty>
+                <Name>RecipientsDisplayName</Name>
+                <GetScriptBlock>
+                    ($this.BaseObject.toRecipients.emailAddress | Select-Object @{n="SenderDisplayName"; e={ "$($_.Name) ($($_.address))"}}).SenderDisplayName
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>WebLink</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.webLink
+                </GetScriptBlock>
+            </ScriptProperty>
+
+        </Members>
+    </Type>
+
+    <Type>
+        <Name>MSGraph.Exchange.Mail.Attachment</Name>
+        <Members>
+            <ScriptProperty>
+                <Name>Name</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.name
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <AliasProperty>
+                <Name>DisplayName</Name>
+                <ReferencedMemberName>
+                    Name
+                </ReferencedMemberName>
+            </AliasProperty>
+
+            <ScriptProperty>
+                <Name>Id</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.id
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>ContentId</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.contentId
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>ContentBytes</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.contentBytes
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>contentLocation</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.contentLocation
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>contentType</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.contentType
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>IsInline</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.isInline
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>LastModifiedDateTime</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.lastModifiedDateTime
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>Size</Name>
+                <GetScriptBlock>
+                    $this.BaseObject.size
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>SizeKB</Name>
+                <GetScriptBlock>
+                    [math]::Round( ($this.BaseObject.size / 1KB), 2)
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>SizeMB</Name>
+                <GetScriptBlock>
+                    [math]::Round( ($this.BaseObject.size / 1MB), 2)
+                </GetScriptBlock>
+            </ScriptProperty>
+
+        </Members>
+    </Type>
+
 
 </Types>
