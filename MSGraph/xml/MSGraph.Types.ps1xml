@@ -407,12 +407,12 @@
                 </GetScriptBlock>
             </ScriptProperty>
 
-            <AliasProperty>
+            <ScriptProperty>
                 <Name>Sender</Name>
-                <ReferencedMemberName>
-                    From
-                </ReferencedMemberName>
-            </AliasProperty>
+                <GetScriptBlock>
+                    $this.BaseObject.Sender.emailAddress | ForEach-Object { [mailaddress]"$($_.name) $($_.address)"}
+                </GetScriptBlock>
+            </ScriptProperty>
 
             <ScriptProperty>
                 <Name>HasAttachments</Name>

@@ -253,6 +253,9 @@
                                 <PropertyName>lastModifiedDateTime</PropertyName>
                             </ListItem>
                             <ListItem>
+                                <PropertyName>From</PropertyName>
+                            </ListItem>
+                            <ListItem>
                                 <PropertyName>Sender</PropertyName>
                             </ListItem>
                             <ListItem>
