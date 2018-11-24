@@ -29,7 +29,7 @@
     .EXAMPLE
         PS C:\> Invoke-MgaPatchMethod -Field "messages/$($id)" -Body '{ "isRead": true }' -Token $Token
 
-        Retrieves a list of email folders for the user $User, using the token stored in $Token
+        Set a message as readed, using the token stored in $Token
     #>
     [CmdletBinding(DefaultParameterSetName = 'Default')]
     param (
