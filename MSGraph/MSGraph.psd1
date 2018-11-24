@@ -68,9 +68,11 @@
         'Get-MgaMailAttachment',
         'Export-MgaMailAttachment',
         'Set-MgaMailMessage',
+        'Move-MgaMailMessage',
 
         'Invoke-MgaGetMethod',
         'Invoke-MgaPatchMethod',
+        'Invoke-MgaPostMethod',
         'New-MgaAccessToken',
         'Update-MgaAccessToken',
         'Get-MgaRegisteredAccessToken',
