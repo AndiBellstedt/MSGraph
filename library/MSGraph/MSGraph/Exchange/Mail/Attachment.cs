@@ -13,5 +13,10 @@ namespace MSGraph.Exchange.Mail
         /// data carrier object
         /// </summary>
         public object BaseObject;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public String Id;
     }
 }

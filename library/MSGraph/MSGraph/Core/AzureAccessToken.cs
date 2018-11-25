@@ -6,6 +6,9 @@ namespace MSGraph.Core
 {
     /// <summary>
     /// Token used to authenticate against azure with
+    /// 
+    /// https://docs.microsoft.com/en-us/azure/active-directory/develop/access-tokens
+    /// 
     /// </summary>
     [Serializable]
     public class AzureAccessToken
@@ -106,7 +109,7 @@ namespace MSGraph.Core
         public JWTAccessTokenInfo AccessTokenInfo;
 
         /// <summary>
-        /// 
+        /// The owner of the Token extracted from the JWT
         /// </summary>
         public String TokenOwner
         {
@@ -121,7 +124,7 @@ namespace MSGraph.Core
         }
 
         /// <summary>
-        /// 
+        /// The user principal in the Token extracted from the JWT
         /// </summary>
         public String UserprincipalName
         {
@@ -136,7 +139,7 @@ namespace MSGraph.Core
         }
 
         /// <summary>
-        /// 
+        /// Tenant ID for the Application in Azure (extracted from the JWT)
         /// </summary>
         public Guid TenantID
         {
@@ -151,7 +154,7 @@ namespace MSGraph.Core
         }
 
         /// <summary>
-        /// 
+        /// The Application Name in Azure (extracted from the JWT)
         /// </summary>
         public string AppName
         {
@@ -166,7 +169,7 @@ namespace MSGraph.Core
         }
 
         /// <summary>
-        /// 
+        /// The Lifetime of the Access Token
         /// </summary>
         public TimeSpan AccessTokenLifeTime
         {
@@ -181,7 +184,7 @@ namespace MSGraph.Core
         }
 
         /// <summary>
-        /// 
+        /// Remaining time of the token Lifetime
         /// </summary>
         public TimeSpan TimeRemaining
         {
@@ -204,7 +207,7 @@ namespace MSGraph.Core
         }
 
         /// <summary>
-        /// 
+        /// Percentage value of the Tokenlifetime
         /// </summary>
         public Int16 PercentRemaining
         {
