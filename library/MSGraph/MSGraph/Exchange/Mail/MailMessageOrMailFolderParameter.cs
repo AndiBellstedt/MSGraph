@@ -9,7 +9,7 @@ namespace MSGraph.Exchange.Mail
     /// Mail message parameter class for convinient pipeline 
     /// input on parameters in *-MgaMail* commands
     /// </summary>
-    public class MailMessageParameter
+    public class MailMessageOrMailFolderParameter
     {
         #region Properties
         /// <summary>
@@ -21,6 +21,23 @@ namespace MSGraph.Exchange.Mail
         /// name of a folder
         /// </summary>
         public string Name;
+
+        /// <summary>
+        /// The type name of inputobject
+        /// </summary>
+        public string TypeName
+        {
+            get
+            {
+                return _typeName;
+            }
+
+            set
+            {
+            }
+        }
+
+        private string _typeName;
 
         /// <summary>
         /// indicator wether name is a WellKnownFolder
@@ -39,36 +56,40 @@ namespace MSGraph.Exchange.Mail
         /// <summary>
         /// Mail Message input
         /// </summary>
-        public MailMessageParameter(Mail.Message Message)
+        public MailMessageOrMailFolderParameter(Message Message)
         {
             InputObject = Message;
+            _typeName = InputObject.GetType().ToString();
             Id = Message.Id;
         }
 
         /// <summary>
         /// Mail Folderinput
         /// </summary>
-        public MailMessageParameter(Mail.Folder Folder)
+        public MailMessageOrMailFolderParameter(Folder Folder)
         {
             InputObject = Folder;
+            _typeName = InputObject.GetType().ToString();
             Id = Folder.Id;
         }
 
         /// <summary>
         /// String input
         /// </summary>
-        public MailMessageParameter(string Text)
+        public MailMessageOrMailFolderParameter(string Text)
         {
             InputObject = Text;
             string[] names = Enum.GetNames(typeof(WellKnownFolder));
             if (names.Contains(Text, StringComparer.InvariantCultureIgnoreCase))
             {
                 IsWellKnownName = true;
+                _typeName = InputObject.GetType().ToString();
                 Name = Text.ToLower();
             }
             else
             {
                 Id = Text;
+                _typeName = "Unknown";
             }
         }
         #endregion Constructors

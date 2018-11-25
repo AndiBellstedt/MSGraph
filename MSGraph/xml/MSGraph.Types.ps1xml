@@ -77,69 +77,12 @@
     <Type>
         <Name>MSGraph.Exchange.Mail.Folder</Name>
         <Members>
-            <ScriptProperty>
-                <Name>DisplayName</Name>
-                <GetScriptBlock>
-                    $this.BaseObject.displayName
-                </GetScriptBlock>
-            </ScriptProperty>
-
-            <AliasProperty>
-                <Name>Name</Name>
-                <ReferencedMemberName>
-                    displayName
-                </ReferencedMemberName>
-            </AliasProperty>
-
             <AliasProperty>
                 <Name>Folder</Name>
                 <ReferencedMemberName>
-                    displayName
+                    DisplayName
                 </ReferencedMemberName>
             </AliasProperty>
-
-            <ScriptProperty>
-                <Name>Id</Name>
-                <GetScriptBlock>
-                    $this.BaseObject.id
-                </GetScriptBlock>
-            </ScriptProperty>
-
-            <ScriptProperty>
-                <Name>ParentFolderId</Name>
-                <GetScriptBlock>
-                    $this.BaseObject.parentFolderId
-                </GetScriptBlock>
-            </ScriptProperty>
-
-            <ScriptProperty>
-                <Name>childFolderCount</Name>
-                <GetScriptBlock>
-                    $this.BaseObject.childFolderCount
-                </GetScriptBlock>
-            </ScriptProperty>
-
-            <ScriptProperty>
-                <Name>UnreadItemCount</Name>
-                <GetScriptBlock>
-                    $this.BaseObject.unreadItemCount
-                </GetScriptBlock>
-            </ScriptProperty>
-
-            <ScriptProperty>
-                <Name>TotalItemCount</Name>
-                <GetScriptBlock>
-                    $this.BaseObject.totalItemCount
-                </GetScriptBlock>
-            </ScriptProperty>
-
-            <ScriptProperty>
-                <Name>UnreadInPercent</Name>
-                <GetScriptBlock>
-                    [math]::Round( [double]( $this.BaseObject.unreadItemCount / $this.BaseObject.totalItemCount * 100 ), 2)
-                </GetScriptBlock>
-            </ScriptProperty>
-
         </Members>
     </Type>
 

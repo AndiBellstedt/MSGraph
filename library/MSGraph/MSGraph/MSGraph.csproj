@@ -51,8 +51,9 @@
     <Compile Include="Core\JWTAccessTokenInfo.cs" />
     <Compile Include="Exchange\Mail\Attachment.cs" />
     <Compile Include="Exchange\Mail\Folder.cs" />
+    <Compile Include="Exchange\Mail\MailFolderParameter.cs" />
     <Compile Include="Exchange\Mail\Message.cs" />
-    <Compile Include="Exchange\Mail\MailMessageParameter.cs" />
+    <Compile Include="Exchange\Mail\MailMessageOrMailFolderParameter.cs" />
     <Compile Include="Exchange\Mail\WellKnownFolder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

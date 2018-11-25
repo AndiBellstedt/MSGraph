@@ -306,14 +306,90 @@
             Mail folder in exchange online
             </summary>
         </member>
-        <member name="F:MSGraph.Exchange.Mail.Folder.BaseObject">
-            <summary>
-            data carrier object
-            </summary>
-        </member>
         <member name="F:MSGraph.Exchange.Mail.Folder.Id">
             <summary>
-            
+            The mailFolder's unique identifier.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Folder.DisplayName">
+            <summary>
+            The mailFolder's display name.
+            </summary>
+        </member>
+        <member name="P:MSGraph.Exchange.Mail.Folder.Name">
+            <summary>
+            Alias property from display name.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Folder.ParentFolderId">
+            <summary>
+            The unique identifier for the mailFolder's parent mailFolder.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Folder.ChildFolderCount">
+            <summary>
+            The number of immediate child mailFolders in the current mailFolder.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Folder.UnreadItemCount">
+            <summary>
+            The number of items in the mailFolder marked as unread.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Folder.TotalItemCount">
+            <summary>
+            The number of items in the mailFolder.
+            </summary>
+        </member>
+        <member name="P:MSGraph.Exchange.Mail.Folder.UnreadInPercent">
+            <summary>
+            Percentage of unread items in mailFolder.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Folder.User">
+            <summary>
+            The user name which owns the folder
+            </summary>
+        </member>
+        <member name="T:MSGraph.Exchange.Mail.MailFolderParameter">
+            <summary>
+            Mail message parameter class for convinient pipeline 
+            input on parameters in *-MgaMail* commands
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.MailFolderParameter.Id">
+            <summary>
+            message or folder id
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.MailFolderParameter.Name">
+            <summary>
+            name of a folder
+            </summary>
+        </member>
+        <member name="P:MSGraph.Exchange.Mail.MailFolderParameter.TypeName">
+            <summary>
+            The type name of inputobject
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.MailFolderParameter.IsWellKnownName">
+            <summary>
+            indicator wether name is a WellKnownFolder
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.MailFolderParameter.InputObject">
+            <summary>
+            carrier object for the input object
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.Mail.MailFolderParameter.#ctor(MSGraph.Exchange.Mail.Folder)">
+            <summary>
+            Mail Folderinput
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.Mail.MailFolderParameter.#ctor(System.String)">
+            <summary>
+            String input
             </summary>
         </member>
         <member name="T:MSGraph.Exchange.Mail.Message">
@@ -331,43 +407,48 @@
             
             </summary>
         </member>
-        <member name="T:MSGraph.Exchange.Mail.MailMessageParameter">
+        <member name="T:MSGraph.Exchange.Mail.MailMessageOrMailFolderParameter">
             <summary>
             Mail message parameter class for convinient pipeline 
             input on parameters in *-MgaMail* commands
             </summary>
         </member>
-        <member name="F:MSGraph.Exchange.Mail.MailMessageParameter.Id">
+        <member name="F:MSGraph.Exchange.Mail.MailMessageOrMailFolderParameter.Id">
             <summary>
             message or folder id
             </summary>
         </member>
-        <member name="F:MSGraph.Exchange.Mail.MailMessageParameter.Name">
+        <member name="F:MSGraph.Exchange.Mail.MailMessageOrMailFolderParameter.Name">
             <summary>
             name of a folder
             </summary>
         </member>
-        <member name="F:MSGraph.Exchange.Mail.MailMessageParameter.IsWellKnownName">
+        <member name="P:MSGraph.Exchange.Mail.MailMessageOrMailFolderParameter.TypeName">
+            <summary>
+            The type name of inputobject
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.MailMessageOrMailFolderParameter.IsWellKnownName">
             <summary>
             indicator wether name is a WellKnownFolder
             </summary>
         </member>
-        <member name="F:MSGraph.Exchange.Mail.MailMessageParameter.InputObject">
+        <member name="F:MSGraph.Exchange.Mail.MailMessageOrMailFolderParameter.InputObject">
             <summary>
             carrier object for the input object
             </summary>
         </member>
-        <member name="M:MSGraph.Exchange.Mail.MailMessageParameter.#ctor(MSGraph.Exchange.Mail.Message)">
+        <member name="M:MSGraph.Exchange.Mail.MailMessageOrMailFolderParameter.#ctor(MSGraph.Exchange.Mail.Message)">
             <summary>
             Mail Message input
             </summary>
         </member>
-        <member name="M:MSGraph.Exchange.Mail.MailMessageParameter.#ctor(MSGraph.Exchange.Mail.Folder)">
+        <member name="M:MSGraph.Exchange.Mail.MailMessageOrMailFolderParameter.#ctor(MSGraph.Exchange.Mail.Folder)">
             <summary>
             Mail Folderinput
             </summary>
         </member>
-        <member name="M:MSGraph.Exchange.Mail.MailMessageParameter.#ctor(System.String)">
+        <member name="M:MSGraph.Exchange.Mail.MailMessageOrMailFolderParameter.#ctor(System.String)">
             <summary>
             String input
             </summary>

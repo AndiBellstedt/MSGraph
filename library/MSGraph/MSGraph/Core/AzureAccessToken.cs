@@ -215,7 +215,7 @@ namespace MSGraph.Core
             {
                 if (ValidUntil > DateTime.Now)
                 {
-                    Int16 percentage = (Int16)(Math.Round( TimeRemaining.TotalMilliseconds / AccessTokenLifeTime.TotalMilliseconds * 100 ));
+                    Int16 percentage = (Int16)(Math.Round( TimeRemaining.TotalMilliseconds / AccessTokenLifeTime.TotalMilliseconds * 100 , 0 ));
                     return percentage;
                 }
                 else
