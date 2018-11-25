@@ -54,7 +54,6 @@
         ExpirationTime       = ([datetime]"1970-01-01Z00:00:00").AddSeconds($tokenPayloadJSON.exp).ToUniversalTime()
         GivenName            = $tokenPayloadJSON.given_name
         IssuedAt             = ([datetime]"1970-01-01Z00:00:00").AddSeconds($tokenPayloadJSON.iat).ToUniversalTime()
-        Issuer               = $tokenPayloadJSON.aud
         Name                 = $tokenPayloadJSON.name
         NotBefore            = ([datetime]"1970-01-01Z00:00:00").AddSeconds($tokenPayloadJSON.nbf).ToUniversalTime()
         OID                  = $tokenPayloadJSON.oid

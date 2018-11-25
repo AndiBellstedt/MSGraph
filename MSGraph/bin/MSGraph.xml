@@ -7,6 +7,9 @@
         <member name="T:MSGraph.Core.AzureAccessToken">
             <summary>
             Token used to authenticate against azure with
+            
+            https://docs.microsoft.com/en-us/azure/active-directory/develop/access-tokens
+            
             </summary>
         </member>
         <member name="F:MSGraph.Core.AzureAccessToken.TokenType">
@@ -86,37 +89,37 @@
         </member>
         <member name="P:MSGraph.Core.AzureAccessToken.TokenOwner">
             <summary>
-            
+            The owner of the Token extracted from the JWT
             </summary>
         </member>
         <member name="P:MSGraph.Core.AzureAccessToken.UserprincipalName">
             <summary>
-            
+            The user principal in the Token extracted from the JWT
             </summary>
         </member>
         <member name="P:MSGraph.Core.AzureAccessToken.TenantID">
             <summary>
-            
+            Tenant ID for the Application in Azure (extracted from the JWT)
             </summary>
         </member>
         <member name="P:MSGraph.Core.AzureAccessToken.AppName">
             <summary>
-            
+            The Application Name in Azure (extracted from the JWT)
             </summary>
         </member>
         <member name="P:MSGraph.Core.AzureAccessToken.AccessTokenLifeTime">
             <summary>
-            
+            The Lifetime of the Access Token
             </summary>
         </member>
         <member name="P:MSGraph.Core.AzureAccessToken.TimeRemaining">
             <summary>
-            
+            Remaining time of the token Lifetime
             </summary>
         </member>
         <member name="P:MSGraph.Core.AzureAccessToken.PercentRemaining">
             <summary>
-            
+            Percentage value of the Tokenlifetime
             </summary>
         </member>
         <member name="T:MSGraph.Core.JWTAccessTokenInfo">
@@ -141,112 +144,146 @@
         </member>
         <member name="F:MSGraph.Core.JWTAccessTokenInfo.Algorithm">
             <summary>
-            
+            Indicates the algorithm that was used to sign the token, for example, "RS256"
             </summary>
         </member>
         <member name="F:MSGraph.Core.JWTAccessTokenInfo.ApplicationID">
             <summary>
-            
+            Only present in v1.0 tokens. The application ID of the client using the token.
+            The application can act as itself or on behalf of a user.
+            The application ID typically represents an application object,
+            but it can also represent a service principal object in Azure AD.
             </summary>
         </member>
         <member name="F:MSGraph.Core.JWTAccessTokenInfo.ApplicationName">
             <summary>
-            
+            Application name from registered Azure Application
             </summary>
         </member>
         <member name="F:MSGraph.Core.JWTAccessTokenInfo.Audience">
             <summary>
-            
+            Identifies the intended recipient of the token.
+            In access tokens, the audience is your app's Application ID, assigned to your app in the Azure portal.
+            Your app should validate this value and reject the token if the value does not match.
             </summary>
         </member>
         <member name="F:MSGraph.Core.JWTAccessTokenInfo.AuthenticationMethod">
             <summary>
-            
+            Only present in v1.0 tokens. Identifies how the subject of the token was authenticated. 
+            See https://docs.microsoft.com/en-us/azure/active-directory/develop/access-tokens#the-amr-claim for more details.
+            Microsoft identities can authenticate in a variety of ways, which may be relevant to your application. 
+            The amr claim is an array that can contain multiple items, such as ["mfa", "rsa", "pwd"], 
+            for an authentication that used both a password and the Authenticator app. 
             </summary>
         </member>
         <member name="F:MSGraph.Core.JWTAccessTokenInfo.ExpirationTime">
             <summary>
-            
+            The "exp" (expiration time) claim identifies the expiration time on or after which the
+            JWT must not be accepted for processing. It's important to note that a resource may
+            reject the token before this time as well, such as when a change in authentication is
+            required or a token revocation has been detected.
             </summary>
         </member>
         <member name="F:MSGraph.Core.JWTAccessTokenInfo.GivenName">
             <summary>
-            
+            Provides the first or given name of the user, as set on the user object.
             </summary>
         </member>
         <member name="F:MSGraph.Core.JWTAccessTokenInfo.IssuedAt">
             <summary>
-            
+            "Issued At" indicates when the authentication for this token occurred.
             </summary>
         </member>
-        <member name="F:MSGraph.Core.JWTAccessTokenInfo.Issuer">
+        <member name="P:MSGraph.Core.JWTAccessTokenInfo.Issuer">
             <summary>
-            
+            Alias property from Audience
             </summary>
         </member>
         <member name="F:MSGraph.Core.JWTAccessTokenInfo.Name">
             <summary>
-            
+            Provides a human-readable value that identifies the subject of the token.
+            The value is not guaranteed to be unique, it is mutable, and it's designed
+            to be used only for display purposes. The profile scope is required in
+            order to receive this claim.
             </summary>
         </member>
         <member name="F:MSGraph.Core.JWTAccessTokenInfo.NotBefore">
             <summary>
-            
+            The "nbf" (not before) claim identifies the time before which the JWT must not be accepted for processing.
             </summary>
         </member>
         <member name="F:MSGraph.Core.JWTAccessTokenInfo.OID">
             <summary>
-            
+            he immutable identifier for an object in the Microsoft identity platform, in this case, a user account.
+            It can also be used to perform authorization checks safely and as a key in database tables. This ID 
+            uniquely identifies the user across applications - two different applications signing in the same user 
+            will receive the same value in the oid claim. Thus, oid can be used when making queries to Microsoft
+            online services, such as the Microsoft Graph. The Microsoft Graph will return this ID as the id 
+            property for a given user account. Because the oid allows multiple apps to correlate users, the profile
+            scope is required in order to receive this claim. Note that if a single user exists in multiple 
+            tenants, the user will contain a different object ID in each tenant - they are considered different 
+            accounts, even though the user logs into each account with the same credentials.
             </summary>
         </member>
         <member name="F:MSGraph.Core.JWTAccessTokenInfo.Plattform">
             <summary>
-            
+            The plattform
             </summary>
         </member>
         <member name="F:MSGraph.Core.JWTAccessTokenInfo.Scope">
             <summary>
-            
+            The set of scopes exposed by your application for which the client application has requested
+            (and received) consent. Your app should verify that these scopes are valid ones exposed by
+            your app, and make authorization decisions based on the value of these scopes.
+            Only included for user tokens.
             </summary>
         </member>
         <member name="F:MSGraph.Core.JWTAccessTokenInfo.SID">
             <summary>
-            
+            In cases where the user has an on-premises authentication, this claim provides their SID.
+            This can be used for authorization in legacy applications.
             </summary>
         </member>
         <member name="F:MSGraph.Core.JWTAccessTokenInfo.SourceIPAddr">
             <summary>
-            
+            The IP address the user authenticated from.
             </summary>
         </member>
         <member name="F:MSGraph.Core.JWTAccessTokenInfo.SureName">
             <summary>
-            
+            Provides the last name, surname, or family name of the user as defined on the user object.
             </summary>
         </member>
         <member name="F:MSGraph.Core.JWTAccessTokenInfo.TenantID">
             <summary>
-            
+            Represents the Azure AD tenant that the user is from. For work and school accounts,
+            the GUID is the immutable tenant ID of the organization that the user belongs to.
+            For personal accounts, the value is 9188040d-6c67-4c5b-b112-36a304b66dad.
+            The profile scope is required in order to receive this claim.
             </summary>
         </member>
         <member name="F:MSGraph.Core.JWTAccessTokenInfo.Type">
             <summary>
-            
+            Indicates that the token is a JWT.
             </summary>
         </member>
         <member name="F:MSGraph.Core.JWTAccessTokenInfo.UniqueName">
             <summary>
-            
+            Only present in v1.0 tokens.
+            Provides a human readable value that identifies the subject of the token.
+            This value is not guaranteed to be unique within a tenant and should 
+            be used only for display purposes.
             </summary>
         </member>
         <member name="F:MSGraph.Core.JWTAccessTokenInfo.UPN">
             <summary>
-            
+            The username of the user. May be a phone number, email address, or unformatted string.
+            Should only be used for display purposes and providing username hints in reauthentication scenarios.
             </summary>
         </member>
         <member name="F:MSGraph.Core.JWTAccessTokenInfo.Version">
             <summary>
-            
+            Indicates the version of the access token.
             </summary>
         </member>
         <member name="T:MSGraph.Exchange.Mail.Attachment">
@@ -257,6 +294,11 @@
         <member name="F:MSGraph.Exchange.Mail.Attachment.BaseObject">
             <summary>
             data carrier object
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Attachment.Id">
+            <summary>
+            
             </summary>
         </member>
         <member name="T:MSGraph.Exchange.Mail.Folder">
