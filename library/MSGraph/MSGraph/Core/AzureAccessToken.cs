@@ -18,12 +18,12 @@ namespace MSGraph.Core
         /// <summary>
         /// The service uri where to connect
         /// </summary>
-        public string Resource;
+        public Uri Resource;
 
         /// <summary>
         /// The service uri where to connect
         /// </summary>
-        public string AppRedirectUrl;
+        public Uri AppRedirectUrl;
 
         /// <summary>
         /// The permission scopes contained on the token
@@ -73,7 +73,7 @@ namespace MSGraph.Core
         /// <summary>
         /// The client ID used to connect
         /// </summary>
-        public string ClientId;
+        public Guid ClientId;
 
         /// <summary>
         /// Whether the token is valid for connections
@@ -104,5 +104,126 @@ namespace MSGraph.Core
         /// Informationen from JWT access token
         /// </summary>
         public JWTAccessTokenInfo AccessTokenInfo;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public String TokenOwner
+        {
+            get
+            {
+                return AccessTokenInfo.Name;
+            }
+
+            set
+            {
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public String UserprincipalName
+        {
+            get
+            {
+                return AccessTokenInfo.UPN;
+            }
+
+            set
+            {
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Guid TenantID
+        {
+            get
+            {
+                return AccessTokenInfo.TenantID;
+            }
+
+            set
+            {
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string AppName
+        {
+            get
+            {
+                return AccessTokenInfo.ApplicationName;
+            }
+
+            set
+            {
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public TimeSpan AccessTokenLifeTime
+        {
+            get
+            {
+                return  ValidUntil.Subtract ( ValidFrom );
+            }
+
+            set
+            {
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public TimeSpan TimeRemaining
+        {
+            get
+            {
+                if (ValidUntil > DateTime.Now )
+                {
+                    TimeSpan timeSpan = ValidUntil - DateTime.Now;
+                    return TimeSpan.Parse(timeSpan.ToString(@"dd\.hh\:mm\:ss"));
+                }
+                else {
+                    TimeSpan timeSpan = TimeSpan.Parse("0:0:0:0");
+                    return timeSpan;
+                }
+            }
+
+            set
+            {
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Int16 PercentRemaining
+        {
+            get
+            {
+                if (ValidUntil > DateTime.Now)
+                {
+                    Int16 percentage = (Int16)(Math.Round( TimeRemaining.TotalMilliseconds / AccessTokenLifeTime.TotalMilliseconds * 100 ));
+                    return percentage;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+
+            set
+            {
+            }
+        }
     }
 }
