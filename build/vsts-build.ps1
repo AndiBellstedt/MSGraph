@@ -62,8 +62,8 @@ foreach ($line in (Get-Content "$($PSScriptRoot)\filesAfter.txt" | Where-Object 
 
 #region Update the psm1 file
 $fileData = Get-Content -Path "$($publishDir.FullName)\MSGraph\MSGraph.psm1" -Raw
-$fileData = $fileData -replace '"<was not compiled>"', '"<was compiled>"'
-$fileData = $fileData -replace '"<compile code into here>"', ($text -join "`n`n")
+$fileData = $fileData.replace('"<was not compiled>"', '"<was compiled>"')
+$fileData = $fileData.replace('"<compile code into here>"', ($text -join "`n`n"))
 [System.IO.File]::WriteAllText("$($publishDir.FullName)\MSGraph\MSGraph.psm1", $fileData, [System.Text.Encoding]::UTF8)
 #endregion Update the psm1 file
 
