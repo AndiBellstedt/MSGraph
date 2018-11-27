@@ -1,4 +1,18 @@
 # Changelog
+## 1.2.6 (2018-11-27)
+- Upd: Command Get-MgaMailFolder
+    - Implement parametersets with pipeable input parameter "Name".
+    - Implement parameter "IncludeChildFolders" for query subfolders from within a folder
+    - Implement parameter "Recurse" to query whole folder structure from a folder
+    - Add properties on output object
+    - Grouped output on PatentPath name for folder objects on Format-Table
+    - Add tab completion on "Name" parameter for well known folders
+- Upd: Code refactoring
+    - Moving properties from type-system to c# classes
+- New: Invent ParameterClasses for enabling convinient Pipeline input on parameters. Currently available parameterclasses:
+    - [MSGraph.Exchange.Mail.MailFolderParameter]
+    - [MSGraph.Exchange.Mail.MailMessageOrMailFolderParameter]
+
 ## 1.2.5 (2018-11-24)
 - New: Command Move-MgaMailMessage
 - Upd: Command Update-MgaMailMessage

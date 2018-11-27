@@ -89,9 +89,41 @@
         If this switch is enabled, no actions are performed but informational messages will be displayed that explain what would happen if the command were to run.
 
     .EXAMPLE
-        PS C:\> Update-MgaMailMessage
+        PS C:\> $mail | Set-MgaMailMessage -IsRead $false
 
-        Update emails
+        Set messages represented by variable $mail to status "unread"
+        The variable $mails can be represent:
+        PS C:\> $mails = Get-MgaMailMessage -Folder Inbox -ResultSize 1
+
+    .EXAMPLE
+        PS C:\> $mail | Set-MgaMailMessage -IsRead $false -categories "Red category"
+
+        Set status "unread" and category "Red category" to messages represented by variable $mail
+        The variable $mails can be represent:
+        PS C:\> $mails = Get-MgaMailMessage -Folder Inbox -ResultSize 1
+
+    .EXAMPLE
+        PS C:\> $mail | Set-MgaMailMessage -ToRecipients "someone@something.org"
+
+        Set reciepent from draft mail represented by variable $mail
+        The variable $mails can be represent:
+        PS C:\> $mails = Get-MgaMailMessage -Folder Drafts
+
+    .EXAMPLE
+        PS C:\> Set-MgaMailMessage -Id $mail.Id -ToRecipients "someone@something.org" -Subject "Something important"
+
+        Set reciepent from draft mail represented by variable $mail
+        The variable $mails can be represent:
+        PS C:\> $mails = Get-MgaMailMessage -Folder Drafts
+
+    .EXAMPLE
+        PS C:\> $mail | Set-MgaMailMessage -ToRecipients $null
+
+        Clear reciepent from draft mail represented by variable $mail
+        The variable $mails can be represent:
+        PS C:\> $mails = Get-MgaMailMessage -Folder Drafts
+
+
     #>
     [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'Medium', DefaultParameterSetName = 'ByInputObject')]
     [Alias("Update-MgaMailMessage")]

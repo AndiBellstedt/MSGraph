@@ -34,9 +34,30 @@
         If this switch is enabled, no actions are performed but informational messages will be displayed that explain what would happen if the command were to run.
 
     .EXAMPLE
-        PS C:\> Update-MgaMailMessage
+        PS C:\> $mails | Move-MgaMailMessage -DestinationFolder $destinationFolder
 
-        Update emails
+        Moves messages in variable $mails to the folder in the variable $destinationFolder.
+
+        The variable $mails can be represent:
+        PS C:\> $mails = Get-MgaMailMessage -Folder Inbox -ResultSize 1
+
+        The variable $destinationFolder can be represent:
+        PS C:\> $destinationFolder = Get-MgaMailFolder -Filter "Archive"
+
+    .EXAMPLE
+        PS C:\> Move-MgaMailMessage -Id $mails.id -DestinationFolder $destinationFolder
+
+        Moves messages into the folder $destinationFolder.
+        The variable $destinationFolder can be represent:
+        PS C:\> $destinationFolder = Get-MgaMailFolder -Filter "Archive"
+
+    .EXAMPLE
+        PS C:\> Get-MgaMailMessage -Folder Inbox | Move-MgaMailMessage -DestinationFolder $destinationFolder
+
+        Moves ALL messages from your inbox into the folder $destinationFolder.
+        The variable $destinationFolder can be represent:
+        PS C:\> $destinationFolder = Get-MgaMailFolder -Filter "Archive"
+
     #>
     [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'Medium', DefaultParameterSetName = 'ByInputObject')]
     [Alias()]

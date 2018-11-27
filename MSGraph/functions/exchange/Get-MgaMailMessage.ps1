@@ -162,7 +162,7 @@
                                 Write-PSFMessage -Level VeryVerbose -Message "Gettings messages in folder '$($folderItem.Name)' from the pipeline"
                                 $invokeParam = @{
                                     "Field"        = "mailFolders/$($folderItem.Id)/messages"
-                                    "User"         = $folderItem.BaseObject.User
+                                    "User"         = $folderItem.User
                                     "Token"        = $Token
                                     "ResultSize"   = $ResultSize
                                     "FunctionName" = $MyInvocation.MyCommand

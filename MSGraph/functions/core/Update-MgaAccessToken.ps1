@@ -76,7 +76,7 @@
         $queryHash = [ordered]@{
             grant_type    = "refresh_token"
             resource      = [System.Web.HttpUtility]::UrlEncode($resourceUri)
-            client_id     = $Token.ClientId
+            client_id     = $Token.ClientId.Guid
             refresh_token = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto([System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($Token.RefreshToken))
         }
         $authorizationPostRequest = Convert-UriQueryFromHash $queryHash -NoQuestionmark
@@ -103,10 +103,10 @@
             AccessToken    = $null
             RefreshToken   = $null
             IDToken        = $null
-            Credential     = $Credential
-            ClientId       = $ClientId
-            Resource       = $resourceUri
-            AppRedirectUrl = $Token.AppRedirectUrl
+            Credential     = $Token.Credential
+            ClientId       = $Token.ClientId.Guid
+            Resource       = $Token.Resource.ToString()
+            AppRedirectUrl = $Token.AppRedirectUrl.ToString()
         }
         # Insert token data into output object. done as secure string to prevent text output of tokens
         if ($jsonResponse.psobject.Properties.name -contains "refresh_token") { $resultObject.RefreshToken = ($jsonResponse.refresh_token | ConvertTo-SecureString -AsPlainText -Force) }
