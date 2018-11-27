@@ -36,7 +36,7 @@
     # Work on payload
     $tokenPayload = [System.Text.Encoding]::UTF8.GetString( (ConvertFrom-Base64StringWithNoPadding $tokenParts[1]) )
     $tokenPayloadJSON = $tokenPayload | ConvertFrom-Json
-    
+
     # Work on signature
     $tokenSignature = ConvertFrom-Base64StringWithNoPadding $tokenParts[2]
 

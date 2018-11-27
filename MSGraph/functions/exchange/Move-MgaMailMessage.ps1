@@ -109,7 +109,7 @@
         $bodyHash = @{
             destinationId = ($DestinationFolder.Id | ConvertTo-Json)
         }
-        
+
         #region Put parameters (JSON Parts) into a valid "message"-JSON-object together
         $bodyJsonParts = @()
         foreach ($key in $bodyHash.Keys) {

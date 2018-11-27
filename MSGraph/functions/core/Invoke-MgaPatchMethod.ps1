@@ -60,7 +60,7 @@
 
     Write-PSFMessage -Tag "RestData" -Level VeryVerbose -Message "Invoking REST PATCH to uri: $($restUri)"
     Write-PSFMessage -Tag "RestData" -Level Debug -Message "REST body data: $($Body)"
-    
+
     Clear-Variable -Name data -Force -WhatIf:$false -Confirm:$false -Verbose:$false -ErrorAction Ignore
     $invokeParam = @{
         Method          = "Patch"
@@ -72,7 +72,7 @@
         }
     }
     $data = Invoke-RestMethod @invokeParam -ErrorVariable "restError" -Verbose:$false -UseBasicParsing
-    
+
     if ($restError) {
         Stop-PSFFunction -Tag "RestData" -Message $parseError[0].Exception -Exception $parseError[0].Exception -EnableException $false -Category ConnectionError -FunctionName $FunctionName
         return
