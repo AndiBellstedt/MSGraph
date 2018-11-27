@@ -57,9 +57,14 @@
             <ViewSelectedBy>
                 <TypeName>MSGraph.Exchange.Mail.Folder</TypeName>
             </ViewSelectedBy>
+            <GroupBy>
+                <PropertyName>ParentPath</PropertyName>
+                <Label>ParentPath</Label>
+            </GroupBy>
             <TableControl>
                 <AutoSize/>
                 <TableHeaders>
+                    <TableColumnHeader/>
                     <TableColumnHeader/>
                     <TableColumnHeader/>
                     <TableColumnHeader/>
@@ -69,6 +74,9 @@
                 <TableRowEntries>
                     <TableRowEntry>
                         <TableColumnItems>
+                            <TableColumnItem>
+                                <PropertyName>FullName</PropertyName>
+                            </TableColumnItem>
                             <TableColumnItem>
                                 <PropertyName>Name</PropertyName>
                             </TableColumnItem>
@@ -101,6 +109,12 @@
                         <ListItems>
                             <ListItem>
                                 <PropertyName>Id</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>FullName</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>ParentPath</PropertyName>
                             </ListItem>
                             <ListItem>
                                 <PropertyName>Name</PropertyName>

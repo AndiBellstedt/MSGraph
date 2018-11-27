@@ -24,7 +24,8 @@ namespace MSGraph.Exchange.Mail
         /// </summary>
         public string Name
         {
-            get {
+            get
+            {
                 return DisplayName;
             }
 
@@ -32,9 +33,24 @@ namespace MSGraph.Exchange.Mail
         }
 
         /// <summary>
+        /// The realive level of the queried folder.
+        /// Indicates wether it is a directly queried folder ( =1 ),
+        /// or a childfolder from a queried folder ( =2 ),
+        /// or a recursive queried folder within a folder structure ( >2 )
+        /// 
+        /// needed to build a Fullname and a folder chain
+        /// </summary>
+        public Int32 HierarchyLevel;
+
+        /// <summary>
         /// The unique identifier for the mailFolder's parent mailFolder.
         /// </summary>
         public String ParentFolderId;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Folder ParentFolder;
 
         /// <summary>
         /// The number of immediate child mailFolders in the current mailFolder.
@@ -58,7 +74,7 @@ namespace MSGraph.Exchange.Mail
         {
             get
             {
-                if(TotalItemCount > 0)
+                if (TotalItemCount > 0)
                 {
                     Double percentage = Math.Round(Double.Parse(UnreadItemCount.ToString()) / Double.Parse(TotalItemCount.ToString()) * 100, 2);
                     return percentage;

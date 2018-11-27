@@ -321,9 +321,24 @@
             Alias property from display name.
             </summary>
         </member>
+        <member name="F:MSGraph.Exchange.Mail.Folder.HierarchyLevel">
+            <summary>
+            The realive level of the queried folder.
+            Indicates wether it is a directly queried folder ( =1 ),
+            or a childfolder from a queried folder ( =2 ),
+            or a recursive queried folder within a folder structure ( >2 )
+            
+            needed to build a Fullname and a folder chain
+            </summary>
+        </member>
         <member name="F:MSGraph.Exchange.Mail.Folder.ParentFolderId">
             <summary>
             The unique identifier for the mailFolder's parent mailFolder.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Folder.ParentFolder">
+            <summary>
+            
             </summary>
         </member>
         <member name="F:MSGraph.Exchange.Mail.Folder.ChildFolderCount">
