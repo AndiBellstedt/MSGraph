@@ -91,7 +91,7 @@
             }
         }
 
-        function get-childfolders ($output, $level, $invokeParam){
+        function get-childfolder ($output, $level, $invokeParam){
             $FoldersWithChilds = $output | Where-Object ChildFolderCount -gt 0
             $childFolders = @()
 
@@ -102,7 +102,7 @@
                         Write-PSFMessage -Level VeryVerbose -Message "Getting childfolders for folder '$($folderItem.Name)'" -Tag "ParameterSetHandling"
                         $invokeParam.Field = "mailFolders/$($folderItem.Id)/childFolders"
                         $childFolderOutput = invoke-internalMgaGetMethod -invokeParam $invokeParam -level $level -parentFolder $folderItem
-                        
+
                         $FoldersWithChilds = $childFolderOutput | Where-Object ChildFolderCount -gt 0
                         $childFolders = $childFolders + $childFolderOutput
                     }
@@ -130,7 +130,7 @@
 
                 if ($output -and $IncludeChildFolders) {
                     $childFolders = $output | Where-Object ChildFolderCount -gt 0 | ForEach-Object {
-                        get-childfolders -output $_ -level $level -invokeParam $invokeParam
+                        get-childfolder -output $_ -level $level -invokeParam $invokeParam
                     }
                     if($childFolders) {
                         [array]$output = [array]$output + $childFolders
@@ -153,7 +153,7 @@
                     $output = invoke-internalMgaGetMethod -invokeParam $invokeParam -level $level
 
                     if ($output -and $IncludeChildFolders) {
-                        $childFolders = get-childfolders -output $output -level $level -invokeParam $invokeParam
+                        $childFolders = get-childfolder -output $output -level $level -invokeParam $invokeParam
                         if($childFolders) {
                             [array]$output = [array]$output + $childFolders
                         }
