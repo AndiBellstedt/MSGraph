@@ -7,6 +7,9 @@
         <member name="T:MSGraph.Core.AzureAccessToken">
             <summary>
             Token used to authenticate against azure with
+            
+            https://docs.microsoft.com/en-us/azure/active-directory/develop/access-tokens
+            
             </summary>
         </member>
         <member name="F:MSGraph.Core.AzureAccessToken.TokenType">
@@ -84,6 +87,41 @@
             Informationen from JWT access token
             </summary>
         </member>
+        <member name="P:MSGraph.Core.AzureAccessToken.TokenOwner">
+            <summary>
+            The owner of the Token extracted from the JWT
+            </summary>
+        </member>
+        <member name="P:MSGraph.Core.AzureAccessToken.UserprincipalName">
+            <summary>
+            The user principal in the Token extracted from the JWT
+            </summary>
+        </member>
+        <member name="P:MSGraph.Core.AzureAccessToken.TenantID">
+            <summary>
+            Tenant ID for the Application in Azure (extracted from the JWT)
+            </summary>
+        </member>
+        <member name="P:MSGraph.Core.AzureAccessToken.AppName">
+            <summary>
+            The Application Name in Azure (extracted from the JWT)
+            </summary>
+        </member>
+        <member name="P:MSGraph.Core.AzureAccessToken.AccessTokenLifeTime">
+            <summary>
+            The Lifetime of the Access Token
+            </summary>
+        </member>
+        <member name="P:MSGraph.Core.AzureAccessToken.TimeRemaining">
+            <summary>
+            Remaining time of the token Lifetime
+            </summary>
+        </member>
+        <member name="P:MSGraph.Core.AzureAccessToken.PercentRemaining">
+            <summary>
+            Percentage value of the Tokenlifetime
+            </summary>
+        </member>
         <member name="T:MSGraph.Core.JWTAccessTokenInfo">
             <summary>
             Token informationen from a JWT access token
@@ -104,24 +142,148 @@
             The type of token. Generally, only when the token is of type "Bearer" is a valid connection established.
             </summary>
         </member>
-        <member name="T:MSGraph.Exchange.Mail.Message">
+        <member name="F:MSGraph.Core.JWTAccessTokenInfo.Algorithm">
             <summary>
-            Mail message in exchange online
+            Indicates the algorithm that was used to sign the token, for example, "RS256"
             </summary>
         </member>
-        <member name="F:MSGraph.Exchange.Mail.Message.BaseObject">
+        <member name="F:MSGraph.Core.JWTAccessTokenInfo.ApplicationID">
             <summary>
-            data carrier object
+            Only present in v1.0 tokens. The application ID of the client using the token.
+            The application can act as itself or on behalf of a user.
+            The application ID typically represents an application object,
+            but it can also represent a service principal object in Azure AD.
             </summary>
         </member>
-        <member name="T:MSGraph.Exchange.Mail.Folder">
+        <member name="F:MSGraph.Core.JWTAccessTokenInfo.ApplicationName">
             <summary>
-            Mail folder in exchange online
+            Application name from registered Azure Application
             </summary>
         </member>
-        <member name="F:MSGraph.Exchange.Mail.Folder.BaseObject">
+        <member name="F:MSGraph.Core.JWTAccessTokenInfo.Audience">
             <summary>
-            data carrier object
+            Identifies the intended recipient of the token.
+            In access tokens, the audience is your app's Application ID, assigned to your app in the Azure portal.
+            Your app should validate this value and reject the token if the value does not match.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Core.JWTAccessTokenInfo.AuthenticationMethod">
+            <summary>
+            Only present in v1.0 tokens. Identifies how the subject of the token was authenticated. 
+            See https://docs.microsoft.com/en-us/azure/active-directory/develop/access-tokens#the-amr-claim for more details.
+            Microsoft identities can authenticate in a variety of ways, which may be relevant to your application. 
+            The amr claim is an array that can contain multiple items, such as ["mfa", "rsa", "pwd"], 
+            for an authentication that used both a password and the Authenticator app. 
+            </summary>
+        </member>
+        <member name="F:MSGraph.Core.JWTAccessTokenInfo.ExpirationTime">
+            <summary>
+            The "exp" (expiration time) claim identifies the expiration time on or after which the
+            JWT must not be accepted for processing. It's important to note that a resource may
+            reject the token before this time as well, such as when a change in authentication is
+            required or a token revocation has been detected.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Core.JWTAccessTokenInfo.GivenName">
+            <summary>
+            Provides the first or given name of the user, as set on the user object.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Core.JWTAccessTokenInfo.IssuedAt">
+            <summary>
+            "Issued At" indicates when the authentication for this token occurred.
+            </summary>
+        </member>
+        <member name="P:MSGraph.Core.JWTAccessTokenInfo.Issuer">
+            <summary>
+            Alias property from Audience
+            </summary>
+        </member>
+        <member name="F:MSGraph.Core.JWTAccessTokenInfo.Name">
+            <summary>
+            Provides a human-readable value that identifies the subject of the token.
+            The value is not guaranteed to be unique, it is mutable, and it's designed
+            to be used only for display purposes. The profile scope is required in
+            order to receive this claim.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Core.JWTAccessTokenInfo.NotBefore">
+            <summary>
+            The "nbf" (not before) claim identifies the time before which the JWT must not be accepted for processing.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Core.JWTAccessTokenInfo.OID">
+            <summary>
+            he immutable identifier for an object in the Microsoft identity platform, in this case, a user account.
+            It can also be used to perform authorization checks safely and as a key in database tables. This ID 
+            uniquely identifies the user across applications - two different applications signing in the same user 
+            will receive the same value in the oid claim. Thus, oid can be used when making queries to Microsoft
+            online services, such as the Microsoft Graph. The Microsoft Graph will return this ID as the id 
+            property for a given user account. Because the oid allows multiple apps to correlate users, the profile
+            scope is required in order to receive this claim. Note that if a single user exists in multiple 
+            tenants, the user will contain a different object ID in each tenant - they are considered different 
+            accounts, even though the user logs into each account with the same credentials.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Core.JWTAccessTokenInfo.Plattform">
+            <summary>
+            The plattform
+            </summary>
+        </member>
+        <member name="F:MSGraph.Core.JWTAccessTokenInfo.Scope">
+            <summary>
+            The set of scopes exposed by your application for which the client application has requested
+            (and received) consent. Your app should verify that these scopes are valid ones exposed by
+            your app, and make authorization decisions based on the value of these scopes.
+            Only included for user tokens.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Core.JWTAccessTokenInfo.SID">
+            <summary>
+            In cases where the user has an on-premises authentication, this claim provides their SID.
+            This can be used for authorization in legacy applications.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Core.JWTAccessTokenInfo.SourceIPAddr">
+            <summary>
+            The IP address the user authenticated from.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Core.JWTAccessTokenInfo.SureName">
+            <summary>
+            Provides the last name, surname, or family name of the user as defined on the user object.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Core.JWTAccessTokenInfo.TenantID">
+            <summary>
+            Represents the Azure AD tenant that the user is from. For work and school accounts,
+            the GUID is the immutable tenant ID of the organization that the user belongs to.
+            For personal accounts, the value is 9188040d-6c67-4c5b-b112-36a304b66dad.
+            The profile scope is required in order to receive this claim.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Core.JWTAccessTokenInfo.Type">
+            <summary>
+            Indicates that the token is a JWT.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Core.JWTAccessTokenInfo.UniqueName">
+            <summary>
+            Only present in v1.0 tokens.
+            Provides a human readable value that identifies the subject of the token.
+            This value is not guaranteed to be unique within a tenant and should 
+            be used only for display purposes.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Core.JWTAccessTokenInfo.UPN">
+            <summary>
+            The username of the user. May be a phone number, email address, or unformatted string.
+            Should only be used for display purposes and providing username hints in reauthentication scenarios.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Core.JWTAccessTokenInfo.Version">
+            <summary>
+            Indicates the version of the access token.
             </summary>
         </member>
         <member name="T:MSGraph.Exchange.Mail.Attachment">
@@ -132,6 +294,278 @@
         <member name="F:MSGraph.Exchange.Mail.Attachment.BaseObject">
             <summary>
             data carrier object
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Attachment.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:MSGraph.Exchange.Mail.Folder">
+            <summary>
+            Mail folder in exchange online
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Folder.Id">
+            <summary>
+            The mailFolder's unique identifier.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Folder.DisplayName">
+            <summary>
+            The mailFolder's display name.
+            </summary>
+        </member>
+        <member name="P:MSGraph.Exchange.Mail.Folder.Name">
+            <summary>
+            Alias property from display name.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Folder.HierarchyLevel">
+            <summary>
+            The realive level of the queried folder.
+            Indicates wether it is a directly queried folder ( =1 ),
+            or a childfolder from a queried folder ( =2 ),
+            or a recursive queried folder within a folder structure ( >2 )
+            
+            needed to build a Fullname and a folder chain
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Folder.ParentFolderId">
+            <summary>
+            The unique identifier for the mailFolder's parent mailFolder.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Folder.ParentFolder">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Folder.ChildFolderCount">
+            <summary>
+            The number of immediate child mailFolders in the current mailFolder.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Folder.UnreadItemCount">
+            <summary>
+            The number of items in the mailFolder marked as unread.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Folder.TotalItemCount">
+            <summary>
+            The number of items in the mailFolder.
+            </summary>
+        </member>
+        <member name="P:MSGraph.Exchange.Mail.Folder.UnreadInPercent">
+            <summary>
+            Percentage of unread items in mailFolder.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Folder.User">
+            <summary>
+            The user name which owns the folder
+            </summary>
+        </member>
+        <member name="T:MSGraph.Exchange.Mail.MailFolderParameter">
+            <summary>
+            Mail message parameter class for convinient pipeline 
+            input on parameters in *-MgaMail* commands
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.MailFolderParameter.Id">
+            <summary>
+            message or folder id
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.MailFolderParameter.Name">
+            <summary>
+            name of a folder
+            </summary>
+        </member>
+        <member name="P:MSGraph.Exchange.Mail.MailFolderParameter.TypeName">
+            <summary>
+            The type name of inputobject
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.MailFolderParameter.IsWellKnownName">
+            <summary>
+            indicator wether name is a WellKnownFolder
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.MailFolderParameter.InputObject">
+            <summary>
+            carrier object for the input object
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.Mail.MailFolderParameter.#ctor(MSGraph.Exchange.Mail.Folder)">
+            <summary>
+            Mail Folderinput
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.Mail.MailFolderParameter.#ctor(System.String)">
+            <summary>
+            String input
+            </summary>
+        </member>
+        <member name="T:MSGraph.Exchange.Mail.Message">
+            <summary>
+            Mail message in exchange online
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Message.BaseObject">
+            <summary>
+            data carrier object
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Message.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:MSGraph.Exchange.Mail.MailMessageOrMailFolderParameter">
+            <summary>
+            Mail message parameter class for convinient pipeline 
+            input on parameters in *-MgaMail* commands
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.MailMessageOrMailFolderParameter.Id">
+            <summary>
+            message or folder id
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.MailMessageOrMailFolderParameter.Name">
+            <summary>
+            name of a folder
+            </summary>
+        </member>
+        <member name="P:MSGraph.Exchange.Mail.MailMessageOrMailFolderParameter.TypeName">
+            <summary>
+            The type name of inputobject
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.MailMessageOrMailFolderParameter.IsWellKnownName">
+            <summary>
+            indicator wether name is a WellKnownFolder
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.MailMessageOrMailFolderParameter.InputObject">
+            <summary>
+            carrier object for the input object
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.Mail.MailMessageOrMailFolderParameter.#ctor(MSGraph.Exchange.Mail.Message)">
+            <summary>
+            Mail Message input
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.Mail.MailMessageOrMailFolderParameter.#ctor(MSGraph.Exchange.Mail.Folder)">
+            <summary>
+            Mail Folderinput
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.Mail.MailMessageOrMailFolderParameter.#ctor(System.String)">
+            <summary>
+            String input
+            </summary>
+        </member>
+        <member name="T:MSGraph.Exchange.Mail.WellKnownFolder">
+            <summary>
+            name fo well-known-folders in a outlook mailboxes
+            
+            Outlook creates certain folders for users by default. 
+            Instead of using the corresponding folder id value, for convenience, 
+            you can use the well-known folder names from the table below when accessing these folders. 
+            
+            For example, you can get the Drafts folder using its well-known name with the following query.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.WellKnownFolder.archive">
+            <summary>
+            The archive folder messages are sent to when using the One_Click Archive feature in Outlook clients that support it. 
+            Note: this is not the same as the Archive Mailbox feature of Exchange online.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.WellKnownFolder.clutter">
+            <summary>
+            The clutter folder low-priority messages are moved to when using the Clutter feature.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.WellKnownFolder.conflicts">
+            <summary>
+            The folder that contains conflicting items in the mailbox.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.WellKnownFolder.conversationhistory">
+            <summary>
+            The folder where Skype saves IM conversations (if Skype is configured to do so).
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.WellKnownFolder.deleteditems">
+            <summary>
+            The folder items are moved to when they are deleted.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.WellKnownFolder.drafts">
+            <summary>
+            The folder that contains unsent messages.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.WellKnownFolder.inbox">
+            <summary>
+            The inbox folder.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.WellKnownFolder.junkemail">
+            <summary>
+            The junk email folder.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.WellKnownFolder.localfailures">
+            <summary>
+            The folder that contains items that exist on the local client but could not be uploaded to the server.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.WellKnownFolder.msgfolderroot">
+            <summary>
+            The "Top of Information Store" folder. This folder is the parent folder for folders that are displayed in normal mail clients, such as the inbox.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.WellKnownFolder.outbox">
+            <summary>
+            The outbox folder.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.WellKnownFolder.recoverableitemsdeletions">
+            <summary>
+            The folder that contains soft-deleted items: 
+            deleted either from the Deleted Items folder, or by pressing shift+delete in Outlook. 
+            This folder is not visible in any Outlook email client, but end users can interact with 
+            it through the Recover Deleted Items from Server feature in Outlook or Outlook on the web.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.WellKnownFolder.scheduled">
+            <summary>
+            The folder that contains messages that are scheduled to reappear in the inbox using the Schedule feature in Outlook for iOS.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.WellKnownFolder.searchfolders">
+            <summary>
+            The parent folder for all search folders defined in the user's mailbox.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.WellKnownFolder.sentitems">
+            <summary>
+            The sent items folder.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.WellKnownFolder.serverfailures">
+            <summary>
+            The folder that contains items that exist on the server but could not be synchronized to the local client.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.WellKnownFolder.syncissues">
+            <summary>
+            The folder that contains synchronization logs created by Outlook.
             </summary>
         </member>
     </members>
