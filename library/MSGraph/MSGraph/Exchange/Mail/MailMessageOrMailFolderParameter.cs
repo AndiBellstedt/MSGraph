@@ -9,6 +9,7 @@ namespace MSGraph.Exchange.Mail
     /// Mail message parameter class for convinient pipeline 
     /// input on parameters in *-MgaMail* commands
     /// </summary>
+    [Serializable]
     public class MailMessageOrMailFolderParameter
     {
         #region Properties
@@ -39,6 +40,8 @@ namespace MSGraph.Exchange.Mail
 
         private string _typeName;
 
+        private string _returnValue;
+
         /// <summary>
         /// indicator wether name is a WellKnownFolder
         /// </summary>
@@ -52,6 +55,31 @@ namespace MSGraph.Exchange.Mail
         #endregion Properties
 
 
+        #region Statics & Stuff
+        /// <summary>
+        /// Overrides the default ToString() method 
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            if ( !string.IsNullOrEmpty(Name) )
+            {
+                _returnValue = Name;
+            }
+            else if (!string.IsNullOrEmpty(Id))
+            {
+                _returnValue = Id;
+            }
+            else
+            {
+                _returnValue = InputObject.ToString();
+            }
+
+            return _returnValue;
+        }
+        #endregion Statics & Stuff
+
+
         #region Constructors
         /// <summary>
         /// Mail Message input
@@ -61,6 +89,7 @@ namespace MSGraph.Exchange.Mail
             InputObject = Message;
             _typeName = InputObject.GetType().ToString();
             Id = Message.Id;
+            Name = Message.Subject;
         }
 
         /// <summary>
@@ -71,6 +100,7 @@ namespace MSGraph.Exchange.Mail
             InputObject = Folder;
             _typeName = InputObject.GetType().ToString();
             Id = Folder.Id;
+            Name = Folder.Name;
         }
 
         /// <summary>
@@ -79,17 +109,18 @@ namespace MSGraph.Exchange.Mail
         public MailMessageOrMailFolderParameter(string Text)
         {
             InputObject = Text;
+            _typeName = InputObject.GetType().ToString();
+
             string[] names = Enum.GetNames(typeof(WellKnownFolder));
             if (names.Contains(Text, StringComparer.InvariantCultureIgnoreCase))
             {
                 IsWellKnownName = true;
-                _typeName = InputObject.GetType().ToString();
                 Name = Text.ToLower();
             }
             else
             {
+                IsWellKnownName = false;
                 Id = Text;
-                _typeName = "Unknown";
             }
         }
         #endregion Constructors

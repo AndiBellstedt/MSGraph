@@ -75,18 +75,20 @@
 
         Return emails in the folders "MyFolder*" of the user connected to through a token
 #>
-    [CmdletBinding(DefaultParameterSetName = 'ByFolderName')]
+    [CmdletBinding(DefaultParameterSetName = 'ByInputObject')]
     [OutputType([MSGraph.Exchange.Mail.Message])]
     param (
-        [Parameter(ParameterSetName = 'ByInputObject', ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
+        [Parameter(ParameterSetName = 'ByInputObject', Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
+        [Alias('Input', 'Id')]
+        [MSGraph.Exchange.Mail.MailMessageOrMailFolderParameter[]]
         $InputObject,
 
-        [Parameter(ParameterSetName = 'ByFolderName', ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
-        [Alias('FolderName')]
+        [Parameter(ParameterSetName = 'ByFolderName', Position = 0)]
+        [Alias('Folder')]
         [string[]]
-        $Folder = 'Inbox',
+        $FolderName,
 
-        [Parameter(ParameterSetName = 'ByFolderName')]
+        [Parameter(ParameterSetName = 'ByFolderName', Position = 1)]
         [string]
         $User,
 
@@ -108,116 +110,146 @@
 
     process {
         Write-PSFMessage -Level VeryVerbose -Message "Gettings mails by parameter set $($PSCmdlet.ParameterSetName)" -Tag "ParameterSetHandling"
-        switch ($PSCmdlet.ParameterSetName) {
-            "ByInputObject" {
-                $typeNames = ($InputObject | Get-Member).TypeName | Sort-Object -Unique
-                foreach($typeName in $typeNames) {
-                    switch ($typeName) {
-                        "MSGraph.Exchange.Mail.Message" {
-                            Write-PSFMessage -Level VeryVerbose -Message "Parsing messages from the pipeline"
-                            [array]$messages = $InputObject | Where-Object { "MSGraph.Exchange.Mail.Message" -in $_.psobject.TypeNames }
-
-                            if($Delta) {
-                                # retreive delta messages
-                                [array]$deltaMessages = $messages | Where-Object { '@odata.deltaLink' -in $_.BaseObject.psobject.Properties.Name }
-                                [array]$deltaLinks = $deltaMessages.BaseObject | Select-Object -ExpandProperty '@odata.deltaLink' -Unique
-
-                                Write-PSFMessage -Level VeryVerbose -Message "Delta parameter specified. Checking on $($deltaLinks.Count) deltalink(s) in $($deltaMessages.Count) message(s) from the pipeline"
-                                # build hashtable for Invoke-MgaGetMethod parameter splatting
-                                foreach($deltaLink in $deltaLinks) {
-                                    $invokeParams = $invokeParams + @{
-                                        "deltaLink"  = $deltaLink
-                                        "Token"      = $Token
-                                        "ResultSize" = $ResultSize
-                                    }
-                                }
-
-                                # filtering out delta-messages to get owing message in messages-array
-                                [array]$messages = $messages | Where-Object { $_.BaseObject.id -notin $deltaMessages.BaseObject.id }
-                                Remove-Variable deltaLinks, deltaMessages
-                            }
-
-                            # if non delta messages are parsed in, the messages will be queried again (refresh). Not really necessary, but intend from pipeline usage
-                            if($messages) {
-                                Write-PSFMessage -Level VeryVerbose -Message "Refresh message for $($messages.count) message(s) from the pipeline"
-                                foreach($message in $messages) {
-                                    $invokeParam = @{
-                                        "Field"        = "messages/$($message.id)"
-                                        "User"         = $message.BaseObject.User
-                                        "Token"        = $Token
-                                        "ResultSize"   = $ResultSize
-                                        "FunctionName" = $MyInvocation.MyCommand
-                                    }
-                                    if($Delta) { $invokeParam.Add("Delta", $true) }
-                                    $invokeParams = $invokeParams + $invokeParam
-                                }
-                            }
-
-                            Remove-Variable messages
-                        }
-
-                        "MSGraph.Exchange.Mail.Folder" {
-                            $folders = $InputObject | Where-Object { "MSGraph.Exchange.Mail.Folder" -in $_.psobject.TypeNames }
-                            foreach($folderItem in $folders) {
-                                Write-PSFMessage -Level VeryVerbose -Message "Gettings messages in folder '$($folderItem.Name)' from the pipeline"
-                                $invokeParam = @{
-                                    "Field"        = "mailFolders/$($folderItem.Id)/messages"
-                                    "User"         = $folderItem.User
-                                    "Token"        = $Token
-                                    "ResultSize"   = $ResultSize
-                                    "FunctionName" = $MyInvocation.MyCommand
-                                }
-                                if($Delta) { $invokeParam.Add("Delta", $true) }
-                                $invokeParams = $invokeParams + $invokeParam
-                            }
-                            Remove-Variable Folders
-                        }
-
-                        Default { Write-PSFMessage -Level Critical -Message "Failed on type validation. Can not handle $typeName" -EnableException $true -Tag "TypeValidation" }
-                    }
-                }
-                Remove-Variable typeNames
+        if ($PSCmdlet.ParameterSetName -like "ByInputObject" -and -not $InputObject) {
+            Write-PSFMessage -Level Verbose -Message "No InputObject specified. Gettings mail from default folder (inbox)." -Tag "ParameterSetHandling"
+            $InputObject = [MSGraph.Exchange.Mail.WellKnownFolder]::Inbox.ToString()
+        }
+        if ($PSCmdlet.ParameterSetName -like "ByFolderName") {
+            foreach ($folderItem in $FolderName) {
+                $InputObject = $InputObject + [MSGraph.Exchange.Mail.MailMessageOrMailFolderParameter]$folderItem
             }
+        }
 
-            "ByFolderName" {
-                foreach ($folderItem in $Folder) {
-                    Write-PSFMessage -Level VeryVerbose -Message "Getting messages in specified folder '$($folderItem.Name)'"
-                    # construct parameters for message query
+        foreach ($InputObjectItem in $InputObject) {
+            Write-PSFMessage -Level VeryVerbose -Message "Parsing input $($InputObjectItem.TypeName) object '$($InputObjectItem)'"
+            switch ($InputObjectItem.TypeName) {
+                "MSGraph.Exchange.Mail.Message" {
+                    if ($Delta -and ('@odata.deltaLink' -in $InputObjectItem.InputObject.BaseObject.psobject.Properties.Name)) {
+                        # if delta message, construct a delta query from mail
+                        Write-PSFMessage -Level VeryVerbose -Message "Delta parameter specified and delta message found. Checking on message '$($InputObjectItem)' from the pipeline"
+                        $invokeParam = @{
+                            "deltaLink"    = $InputObjectItem.InputObject.BaseObject.'@odata.deltaLink'
+                            "Token"        = $Token
+                            "ResultSize"   = $ResultSize
+                            "FunctionName" = $MyInvocation.MyCommand
+                        }
+                    }
+                    else {
+                        # if non delta message is parsed in, the message will be queried again (refreshed)
+                        # Not really necessary, but works as intend from pipeline usage
+                        Write-PSFMessage -Level VeryVerbose -Message "Refresh message '$($InputObjectItem)' from the pipeline"
+                        $invokeParam = @{
+                            "Field"        = "messages/$($InputObjectItem.Id)"
+                            "User"         = $InputObjectItem.InputObject.BaseObject.User
+                            "Token"        = $Token
+                            "ResultSize"   = $ResultSize
+                            "FunctionName" = $MyInvocation.MyCommand
+                        }
+                        if ($Delta) { $invokeParam.Add("Delta", $true) }
+                    }
+                    $invokeParams = $invokeParams + $invokeParam
+                }
+
+                "MSGraph.Exchange.Mail.Folder" {
+                    Write-PSFMessage -Level VeryVerbose -Message "Gettings messages in folder '$($InputObjectItem)' from the pipeline"
                     $invokeParam = @{
-                        "Field"        = "mailFolders/$($folderItem)/messages"
+                        "Field"        = "mailFolders/$($InputObjectItem.Id)/messages"
+                        "User"         = $InputObjectItem.InputObject.User
+                        "Token"        = $Token
+                        "ResultSize"   = $ResultSize
+                        "FunctionName" = $MyInvocation.MyCommand
+                    }
+                    if ($Delta) { $invokeParam.Add("Delta", $true) }
+                    $invokeParams = $invokeParams + $invokeParam
+                }
+
+                "System.String" {
+                    Write-PSFMessage -Level VeryVerbose -Message "Gettings messages in folder '$($InputObjectItem)' from the pipeline"
+                    $name = if ($InputObjectItem.IsWellKnownName) { $InputObjectItem.Name } else { $InputObjectItem.Id }
+                    $invokeParam = @{
+                        "Field"        = "mailFolders/$($name)/messages"
                         "User"         = $User
                         "Token"        = $Token
                         "ResultSize"   = $ResultSize
                         "FunctionName" = $MyInvocation.MyCommand
                     }
-                    if($Delta) { $invokeParam.Add("Delta", $true) }
-
-                    $InvokeParams = $InvokeParams + $InvokeParam
+                    if ($Delta) { $invokeParam.Add("Delta", $true) }
+                    $invokeParams = $invokeParams + $invokeParam
+                    Remove-Variable -Name name -Force -ErrorAction Ignore -WhatIf:$false -Confirm:$false -Verbose:$false -Debug:$false
                 }
-            }
 
-            Default { stop-PSFMessage -Message "Unhandled parameter set. ($($PSCmdlet.ParameterSetName)) Developer mistage." -EnableException $true -Category "ParameterSetHandling" -FunctionName $MyInvocation.MyCommand }
+                Default { Write-PSFMessage -Level Critical -Message "Failed on type validation. Can not handle $($InputObjectItem.TypeName)" -EnableException $true -Tag "TypeValidation" }
+            }
         }
     }
 
     end {
         $fielList = @()
         $InvokeParamsUniqueList = @()
-        foreach($invokeParam in $InvokeParams) {
-            if($invokeParam.Field -notin $fielList) {
+        Write-PSFMessage -Level Verbose -Message "Checking $( ($InvokeParams | Measure-Object).Count ) objects on unique calls..."
+        foreach ($invokeParam in $InvokeParams) {
+            if ($invokeParam.Field -and ($invokeParam.Field -notin $fielList)) {
                 $InvokeParamsUniqueList = $InvokeParamsUniqueList + $invokeParam
                 $fielList = $fielList + $invokeParam.Field
             }
+            elseif ($invokeParam.deltaLink -notin $fielList) {
+                $InvokeParamsUniqueList = $InvokeParamsUniqueList + $invokeParam
+                $fielList = $fielList + $invokeParam.deltaLink
+            }
         }
-        Write-PSFMessage -Level Verbose -Message "Invoking $( ($InvokeParamsUniqueList | Measure-Object).Count ) REST calls for gettings messages" #-FunctionName $MyInvocation.MyCommand
+        Write-PSFMessage -Level Verbose -Message "Invoking $( ($InvokeParamsUniqueList | Measure-Object).Count ) REST calls for gettings messages"
 
         # run the message query and process the output
-        foreach($invokeParam in $InvokeParamsUniqueList) {
+        foreach ($invokeParam in $InvokeParamsUniqueList) {
             $data = Invoke-MgaGetMethod @invokeParam | Where-Object { $_.subject -like $Subject }
             foreach ($output in $data) {
-                [MSGraph.Exchange.Mail.Message]@{
-                    BaseObject = $output
+                $hash = [ordered]@{
+                    BaseObject                 = $output
+                    Subject                    = $output.subject
+                    Body                       = $output.body
+                    BodyPreview                = $output.bodyPreview
+                    Categories                 = $output.categories
+                    ChangeKey                  = $output.changeKey
+                    ConversationId             = $output.conversationId
+                    CreatedDateTime            = [datetime]::Parse($output.createdDateTime)
+                    Flag                       = $output.flag.flagStatus
+                    HasAttachments             = $output.hasAttachments
+                    Id                         = $output.id
+                    Importance                 = $output.importance
+                    InferenceClassification    = $output.inferenceClassification
+                    InternetMessageId          = $output.internetMessageId
+                    IsDeliveryReceiptRequested = $output.isDeliveryReceiptRequested
+                    IsDraft                    = $output.isDraft
+                    IsRead                     = $output.isRead
+                    isReadReceiptRequested     = $output.isReadReceiptRequested
+                    lastModifiedDateTime       = [datetime]::Parse($output.lastModifiedDateTime)
+                    MeetingMessageType         = $output.meetingMessageType
+                    ParentFolderId             = $output.parentFolderId
+                    ReceivedDateTime           = [datetime]::Parse($output.receivedDateTime)
+                    SentDateTime               = [datetime]::Parse($output.sentDateTime)
+                    WebLink                    = $output.webLink
                 }
+                if($output.from.emailAddress) {
+                    $hash.Add("from", ($output.from.emailAddress | ForEach-Object { [mailaddress]"$($_.name) $($_.address)"} -ErrorAction Ignore))
+                }
+                if($output.Sender.emailAddress) {
+                    $hash.Add("Sender", ($output.Sender.emailAddress | ForEach-Object { [mailaddress]"$($_.name) $($_.address)"} -ErrorAction Ignore ))
+                }
+                if($output.bccRecipients.emailAddress) {
+                    $hash.Add("bccRecipients", [array]($output.bccRecipients.emailAddress | ForEach-Object { [mailaddress]"$($_.name) $($_.address)"} -ErrorAction Ignore))
+                }
+                if($output.ccRecipients.emailAddress) { 
+                    $hash.Add("ccRecipients", [array]($output.ccRecipients.emailAddress | ForEach-Object { [mailaddress]"$($_.name) $($_.address)"} -ErrorAction Ignore))
+                }
+                if($output.replyTo.emailAddress) {
+                    $hash.Add("replyTo", [array]($output.replyTo.emailAddress | ForEach-Object { [mailaddress]"$($_.name) $($_.address)"} -ErrorAction Ignore))
+                }
+                if($output.toRecipients.emailAddress) {
+                    $hash.Add("toRecipients", [array]($output.toRecipients.emailAddress | ForEach-Object { [mailaddress]"$($_.name) $($_.address)"}))
+                }
+
+                $messageOutputObject = New-Object -TypeName MSGraph.Exchange.Mail.Message -Property $hash
+                $messageOutputObject
             }
         }
     }

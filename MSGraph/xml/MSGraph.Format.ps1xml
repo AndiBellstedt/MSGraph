@@ -303,7 +303,7 @@
                                 <PropertyName>IsDraft</PropertyName>
                             </ListItem>
                             <ListItem>
-                                <PropertyName>FlagStatus</PropertyName>
+                                <PropertyName>Flag</PropertyName>
                             </ListItem>
                             <ListItem>
                                 <PropertyName>MeetingMessageType</PropertyName>

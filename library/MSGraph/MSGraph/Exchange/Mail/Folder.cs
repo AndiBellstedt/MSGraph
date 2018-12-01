@@ -7,6 +7,7 @@ namespace MSGraph.Exchange.Mail
     /// <summary>
     /// Mail folder in exchange online
     /// </summary>
+    [Serializable]
     public class Folder
     {
         /// <summary>

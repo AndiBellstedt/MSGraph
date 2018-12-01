@@ -9,6 +9,7 @@ namespace MSGraph.Exchange.Mail
     /// Mail message parameter class for convinient pipeline 
     /// input on parameters in *-MgaMail* commands
     /// </summary>
+    [Serializable]
     public class MailFolderParameter
     {
         #region Properties
@@ -32,9 +33,7 @@ namespace MSGraph.Exchange.Mail
                 return _typeName;
             }
 
-            set
-            {
-            }
+            set { }
         }
 
         private string _typeName;
@@ -50,6 +49,26 @@ namespace MSGraph.Exchange.Mail
         public object InputObject;
 
         #endregion Properties
+
+
+        #region Statics & Stuff
+        /// <summary>
+        /// Overrides the default ToString() method 
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            if (Name.Length > 0)
+            {
+                return Name;
+            }
+            else
+            {
+                return Id;
+            }
+
+        }
+        #endregion Statics & Stuff
 
 
         #region Constructors

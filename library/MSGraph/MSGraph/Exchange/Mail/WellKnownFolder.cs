@@ -21,57 +21,57 @@ namespace MSGraph.Exchange
             /// The archive folder messages are sent to when using the One_Click Archive feature in Outlook clients that support it. 
             /// Note: this is not the same as the Archive Mailbox feature of Exchange online.
             /// </summary>
-            archive,
+            Archive,
 
             /// <summary>
             /// The clutter folder low-priority messages are moved to when using the Clutter feature.
             /// </summary>
-            clutter,
+            Clutter,
 
             /// <summary>
             /// The folder that contains conflicting items in the mailbox.
             /// </summary>
-            conflicts,
+            Conflicts,
 
             /// <summary>
             /// The folder where Skype saves IM conversations (if Skype is configured to do so).
             /// </summary>
-            conversationhistory,
+            Conversationhistory,
 
             /// <summary>
             /// The folder items are moved to when they are deleted.
             /// </summary>
-            deleteditems,
+            DeletedItems,
 
             /// <summary>
             /// The folder that contains unsent messages.
             /// </summary>
-            drafts,
+            Drafts,
 
             /// <summary>
             /// The inbox folder.
             /// </summary>
-            inbox,
+            Inbox,
 
             /// <summary>
             /// The junk email folder.
             /// </summary>
-            junkemail,
+            JunkEmail,
 
             /// <summary>
             /// The folder that contains items that exist on the local client but could not be uploaded to the server.
             /// </summary>
-            localfailures,
+            LocalFailures,
 
             /// <summary>
             /// The "Top of Information Store" folder. This folder is the parent folder for folders that are displayed in normal mail clients, such as the inbox.
             /// </summary>
-            msgfolderroot,
+            MsgFolderRoot,
 
             /// <summary>
             /// The outbox folder.
             /// </summary>
-            outbox,
+            Outbox,
 
             /// <summary>
             /// The folder that contains soft-deleted items: 
@@ -79,32 +79,32 @@ namespace MSGraph.Exchange
             /// This folder is not visible in any Outlook email client, but end users can interact with 
             /// it through the Recover Deleted Items from Server feature in Outlook or Outlook on the web.
             /// </summary>
-            recoverableitemsdeletions,
+            RecoverableItemsDeletions,
 
             /// <summary>
             /// The folder that contains messages that are scheduled to reappear in the inbox using the Schedule feature in Outlook for iOS.
             /// </summary>
-            scheduled,
+            Scheduled,
 
             /// <summary>
             /// The parent folder for all search folders defined in the user's mailbox.
             /// </summary>
-            searchfolders,
+            SearchFolders,
 
             /// <summary>
             /// The sent items folder.
             /// </summary>
-            sentitems,
+            SentItems,
 
             /// <summary>
             /// The folder that contains items that exist on the server but could not be synchronized to the local client.
             /// </summary>
-            serverfailures,
+            ServerFailures,
 
             /// <summary>
             /// The folder that contains synchronization logs created by Outlook.
             /// </summary>
-            syncissues,
+            SyncIssues,
         }
     }
 }
