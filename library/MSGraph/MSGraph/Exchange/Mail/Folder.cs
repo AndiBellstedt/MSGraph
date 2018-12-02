@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Management.Automation;
-using System.Security;
 
 namespace MSGraph.Exchange.Mail
 {

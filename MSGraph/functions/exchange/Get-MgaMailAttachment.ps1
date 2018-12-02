@@ -33,12 +33,12 @@
     [CmdletBinding()]
     [OutputType([MSGraph.Exchange.Mail.Attachment])]
     param (
-        [Parameter(ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName='ById')]
+        [Parameter(ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ById')]
         [Alias('Id')]
         [string[]]
         $MailId,
 
-        [Parameter(ParameterSetName='ById')]
+        [Parameter(ParameterSetName = 'ById')]
         [string]
         $User = 'me',
 
@@ -62,10 +62,18 @@
         foreach ($mail in $MailId) {
             Write-PSFMessage -Level Verbose -Message "Getting attachment from mail"
             $data = Invoke-MgaGetMethod -Field "messages/$($mail)/attachments" -User $User -Token $Token -ResultSize $ResultSize
-            if(-not $IncludeInlineAttachment) { $data = $data | Where-Object isInline -eq $false}
+            if (-not $IncludeInlineAttachment) { $data = $data | Where-Object isInline -eq $false}
             foreach ($output in $data) {
                 [MSGraph.Exchange.Mail.Attachment]@{
-                    BaseObject = $output
+                    BaseObject           = $output
+                    Id                   = $output.Id
+                    Name                 = $output.Name
+                    ContentType          = $output.ContentType
+                    ContentId            = $output.ContentId
+                    ContentLocation      = $output.ContentLocation
+                    IsInline             = $output.isInline
+                    LastModifiedDateTime = $output.LastModifiedDateTime
+                    Size                 = $output.Size
                 }
             }
         }

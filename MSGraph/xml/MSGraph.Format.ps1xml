@@ -144,7 +144,7 @@
             </ViewSelectedBy>
 
             <WideControl>
-                <ColumnNumber>3</ColumnNumber> 
+                <ColumnNumber>3</ColumnNumber>
                 <WideEntries>
                     <WideEntry>
                         <WideItem>
@@ -191,6 +191,51 @@
                     </TableRowEntry>
                 </TableRowEntries>
             </TableControl>
+        </View>
+
+        <View>
+            <Name>MSGraph.Exchange.Mail.Attachment_list</Name>
+            <ViewSelectedBy>
+                <TypeName>MSGraph.Exchange.Mail.Attachment</TypeName>
+            </ViewSelectedBy>
+            <ListControl>
+                <ListEntries>
+                    <ListEntry>
+                        <ListItems>
+                            <ListItem>
+                                <PropertyName>Id</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>Name</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>ContentType</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>ContentId</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>ContentLocation</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>IsInline</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>Size</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>SizeKB</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>SizeMB</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>LastModifiedDateTime</PropertyName>
+                            </ListItem>
+                        </ListItems>
+                    </ListEntry>
+                </ListEntries>
+            </ListControl>
         </View>
 
         <View>

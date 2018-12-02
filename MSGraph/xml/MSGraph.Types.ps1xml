@@ -253,89 +253,12 @@
     <Type>
         <Name>MSGraph.Exchange.Mail.Attachment</Name>
         <Members>
-            <ScriptProperty>
-                <Name>Name</Name>
-                <GetScriptBlock>
-                    $this.BaseObject.name
-                </GetScriptBlock>
-            </ScriptProperty>
-
             <AliasProperty>
                 <Name>DisplayName</Name>
                 <ReferencedMemberName>
                     Name
                 </ReferencedMemberName>
             </AliasProperty>
-
-            <ScriptProperty>
-                <Name>Id</Name>
-                <GetScriptBlock>
-                    $this.BaseObject.id
-                </GetScriptBlock>
-            </ScriptProperty>
-
-            <ScriptProperty>
-                <Name>ContentId</Name>
-                <GetScriptBlock>
-                    $this.BaseObject.contentId
-                </GetScriptBlock>
-            </ScriptProperty>
-
-            <ScriptProperty>
-                <Name>ContentBytes</Name>
-                <GetScriptBlock>
-                    $this.BaseObject.contentBytes
-                </GetScriptBlock>
-            </ScriptProperty>
-
-            <ScriptProperty>
-                <Name>contentLocation</Name>
-                <GetScriptBlock>
-                    $this.BaseObject.contentLocation
-                </GetScriptBlock>
-            </ScriptProperty>
-
-            <ScriptProperty>
-                <Name>contentType</Name>
-                <GetScriptBlock>
-                    $this.BaseObject.contentType
-                </GetScriptBlock>
-            </ScriptProperty>
-
-            <ScriptProperty>
-                <Name>IsInline</Name>
-                <GetScriptBlock>
-                    $this.BaseObject.isInline
-                </GetScriptBlock>
-            </ScriptProperty>
-
-            <ScriptProperty>
-                <Name>LastModifiedDateTime</Name>
-                <GetScriptBlock>
-                    $this.BaseObject.lastModifiedDateTime
-                </GetScriptBlock>
-            </ScriptProperty>
-
-            <ScriptProperty>
-                <Name>Size</Name>
-                <GetScriptBlock>
-                    $this.BaseObject.size
-                </GetScriptBlock>
-            </ScriptProperty>
-
-            <ScriptProperty>
-                <Name>SizeKB</Name>
-                <GetScriptBlock>
-                    [math]::Round( ($this.BaseObject.size / 1KB), 2)
-                </GetScriptBlock>
-            </ScriptProperty>
-
-            <ScriptProperty>
-                <Name>SizeMB</Name>
-                <GetScriptBlock>
-                    [math]::Round( ($this.BaseObject.size / 1MB), 2)
-                </GetScriptBlock>
-            </ScriptProperty>
 
             <CodeProperty IsHidden="true">
                 <Name>SerializationData</Name>

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Management.Automation;
-using System.Security;
 
 namespace MSGraph.Exchange.Mail
 {
@@ -62,7 +60,7 @@ namespace MSGraph.Exchange.Mail
         /// <returns></returns>
         public override string ToString()
         {
-            if ( !string.IsNullOrEmpty(Name) )
+            if (!string.IsNullOrEmpty(Name))
             {
                 _returnValue = Name;
             }

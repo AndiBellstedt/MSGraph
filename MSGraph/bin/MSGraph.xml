@@ -286,19 +286,174 @@
             Indicates the version of the access token.
             </summary>
         </member>
+        <member name="T:MSGraph.Exchange.APIVersion">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.APIVersion.V1">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:MSGraph.Exchange.FollowupFlag">
+            <summary>
+            followupFlag resource type
+            Allows setting a flag in an item for the user to follow up on later.
+            
+            https://docs.microsoft.com/en-us/graph/api/resources/followupflag?view=graph-rest-1.0
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.FollowupFlag.CompletedDateTime">
+            <summary>
+            The date and time that the follow-up was finished.
+            
+            type format: microsoft.graph.dateTimeTimeZone
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.FollowupFlag.DueDateTime">
+            <summary>
+            The date and time that the follow-up is to be finished.
+            
+            type format: microsoft.graph.dateTimeTimeZone
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.FollowupFlag.FlagStatus">
+            <summary>
+            The status for follow-up for an item. 
+            Possible values are notFlagged, complete, and flagged.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.FollowupFlag.StartDateTime">
+            <summary>
+            The date and time that the follow-up is to begin.
+            
+            type format: microsoft.graph.dateTimeTimeZone
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.FollowupFlag.ToString">
+            <summary>
+            Overrides the default ToString() method 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MSGraph.Exchange.FollowupFlag.#ctor(MSGraph.Exchange.FollowupFlag)">
+            <summary>
+            MessageBody input
+            </summary>
+            <param name="Flag"></param>
+        </member>
+        <member name="M:MSGraph.Exchange.FollowupFlag.#ctor(System.String)">
+            <summary>
+            String input parser
+            </summary>
+            <param name="StatusText"></param>
+        </member>
+        <member name="M:MSGraph.Exchange.FollowupFlag.#ctor">
+            <summary>
+            empty object
+            </summary>
+        </member>
         <member name="T:MSGraph.Exchange.Mail.Attachment">
             <summary>
             Mail attachments in exchange online
+            fileAttachment resource type
+            
+            https://docs.microsoft.com/en-us/graph/api/resources/fileattachment?view=graph-rest-1.0
             </summary>
         </member>
         <member name="F:MSGraph.Exchange.Mail.Attachment.BaseObject">
             <summary>
-            data carrier object
+            raw data carrier object
             </summary>
         </member>
         <member name="F:MSGraph.Exchange.Mail.Attachment.Id">
             <summary>
             
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Attachment.Name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Attachment.ContentType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Attachment.ContentId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Attachment.ContentLocation">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Attachment.IsInline">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Attachment.LastModifiedDateTime">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Attachment.Size">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:MSGraph.Exchange.Mail.Attachment.SizeKB">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:MSGraph.Exchange.Mail.Attachment.SizeMB">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:MSGraph.Exchange.Mail.MessageBody">
+            <summary>
+            Class for a body object from a message
+            https://docs.microsoft.com/en-us/graph/api/resources/itembody?view=graph-rest-1.0
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.MessageBody.contentType">
+            <summary>
+            The type of the content. Possible values are Text and HTML.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.MessageBody.content">
+            <summary>
+            The content of the item.
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.Mail.MessageBody.ToString">
+            <summary>
+            Overrides the default ToString() method 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MSGraph.Exchange.Mail.MessageBody.#ctor(MSGraph.Exchange.Mail.MessageBody)">
+            <summary>
+            MessageBody input
+            </summary>
+            <param name="Body"></param>
+        </member>
+        <member name="M:MSGraph.Exchange.Mail.MessageBody.#ctor(System.String)">
+            <summary>
+            String input parser
+            </summary>
+            <param name="Body"></param>
+        </member>
+        <member name="M:MSGraph.Exchange.Mail.MessageBody.#ctor">
+            <summary>
+            empty object
             </summary>
         </member>
         <member name="T:MSGraph.Exchange.Mail.Folder">

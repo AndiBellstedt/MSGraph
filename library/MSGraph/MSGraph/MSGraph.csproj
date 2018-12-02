@@ -49,7 +49,10 @@
   <ItemGroup>
     <Compile Include="Core\AzureAccessToken.cs" />
     <Compile Include="Core\JWTAccessTokenInfo.cs" />
+    <Compile Include="Exchange\APIVersion.cs" />
+    <Compile Include="Exchange\FollowupFlag.cs" />
     <Compile Include="Exchange\Mail\Attachment.cs" />
+    <Compile Include="Exchange\Mail\MessageBody.cs" />
     <Compile Include="Exchange\Mail\Folder.cs" />
     <Compile Include="Exchange\Mail\MailFolderParameter.cs" />
     <Compile Include="Exchange\Mail\Message.cs" />

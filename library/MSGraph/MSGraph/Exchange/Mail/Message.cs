@@ -55,7 +55,7 @@ namespace MSGraph.Exchange.Mail
         /// 
         /// </summary>
         public MailAddress From;
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -84,7 +84,7 @@ namespace MSGraph.Exchange.Mail
         /// <summary>
         /// 
         /// </summary>
-        public object Body;
+        public MessageBody Body;
 
         /// <summary>
         /// 
@@ -109,13 +109,13 @@ namespace MSGraph.Exchange.Mail
         /// <summary>
         /// 
         /// </summary>
-        public object Flag;
+        public FollowupFlag Flag;
 
         /// <summary>
         /// 
         /// </summary>
         public object MeetingMessageType;
-        
+
 
         /// <summary>
         /// 
