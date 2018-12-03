@@ -99,7 +99,7 @@
                 $level = $level + 1
                 foreach ($folderItem in $FoldersWithChilds) {
                     if($folderItem.ChildFolderCount -gt 0) {
-                        Write-PSFMessage -Level VeryVerbose -Message "Getting childfolders for folder '$($folderItem.Name)'" -Tag "ParameterSetHandling"
+                        Write-PSFMessage -Level VeryVerbose -Message "Getting childfolders for folder '$($folderItem.Name)'" -Tag "QueryData"
                         $invokeParam.Field = "mailFolders/$($folderItem.Id)/childFolders"
                         $childFolderOutput = invoke-internalMgaGetMethod -invokeParam $invokeParam -level $level -parentFolder $folderItem
 
