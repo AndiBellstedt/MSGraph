@@ -30,17 +30,20 @@
 
         Return all emails in the inbox of the user connected to through a token
     #>
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName = 'Default')]
     [OutputType([MSGraph.Exchange.Mail.Attachment])]
     param (
-        [Parameter(ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ById')]
-        [Alias('Id')]
-        [string[]]
-        $MailId,
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ByInputObject', Position = 0)]
+        [Alias('Id', 'Mail', 'MailMessage', 'MessageId', 'MailId')]
+        [MSGraph.Exchange.Mail.MailMessageOrMailFolderParameter[]]
+        $Message,
 
-        [Parameter(ParameterSetName = 'ById')]
+        [Parameter(Position = 1)]
         [string]
-        $User = 'me',
+        $Name = "*",
+
+        [string]
+        $User,
 
         [switch]
         $IncludeInlineAttachment,
@@ -52,16 +55,20 @@
         $Token
     )
     begin {
-        #[Parameter(ValueFromPipeline = $true, ParameterSetName='ByInputObject')]
-        #[Alias('Mail', 'MailMessage', 'Message')]
-        #[MSGraph.Exchange.Mail.Message]
-        #$InputObject,
     }
 
     process {
-        foreach ($mail in $MailId) {
-            Write-PSFMessage -Level Verbose -Message "Getting attachment from mail"
-            $data = Invoke-MgaGetMethod -Field "messages/$($mail)/attachments" -User $User -Token $Token -ResultSize $ResultSize
+        foreach ($item in $Message) {
+            Write-PSFMessage -Level Verbose -Message "Getting attachment from mail" -Tag "QueryData"
+            $invokeParam = @{
+                "Field"        = "messages/$($item.Id)/attachments"
+                "Token"        = $Token
+                "User"         = Resolve-UserString -User $User
+                "ResultSize"   = $ResultSize
+                "FunctionName" = $MyInvocation.MyCommand
+            }
+
+            $data = Invoke-MgaGetMethod @invokeParam | Where-Object { $_.name -like $Name }
             if (-not $IncludeInlineAttachment) { $data = $data | Where-Object isInline -eq $false}
             foreach ($output in $data) {
                 [MSGraph.Exchange.Mail.Attachment]@{
