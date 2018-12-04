@@ -115,10 +115,15 @@ namespace MSGraph.Exchange.Mail
                 IsWellKnownName = true;
                 Name = Text.ToLower();
             }
-            else
+            else if ((Text.Length == 120 || Text.Length == 152) && Text.EndsWith("="))
             {
                 IsWellKnownName = false;
                 Id = Text;
+            }
+            else
+            {
+                IsWellKnownName = false;
+                Name = Text;
             }
         }
         #endregion Constructors

@@ -39,7 +39,7 @@
     .EXAMPLE
         PS C:\> Get-MgaMailMessage
 
-        Return emails in the inbox of the user connected to through a token
+        Return emails in the inbox of the user connected to through a token.
 
     .EXAMPLE
         PS C:\> $mails = Get-MgaMailMessage -Delta
@@ -66,14 +66,14 @@
         From the second call, the procedure can be continued as needed, only updates will be outputted by Get-MgaMailMessage.
 
         .EXAMPLE
-        PS C:\> Get-MgaMailFolder -Filter "MyFolder*" | Get-MgaMailMessage
+        PS C:\> Get-MgaMailFolder -Name "Junkemail" | Get-MgaMailMessage
 
-        Return emails in the folders "MyFolder*" of the user connected to through a token
+        Return emails from the Junkemail folder of the user connected to through a token.
 
         .EXAMPLE
-        PS C:\> Get-MgaMailMessage
+        PS C:\> Get-MgaMailMessage -FolderName "MyFolder" -Subject "Important*"
 
-        Return emails in the folders "MyFolder*" of the user connected to through a token
+        Return emails where the subject starts with "Important" from the folder "MyFolder" of the user connected to through a token.
 #>
     [CmdletBinding(DefaultParameterSetName = 'ByInputObject')]
     [OutputType([MSGraph.Exchange.Mail.Message])]
@@ -84,7 +84,7 @@
         $InputObject,
 
         [Parameter(ParameterSetName = 'ByFolderName', Position = 0)]
-        [Alias('Folder')]
+        [Alias('FolderId', 'Folder')]
         [string[]]
         $FolderName,
 
@@ -116,7 +116,11 @@
         }
         if ($PSCmdlet.ParameterSetName -like "ByFolderName") {
             foreach ($folderItem in $FolderName) {
-                $InputObject = $InputObject + [MSGraph.Exchange.Mail.MailMessageOrMailFolderParameter]$folderItem
+                $folderItem = [MSGraph.Exchange.Mail.MailMessageOrMailFolderParameter]$folderItem
+                if($folderItem.Name -and (-not $folderItem.IsWellKnownName)) {
+                    [MSGraph.Exchange.Mail.MailMessageOrMailFolderParameter]$folderItem = Get-MgaMailFolder -Name $folderItem.Name
+                }
+                $InputObject = $InputObject + $folderItem
             }
         }
 

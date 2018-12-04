@@ -21,8 +21,8 @@
 
     .PARAMETER Token
         The token representing an established connection to the Microsoft Graph Api.
-        Can be created by using New-EORAccessToken.
-        Can be omitted if a connection has been registered using the -Register parameter on New-EORAccessToken.
+        Can be created by using New-MgaAccessToken.
+        Can be omitted if a connection has been registered using the -Register parameter on New-MgaAccessToken.
 
     .PARAMETER PassThru
         Outputs the token to the console
@@ -37,26 +37,32 @@
         PS C:\> $mails | Move-MgaMailMessage -DestinationFolder $destinationFolder
 
         Moves messages in variable $mails to the folder in the variable $destinationFolder.
+        also possible:
+        PS C:\> Move-MgaMailMessage -InputObject $mails -DestinationFolder $destinationFolder
 
         The variable $mails can be represent:
         PS C:\> $mails = Get-MgaMailMessage -Folder Inbox -ResultSize 1
 
         The variable $destinationFolder can be represent:
-        PS C:\> $destinationFolder = Get-MgaMailFolder -Filter "Archive"
+        PS C:\> $destinationFolder = Get-MgaMailFolder -Name "Archive"
 
     .EXAMPLE
         PS C:\> Move-MgaMailMessage -Id $mails.id -DestinationFolder $destinationFolder
 
         Moves messages into the folder $destinationFolder.
+        
+        The variable $mails can be represent:
+        PS C:\> $mails = Get-MgaMailMessage -Folder Inbox -ResultSize 1
+
         The variable $destinationFolder can be represent:
-        PS C:\> $destinationFolder = Get-MgaMailFolder -Filter "Archive"
+        PS C:\> $destinationFolder = Get-MgaMailFolder -Name "Archive"
 
     .EXAMPLE
         PS C:\> Get-MgaMailMessage -Folder Inbox | Move-MgaMailMessage -DestinationFolder $destinationFolder
 
         Moves ALL messages from your inbox into the folder $destinationFolder.
         The variable $destinationFolder can be represent:
-        PS C:\> $destinationFolder = Get-MgaMailFolder -Filter "Archive"
+        PS C:\> $destinationFolder = Get-MgaMailFolder -Name "Archive"
 
     #>
     [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'Medium', DefaultParameterSetName = 'ByInputObject')]

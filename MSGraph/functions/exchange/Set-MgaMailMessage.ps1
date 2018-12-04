@@ -76,8 +76,8 @@
 
     .PARAMETER Token
         The token representing an established connection to the Microsoft Graph Api.
-        Can be created by using New-EORAccessToken.
-        Can be omitted if a connection has been registered using the -Register parameter on New-EORAccessToken.
+        Can be created by using New-MgaAccessToken.
+        Can be omitted if a connection has been registered using the -Register parameter on New-MgaAccessToken.
 
     .PARAMETER PassThru
         Outputs the token to the console

@@ -29,8 +29,8 @@
 
     .PARAMETER Token
         The token representing an established connection to the Microsoft Graph Api.
-        Can be created by using New-EORAccessToken.
-        Can be omitted if a connection has been registered using the -Register parameter on New-EORAccessToken.
+        Can be created by using New-MgaAccessToken.
+        Can be omitted if a connection has been registered using the -Register parameter on New-MgaAccessToken.
 
     .EXAMPLE
         PS C:\> Get-MgaMailFolder
@@ -38,9 +38,31 @@
         Returns all folders in the mailbox of the connected user.
 
     .EXAMPLE
-        PS C:\> Get-MgaMailFolder -Filter Inbox -User "max.master@contoso.onmicrosoft.com" -Token $Token
+        PS C:\> Get-MgaMailFolder -Name Inbox
 
-        Retrieves the inbox folder of the "max.master@contoso.onmicrosoft.com" mailbox, using the connection token stored in $Token.
+        Returns the "wellknown" inbox folder in the mailbox of the connected user.
+        The wellknown folders can be specified by tab completion.
+
+    .EXAMPLE
+        PS C:\> Get-MgaMailFolder -Name Inbox -IncludeChildFolders
+
+        Returns inbox and the next level of subfolders in the inbox of the connected user.
+
+    .EXAMPLE
+        PS C:\> Get-MgaMailFolder -Name Inbox -Recurse
+
+        Returns inbox and the all subfolders underneath the inbox of the connected user.
+        This one is like the "-Recurse" switch on the dir/Get-ChildItem command.
+
+    .EXAMPLE
+        PS C:\> Get-MgaMailFolder -Filter "My*" -User "max.master@contoso.onmicrosoft.com" -Token $Token
+
+        Retrieves all folders where name starts with My in the mailbox of "max.master@contoso.onmicrosoft.com", using the connection token stored in $Token.
+
+    .EXAMPLE
+        PS C:\> Get-MgaMailFolder -ResultSize 5
+
+        Retrieves only the first 5 folders in the mailbox of the connected user.
     #>
     [CmdletBinding(DefaultParameterSetName = 'Default')]
     [OutputType([MSGraph.Exchange.Mail.Folder])]
@@ -143,11 +165,16 @@
                     $level = 1
                     Write-PSFMessage -Level VeryVerbose -Message "Getting folder '$( if($folder.Name){$folder.Name}else{$folder.Id} )'" -Tag "ParameterSetHandling"
                     $invokeParam = @{
-                        "Field"        = "mailFolders/$($folder.Id)"
                         "Token"        = $Token
                         "User"         = Resolve-UserString -User $User
                         "ResultSize"   = $ResultSize
                         "FunctionName" = $MyInvocation.MyCommand
+                    }
+                    if($folder.id) {
+                        $invokeParam.add("Field", "mailFolders/$($folder.Id)")
+                    }
+                    else {
+                        $invokeParam.add("Field", "mailFolders?`$filter=DisplayName eq '$($folder.Name)'")
                     }
 
                     $output = invoke-internalMgaGetMethod -invokeParam $invokeParam -level $level

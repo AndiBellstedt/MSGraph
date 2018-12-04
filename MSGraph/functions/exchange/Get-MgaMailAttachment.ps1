@@ -22,20 +22,20 @@
 
     .PARAMETER Token
         The token representing an established connection to the Microsoft Graph Api.
-        Can be created by using New-EORAccessToken.
-        Can be omitted if a connection has been registered using the -Register parameter on New-EORAccessToken.
+        Can be created by using New-MgaAccessToken.
+        Can be omitted if a connection has been registered using the -Register parameter on New-MgaAccessToken.
 
     .EXAMPLE
-        PS C:\> Get-MgaMailMessage
+        PS C:\> MgaMailMessage | Get-MgaMailAttachment
 
-        Return all emails in the inbox of the user connected to through a token
+        Return all emails attachments in the inbox of the user connected to through a token.
     #>
     [CmdletBinding(DefaultParameterSetName = 'Default')]
     [OutputType([MSGraph.Exchange.Mail.Attachment])]
     param (
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ByInputObject', Position = 0)]
         [Alias('Id', 'Mail', 'MailMessage', 'MessageId', 'MailId')]
-        [MSGraph.Exchange.Mail.MailMessageOrMailFolderParameter[]]
+        [MSGraph.Exchange.Mail.MailMessageParameter[]]
         $Message,
 
         [Parameter(Position = 1)]
@@ -59,7 +59,10 @@
 
     process {
         foreach ($item in $Message) {
-            Write-PSFMessage -Level Verbose -Message "Getting attachment from mail" -Tag "QueryData"
+            if($item.Name -and (-not $item.Id)) {
+                Write-PSFMessage -Level Warning -Message "'$($item.Name)' has no valid ID to query. You have to input message objects or message Id to query attachments." -Tag "ParameterSetHandling"
+                continue
+            }
             $invokeParam = @{
                 "Field"        = "messages/$($item.Id)/attachments"
                 "Token"        = $Token
@@ -67,6 +70,8 @@
                 "ResultSize"   = $ResultSize
                 "FunctionName" = $MyInvocation.MyCommand
             }
+
+            Write-PSFMessage -Level Verbose -Message "Getting attachment from mail" -Tag "QueryData"
 
             $data = Invoke-MgaGetMethod @invokeParam | Where-Object { $_.name -like $Name }
             if (-not $IncludeInlineAttachment) { $data = $data | Where-Object isInline -eq $false}

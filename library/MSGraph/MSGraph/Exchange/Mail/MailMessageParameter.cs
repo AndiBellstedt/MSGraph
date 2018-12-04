@@ -8,7 +8,7 @@ namespace MSGraph.Exchange.Mail
     /// input on parameters in *-MgaMail* commands
     /// </summary>
     [Serializable]
-    public class MailFolderParameter
+    public class MailMessageParameter
     {
         #region Properties
         /// <summary>
@@ -35,11 +35,6 @@ namespace MSGraph.Exchange.Mail
         }
 
         private string _typeName;
-
-        /// <summary>
-        /// indicator wether name is a WellKnownFolder
-        /// </summary>
-        public bool IsWellKnownName;
 
         /// <summary>
         /// carrier object for the input object
@@ -73,18 +68,18 @@ namespace MSGraph.Exchange.Mail
         /// <summary>
         /// Mail Folderinput
         /// </summary>
-        public MailFolderParameter(Folder Folder)
+        public MailMessageParameter(Message Message)
         {
-            InputObject = Folder;
+            InputObject = Message;
             _typeName = InputObject.GetType().ToString();
-            Id = Folder.Id;
-            Name = Folder.DisplayName;
+            Id = Message.Id;
+            Name = Message.Subject;
         }
 
         /// <summary>
         /// String input
         /// </summary>
-        public MailFolderParameter(string Text)
+        public MailMessageParameter(string Text)
         {
             InputObject = Text;
             string[] names = Enum.GetNames(typeof(WellKnownFolder));
@@ -92,18 +87,15 @@ namespace MSGraph.Exchange.Mail
 
             if (names.Contains(Text, StringComparer.InvariantCultureIgnoreCase))
             {
-                IsWellKnownName = true;
                 Name = Text.ToLower();
                 Id = Name;
             }
-            else if (Text.Length == 120 && Text.EndsWith("="))
+            else if (Text.Length == 152 && Text.EndsWith("="))
             {
-                IsWellKnownName = false;
                 Id = Text;
             }
             else
             {
-                IsWellKnownName = false;
                 Name = Text;
             }
         }

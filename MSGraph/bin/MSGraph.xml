@@ -417,6 +417,53 @@
             
             </summary>
         </member>
+        <member name="T:MSGraph.Exchange.Mail.MailMessageParameter">
+            <summary>
+            Mail message parameter class for convinient pipeline 
+            input on parameters in *-MgaMail* commands
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.MailMessageParameter.Id">
+            <summary>
+            message or folder id
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.MailMessageParameter.Name">
+            <summary>
+            name of a folder
+            </summary>
+        </member>
+        <member name="P:MSGraph.Exchange.Mail.MailMessageParameter.TypeName">
+            <summary>
+            The type name of inputobject
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.MailMessageParameter.IsWellKnownName">
+            <summary>
+            indicator wether name is a WellKnownFolder
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.MailMessageParameter.InputObject">
+            <summary>
+            carrier object for the input object
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.Mail.MailMessageParameter.ToString">
+            <summary>
+            Overrides the default ToString() method 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MSGraph.Exchange.Mail.MailMessageParameter.#ctor(MSGraph.Exchange.Mail.Message)">
+            <summary>
+            Mail Folderinput
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.Mail.MailMessageParameter.#ctor(System.String)">
+            <summary>
+            String input
+            </summary>
+        </member>
         <member name="T:MSGraph.Exchange.Mail.MessageBody">
             <summary>
             Class for a body object from a message
