@@ -438,11 +438,6 @@
             The type name of inputobject
             </summary>
         </member>
-        <member name="F:MSGraph.Exchange.Mail.MailMessageParameter.IsWellKnownName">
-            <summary>
-            indicator wether name is a WellKnownFolder
-            </summary>
-        </member>
         <member name="F:MSGraph.Exchange.Mail.MailMessageParameter.InputObject">
             <summary>
             carrier object for the input object
