@@ -125,21 +125,17 @@
 
 
     #>
-    [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'Medium', DefaultParameterSetName = 'ByInputObject')]
+    [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'Medium', DefaultParameterSetName = 'Default')]
     [Alias("Update-MgaMailMessage")]
     [OutputType([MSGraph.Exchange.Mail.Message])]
     param (
-        [Parameter(Mandatory=$true, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ByInputObject')]
-        [Alias("Message")]
-        [MSGraph.Exchange.Mail.Message]
+        [Parameter(Mandatory=$true, Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
+        [Alias('Message', 'MessageId', 'Id')]
+        [MSGraph.Exchange.Mail.MailMessageParameter[]]
         $InputObject,
 
-        [Parameter(Mandatory=$true, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ById')]
-        [Alias("MessageId")]
-        [string[]]
-        $Id,
-
-        [Parameter(ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ById')]
+        [Parameter(Mandatory=$true, Position = 1, ParameterSetName = 'IndiviualUser')]
+        [ValidateNotNullOrEmpty()]
         [string]
         $User,
 
@@ -236,21 +232,10 @@
     }
 
     process {
-        $messages = @()
         $bodyHash = @{}
 
         # Get input from pipeable objects
         Write-PSFMessage -Level Debug -Message "Gettings messages by parameter set $($PSCmdlet.ParameterSetName)" -Tag "ParameterSetHandling"
-        switch ($PSCmdlet.ParameterSetName) {
-            "ByInputObject" {
-                $messages = $InputObject.Id
-                $User = $InputObject.BaseObject.User
-            }
-            "ById" {
-                $messages = $Id
-            }
-            Default { Stop-PSFFunction -Tag "ParameterSetHandling" -Message "Unhandled parameter set. ($($PSCmdlet.ParameterSetName)) Developer mistage." -EnableException $true -Exception ([System.Management.Automation.RuntimeException]::new("Unhandled parameter set. ($($PSCmdlet.ParameterSetName)) Developer mistage.")) -FunctionName $MyInvocation.MyCommand }
-        }
 
         #region Parsing string and boolean parameters to json data parts
         $names = @("IsRead", "Subject", "Body", "Categories", "Importance", "InferenceClassification", "InternetMessageId", "IsDeliveryReceiptRequested", "IsReadReceiptRequested")
@@ -317,11 +302,29 @@
         #endregion Put parameters (JSON Parts) into a valid "message"-JSON-object together
 
         #region Update messages
-        foreach ($messageId in $messages) {
-            if ($pscmdlet.ShouldProcess("messageId $($messageId)", "Update properties '$([string]::Join("', '", $boundParameters))'")) {
-                Write-PSFMessage -Level Verbose -Message "Update properties '$([string]::Join("', '", $boundParameters))' on messageId $($messageId)"  -Tag "MessageUpdate"
+        foreach ($messageItem in $InputObject) {
+            if ($messageItem.TypeName -like "System.String") {
+                if ($messageItem.Id -and ($messageItem.Id.Length -eq 152)) {
+                    [MSGraph.Exchange.Mail.MailMessageParameter]$messageItem = Get-MgaMailMessage -InputObject $messageItem.Id
+                }
+                else {
+                    Write-PSFMessage -Level Warning -Message "The specified input string seams not to be a valid Id. Skipping object '$($messageItem)'" -Tag "InputValidation"
+                    continue
+                }
+            }
+
+            if ($PSCmdlet.ParameterSetName -like "IndiviualUser" -and $messageItem.TypeName -like "MSGraph.Exchange.Mail.Message") {
+                Write-PSFMessage -Level Important -Message "Individual user specified with message object! User from message object ($($messageItem.InputObject.BaseObject.User))will take precedence on specified user ($($User))!" -Tag "InputValidation"
+                $User = $messageItem.InputObject.BaseObject.User
+            }
+            if ($PSCmdlet.ParameterSetName -notlike "IndiviualUser") {
+                $User = $messageItem.InputObject.BaseObject.User
+            }
+
+            if ($pscmdlet.ShouldProcess("message '$($messageItem)'", "Update properties '$([string]::Join("', '", $boundParameters))'")) {
+                Write-PSFMessage -Level Verbose -Message "Update properties '$([string]::Join("', '", $boundParameters))' on message '$($messageItem)'" -Tag "MessageUpdate"
                 $invokeParam = @{
-                    "Field"        = "messages/$($messageId)"
+                    "Field"        = "messages/$($messageItem.Id)"
                     "User"         = $User
                     "Body"         = $bodyJSON
                     "ContentType"  = "application/json"
@@ -330,7 +333,53 @@
                 }
                 $output = Invoke-MgaPatchMethod @invokeParam
                 if ($PassThru) {
-                    [MSGraph.Exchange.Mail.Message]@{ BaseObject = $output }
+                    $hash = [ordered]@{
+                        BaseObject                 = $output
+                        Subject                    = $output.subject
+                        Body                       = $output.body
+                        BodyPreview                = $output.bodyPreview
+                        Categories                 = $output.categories
+                        ChangeKey                  = $output.changeKey
+                        ConversationId             = $output.conversationId
+                        CreatedDateTime            = [datetime]::Parse($output.createdDateTime)
+                        Flag                       = $output.flag.flagStatus
+                        HasAttachments             = $output.hasAttachments
+                        Id                         = $output.id
+                        Importance                 = $output.importance
+                        InferenceClassification    = $output.inferenceClassification
+                        InternetMessageId          = $output.internetMessageId
+                        IsDeliveryReceiptRequested = $output.isDeliveryReceiptRequested
+                        IsDraft                    = $output.isDraft
+                        IsRead                     = $output.isRead
+                        isReadReceiptRequested     = $output.isReadReceiptRequested
+                        lastModifiedDateTime       = [datetime]::Parse($output.lastModifiedDateTime)
+                        MeetingMessageType         = $output.meetingMessageType
+                        ParentFolderId             = $output.parentFolderId
+                        ReceivedDateTime           = [datetime]::Parse($output.receivedDateTime)
+                        SentDateTime               = [datetime]::Parse($output.sentDateTime)
+                        WebLink                    = $output.webLink
+                    }
+                    if($output.from.emailAddress) {
+                        $hash.Add("from", ($output.from.emailAddress | ForEach-Object { [mailaddress]"$($_.name) $($_.address)"} -ErrorAction Ignore))
+                    }
+                    if($output.Sender.emailAddress) {
+                        $hash.Add("Sender", ($output.Sender.emailAddress | ForEach-Object { [mailaddress]"$($_.name) $($_.address)"} -ErrorAction Ignore ))
+                    }
+                    if($output.bccRecipients.emailAddress) {
+                        $hash.Add("bccRecipients", [array]($output.bccRecipients.emailAddress | ForEach-Object { [mailaddress]"$($_.name) $($_.address)"} -ErrorAction Ignore))
+                    }
+                    if($output.ccRecipients.emailAddress) { 
+                        $hash.Add("ccRecipients", [array]($output.ccRecipients.emailAddress | ForEach-Object { [mailaddress]"$($_.name) $($_.address)"} -ErrorAction Ignore))
+                    }
+                    if($output.replyTo.emailAddress) {
+                        $hash.Add("replyTo", [array]($output.replyTo.emailAddress | ForEach-Object { [mailaddress]"$($_.name) $($_.address)"} -ErrorAction Ignore))
+                    }
+                    if($output.toRecipients.emailAddress) {
+                        $hash.Add("toRecipients", [array]($output.toRecipients.emailAddress | ForEach-Object { [mailaddress]"$($_.name) $($_.address)"}))
+                    }
+    
+                    $messageOutputObject = New-Object -TypeName MSGraph.Exchange.Mail.Message -Property $hash
+                    $messageOutputObject
                 }
             }
         }

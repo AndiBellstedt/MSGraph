@@ -35,6 +35,7 @@ namespace MSGraph.Exchange.Mail
         }
 
         private string _typeName;
+        private string _returnValue;
 
         /// <summary>
         /// carrier object for the input object
@@ -51,15 +52,20 @@ namespace MSGraph.Exchange.Mail
         /// <returns></returns>
         public override string ToString()
         {
-            if (Name.Length > 0)
+            if (!string.IsNullOrEmpty(Name))
             {
-                return Name;
+                _returnValue = Name;
+            }
+            else if (!string.IsNullOrEmpty(Id))
+            {
+                _returnValue = Id;
             }
             else
             {
-                return Id;
+                _returnValue = InputObject.ToString();
             }
 
+            return _returnValue;
         }
         #endregion Statics & Stuff
 

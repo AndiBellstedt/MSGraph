@@ -168,16 +168,32 @@
                 }
 
                 "System.String" {
-                    Write-PSFMessage -Level VeryVerbose -Message "Gettings messages in folder '$($InputObjectItem)' from the pipeline"
-                    $name = if ($InputObjectItem.IsWellKnownName) { $InputObjectItem.Name } else { $InputObjectItem.Id }
                     $invokeParam = @{
-                        "Field"        = "mailFolders/$($name)/messages"
                         "User"         = $User
                         "Token"        = $Token
                         "ResultSize"   = $ResultSize
                         "FunctionName" = $MyInvocation.MyCommand
                     }
                     if ($Delta) { $invokeParam.Add("Delta", $true) }
+
+                    $name = if ($InputObjectItem.IsWellKnownName) { $InputObjectItem.Name } else { $InputObjectItem.Id }
+                    if($name.length -eq 152) {
+                        # Id is a message
+                        Write-PSFMessage -Level VeryVerbose -Message "Gettings messages with Id '$($InputObjectItem)'" -Tag "InputValidation"
+                        $invokeParam.Add("Field","messages/$($name)")
+                    }
+                    elseif ($name.length -eq 120)
+                    {
+                        # Id is a folder
+                        Write-PSFMessage -Level VeryVerbose -Message "Gettings messages in folder with Id '$($InputObjectItem)'" -Tag "InputValidation"
+                        $invokeParam.Add("Field","mailFolders/$($name)/messages")
+                    }
+                    else {
+                        # not a valid Id -> should not happen
+                        Write-PSFMessage -Level Warning -Message "The specified Id seeams not be a valid Id. Skipping object '$($name)'" -Tag "InputValidation"
+                        continue
+                    }
+
                     $invokeParams = $invokeParams + $invokeParam
                     Remove-Variable -Name name -Force -ErrorAction Ignore -WhatIf:$false -Confirm:$false -Verbose:$false -Debug:$false
                 }

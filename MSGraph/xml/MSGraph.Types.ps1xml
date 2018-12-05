@@ -37,6 +37,7 @@
         </TypeConverter>
     </Type>
 
+
     <Type>
         <Name>Deserialized.MSGraph.Core.AzureAccessToken</Name>
         <Members>
@@ -72,6 +73,7 @@
             <TypeName>PSFramework.Serialization.SerializationTypeConverter</TypeName>
         </TypeConverter>
     </Type>
+
 
     <Type>
         <Name>Deserialized.MSGraph.Exchange.Mail.Folder</Name>
@@ -138,6 +140,7 @@
             <TypeName>PSFramework.Serialization.SerializationTypeConverter</TypeName>
         </TypeConverter>
     </Type>
+
 
     <Type>
         <Name>Deserialized.MSGraph.Exchange.Mail.Message</Name>
@@ -230,6 +233,7 @@
             <TypeName>PSFramework.Serialization.SerializationTypeConverter</TypeName>
         </TypeConverter>
     </Type>
+
 
     <Type>
         <Name>Deserialized.MSGraph.Exchange.Mail.Attachment</Name>
