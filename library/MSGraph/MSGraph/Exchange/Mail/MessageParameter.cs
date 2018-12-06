@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Management.Automation;
-using System.Security;
 
 namespace MSGraph.Exchange.Mail
 {
@@ -9,7 +7,8 @@ namespace MSGraph.Exchange.Mail
     /// Mail message parameter class for convinient pipeline 
     /// input on parameters in *-MgaMail* commands
     /// </summary>
-    public class MailFolderParameter
+    [Serializable]
+    public class MessageParameter
     {
         #region Properties
         /// <summary>
@@ -32,17 +31,11 @@ namespace MSGraph.Exchange.Mail
                 return _typeName;
             }
 
-            set
-            {
-            }
+            set { }
         }
 
         private string _typeName;
-
-        /// <summary>
-        /// indicator wether name is a WellKnownFolder
-        /// </summary>
-        public bool IsWellKnownName;
+        private string _returnValue;
 
         /// <summary>
         /// carrier object for the input object
@@ -52,36 +45,64 @@ namespace MSGraph.Exchange.Mail
         #endregion Properties
 
 
+        #region Statics & Stuff
+        /// <summary>
+        /// Overrides the default ToString() method 
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            if (!string.IsNullOrEmpty(Name))
+            {
+                _returnValue = Name;
+            }
+            else if (!string.IsNullOrEmpty(Id))
+            {
+                _returnValue = Id;
+            }
+            else
+            {
+                _returnValue = InputObject.ToString();
+            }
+
+            return _returnValue;
+        }
+        #endregion Statics & Stuff
+
+
         #region Constructors
         /// <summary>
         /// Mail Folderinput
         /// </summary>
-        public MailFolderParameter(Folder Folder)
+        public MessageParameter(Message Message)
         {
-            InputObject = Folder;
+            InputObject = Message;
             _typeName = InputObject.GetType().ToString();
-            Id = Folder.Id;
-            Name = Folder.DisplayName;
+            Id = Message.Id;
+            Name = Message.Subject;
         }
 
         /// <summary>
         /// String input
         /// </summary>
-        public MailFolderParameter(string Text)
+        public MessageParameter(string Text)
         {
             InputObject = Text;
             string[] names = Enum.GetNames(typeof(WellKnownFolder));
+            _typeName = InputObject.GetType().ToString();
+
             if (names.Contains(Text, StringComparer.InvariantCultureIgnoreCase))
             {
-                IsWellKnownName = true;
-                _typeName = "WellKnownFolder";
                 Name = Text.ToLower();
                 Id = Name;
             }
-            else
+            else if (Text.Length == 152 && Text.EndsWith("="))
             {
                 Id = Text;
-                _typeName = "Unknown";
+            }
+            else
+            {
+                Name = Text;
             }
         }
         #endregion Constructors

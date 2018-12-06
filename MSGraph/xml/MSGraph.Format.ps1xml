@@ -144,7 +144,7 @@
             </ViewSelectedBy>
 
             <WideControl>
-                <ColumnNumber>3</ColumnNumber> 
+                <ColumnNumber>3</ColumnNumber>
                 <WideEntries>
                     <WideEntry>
                         <WideItem>
@@ -156,41 +156,33 @@
         </View>
 
         <View>
-            <Name>MSGraph.Exchange.Mail.Attachment_table</Name>
+            <Name>MSGraph.Exchange.Mail.FolderParameter_list</Name>
             <ViewSelectedBy>
-                <TypeName>MSGraph.Exchange.Mail.Attachment</TypeName>
+                <TypeName>MSGraph.Exchange.Mail.FolderParameter</TypeName>
             </ViewSelectedBy>
-            <TableControl>
-                <AutoSize/>
-                <TableHeaders>
-                    <TableColumnHeader/>
-                    <TableColumnHeader/>
-                    <TableColumnHeader/>
-                    <TableColumnHeader/>
-                    <TableColumnHeader/>
-                </TableHeaders>
-                <TableRowEntries>
-                    <TableRowEntry>
-                        <TableColumnItems>
-                            <TableColumnItem>
+            <ListControl>
+                <ListEntries>
+                    <ListEntry>
+                        <ListItems>
+                            <ListItem>
+                                <PropertyName>TypeName</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>Id</PropertyName>
+                            </ListItem>
+                            <ListItem>
                                 <PropertyName>Name</PropertyName>
-                            </TableColumnItem>
-                            <TableColumnItem>
-                                <PropertyName>SizeKB</PropertyName>
-                            </TableColumnItem>
-                            <TableColumnItem>
-                                <PropertyName>ContentType</PropertyName>
-                            </TableColumnItem>
-                            <TableColumnItem>
-                                <PropertyName>lastModifiedDateTime</PropertyName>
-                            </TableColumnItem>
-                            <TableColumnItem>
-                                <PropertyName>isInline</PropertyName>
-                            </TableColumnItem>
-                        </TableColumnItems>
-                    </TableRowEntry>
-                </TableRowEntries>
-            </TableControl>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>IsWellKnownName</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>InputObject</PropertyName>
+                            </ListItem>
+                        </ListItems>
+                    </ListEntry>
+                </ListEntries>
+            </ListControl>
         </View>
 
         <View>
@@ -303,7 +295,7 @@
                                 <PropertyName>IsDraft</PropertyName>
                             </ListItem>
                             <ListItem>
-                                <PropertyName>FlagStatus</PropertyName>
+                                <PropertyName>Flag</PropertyName>
                             </ListItem>
                             <ListItem>
                                 <PropertyName>MeetingMessageType</PropertyName>
@@ -325,6 +317,146 @@
                             </ListItem>
                             <ListItem>
                                 <PropertyName>WebLink</PropertyName>
+                            </ListItem>
+                        </ListItems>
+                    </ListEntry>
+                </ListEntries>
+            </ListControl>
+        </View>
+
+        <View>
+            <Name>MSGraph.Exchange.Mail.MessageParameter_list</Name>
+            <ViewSelectedBy>
+                <TypeName>MSGraph.Exchange.Mail.MessageParameter</TypeName>
+            </ViewSelectedBy>
+            <ListControl>
+                <ListEntries>
+                    <ListEntry>
+                        <ListItems>
+                            <ListItem>
+                                <PropertyName>TypeName</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>Id</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>Name</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>InputObject</PropertyName>
+                            </ListItem>
+                        </ListItems>
+                    </ListEntry>
+                </ListEntries>
+            </ListControl>
+        </View>
+
+        <View>
+            <Name>MSGraph.Exchange.Mail.MessageOrFolderParameter_list</Name>
+            <ViewSelectedBy>
+                <TypeName>MSGraph.Exchange.Mail.MessageOrFolderParameter</TypeName>
+            </ViewSelectedBy>
+            <ListControl>
+                <ListEntries>
+                    <ListEntry>
+                        <ListItems>
+                            <ListItem>
+                                <PropertyName>TypeName</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>Id</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>Name</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>IsWellKnownName</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>InputObject</PropertyName>
+                            </ListItem>
+                        </ListItems>
+                    </ListEntry>
+                </ListEntries>
+            </ListControl>
+        </View>
+
+        <View>
+            <Name>MSGraph.Exchange.Mail.Attachment_table</Name>
+            <ViewSelectedBy>
+                <TypeName>MSGraph.Exchange.Mail.Attachment</TypeName>
+            </ViewSelectedBy>
+            <TableControl>
+                <AutoSize/>
+                <TableHeaders>
+                    <TableColumnHeader/>
+                    <TableColumnHeader/>
+                    <TableColumnHeader/>
+                    <TableColumnHeader/>
+                    <TableColumnHeader/>
+                </TableHeaders>
+                <TableRowEntries>
+                    <TableRowEntry>
+                        <TableColumnItems>
+                            <TableColumnItem>
+                                <PropertyName>Name</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>SizeKB</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>ContentType</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>lastModifiedDateTime</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>isInline</PropertyName>
+                            </TableColumnItem>
+                        </TableColumnItems>
+                    </TableRowEntry>
+                </TableRowEntries>
+            </TableControl>
+        </View>
+
+        <View>
+            <Name>MSGraph.Exchange.Mail.Attachment_list</Name>
+            <ViewSelectedBy>
+                <TypeName>MSGraph.Exchange.Mail.Attachment</TypeName>
+            </ViewSelectedBy>
+            <ListControl>
+                <ListEntries>
+                    <ListEntry>
+                        <ListItems>
+                            <ListItem>
+                                <PropertyName>Id</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>Name</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>ContentType</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>ContentId</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>ContentLocation</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>IsInline</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>Size</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>SizeKB</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>SizeMB</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>LastModifiedDateTime</PropertyName>
                             </ListItem>
                         </ListItems>
                     </ListEntry>

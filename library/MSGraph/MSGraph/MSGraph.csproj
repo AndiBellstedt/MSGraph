@@ -49,11 +49,14 @@
   <ItemGroup>
     <Compile Include="Core\AzureAccessToken.cs" />
     <Compile Include="Core\JWTAccessTokenInfo.cs" />
+    <Compile Include="Exchange\FollowupFlag.cs" />
     <Compile Include="Exchange\Mail\Attachment.cs" />
+    <Compile Include="Exchange\Mail\MessageParameter.cs" />
+    <Compile Include="Exchange\Mail\MessageBody.cs" />
     <Compile Include="Exchange\Mail\Folder.cs" />
-    <Compile Include="Exchange\Mail\MailFolderParameter.cs" />
+    <Compile Include="Exchange\Mail\FolderParameter.cs" />
     <Compile Include="Exchange\Mail\Message.cs" />
-    <Compile Include="Exchange\Mail\MailMessageOrMailFolderParameter.cs" />
+    <Compile Include="Exchange\Mail\MessageOrFolderParameter.cs" />
     <Compile Include="Exchange\Mail\WellKnownFolder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

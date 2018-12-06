@@ -286,19 +286,206 @@
             Indicates the version of the access token.
             </summary>
         </member>
+        <member name="T:MSGraph.Exchange.FollowupFlag">
+            <summary>
+            followupFlag resource type
+            Allows setting a flag in an item for the user to follow up on later.
+            
+            https://docs.microsoft.com/en-us/graph/api/resources/followupflag?view=graph-rest-1.0
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.FollowupFlag.CompletedDateTime">
+            <summary>
+            The date and time that the follow-up was finished.
+            
+            type format: microsoft.graph.dateTimeTimeZone
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.FollowupFlag.DueDateTime">
+            <summary>
+            The date and time that the follow-up is to be finished.
+            
+            type format: microsoft.graph.dateTimeTimeZone
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.FollowupFlag.FlagStatus">
+            <summary>
+            The status for follow-up for an item. 
+            Possible values are notFlagged, complete, and flagged.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.FollowupFlag.StartDateTime">
+            <summary>
+            The date and time that the follow-up is to begin.
+            
+            type format: microsoft.graph.dateTimeTimeZone
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.FollowupFlag.ToString">
+            <summary>
+            Overrides the default ToString() method 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MSGraph.Exchange.FollowupFlag.#ctor(MSGraph.Exchange.FollowupFlag)">
+            <summary>
+            MessageBody input
+            </summary>
+            <param name="Flag"></param>
+        </member>
+        <member name="M:MSGraph.Exchange.FollowupFlag.#ctor(System.String)">
+            <summary>
+            String input parser
+            </summary>
+            <param name="StatusText"></param>
+        </member>
+        <member name="M:MSGraph.Exchange.FollowupFlag.#ctor">
+            <summary>
+            empty object
+            </summary>
+        </member>
         <member name="T:MSGraph.Exchange.Mail.Attachment">
             <summary>
             Mail attachments in exchange online
+            fileAttachment resource type
+            
+            https://docs.microsoft.com/en-us/graph/api/resources/fileattachment?view=graph-rest-1.0
             </summary>
         </member>
         <member name="F:MSGraph.Exchange.Mail.Attachment.BaseObject">
             <summary>
-            data carrier object
+            raw data carrier object
             </summary>
         </member>
         <member name="F:MSGraph.Exchange.Mail.Attachment.Id">
             <summary>
             
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Attachment.Name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Attachment.ContentType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Attachment.ContentId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Attachment.ContentLocation">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Attachment.IsInline">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Attachment.LastModifiedDateTime">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Attachment.Size">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:MSGraph.Exchange.Mail.Attachment.SizeKB">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:MSGraph.Exchange.Mail.Attachment.SizeMB">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:MSGraph.Exchange.Mail.MessageParameter">
+            <summary>
+            Mail message parameter class for convinient pipeline 
+            input on parameters in *-MgaMail* commands
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.MessageParameter.Id">
+            <summary>
+            message or folder id
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.MessageParameter.Name">
+            <summary>
+            name of a folder
+            </summary>
+        </member>
+        <member name="P:MSGraph.Exchange.Mail.MessageParameter.TypeName">
+            <summary>
+            The type name of inputobject
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.MessageParameter.InputObject">
+            <summary>
+            carrier object for the input object
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.Mail.MessageParameter.ToString">
+            <summary>
+            Overrides the default ToString() method 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MSGraph.Exchange.Mail.MessageParameter.#ctor(MSGraph.Exchange.Mail.Message)">
+            <summary>
+            Mail Folderinput
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.Mail.MessageParameter.#ctor(System.String)">
+            <summary>
+            String input
+            </summary>
+        </member>
+        <member name="T:MSGraph.Exchange.Mail.MessageBody">
+            <summary>
+            Class for a body object from a message
+            https://docs.microsoft.com/en-us/graph/api/resources/itembody?view=graph-rest-1.0
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.MessageBody.contentType">
+            <summary>
+            The type of the content. Possible values are Text and HTML.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.MessageBody.content">
+            <summary>
+            The content of the item.
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.Mail.MessageBody.ToString">
+            <summary>
+            Overrides the default ToString() method 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MSGraph.Exchange.Mail.MessageBody.#ctor(MSGraph.Exchange.Mail.MessageBody)">
+            <summary>
+            MessageBody input
+            </summary>
+            <param name="Body"></param>
+        </member>
+        <member name="M:MSGraph.Exchange.Mail.MessageBody.#ctor(System.String)">
+            <summary>
+            String input parser
+            </summary>
+            <param name="Body"></param>
+        </member>
+        <member name="M:MSGraph.Exchange.Mail.MessageBody.#ctor">
+            <summary>
+            empty object
             </summary>
         </member>
         <member name="T:MSGraph.Exchange.Mail.Folder">
@@ -366,43 +553,55 @@
             The user name which owns the folder
             </summary>
         </member>
-        <member name="T:MSGraph.Exchange.Mail.MailFolderParameter">
+        <member name="M:MSGraph.Exchange.Mail.Folder.ToString">
+            <summary>
+            Overrides the default ToString() method 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:MSGraph.Exchange.Mail.FolderParameter">
             <summary>
             Mail message parameter class for convinient pipeline 
             input on parameters in *-MgaMail* commands
             </summary>
         </member>
-        <member name="F:MSGraph.Exchange.Mail.MailFolderParameter.Id">
+        <member name="F:MSGraph.Exchange.Mail.FolderParameter.Id">
             <summary>
             message or folder id
             </summary>
         </member>
-        <member name="F:MSGraph.Exchange.Mail.MailFolderParameter.Name">
+        <member name="F:MSGraph.Exchange.Mail.FolderParameter.Name">
             <summary>
             name of a folder
             </summary>
         </member>
-        <member name="P:MSGraph.Exchange.Mail.MailFolderParameter.TypeName">
+        <member name="P:MSGraph.Exchange.Mail.FolderParameter.TypeName">
             <summary>
             The type name of inputobject
             </summary>
         </member>
-        <member name="F:MSGraph.Exchange.Mail.MailFolderParameter.IsWellKnownName">
+        <member name="F:MSGraph.Exchange.Mail.FolderParameter.IsWellKnownName">
             <summary>
             indicator wether name is a WellKnownFolder
             </summary>
         </member>
-        <member name="F:MSGraph.Exchange.Mail.MailFolderParameter.InputObject">
+        <member name="F:MSGraph.Exchange.Mail.FolderParameter.InputObject">
             <summary>
             carrier object for the input object
             </summary>
         </member>
-        <member name="M:MSGraph.Exchange.Mail.MailFolderParameter.#ctor(MSGraph.Exchange.Mail.Folder)">
+        <member name="M:MSGraph.Exchange.Mail.FolderParameter.ToString">
+            <summary>
+            Overrides the default ToString() method 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MSGraph.Exchange.Mail.FolderParameter.#ctor(MSGraph.Exchange.Mail.Folder)">
             <summary>
             Mail Folderinput
             </summary>
         </member>
-        <member name="M:MSGraph.Exchange.Mail.MailFolderParameter.#ctor(System.String)">
+        <member name="M:MSGraph.Exchange.Mail.FolderParameter.#ctor(System.String)">
             <summary>
             String input
             </summary>
@@ -422,48 +621,205 @@
             
             </summary>
         </member>
-        <member name="T:MSGraph.Exchange.Mail.MailMessageOrMailFolderParameter">
+        <member name="F:MSGraph.Exchange.Mail.Message.ChangeKey">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Message.ParentFolderId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Message.ConversationId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Message.InternetMessageId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Message.WebLink">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Message.Sender">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Message.From">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Message.ToRecipients">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Message.CCRecipients">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Message.BCCRecipients">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Message.ReplyTo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Message.Subject">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Message.Body">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Message.BodyPreview">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Message.Categories">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Message.Importance">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Message.InferenceClassification">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Message.Flag">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Message.MeetingMessageType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Message.CreatedDateTime">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Message.SentDateTime">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Message.ReceivedDateTime">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Message.lastModifiedDateTime">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Message.HasAttachments">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Message.IsDeliveryReceiptRequested">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Message.IsDraft">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Message.IsRead">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.Message.isReadReceiptRequested">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:MSGraph.Exchange.Mail.Message.UnRead">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.Mail.Message.ToString">
+            <summary>
+            Overrides the default ToString() method 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:MSGraph.Exchange.Mail.MessageOrFolderParameter">
             <summary>
             Mail message parameter class for convinient pipeline 
             input on parameters in *-MgaMail* commands
             </summary>
         </member>
-        <member name="F:MSGraph.Exchange.Mail.MailMessageOrMailFolderParameter.Id">
+        <member name="F:MSGraph.Exchange.Mail.MessageOrFolderParameter.Id">
             <summary>
             message or folder id
             </summary>
         </member>
-        <member name="F:MSGraph.Exchange.Mail.MailMessageOrMailFolderParameter.Name">
+        <member name="F:MSGraph.Exchange.Mail.MessageOrFolderParameter.Name">
             <summary>
             name of a folder
             </summary>
         </member>
-        <member name="P:MSGraph.Exchange.Mail.MailMessageOrMailFolderParameter.TypeName">
+        <member name="P:MSGraph.Exchange.Mail.MessageOrFolderParameter.TypeName">
             <summary>
             The type name of inputobject
             </summary>
         </member>
-        <member name="F:MSGraph.Exchange.Mail.MailMessageOrMailFolderParameter.IsWellKnownName">
+        <member name="F:MSGraph.Exchange.Mail.MessageOrFolderParameter.IsWellKnownName">
             <summary>
             indicator wether name is a WellKnownFolder
             </summary>
         </member>
-        <member name="F:MSGraph.Exchange.Mail.MailMessageOrMailFolderParameter.InputObject">
+        <member name="F:MSGraph.Exchange.Mail.MessageOrFolderParameter.InputObject">
             <summary>
             carrier object for the input object
             </summary>
         </member>
-        <member name="M:MSGraph.Exchange.Mail.MailMessageOrMailFolderParameter.#ctor(MSGraph.Exchange.Mail.Message)">
+        <member name="M:MSGraph.Exchange.Mail.MessageOrFolderParameter.ToString">
+            <summary>
+            Overrides the default ToString() method 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MSGraph.Exchange.Mail.MessageOrFolderParameter.#ctor(MSGraph.Exchange.Mail.Message)">
             <summary>
             Mail Message input
             </summary>
         </member>
-        <member name="M:MSGraph.Exchange.Mail.MailMessageOrMailFolderParameter.#ctor(MSGraph.Exchange.Mail.Folder)">
+        <member name="M:MSGraph.Exchange.Mail.MessageOrFolderParameter.#ctor(MSGraph.Exchange.Mail.Folder)">
             <summary>
             Mail Folderinput
             </summary>
         </member>
-        <member name="M:MSGraph.Exchange.Mail.MailMessageOrMailFolderParameter.#ctor(System.String)">
+        <member name="M:MSGraph.Exchange.Mail.MessageOrFolderParameter.#ctor(System.String)">
             <summary>
             String input
             </summary>
@@ -479,63 +835,63 @@
             For example, you can get the Drafts folder using its well-known name with the following query.
             </summary>
         </member>
-        <member name="F:MSGraph.Exchange.Mail.WellKnownFolder.archive">
+        <member name="F:MSGraph.Exchange.Mail.WellKnownFolder.Archive">
             <summary>
             The archive folder messages are sent to when using the One_Click Archive feature in Outlook clients that support it. 
             Note: this is not the same as the Archive Mailbox feature of Exchange online.
             </summary>
         </member>
-        <member name="F:MSGraph.Exchange.Mail.WellKnownFolder.clutter">
+        <member name="F:MSGraph.Exchange.Mail.WellKnownFolder.Clutter">
             <summary>
             The clutter folder low-priority messages are moved to when using the Clutter feature.
             </summary>
         </member>
-        <member name="F:MSGraph.Exchange.Mail.WellKnownFolder.conflicts">
+        <member name="F:MSGraph.Exchange.Mail.WellKnownFolder.Conflicts">
             <summary>
             The folder that contains conflicting items in the mailbox.
             </summary>
         </member>
-        <member name="F:MSGraph.Exchange.Mail.WellKnownFolder.conversationhistory">
+        <member name="F:MSGraph.Exchange.Mail.WellKnownFolder.Conversationhistory">
             <summary>
             The folder where Skype saves IM conversations (if Skype is configured to do so).
             </summary>
         </member>
-        <member name="F:MSGraph.Exchange.Mail.WellKnownFolder.deleteditems">
+        <member name="F:MSGraph.Exchange.Mail.WellKnownFolder.DeletedItems">
             <summary>
             The folder items are moved to when they are deleted.
             </summary>
         </member>
-        <member name="F:MSGraph.Exchange.Mail.WellKnownFolder.drafts">
+        <member name="F:MSGraph.Exchange.Mail.WellKnownFolder.Drafts">
             <summary>
             The folder that contains unsent messages.
             </summary>
         </member>
-        <member name="F:MSGraph.Exchange.Mail.WellKnownFolder.inbox">
+        <member name="F:MSGraph.Exchange.Mail.WellKnownFolder.Inbox">
             <summary>
             The inbox folder.
             </summary>
         </member>
-        <member name="F:MSGraph.Exchange.Mail.WellKnownFolder.junkemail">
+        <member name="F:MSGraph.Exchange.Mail.WellKnownFolder.JunkEmail">
             <summary>
             The junk email folder.
             </summary>
         </member>
-        <member name="F:MSGraph.Exchange.Mail.WellKnownFolder.localfailures">
+        <member name="F:MSGraph.Exchange.Mail.WellKnownFolder.LocalFailures">
             <summary>
             The folder that contains items that exist on the local client but could not be uploaded to the server.
             </summary>
         </member>
-        <member name="F:MSGraph.Exchange.Mail.WellKnownFolder.msgfolderroot">
+        <member name="F:MSGraph.Exchange.Mail.WellKnownFolder.MsgFolderRoot">
             <summary>
             The "Top of Information Store" folder. This folder is the parent folder for folders that are displayed in normal mail clients, such as the inbox.
             </summary>
         </member>
-        <member name="F:MSGraph.Exchange.Mail.WellKnownFolder.outbox">
+        <member name="F:MSGraph.Exchange.Mail.WellKnownFolder.Outbox">
             <summary>
             The outbox folder.
             </summary>
         </member>
-        <member name="F:MSGraph.Exchange.Mail.WellKnownFolder.recoverableitemsdeletions">
+        <member name="F:MSGraph.Exchange.Mail.WellKnownFolder.RecoverableItemsDeletions">
             <summary>
             The folder that contains soft-deleted items: 
             deleted either from the Deleted Items folder, or by pressing shift+delete in Outlook. 
@@ -543,27 +899,27 @@
             it through the Recover Deleted Items from Server feature in Outlook or Outlook on the web.
             </summary>
         </member>
-        <member name="F:MSGraph.Exchange.Mail.WellKnownFolder.scheduled">
+        <member name="F:MSGraph.Exchange.Mail.WellKnownFolder.Scheduled">
             <summary>
             The folder that contains messages that are scheduled to reappear in the inbox using the Schedule feature in Outlook for iOS.
             </summary>
         </member>
-        <member name="F:MSGraph.Exchange.Mail.WellKnownFolder.searchfolders">
+        <member name="F:MSGraph.Exchange.Mail.WellKnownFolder.SearchFolders">
             <summary>
             The parent folder for all search folders defined in the user's mailbox.
             </summary>
         </member>
-        <member name="F:MSGraph.Exchange.Mail.WellKnownFolder.sentitems">
+        <member name="F:MSGraph.Exchange.Mail.WellKnownFolder.SentItems">
             <summary>
             The sent items folder.
             </summary>
         </member>
-        <member name="F:MSGraph.Exchange.Mail.WellKnownFolder.serverfailures">
+        <member name="F:MSGraph.Exchange.Mail.WellKnownFolder.ServerFailures">
             <summary>
             The folder that contains items that exist on the server but could not be synchronized to the local client.
             </summary>
         </member>
-        <member name="F:MSGraph.Exchange.Mail.WellKnownFolder.syncissues">
+        <member name="F:MSGraph.Exchange.Mail.WellKnownFolder.SyncIssues">
             <summary>
             The folder that contains synchronization logs created by Outlook.
             </summary>
