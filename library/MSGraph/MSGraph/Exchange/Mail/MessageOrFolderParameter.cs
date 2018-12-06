@@ -8,7 +8,7 @@ namespace MSGraph.Exchange.Mail
     /// input on parameters in *-MgaMail* commands
     /// </summary>
     [Serializable]
-    public class MailMessageParameter
+    public class MessageOrFolderParameter
     {
         #region Properties
         /// <summary>
@@ -31,11 +31,19 @@ namespace MSGraph.Exchange.Mail
                 return _typeName;
             }
 
-            set { }
+            set
+            {
+            }
         }
 
         private string _typeName;
+
         private string _returnValue;
+
+        /// <summary>
+        /// indicator wether name is a WellKnownFolder
+        /// </summary>
+        public bool IsWellKnownName;
 
         /// <summary>
         /// carrier object for the input object
@@ -72,9 +80,9 @@ namespace MSGraph.Exchange.Mail
 
         #region Constructors
         /// <summary>
-        /// Mail Folderinput
+        /// Mail Message input
         /// </summary>
-        public MailMessageParameter(Message Message)
+        public MessageOrFolderParameter(Message Message)
         {
             InputObject = Message;
             _typeName = InputObject.GetType().ToString();
@@ -83,25 +91,38 @@ namespace MSGraph.Exchange.Mail
         }
 
         /// <summary>
+        /// Mail Folderinput
+        /// </summary>
+        public MessageOrFolderParameter(Folder Folder)
+        {
+            InputObject = Folder;
+            _typeName = InputObject.GetType().ToString();
+            Id = Folder.Id;
+            Name = Folder.Name;
+        }
+
+        /// <summary>
         /// String input
         /// </summary>
-        public MailMessageParameter(string Text)
+        public MessageOrFolderParameter(string Text)
         {
             InputObject = Text;
-            string[] names = Enum.GetNames(typeof(WellKnownFolder));
             _typeName = InputObject.GetType().ToString();
 
+            string[] names = Enum.GetNames(typeof(WellKnownFolder));
             if (names.Contains(Text, StringComparer.InvariantCultureIgnoreCase))
             {
+                IsWellKnownName = true;
                 Name = Text.ToLower();
-                Id = Name;
             }
-            else if (Text.Length == 152 && Text.EndsWith("="))
+            else if ((Text.Length == 120 || Text.Length == 152) && Text.EndsWith("="))
             {
+                IsWellKnownName = false;
                 Id = Text;
             }
             else
             {
+                IsWellKnownName = false;
                 Name = Text;
             }
         }

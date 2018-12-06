@@ -179,6 +179,34 @@ namespace MSGraph.Exchange.Mail
             }
         }
 
+        private string _returnValue;
+
         #endregion Properties
+
+
+        #region Statics & Stuff
+        /// <summary>
+        /// Overrides the default ToString() method 
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            if (!string.IsNullOrEmpty(Subject))
+            {
+                _returnValue = Subject;
+            }
+            else if (!string.IsNullOrEmpty(Id))
+            {
+                _returnValue = Id;
+            }
+            else
+            {
+                _returnValue = this.GetType().Name;
+            }
+
+            return _returnValue;
+        }
+        #endregion Statics & Stuff
+
     }
 }

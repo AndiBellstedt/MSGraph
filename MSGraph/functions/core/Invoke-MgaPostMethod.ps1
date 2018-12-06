@@ -34,6 +34,7 @@
     #>
     [CmdletBinding(DefaultParameterSetName = 'Default')]
     param (
+        [Parameter(Mandatory = $true)]
         [string]
         $Field,
 

@@ -80,7 +80,7 @@
     param (
         [Parameter(ParameterSetName = 'ByInputObject', Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
         [Alias('Input', 'Id')]
-        [MSGraph.Exchange.Mail.MailMessageOrMailFolderParameter[]]
+        [MSGraph.Exchange.Mail.MessageOrFolderParameter[]]
         $InputObject,
 
         [Parameter(ParameterSetName = 'ByFolderName', Position = 0)]
@@ -88,7 +88,6 @@
         [string[]]
         $FolderName,
 
-        [Parameter(ParameterSetName = 'ByFolderName', Position = 1)]
         [string]
         $User,
 
@@ -112,13 +111,13 @@
         Write-PSFMessage -Level VeryVerbose -Message "Gettings mails by parameter set $($PSCmdlet.ParameterSetName)" -Tag "ParameterSetHandling"
         if ($PSCmdlet.ParameterSetName -like "ByInputObject" -and -not $InputObject) {
             Write-PSFMessage -Level Verbose -Message "No InputObject specified. Gettings mail from default folder (inbox)." -Tag "ParameterSetHandling"
-            $InputObject = [MSGraph.Exchange.Mail.WellKnownFolder]::Inbox.ToString()
+            [MSGraph.Exchange.Mail.MessageOrFolderParameter]$InputObject = [MSGraph.Exchange.Mail.WellKnownFolder]::Inbox.ToString()
         }
         if ($PSCmdlet.ParameterSetName -like "ByFolderName") {
             foreach ($folderItem in $FolderName) {
-                $folderItem = [MSGraph.Exchange.Mail.MailMessageOrMailFolderParameter]$folderItem
+                $folderItem = [MSGraph.Exchange.Mail.MessageOrFolderParameter]$folderItem
                 if($folderItem.Name -and (-not $folderItem.IsWellKnownName)) {
-                    [MSGraph.Exchange.Mail.MailMessageOrMailFolderParameter]$folderItem = Get-MgaMailFolder -Name $folderItem.Name
+                    [MSGraph.Exchange.Mail.MessageOrFolderParameter]$folderItem = Get-MgaMailFolder -Name $folderItem.Name -User $User -Token $Token
                 }
                 $InputObject = $InputObject + $folderItem
             }
@@ -188,6 +187,10 @@
                         Write-PSFMessage -Level VeryVerbose -Message "Gettings messages in folder with Id '$($InputObjectItem)'" -Tag "InputValidation"
                         $invokeParam.Add("Field","mailFolders/$($name)/messages")
                     }
+                    elseif ($InputObjectItem.IsWellKnownName -and $name) {
+                        # a well known folder is specified by name
+                        $invokeParam.Add("Field","mailFolders/$($name)/messages")
+                    }
                     else {
                         # not a valid Id -> should not happen
                         Write-PSFMessage -Level Warning -Message "The specified Id seeams not be a valid Id. Skipping object '$($name)'" -Tag "InputValidation"
@@ -223,53 +226,7 @@
         foreach ($invokeParam in $InvokeParamsUniqueList) {
             $data = Invoke-MgaGetMethod @invokeParam | Where-Object { $_.subject -like $Subject }
             foreach ($output in $data) {
-                $hash = [ordered]@{
-                    BaseObject                 = $output
-                    Subject                    = $output.subject
-                    Body                       = $output.body
-                    BodyPreview                = $output.bodyPreview
-                    Categories                 = $output.categories
-                    ChangeKey                  = $output.changeKey
-                    ConversationId             = $output.conversationId
-                    CreatedDateTime            = [datetime]::Parse($output.createdDateTime)
-                    Flag                       = $output.flag.flagStatus
-                    HasAttachments             = $output.hasAttachments
-                    Id                         = $output.id
-                    Importance                 = $output.importance
-                    InferenceClassification    = $output.inferenceClassification
-                    InternetMessageId          = $output.internetMessageId
-                    IsDeliveryReceiptRequested = $output.isDeliveryReceiptRequested
-                    IsDraft                    = $output.isDraft
-                    IsRead                     = $output.isRead
-                    isReadReceiptRequested     = $output.isReadReceiptRequested
-                    lastModifiedDateTime       = [datetime]::Parse($output.lastModifiedDateTime)
-                    MeetingMessageType         = $output.meetingMessageType
-                    ParentFolderId             = $output.parentFolderId
-                    ReceivedDateTime           = [datetime]::Parse($output.receivedDateTime)
-                    SentDateTime               = [datetime]::Parse($output.sentDateTime)
-                    WebLink                    = $output.webLink
-                }
-                if($output.from.emailAddress) {
-                    $hash.Add("from", ($output.from.emailAddress | ForEach-Object { [mailaddress]"$($_.name) $($_.address)"} -ErrorAction Ignore))
-                }
-                if($output.Sender.emailAddress) {
-                    $hash.Add("Sender", ($output.Sender.emailAddress | ForEach-Object { [mailaddress]"$($_.name) $($_.address)"} -ErrorAction Ignore ))
-                }
-                if($output.bccRecipients.emailAddress) {
-                    $hash.Add("bccRecipients", [array]($output.bccRecipients.emailAddress | ForEach-Object { [mailaddress]"$($_.name) $($_.address)"} -ErrorAction Ignore))
-                }
-                if($output.ccRecipients.emailAddress) { 
-                    $hash.Add("ccRecipients", [array]($output.ccRecipients.emailAddress | ForEach-Object { [mailaddress]"$($_.name) $($_.address)"} -ErrorAction Ignore))
-                }
-                if($output.replyTo.emailAddress) {
-                    $hash.Add("replyTo", [array]($output.replyTo.emailAddress | ForEach-Object { [mailaddress]"$($_.name) $($_.address)"} -ErrorAction Ignore))
-                }
-                if($output.toRecipients.emailAddress) {
-                    $hash.Add("toRecipients", [array]($output.toRecipients.emailAddress | ForEach-Object { [mailaddress]"$($_.name) $($_.address)"}))
-                }
-
-                $messageOutputObject = New-Object -TypeName MSGraph.Exchange.Mail.Message -Property $hash
-                $messageOutputObject
+                New-MgaMailMessageObject -RestData $output
             }
         }
     }

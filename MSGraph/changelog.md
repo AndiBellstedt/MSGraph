@@ -1,4 +1,13 @@
 # Changelog
+## 1.2.6.1 (2018-12-06)
+- Upd: Rename ParameterClasses
+    - [MSGraph.Exchange.Mail.MailFolderParameter] -> [MSGraph.Exchange.Mail.FolderParameter]
+    - [MSGraph.Exchange.Mail.MailMessageOrMailFolderParameter] -> [MSGraph.Exchange.Mail.MessageOrFolderParameter]
+    - [MSGraph.Exchange.Mail.MailMessageParameter] -> [MSGraph.Exchange.Mail.MessageParameter]
+- Upd: Code refactoring to support ParameterClasses on input parameter for commands
+    - Move-MgaMailMessage
+    - Set-MgaMailMessage
+
 ## 1.2.6 (2018-11-27)
 - Upd: Command Get-MgaMailFolder
     - Implement parametersets with pipeable input parameter "Name".

@@ -8,7 +8,7 @@ namespace MSGraph.Exchange.Mail
     /// input on parameters in *-MgaMail* commands
     /// </summary>
     [Serializable]
-    public class MailFolderParameter
+    public class FolderParameter
     {
         #region Properties
         /// <summary>
@@ -34,9 +34,6 @@ namespace MSGraph.Exchange.Mail
             set { }
         }
 
-        private string _typeName;
-        private string _returnValue;
-
         /// <summary>
         /// indicator wether name is a WellKnownFolder
         /// </summary>
@@ -46,6 +43,9 @@ namespace MSGraph.Exchange.Mail
         /// carrier object for the input object
         /// </summary>
         public object InputObject;
+
+        private string _typeName;
+        private string _returnValue;
 
         #endregion Properties
 
@@ -79,7 +79,7 @@ namespace MSGraph.Exchange.Mail
         /// <summary>
         /// Mail Folderinput
         /// </summary>
-        public MailFolderParameter(Folder Folder)
+        public FolderParameter(Folder Folder)
         {
             InputObject = Folder;
             _typeName = InputObject.GetType().ToString();
@@ -90,7 +90,7 @@ namespace MSGraph.Exchange.Mail
         /// <summary>
         /// String input
         /// </summary>
-        public MailFolderParameter(string Text)
+        public FolderParameter(string Text)
         {
             InputObject = Text;
             string[] names = Enum.GetNames(typeof(WellKnownFolder));

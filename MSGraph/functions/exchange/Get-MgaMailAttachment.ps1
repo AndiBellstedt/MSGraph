@@ -35,7 +35,7 @@
     param (
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ByInputObject', Position = 0)]
         [Alias('Id', 'Mail', 'MailMessage', 'MessageId', 'MailId')]
-        [MSGraph.Exchange.Mail.MailMessageParameter[]]
+        [MSGraph.Exchange.Mail.MessageParameter[]]
         $Message,
 
         [Parameter(Position = 1)]

@@ -69,7 +69,7 @@
     param (
         [Parameter(ParameterSetName = 'ByFolderName', ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true, Position = 0)]
         [Alias('FolderName', 'InputObject', 'DisplayName', 'Id')]
-        [MSGraph.Exchange.Mail.MailFolderParameter[]]
+        [MSGraph.Exchange.Mail.FolderParameter[]]
         $Name,
 
         [switch]

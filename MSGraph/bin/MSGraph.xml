@@ -286,16 +286,6 @@
             Indicates the version of the access token.
             </summary>
         </member>
-        <member name="T:MSGraph.Exchange.APIVersion">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="F:MSGraph.Exchange.APIVersion.V1">
-            <summary>
-            
-            </summary>
-        </member>
         <member name="T:MSGraph.Exchange.FollowupFlag">
             <summary>
             followupFlag resource type
@@ -417,44 +407,44 @@
             
             </summary>
         </member>
-        <member name="T:MSGraph.Exchange.Mail.MailMessageParameter">
+        <member name="T:MSGraph.Exchange.Mail.MessageParameter">
             <summary>
             Mail message parameter class for convinient pipeline 
             input on parameters in *-MgaMail* commands
             </summary>
         </member>
-        <member name="F:MSGraph.Exchange.Mail.MailMessageParameter.Id">
+        <member name="F:MSGraph.Exchange.Mail.MessageParameter.Id">
             <summary>
             message or folder id
             </summary>
         </member>
-        <member name="F:MSGraph.Exchange.Mail.MailMessageParameter.Name">
+        <member name="F:MSGraph.Exchange.Mail.MessageParameter.Name">
             <summary>
             name of a folder
             </summary>
         </member>
-        <member name="P:MSGraph.Exchange.Mail.MailMessageParameter.TypeName">
+        <member name="P:MSGraph.Exchange.Mail.MessageParameter.TypeName">
             <summary>
             The type name of inputobject
             </summary>
         </member>
-        <member name="F:MSGraph.Exchange.Mail.MailMessageParameter.InputObject">
+        <member name="F:MSGraph.Exchange.Mail.MessageParameter.InputObject">
             <summary>
             carrier object for the input object
             </summary>
         </member>
-        <member name="M:MSGraph.Exchange.Mail.MailMessageParameter.ToString">
+        <member name="M:MSGraph.Exchange.Mail.MessageParameter.ToString">
             <summary>
             Overrides the default ToString() method 
             </summary>
             <returns></returns>
         </member>
-        <member name="M:MSGraph.Exchange.Mail.MailMessageParameter.#ctor(MSGraph.Exchange.Mail.Message)">
+        <member name="M:MSGraph.Exchange.Mail.MessageParameter.#ctor(MSGraph.Exchange.Mail.Message)">
             <summary>
             Mail Folderinput
             </summary>
         </member>
-        <member name="M:MSGraph.Exchange.Mail.MailMessageParameter.#ctor(System.String)">
+        <member name="M:MSGraph.Exchange.Mail.MessageParameter.#ctor(System.String)">
             <summary>
             String input
             </summary>
@@ -563,49 +553,55 @@
             The user name which owns the folder
             </summary>
         </member>
-        <member name="T:MSGraph.Exchange.Mail.MailFolderParameter">
-            <summary>
-            Mail message parameter class for convinient pipeline 
-            input on parameters in *-MgaMail* commands
-            </summary>
-        </member>
-        <member name="F:MSGraph.Exchange.Mail.MailFolderParameter.Id">
-            <summary>
-            message or folder id
-            </summary>
-        </member>
-        <member name="F:MSGraph.Exchange.Mail.MailFolderParameter.Name">
-            <summary>
-            name of a folder
-            </summary>
-        </member>
-        <member name="P:MSGraph.Exchange.Mail.MailFolderParameter.TypeName">
-            <summary>
-            The type name of inputobject
-            </summary>
-        </member>
-        <member name="F:MSGraph.Exchange.Mail.MailFolderParameter.IsWellKnownName">
-            <summary>
-            indicator wether name is a WellKnownFolder
-            </summary>
-        </member>
-        <member name="F:MSGraph.Exchange.Mail.MailFolderParameter.InputObject">
-            <summary>
-            carrier object for the input object
-            </summary>
-        </member>
-        <member name="M:MSGraph.Exchange.Mail.MailFolderParameter.ToString">
+        <member name="M:MSGraph.Exchange.Mail.Folder.ToString">
             <summary>
             Overrides the default ToString() method 
             </summary>
             <returns></returns>
         </member>
-        <member name="M:MSGraph.Exchange.Mail.MailFolderParameter.#ctor(MSGraph.Exchange.Mail.Folder)">
+        <member name="T:MSGraph.Exchange.Mail.FolderParameter">
+            <summary>
+            Mail message parameter class for convinient pipeline 
+            input on parameters in *-MgaMail* commands
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.FolderParameter.Id">
+            <summary>
+            message or folder id
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.FolderParameter.Name">
+            <summary>
+            name of a folder
+            </summary>
+        </member>
+        <member name="P:MSGraph.Exchange.Mail.FolderParameter.TypeName">
+            <summary>
+            The type name of inputobject
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.FolderParameter.IsWellKnownName">
+            <summary>
+            indicator wether name is a WellKnownFolder
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.FolderParameter.InputObject">
+            <summary>
+            carrier object for the input object
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.Mail.FolderParameter.ToString">
+            <summary>
+            Overrides the default ToString() method 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MSGraph.Exchange.Mail.FolderParameter.#ctor(MSGraph.Exchange.Mail.Folder)">
             <summary>
             Mail Folderinput
             </summary>
         </member>
-        <member name="M:MSGraph.Exchange.Mail.MailFolderParameter.#ctor(System.String)">
+        <member name="M:MSGraph.Exchange.Mail.FolderParameter.#ctor(System.String)">
             <summary>
             String input
             </summary>
@@ -770,54 +766,60 @@
             
             </summary>
         </member>
-        <member name="T:MSGraph.Exchange.Mail.MailMessageOrMailFolderParameter">
-            <summary>
-            Mail message parameter class for convinient pipeline 
-            input on parameters in *-MgaMail* commands
-            </summary>
-        </member>
-        <member name="F:MSGraph.Exchange.Mail.MailMessageOrMailFolderParameter.Id">
-            <summary>
-            message or folder id
-            </summary>
-        </member>
-        <member name="F:MSGraph.Exchange.Mail.MailMessageOrMailFolderParameter.Name">
-            <summary>
-            name of a folder
-            </summary>
-        </member>
-        <member name="P:MSGraph.Exchange.Mail.MailMessageOrMailFolderParameter.TypeName">
-            <summary>
-            The type name of inputobject
-            </summary>
-        </member>
-        <member name="F:MSGraph.Exchange.Mail.MailMessageOrMailFolderParameter.IsWellKnownName">
-            <summary>
-            indicator wether name is a WellKnownFolder
-            </summary>
-        </member>
-        <member name="F:MSGraph.Exchange.Mail.MailMessageOrMailFolderParameter.InputObject">
-            <summary>
-            carrier object for the input object
-            </summary>
-        </member>
-        <member name="M:MSGraph.Exchange.Mail.MailMessageOrMailFolderParameter.ToString">
+        <member name="M:MSGraph.Exchange.Mail.Message.ToString">
             <summary>
             Overrides the default ToString() method 
             </summary>
             <returns></returns>
         </member>
-        <member name="M:MSGraph.Exchange.Mail.MailMessageOrMailFolderParameter.#ctor(MSGraph.Exchange.Mail.Message)">
+        <member name="T:MSGraph.Exchange.Mail.MessageOrFolderParameter">
+            <summary>
+            Mail message parameter class for convinient pipeline 
+            input on parameters in *-MgaMail* commands
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.MessageOrFolderParameter.Id">
+            <summary>
+            message or folder id
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.MessageOrFolderParameter.Name">
+            <summary>
+            name of a folder
+            </summary>
+        </member>
+        <member name="P:MSGraph.Exchange.Mail.MessageOrFolderParameter.TypeName">
+            <summary>
+            The type name of inputobject
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.MessageOrFolderParameter.IsWellKnownName">
+            <summary>
+            indicator wether name is a WellKnownFolder
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.MessageOrFolderParameter.InputObject">
+            <summary>
+            carrier object for the input object
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.Mail.MessageOrFolderParameter.ToString">
+            <summary>
+            Overrides the default ToString() method 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MSGraph.Exchange.Mail.MessageOrFolderParameter.#ctor(MSGraph.Exchange.Mail.Message)">
             <summary>
             Mail Message input
             </summary>
         </member>
-        <member name="M:MSGraph.Exchange.Mail.MailMessageOrMailFolderParameter.#ctor(MSGraph.Exchange.Mail.Folder)">
+        <member name="M:MSGraph.Exchange.Mail.MessageOrFolderParameter.#ctor(MSGraph.Exchange.Mail.Folder)">
             <summary>
             Mail Folderinput
             </summary>
         </member>
-        <member name="M:MSGraph.Exchange.Mail.MailMessageOrMailFolderParameter.#ctor(System.String)">
+        <member name="M:MSGraph.Exchange.Mail.MessageOrFolderParameter.#ctor(System.String)">
             <summary>
             String input
             </summary>
