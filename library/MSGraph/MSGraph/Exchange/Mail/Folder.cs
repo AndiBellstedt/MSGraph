@@ -1,14 +1,14 @@
 ﻿using System;
-using System.Management.Automation;
-using System.Security;
 
 namespace MSGraph.Exchange.Mail
 {
     /// <summary>
     /// Mail folder in exchange online
     /// </summary>
+    [Serializable]
     public class Folder
     {
+        #region Properties
         /// <summary>
         /// The mailFolder's unique identifier.
         /// </summary>
@@ -92,5 +92,34 @@ namespace MSGraph.Exchange.Mail
         /// The user name which owns the folder
         /// </summary>
         public String User;
+
+        private string _returnValue;
+
+        #endregion Properties
+
+
+        #region Statics & Stuff
+        /// <summary>
+        /// Overrides the default ToString() method 
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            if (!string.IsNullOrEmpty(DisplayName))
+            {
+                _returnValue = DisplayName;
+            }
+            else if (!string.IsNullOrEmpty(Id))
+            {
+                _returnValue = Id;
+            }
+            else 
+            {
+                _returnValue = this.GetType().Name;
+            }
+
+            return _returnValue;
+        }
+        #endregion Statics & Stuff
     }
 }

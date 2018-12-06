@@ -36,6 +36,7 @@
     #>
     [CmdletBinding(DefaultParameterSetName = 'Default')]
     param (
+        [ValidateNotNullOrEmpty()]
         [string]
         $Field,
 

@@ -6,11 +6,8 @@
     .DESCRIPTION
         Set properties on message(s) in Exchange Online using the graph api.
 
-    .PARAMETER InputObject
+    .PARAMETER Message
         Carrier object for Pipeline input. Accepts messages.
-
-    .PARAMETER Id
-        The ID of the message to update
 
     .PARAMETER User
         The user-account to access. Defaults to the main user connected as.
@@ -76,8 +73,8 @@
 
     .PARAMETER Token
         The token representing an established connection to the Microsoft Graph Api.
-        Can be created by using New-EORAccessToken.
-        Can be omitted if a connection has been registered using the -Register parameter on New-EORAccessToken.
+        Can be created by using New-MgaAccessToken.
+        Can be omitted if a connection has been registered using the -Register parameter on New-MgaAccessToken.
 
     .PARAMETER PassThru
         Outputs the token to the console
@@ -125,21 +122,15 @@
 
 
     #>
-    [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'Medium', DefaultParameterSetName = 'ByInputObject')]
+    [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'Medium', DefaultParameterSetName = 'Default')]
     [Alias("Update-MgaMailMessage")]
     [OutputType([MSGraph.Exchange.Mail.Message])]
     param (
-        [Parameter(Mandatory=$true, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ByInputObject')]
-        [Alias("Message")]
-        [MSGraph.Exchange.Mail.Message]
-        $InputObject,
+        [Parameter(Mandatory=$true, Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
+        [Alias('InputObject', 'MessageId', 'Id')]
+        [MSGraph.Exchange.Mail.MessageParameter[]]
+        $Message,
 
-        [Parameter(Mandatory=$true, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ById')]
-        [Alias("MessageId")]
-        [string[]]
-        $Id,
-
-        [Parameter(ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ById')]
         [string]
         $User,
 
@@ -236,21 +227,8 @@
     }
 
     process {
-        $messages = @()
         $bodyHash = @{}
-
-        # Get input from pipeable objects
         Write-PSFMessage -Level Debug -Message "Gettings messages by parameter set $($PSCmdlet.ParameterSetName)" -Tag "ParameterSetHandling"
-        switch ($PSCmdlet.ParameterSetName) {
-            "ByInputObject" {
-                $messages = $InputObject.Id
-                $User = $InputObject.BaseObject.User
-            }
-            "ById" {
-                $messages = $Id
-            }
-            Default { Stop-PSFFunction -Tag "ParameterSetHandling" -Message "Unhandled parameter set. ($($PSCmdlet.ParameterSetName)) Developer mistage." -EnableException $true -Exception ([System.Management.Automation.RuntimeException]::new("Unhandled parameter set. ($($PSCmdlet.ParameterSetName)) Developer mistage.")) -FunctionName $MyInvocation.MyCommand }
-        }
 
         #region Parsing string and boolean parameters to json data parts
         $names = @("IsRead", "Subject", "Body", "Categories", "Importance", "InferenceClassification", "InternetMessageId", "IsDeliveryReceiptRequested", "IsReadReceiptRequested")
@@ -317,11 +295,29 @@
         #endregion Put parameters (JSON Parts) into a valid "message"-JSON-object together
 
         #region Update messages
-        foreach ($messageId in $messages) {
-            if ($pscmdlet.ShouldProcess("messageId $($messageId)", "Update properties '$([string]::Join("', '", $boundParameters))'")) {
-                Write-PSFMessage -Level Verbose -Message "Update properties '$([string]::Join("', '", $boundParameters))' on messageId $($messageId)"  -Tag "MessageUpdate"
+        foreach ($messageItem in $Message) {
+            if ($messageItem.TypeName -like "System.String") {
+                if ($messageItem.Id -and ($messageItem.Id.Length -eq 152)) {
+                    [MSGraph.Exchange.Mail.MessageParameter]$messageItem = Get-MgaMailMessage -InputObject $messageItem.Id -User $User -Token $Token
+                }
+                else {
+                    Write-PSFMessage -Level Warning -Message "The specified input string seams not to be a valid Id. Skipping object '$($messageItem)'" -Tag "InputValidation"
+                    continue
+                }
+            }
+
+            if ($User -and ($messageItem.TypeName -like "MSGraph.Exchange.Mail.Message") -and ($User -notlike $messageItem.InputObject.BaseObject.User)) {
+                Write-PSFMessage -Level Important -Message "Individual user specified with message object! User from message object ($($messageItem.InputObject.BaseObject.User))will take precedence on specified user ($($User))!" -Tag "InputValidation"
+                $User = $messageItem.InputObject.BaseObject.User
+            }
+            elseif ((-not $User) -and ($messageItem.TypeName -like "MSGraph.Exchange.Mail.Message")) {
+                $User = $messageItem.InputObject.BaseObject.User
+            }
+
+            if ($pscmdlet.ShouldProcess("message '$($messageItem)'", "Update properties '$([string]::Join("', '", $boundParameters))'")) {
+                Write-PSFMessage -Tag "MessageUpdate" -Level Verbose -Message "Update properties '$([string]::Join("', '", $boundParameters))' on message '$($messageItem)'"
                 $invokeParam = @{
-                    "Field"        = "messages/$($messageId)"
+                    "Field"        = "messages/$($messageItem.Id)"
                     "User"         = $User
                     "Body"         = $bodyJSON
                     "ContentType"  = "application/json"
@@ -329,9 +325,7 @@
                     "FunctionName" = $MyInvocation.MyCommand
                 }
                 $output = Invoke-MgaPatchMethod @invokeParam
-                if ($PassThru) {
-                    [MSGraph.Exchange.Mail.Message]@{ BaseObject = $output }
-                }
+                if ($PassThru) { New-MgaMailMessageObject -RestData $output }
             }
         }
         #endregion Update messages
