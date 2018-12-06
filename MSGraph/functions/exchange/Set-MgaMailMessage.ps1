@@ -6,11 +6,8 @@
     .DESCRIPTION
         Set properties on message(s) in Exchange Online using the graph api.
 
-    .PARAMETER InputObject
+    .PARAMETER Message
         Carrier object for Pipeline input. Accepts messages.
-
-    .PARAMETER Id
-        The ID of the message to update
 
     .PARAMETER User
         The user-account to access. Defaults to the main user connected as.
@@ -130,9 +127,9 @@
     [OutputType([MSGraph.Exchange.Mail.Message])]
     param (
         [Parameter(Mandatory=$true, Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
-        [Alias('Message', 'MessageId', 'Id')]
+        [Alias('InputObject', 'MessageId', 'Id')]
         [MSGraph.Exchange.Mail.MessageParameter[]]
-        $InputObject,
+        $Message,
 
         [string]
         $User,
@@ -298,7 +295,7 @@
         #endregion Put parameters (JSON Parts) into a valid "message"-JSON-object together
 
         #region Update messages
-        foreach ($messageItem in $InputObject) {
+        foreach ($messageItem in $Message) {
             if ($messageItem.TypeName -like "System.String") {
                 if ($messageItem.Id -and ($messageItem.Id.Length -eq 152)) {
                     [MSGraph.Exchange.Mail.MessageParameter]$messageItem = Get-MgaMailMessage -InputObject $messageItem.Id -User $User -Token $Token

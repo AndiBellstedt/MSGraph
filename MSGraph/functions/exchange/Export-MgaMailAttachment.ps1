@@ -20,13 +20,13 @@
     [CmdletBinding()]
     [Alias('Save-MgaMailAttachment')]
     param (
-        [Parameter(ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,ValueFromRemainingArguments=$false)]
+        [Parameter(Mandatory = $true, ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,ValueFromRemainingArguments=$false)]
         [ValidateNotNullOrEmpty()]
         [MSGraph.Exchange.Mail.Attachment]
         $InputObject,
 
         [String]
-        $Path
+        $Path = (Get-Location).Path
     )
     begin {
         if (Test-Path -Path $Path -IsValid) {

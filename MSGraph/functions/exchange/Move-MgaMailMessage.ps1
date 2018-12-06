@@ -6,18 +6,15 @@
     .DESCRIPTION
         Move message(s) to a folder in Exchange Online using the graph api.
 
-    .PARAMETER InputObject
-        Carrier object for Pipeline input. Accepts messages.
-
-    .PARAMETER Id
-        The ID of the message to update
-
-    .PARAMETER User
-        The user-account to access. Defaults to the main user connected as.
-        Can be any primary email name of any user the connected token has access to.
+    .PARAMETER Message
+        Carrier object for Pipeline input. Accepts messages and strings.
 
     .PARAMETER DestinationFolder
         The destination folder where to move the message to
+
+        .PARAMETER User
+        The user-account to access. Defaults to the main user connected as.
+        Can be any primary email name of any user the connected token has access to.
 
     .PARAMETER Token
         The token representing an established connection to the Microsoft Graph Api.

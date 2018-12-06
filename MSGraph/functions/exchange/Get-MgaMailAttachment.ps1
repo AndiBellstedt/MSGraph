@@ -6,9 +6,13 @@
     .DESCRIPTION
         Retrieves the attachment object from a email message in Exchange Online using the graph api.
 
-    .PARAMETER MailId
+    .PARAMETER Message
         The display name of the folder to search.
         Defaults to the inbox.
+
+    .PARAMETER Name
+        The name to filter by.
+        (Client Side filtering)
 
     .PARAMETER User
         The user-account to access. Defaults to the main user connected as.

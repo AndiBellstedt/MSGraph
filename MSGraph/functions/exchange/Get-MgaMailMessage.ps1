@@ -10,7 +10,7 @@
         Carrier object for Pipeline input
         Accepts messages or folders from other Mga-functions
 
-    .PARAMETER Folder
+    .PARAMETER FolderName
         The display name of the folder to search.
         Defaults to the inbox.
 
