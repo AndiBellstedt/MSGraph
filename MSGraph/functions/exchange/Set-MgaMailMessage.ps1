@@ -207,6 +207,8 @@
         $PassThru
     )
     begin {
+        $requiredPermission = "Mail.ReadWrite"
+
         $boundParameters = @()
         $mailAddressNames = @("sender", "from", "toRecipients", "ccRecipients", "bccRecipients", "replyTo")
 

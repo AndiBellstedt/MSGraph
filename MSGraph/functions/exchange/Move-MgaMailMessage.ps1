@@ -85,6 +85,8 @@
         $PassThru
     )
     begin {
+        $requiredPermission = "Mail.ReadWrite"
+
         if($DestinationFolder.TypeName -like "System.String") {
             [MSGraph.Exchange.Mail.FolderParameter]$DestinationFolder = Get-MgaMailFolder -Name $DestinationFolder.ToString() -User $User -Token $Token
         }

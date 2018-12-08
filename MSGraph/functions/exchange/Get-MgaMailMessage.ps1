@@ -104,6 +104,7 @@
         $Token
     )
     begin {
+        $requiredPermission = "Mail.Read"
         $InvokeParams = @()
     }
 

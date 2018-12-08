@@ -59,6 +59,7 @@
         $Token
     )
     begin {
+        $requiredPermission = "Mail.Read"
     }
 
     process {

@@ -92,6 +92,8 @@
     )
 
     begin {
+        $requiredPermission = "Mail.Read"
+
         if ($Recurse) { $IncludeChildFolders = $true }
 
         function invoke-internalMgaGetMethod ($invokeParam, [int]$level, [MSGraph.Exchange.Mail.Folder]$parentFolder) {
