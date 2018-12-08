@@ -23,7 +23,8 @@
 
     # Validate as per https://tools.ietf.org/html/rfc7519 - Access and ID tokens are fine, Refresh tokens will not work
     if ((-not $Token.Contains(".")) -or (-not $Token.StartsWith("eyJ"))) {
-        Stop-PSFFunction -Message "Invalid data or not an access token" -EnableException -Tag JWT
+        $msg = "Invalid data or not an access token. $($Token)"
+        Stop-PSFFunction -Message $msg -Tag "JWT" -EnableException $true -Exception ([System.Management.Automation.RuntimeException]::new($msg))
     }
 
     # Split the token in its parts
@@ -41,32 +42,58 @@
     $tokenSignature = ConvertFrom-Base64StringWithNoPadding $tokenParts[2]
 
     # Output
-    $resultObject = New-Object MSGraph.Core.JWTAccessTokenInfo -Property @{
-        Header               = $tokenHeader
-        Payload              = $tokenPayload
-        Signature            = $tokenSignature
-        Algorithm            = $tokenHeaderJSON.alg
-        Type                 = $tokenHeaderJSON.typ
-        ApplicationID        = $tokenPayloadJSON.appid
-        ApplicationName      = $tokenPayloadJSON.app_displayname
-        Audience             = $tokenPayloadJSON.aud
-        AuthenticationMethod = $tokenPayloadJSON.amr
-        ExpirationTime       = ([datetime]"1970-01-01Z00:00:00").AddSeconds($tokenPayloadJSON.exp).ToUniversalTime()
-        GivenName            = $tokenPayloadJSON.given_name
-        IssuedAt             = ([datetime]"1970-01-01Z00:00:00").AddSeconds($tokenPayloadJSON.iat).ToUniversalTime()
-        Name                 = $tokenPayloadJSON.name
-        NotBefore            = ([datetime]"1970-01-01Z00:00:00").AddSeconds($tokenPayloadJSON.nbf).ToUniversalTime()
-        OID                  = $tokenPayloadJSON.oid
-        Plattform            = $tokenPayloadJSON.platf
-        Scope                = $tokenPayloadJSON.scp
-        SID                  = $tokenPayloadJSON.onprem_sid
-        SourceIPAddr         = $tokenPayloadJSON.ipaddr
-        SureName             = $tokenPayloadJSON.family_name
-        TenantID             = $tokenPayloadJSON.tid
-        UniqueName           = $tokenPayloadJSON.unique_name
-        UPN                  = $tokenPayloadJSON.upn
-        Version              = $tokenPayloadJSON.ver
-    }
+    #$resultObject = New-Object MSGraph.Core.JWTAccessTokenInfo -Property @{
+    #    Header               = $tokenHeader
+    #    Payload              = $tokenPayload
+    #    Signature            = $tokenSignature
+    #    Algorithm            = $tokenHeaderJSON.alg
+    #    Type                 = $tokenHeaderJSON.typ
+    #    ApplicationID        = $tokenPayloadJSON.appid
+    #    ApplicationName      = $tokenPayloadJSON.app_displayname
+    #    Audience             = $tokenPayloadJSON.aud
+    #    AuthenticationMethod = $tokenPayloadJSON.amr
+    #    ExpirationTime       = ([datetime]"1970-01-01Z00:00:00").AddSeconds($tokenPayloadJSON.exp).ToUniversalTime()
+    #    GivenName            = $tokenPayloadJSON.given_name
+    #    IssuedAt             = ([datetime]"1970-01-01Z00:00:00").AddSeconds($tokenPayloadJSON.iat).ToUniversalTime()
+    #    Name                 = $tokenPayloadJSON.name
+    #    NotBefore            = ([datetime]"1970-01-01Z00:00:00").AddSeconds($tokenPayloadJSON.nbf).ToUniversalTime()
+    #    OID                  = $tokenPayloadJSON.oid
+    #    Plattform            = $tokenPayloadJSON.platf
+    #    Scope                = $tokenPayloadJSON.scp
+    #    SID                  = $tokenPayloadJSON.onprem_sid
+    #    SourceIPAddr         = $tokenPayloadJSON.ipaddr
+    #    SureName             = $tokenPayloadJSON.family_name
+    #    TenantID             = $tokenPayloadJSON.tid
+    #    UniqueName           = $tokenPayloadJSON.unique_name
+    #    UPN                  = $tokenPayloadJSON.upn
+    #    Version              = $tokenPayloadJSON.ver
+    #}
+
+    $resultObject = New-Object MSGraph.Core.JWTAccessTokenInfo
+    $resultObject.Header = $tokenHeader
+    $resultObject.Payload = $tokenPayload
+    $resultObject.Signature = $tokenSignature
+    $resultObject.Algorithm = $tokenHeaderJSON.alg
+    $resultObject.Type = $tokenHeaderJSON.typ
+    if ($tokenPayloadJSON.appid) { $resultObject.ApplicationID = $tokenPayloadJSON.appid }
+    $resultObject.ApplicationName = $tokenPayloadJSON.app_displayname
+    $resultObject.Audience = $tokenPayloadJSON.aud
+    $resultObject.AuthenticationMethod = $tokenPayloadJSON.amr
+    $resultObject.ExpirationTime = ([datetime]"1970-01-01Z00:00:00").AddSeconds($tokenPayloadJSON.exp).ToUniversalTime()
+    $resultObject.GivenName = $tokenPayloadJSON.given_name
+    $resultObject.IssuedAt = ([datetime]"1970-01-01Z00:00:00").AddSeconds($tokenPayloadJSON.iat).ToUniversalTime()
+    $resultObject.Name = $tokenPayloadJSON.name
+    $resultObject.NotBefore = ([datetime]"1970-01-01Z00:00:00").AddSeconds($tokenPayloadJSON.nbf).ToUniversalTime()
+    if ($tokenPayloadJSON.oid) { $resultObject.OID = $tokenPayloadJSON.oid }
+    $resultObject.Plattform = $tokenPayloadJSON.platf
+    $resultObject.Scope = $tokenPayloadJSON.scp
+    $resultObject.SID = $tokenPayloadJSON.onprem_sid
+    $resultObject.SourceIPAddr = $tokenPayloadJSON.ipaddr
+    $resultObject.SureName = $tokenPayloadJSON.family_name
+    $resultObject.TenantID = $tokenPayloadJSON.tid
+    $resultObject.UniqueName = $tokenPayloadJSON.unique_name
+    $resultObject.UPN = $tokenPayloadJSON.upn
+    $resultObject.Version = $tokenPayloadJSON.ver
 
     #$output
     $resultObject

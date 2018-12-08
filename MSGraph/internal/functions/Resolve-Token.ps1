@@ -22,7 +22,7 @@
     [OutputType([MSGraph.Core.AzureAccessToken])]
     [CmdletBinding()]
     param (
-        #[MSGraph.Core.AzureAccessToken]
+        [MSGraph.Core.AzureAccessToken]
         $Token,
 
         [String]
