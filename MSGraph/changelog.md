@@ -1,5 +1,5 @@
 # Changelog
-## 1.2.6.2
+## 1.2.7.0
 - Upd: New-MgaAccessToken
     - BREAKING CHANGE: rename switch "Refresh" to "ShowLoginWindows"
     - Implement logon against identity platform version 2.0, to allow logon with Microsoft Account
