@@ -264,7 +264,7 @@
         }
 
         # Getting validity period out of AccessToken information
-        if ($resultObject.AccessTokenInfo) {
+        if ($resultObject.AccessTokenInfo -and $resultObject.AccessTokenInfo.TenantID.ToString() -notlike "9188040d-6c67-4c5b-b112-36a304b66dad") {
             $resultObject.ValidUntilUtc = $resultObject.AccessTokenInfo.ExpirationTime.ToUniversalTime()
             $resultObject.ValidFromUtc = $resultObject.AccessTokenInfo.NotBefore.ToUniversalTime()
             $resultObject.ValidUntil = $resultObject.AccessTokenInfo.ExpirationTime.ToLocalTime()

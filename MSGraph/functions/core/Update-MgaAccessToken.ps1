@@ -57,7 +57,7 @@
         if (-not $Token) { Stop-PSFFunction -Message "Not connected! Use New-MgaAccessToken to create a Token and either register it or specifs it." -EnableException $true -Category AuthenticationError -Cmdlet $PSCmdlet }
 
         $Credential = $Token.Credential
-        $ClientId = $Token.AccessTokenInfo.ApplicationID.Guid
+        $ClientId = $Token.ClientId #$Token.AccessTokenInfo.ApplicationID.Guid
         $RedirectUrl = $Token.AppRedirectUrl.ToString()
         $ResourceUri = $Token.Resource.ToString().TrimEnd('/')
         $Permission = ($Token.Scope | Where-Object { $_ -notin "offline_access", "openid", "profile", "email" })
@@ -173,7 +173,7 @@
         }
 
         # Getting validity period out of AccessToken information
-        if ($resultObject.AccessTokenInfo) {
+        if ($resultObject.AccessTokenInfo -and $resultObject.AccessTokenInfo.TenantID.ToString() -notlike "9188040d-6c67-4c5b-b112-36a304b66dad") {
             $resultObject.ValidUntilUtc = $resultObject.AccessTokenInfo.ExpirationTime.ToUniversalTime()
             $resultObject.ValidFromUtc = $resultObject.AccessTokenInfo.NotBefore.ToUniversalTime()
             $resultObject.ValidUntil = $resultObject.AccessTokenInfo.ExpirationTime.ToLocalTime()

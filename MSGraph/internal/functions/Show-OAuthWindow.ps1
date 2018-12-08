@@ -32,7 +32,7 @@
             if ($web.Url.AbsoluteUri -match "error=[^&]*|code=[^&]*") { $form.Close() }
         })
 
-        $form = New-Object -TypeName System.Windows.Forms.Form -Property @{ 
+        $form = New-Object -TypeName System.Windows.Forms.Form -Property @{
             Width = 440
             Height = 640
         }
