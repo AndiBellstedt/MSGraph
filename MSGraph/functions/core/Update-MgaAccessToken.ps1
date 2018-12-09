@@ -29,97 +29,155 @@
     #>
     [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSAvoidUsingConvertToSecureStringWithPlainText", "")]
     [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseShouldProcessForStateChangingFunctions", "")]
-    [CmdletBinding(DefaultParameterSetName="Default")]
+    [CmdletBinding(DefaultParameterSetName = "Default")]
     param (
         [Parameter(ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
-        #[MSGraph.Core.AzureAccessToken]
+        [MSGraph.Core.AzureAccessToken]
         $Token,
 
-        [Parameter(ParameterSetName='Register')]
+        [Parameter(ParameterSetName = 'Register')]
         [switch]
         $Register,
 
-        [Parameter(ParameterSetName='Register')]
+        [Parameter(ParameterSetName = 'Register')]
         [switch]
         $PassThru
     )
 
     begin {
+        $endpointBaseUri = (Get-PSFConfigValue -FullName MSGraph.Tenant.Authentiation.Endpoint -Fallback 'https://login.microsoftonline.com')
+        $baselineTimestamp = [datetime]"1970-01-01Z00:00:00"
     }
 
     process {
-        if (-not $Token) {
-            $Token = $script:msgraph_Token
-            $Register = $true
-        }
-        if (-not $Token) { Stop-PSFFunction -Message "Not connected! Use New-MgaAccessToken to create a Token and either register it or specifs it." -EnableException $true -Category AuthenticationError -Cmdlet $PSCmdlet }
+        $Token = Resolve-Token -Token $Token -FunctionName $MyInvocation.MyCommand
+
+        $Credential = $Token.Credential
+        $ClientId = $Token.ClientId #$Token.AccessTokenInfo.ApplicationID.Guid
+        $RedirectUrl = $Token.AppRedirectUrl.ToString()
+        $ResourceUri = $Token.Resource.ToString().TrimEnd('/')
+        $Permission = ($Token.Scope | Where-Object { $_ -notin "offline_access", "openid", "profile", "email" })
+        $IdentityPlatformVersion = $Token.IdentityPlatformVersion
 
         if (-not $Token.IsValid) {
             Write-PSFMessage -Level Warning -Message "Token lifetime already expired and can't be newed. New authentication is required. Calling New-MgaAccessToken..." -Tag "Authorization"
+
             $paramsNewToken = @{
-                ClientId = $Token.AccessTokenInfo.ApplicationID.Guid
-                RedirectUrl = $Token.AppRedirectUrl
+                PassThru                = "True"
+                ClientId                = $ClientId
+                RedirectUrl             = $RedirectUrl
+                ResourceUri             = $ResourceUri
+                Permission              = $Permission
+                IdentityPlatformVersion = $IdentityPlatformVersion
             }
-            if ($Token.Credential) { $paramsNewToken.Add("Credential", $Token.Credential ) }
+            if ($Credential) { $paramsNewToken.Add("Credential", $Credential ) }
             if ($Register -or ($script:msgraph_Token.AccessTokenInfo.Payload -eq $Token.AccessTokenInfo.Payload) ) { $paramsNewToken.Add("Register", $true) }
-            $resultObject = New-MgaAccessToken -PassThru @paramsNewToken
+            if (Test-PSFParameterBinding -ParameterName Verbose) { $paramsNewToken.Add("Verbose", $true) }
+
+            $resultObject = New-MgaAccessToken @paramsNewToken
             if ($PassThru) { return $resultObject } else { return }
         }
 
-        $resourceUri = "https://graph.microsoft.com"
-        $endpointUri = "https://login.windows.net/common/oauth2"
-        $endpointUriToken = "$($endpointUri)/token "
+        Write-PSFMessage -Level Verbose -Message "Start token refresh for application $( if($Token.AppName){$Token.AppName}else{$ClientId} ). (Identity platform version $($IdentityPlatformVersion))" -Tag "Authorization"
 
-        $baselineTimestamp = [datetime]"1970-01-01Z00:00:00"
-        $httpClient = New-HttpClient
+        switch ($IdentityPlatformVersion) {
+            '1.0' { $endpointUriToken = "$($endpointBaseUri)/common/oauth2/token" }
+            '2.0' {
+                if ($token.Credential) {
+                    $endpointUriToken = "$($endpointBaseUri)/organizations/oauth2/V2.0/token"
+                } else {
+                    $endpointUriToken = "$($endpointBaseUri)/common/oauth2/V2.0/token"
+                }
+
+                [array]$scopes = "offline_access", "openid"
+                foreach ($permissionItem in $Permission) {
+                    $scopes = $scopes + "$($resourceUri)/$($permissionItem)"
+                }
+                $scope = [string]::Join(" ", $scopes)
+                Remove-Variable -Name scopes -Force -WhatIf:$false -Confirm:$false -Verbose:$false -Debug:$false
+                Write-PSFMessage -Level VeryVerbose -Message "Using scope: $($scope)" -Tag "Authorization"
+            }
+        }
 
         $queryHash = [ordered]@{
             grant_type    = "refresh_token"
-            resource      = [System.Web.HttpUtility]::UrlEncode($resourceUri)
-            client_id     = $Token.ClientId.Guid
+            client_id     = $ClientId
             refresh_token = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto([System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($Token.RefreshToken))
+        }
+        switch ($IdentityPlatformVersion) {
+            '1.0' { $queryHash.Add("resource", [System.Web.HttpUtility]::UrlEncode($resourceUri)) }
+            '2.0' {
+                $queryHash.Add("scope", [uri]::EscapeDataString($scope))
+                $queryHash.Add("redirect_uri", [System.Web.HttpUtility]::UrlEncode($redirectUrl))
+            }
         }
         $authorizationPostRequest = Convert-UriQueryFromHash $queryHash -NoQuestionmark
 
-
         $content = New-Object System.Net.Http.StringContent($authorizationPostRequest, [System.Text.Encoding]::UTF8, "application/x-www-form-urlencoded")
+        $httpClient = New-HttpClient
         $clientResult = $httpClient.PostAsync([Uri]$endpointUriToken, $content)
+        $jsonResponse = ConvertFrom-Json -InputObject $clientResult.Result.Content.ReadAsStringAsync().Result -ErrorAction Ignore
         if ($clientResult.Result.StatusCode -eq [System.Net.HttpStatusCode]"OK") {
             Write-PSFMessage -Level Verbose -Message "AccessToken renewal successful. $($clientResult.Result.StatusCode.value__) ($($clientResult.Result.StatusCode)) $($clientResult.Result.ReasonPhrase)" -Tag "Authorization"
         }
         else {
-            Stop-PSFFunction -Message "Failed to renew AccessToken! $($clientResult.Result.StatusCode.value__) ($($clientResult.Result.StatusCode)) $($clientResult.Result.ReasonPhrase)" -Tag "Authorization" -EnableException $true
+            $httpClient.CancelPendingRequests()
+            $msg = "Request for AccessToken failed. $($clientResult.Result.StatusCode.value__) ($($clientResult.Result.StatusCode)) $($clientResult.Result.ReasonPhrase) `n$($jsonResponse.error_description)"
+            Stop-PSFFunction -Message $msg -Tag "Authorization" -EnableException $true -Exception ([System.Management.Automation.RuntimeException]::new($msg))
         }
-        $jsonResponse = ConvertFrom-Json -InputObject $clientResult.Result.Content.ReadAsStringAsync().Result
 
         # Build output object
-        $resultObject = New-Object MSGraph.Core.AzureAccessToken -Property @{
-            TokenType      = $jsonResponse.token_type
-            Scope          = $jsonResponse.scope -split " "
-            ValidUntilUtc  = $baselineTimestamp.AddSeconds($jsonResponse.expires_on).ToUniversalTime()
-            ValidFromUtc   = $baselineTimestamp.AddSeconds($jsonResponse.not_before).ToUniversalTime()
-            ValidUntil     = New-Object DateTime($baselineTimestamp.AddSeconds($jsonResponse.expires_on).Ticks)
-            ValidFrom      = New-Object DateTime($baselineTimestamp.AddSeconds($jsonResponse.not_before).Ticks)
-            AccessToken    = $null
-            RefreshToken   = $null
-            IDToken        = $null
-            Credential     = $Token.Credential
-            ClientId       = $Token.ClientId.Guid
-            Resource       = $Token.Resource.ToString()
-            AppRedirectUrl = $Token.AppRedirectUrl.ToString()
+        $resultObject = New-Object -TypeName MSGraph.Core.AzureAccessToken -Property @{
+            IdentityPlatformVersion = $IdentityPlatformVersion
+            TokenType               = $jsonResponse.token_type
+            AccessToken             = $null
+            RefreshToken            = $null
+            IDToken                 = $null
+            Credential              = $Credential
+            ClientId                = $ClientId
+            Resource                = $resourceUri
+            AppRedirectUrl          = $RedirectUrl
         }
-        # Insert token data into output object. done as secure string to prevent text output of tokens
-        if ($jsonResponse.psobject.Properties.name -contains "refresh_token") { $resultObject.RefreshToken = ($jsonResponse.refresh_token | ConvertTo-SecureString -AsPlainText -Force) }
-        if ($jsonResponse.psobject.Properties.name -contains "id_token") { $resultObject.IDToken = ($jsonResponse.id_token | ConvertTo-SecureString -AsPlainText -Force) }
-        if ($jsonResponse.psobject.Properties.name -contains "access_token") {
-            $resultObject.AccessToken = ($jsonResponse.access_token | ConvertTo-SecureString -AsPlainText -Force)
-            $resultObject.AccessTokenInfo = ConvertFrom-JWTtoken -Token $jsonResponse.access_token
-        }
-        if ((Get-Date).IsDaylightSavingTime()) {
-            $resultObject.ValidUntil = $resultObject.ValidUntil.AddHours(1)
-            $resultObject.ValidFrom = $resultObject.ValidFrom.AddHours(1)
+        switch ($IdentityPlatformVersion) {
+            '1.0' {
+                $resultObject.Scope = $jsonResponse.scope -split " "
+                $resultObject.ValidUntilUtc = $baselineTimestamp.AddSeconds($jsonResponse.expires_on).ToUniversalTime()
+                $resultObject.ValidFromUtc = $baselineTimestamp.AddSeconds($jsonResponse.not_before).ToUniversalTime()
+                $resultObject.ValidUntil = $baselineTimestamp.AddSeconds($jsonResponse.expires_on).ToLocalTime()
+                $resultObject.ValidFrom = $baselineTimestamp.AddSeconds($jsonResponse.not_before).ToLocalTime()
+            }
+            '2.0' {
+                $resultObject.Scope = $jsonResponse.scope.Replace("$ResourceUri/", '') -split " "
+                $resultObject.ValidUntilUtc = (Get-Date).AddSeconds($jsonResponse.expires_in).ToUniversalTime()
+                $resultObject.ValidFromUtc = (Get-Date).ToUniversalTime()
+                $resultObject.ValidUntil = (Get-Date).AddSeconds($jsonResponse.expires_in).ToLocalTime()
+                $resultObject.ValidFrom = (Get-Date).ToLocalTime()
+            }
         }
 
+        # Insert token data into output object. done as secure string to prevent text output of tokens
+        if ($jsonResponse.psobject.Properties.name -contains "refresh_token") { $resultObject.RefreshToken = ($jsonResponse.refresh_token | ConvertTo-SecureString -AsPlainText -Force) }
+        if ($jsonResponse.psobject.Properties.name -contains "id_token") {
+            $resultObject.IDToken = ($jsonResponse.id_token | ConvertTo-SecureString -AsPlainText -Force)
+            $resultObject.AccessTokenInfo = ConvertFrom-JWTtoken -Token $jsonResponse.id_token
+        }
+        if ($jsonResponse.psobject.Properties.name -contains "access_token") {
+            $resultObject.AccessToken = ($jsonResponse.access_token | ConvertTo-SecureString -AsPlainText -Force)
+            if ($jsonResponse.access_token.Contains(".") -and $jsonResponse.access_token.StartsWith("eyJ")) {
+                $resultObject.AccessTokenInfo = ConvertFrom-JWTtoken -Token $jsonResponse.access_token
+            }
+        }
+
+        # Getting validity period out of AccessToken information
+        if ($resultObject.AccessTokenInfo -and $resultObject.AccessTokenInfo.TenantID.ToString() -notlike "9188040d-6c67-4c5b-b112-36a304b66dad") {
+            $resultObject.ValidUntilUtc = $resultObject.AccessTokenInfo.ExpirationTime.ToUniversalTime()
+            $resultObject.ValidFromUtc = $resultObject.AccessTokenInfo.NotBefore.ToUniversalTime()
+            $resultObject.ValidUntil = $resultObject.AccessTokenInfo.ExpirationTime.ToLocalTime()
+            $resultObject.ValidFrom = $resultObject.AccessTokenInfo.NotBefore.ToLocalTime()
+        }
+
+        # Checking if token is valid
+        # ToDo implement "validating token information" -> https://docs.microsoft.com/en-us/azure/active-directory/develop/access-tokens#validating-tokens
         if ($resultObject.IsValid) {
             if ($Register) {
                 $script:msgraph_Token = $resultObject
@@ -130,7 +188,7 @@
             }
         }
         else {
-            Stop-PSFFunction -Message "Token failure. Acquired token is not valid" -EnableException -Tag "Authorization"
+            Stop-PSFFunction -Message "Token failure. Acquired token is not valid" -EnableException $true -Tag "Authorization"
         }
     }
 

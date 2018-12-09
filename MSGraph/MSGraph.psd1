@@ -3,7 +3,7 @@
     ModuleToProcess = 'MSGraph.psm1'
 
     # Version number of this module.
-    ModuleVersion = '1.2.6.1'
+    ModuleVersion = '1.2.7.1'
 
     # ID used to uniquely identify this module
     GUID = '5f61c229-95d0-4423-ab50-938c0723ad21'
@@ -103,19 +103,37 @@
         #Support for PowerShellGet galleries.
         PSData = @{
             # Tags applied to this module. These help with module discovery in online galleries.
-            # Tags = @('MSGraph', 'Microsoft Graph', 'Microsoft Graph REST API', 'PSGallery', 'REST', 'API', 'REST API', 'Outlook', 'Messages', 'Mail', "Email")
+            Tags = @(
+                'MSGraph',
+                'MSGraphAPI',
+                'Graph',
+                'GraphAPI',
+                'MicrosoftGraph',
+                'MicrosoftGraphAPI',
+                'Microsoft Graph',
+                'Microsoft Graph REST API',
+                'PSGallery',
+                'REST',
+                'API',
+                'REST API',
+                'OAuth',
+                'Outlook',
+                'Messages',
+                'Mail',
+                "Email"
+            )
 
             # A URL to the license for this module.
-            # LicenseUri = 'https://github.com/FriedrichWeinmann/MSGraph/blob/master/LICENSE'
+            LicenseUri = 'https://github.com/FriedrichWeinmann/MSGraph/blob/master/LICENSE'
 
             # A URL to the main website for this project.
-            # ProjectUri = 'https://github.com/FriedrichWeinmann/MSGraph'
+            ProjectUri = 'https://github.com/FriedrichWeinmann/MSGraph'
 
             # A URL to an icon representing this module.
-            # IconUri = ''
+            IconUri = 'https://github.com/AndiBellstedt/MSGraph/tree/Development/MSGraph/assets/MSGraph_128x128.png'
 
             # ReleaseNotes of this module
-            # ReleaseNotes = 'https://github.com/FriedrichWeinmann/MSGraph/blob/master/MSGraph/changelog.md'
+            ReleaseNotes = 'https://github.com/FriedrichWeinmann/MSGraph/blob/master/MSGraph/changelog.md'
 
         } # End of PSData hashtable
 

@@ -55,7 +55,9 @@
         $FunctionName = $MyInvocation.MyCommand
     )
 
-    $Token = Resolve-Token -Token $Token -FunctionName $FunctionName
+    # tokek check
+    $Token = Invoke-TokenLifetimeValidation -Token $Token -FunctionName $FunctionName
+
     if (-not $User) { $User = $Token.UserprincipalName }
     $restUri = "https://graph.microsoft.com/v1.0/$(Resolve-UserString -User $User)/$($Field)"
 
