@@ -30,7 +30,7 @@
     )
 
     process {
-        if (-not $Token) { 
+        if (-not $Token) {
             Write-PSFMessage -Level Debug -Message "No token on parameter in command. Getting registered token." -Tag "Authentication" -FunctionName $FunctionName
             $Token = $script:msgraph_Token
         }

@@ -1,4 +1,4 @@
-function Test-TokenScope {
+﻿function Test-TokenScope {
     <#
     .SYNOPSIS
         Test for scopes existence on a Token
@@ -43,7 +43,7 @@ function Test-TokenScope {
 
     process {
         $Token = Resolve-Token -Token $Token -FunctionName $MyInvocation.MyCommand
-        
+
         Write-PSFMessage -Level VeryVerbose -Message "Validating token scope ($([String]::Join(", ",$Token.Scope))) against specified scope(s) ($([String]::Join(", ",$Scope)))" -Tag "Authenication" -FunctionName $FunctionName
         foreach ($scopeName in $Scope) {
             foreach ($tokenScope in $Token.Scope) {

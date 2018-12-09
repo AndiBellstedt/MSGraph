@@ -1,4 +1,4 @@
-function Invoke-TokenLifetimeValidation {
+﻿function Invoke-TokenLifetimeValidation {
     <#
     .SYNOPSIS
         Validates the lifetime of a token object
