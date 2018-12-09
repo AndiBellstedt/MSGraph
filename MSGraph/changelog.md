@@ -7,6 +7,8 @@
         - Get-MgaMailMessage
         - Move-MgaMailMessage
         - Set-MgaMailMessage
+- Upd: New-MgaAccessToken
+    - Add error handling on authentication errors
 
 ## 1.2.7.0
 - Upd: New-MgaAccessToken
