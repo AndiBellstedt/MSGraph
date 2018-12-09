@@ -36,6 +36,10 @@
 
         For more information goto https://docs.microsoft.com/en-us/azure/active-directory/develop/about-microsoft-identity-platform
 
+    .PARAMETER Tenant
+        The entry point to sign into.
+        The allowed values are common, organizations, consumers.
+
     .PARAMETER Permission
         Only applies if IdentityPlatformVersion version 2.0 is used.
         Specify the requested permission in the token.
@@ -61,9 +65,10 @@
         PS C:\> $token = New-MgaAccessToken -Credential $cred
 
         Generates a token with the credentials specified in $cred.
+        This is not supported for personal accounts (Micrsoft Accounts).
 
     .EXAMPLE
-        PS C:\> New-MgaAccessToken -Register -ShowLoginWindow -ClientId '4a6acbac-d325-47a3-b59b-d2e9e05a37c1' -RedirectUrl 'urn:ietf:wg:oauth:2.0:oob' -IdentityPlatformVersion '1.0'
+        PS C:\> New-MgaAccessToken -Register -ShowLoginWindow -ClientId '4a6acbac-d325-47a3-b59b-d2e9e05a37c1' -RedirectUrl 'urn:ietf:wg:oauth:2.0:oob' -IdentityPlatformVersion '2.0'
 
         Requires an interactive session with a user handling the web UI.
         Always prompt for account selection windows.
@@ -101,6 +106,10 @@
         [String]
         $ResourceUri = (Get-PSFConfigValue -FullName MSGraph.Tenant.ApiConnection -Fallback 'https://graph.microsoft.com'),
 
+        [ValidateSet('common', 'organizations', 'consumers')]
+        [String]
+        $Tenant = 'common',
+
         [switch]
         $Register,
 
@@ -123,16 +132,17 @@
     process {
         # variable definitions
         switch ($IdentityPlatformVersion) {
-            '1.0' { $endpointUri = "$($endpointBaseUri)/common/oauth2" }
+            '1.0' { $endpointUri = "$($endpointBaseUri)/$($Tenant)/oauth2" }
             '2.0' {
-                if ($Credential) {
+                if ($Credential -and $Tenant -notlike "organizations") {
                     $endpointUri = "$($endpointBaseUri)/organizations/oauth2/V2.0"
                 }
                 else {
-                    $endpointUri = "$($endpointBaseUri)/common/oauth2/V2.0"
+                    $endpointUri = "$($endpointBaseUri)/$($Tenant)/oauth2/V2.0"
                 }
             }
         }
+
         $endpointUriAuthorize = "$($endpointUri)/authorize"
         $endpointUriToken = "$($endpointUri)/token"
         Write-PSFMessage -Level Verbose -Message "Start authentication against endpoint $($endpointUri). (Identity platform version $($IdentityPlatformVersion))" -Tag "Authorization"
