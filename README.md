@@ -23,4 +23,4 @@ or install it only for your user:
 
 
 
-[logo]: assets/MSGraph_256x256.png
+[logo]: assets/MSGraph_Banner.png
