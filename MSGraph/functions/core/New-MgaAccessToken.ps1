@@ -180,9 +180,14 @@
                     if ($ShowLoginWindow) { $queryHash.Add("prompt", "login") }
                 }
             }
-
+            
             # Show login windows (web form)
             $phase1auth = Show-OAuthWindow -Url ($endpointUriAuthorize + (Convert-UriQueryFromHash $queryHash))
+            if(-not $phase1auth.code) {
+                $msg = "Authentication failed. Unable to obtain AccessToken.`n$($phase1auth.error_description)"
+                if($phase1auth.error) { $msg = $phase1auth.error.ToUpperInvariant() + " - " + $msg }
+                Stop-PSFFunction -Message $msg -Tag "Authorization" -EnableException $true -Exception ([System.Management.Automation.RuntimeException]::new($msg))
+            }
 
             # build authorization string with authentication code from web form auth
             $tokenQueryHash = [ordered]@{
