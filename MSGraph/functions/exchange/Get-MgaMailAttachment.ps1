@@ -60,6 +60,7 @@
     )
     begin {
         $requiredPermission = "Mail.Read"
+        $Token = Invoke-TokenScopeValidation -Token $Token -Scope $requiredPermission -FunctionName $MyInvocation.MyCommand
     }
 
     process {
