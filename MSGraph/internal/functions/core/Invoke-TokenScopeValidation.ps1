@@ -1,4 +1,4 @@
-﻿function Invoke-TokenScopeValidation {
+function Invoke-TokenScopeValidation {
     <#
     .SYNOPSIS
         Validates the scope of a token object
