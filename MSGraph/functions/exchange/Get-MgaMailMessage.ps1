@@ -228,9 +228,16 @@
         # run the message query and process the output
         foreach ($invokeParam in $InvokeParamsUniqueList) {
             $data = Invoke-MgaGetMethod @invokeParam | Where-Object { $_.subject -like $Subject }
-            foreach ($output in $data) {
-                New-MgaMailMessageObject -RestData $output
+            $output = foreach ($messageOutput in $data) {
+                New-MgaMailMessageObject -RestData $messageOutput
             }
+        }
+
+        if ($output) {
+            $output
+        }
+        else {
+            Write-PSFMessage -Level Warning -Message "Message not found." -Tag "QueryData"
         }
     }
 }
