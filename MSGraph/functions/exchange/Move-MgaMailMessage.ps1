@@ -120,12 +120,12 @@
                 }
             }
 
-            if ($User -and ($messageItem.TypeName -like "MSGraph.Exchange.Mail.Message") -and ($User -notlike $messageItem.InputObject.BaseObject.User)) {
-                Write-PSFMessage -Level Important -Message "Individual user specified with message object! User from message object ($($messageItem.InputObject.BaseObject.User))will take precedence on specified user ($($User))!" -Tag "InputValidation"
-                $User = $messageItem.InputObject.BaseObject.User
+            if ($User -and ($messageItem.TypeName -like "MSGraph.Exchange.Mail.Message") -and ($User -notlike $messageItem.InputObject.User)) {
+                Write-PSFMessage -Level Important -Message "Individual user specified with message object! User from message object ($($messageItem.InputObject.User))will take precedence on specified user ($($User))!" -Tag "InputValidation"
+                $User = $messageItem.InputObject.User
             }
             elseif ((-not $User) -and ($messageItem.TypeName -like "MSGraph.Exchange.Mail.Message")) {
-                $User = $messageItem.InputObject.BaseObject.User
+                $User = $messageItem.InputObject.User
             }
 
             if ($pscmdlet.ShouldProcess("message '$($messageItem)'", "Move to folder '$($DestinationFolder.Name)'")) {

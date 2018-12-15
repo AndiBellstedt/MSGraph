@@ -774,6 +774,11 @@
             
             </summary>
         </member>
+        <member name="F:MSGraph.Exchange.Mail.Message.User">
+            <summary>
+            The user name which owns the folder
+            </summary>
+        </member>
         <member name="M:MSGraph.Exchange.Mail.Message.ToString">
             <summary>
             Overrides the default ToString() method 
