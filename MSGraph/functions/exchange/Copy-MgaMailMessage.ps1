@@ -1,16 +1,16 @@
-﻿function Move-MgaMailMessage {
+﻿function Copy-MgaMailMessage {
     <#
     .SYNOPSIS
-        Move message(s) to a folder
+        Copy message(s) to a folder
 
     .DESCRIPTION
-        Move message(s) to a folder in Exchange Online using the graph api.
+        Copy message(s) to a folder in Exchange Online using the graph api.
 
     .PARAMETER Message
         Carrier object for Pipeline input. Accepts messages and strings.
 
     .PARAMETER DestinationFolder
-        The destination folder where to move the message to
+        The destination folder where to copy the message to
 
         .PARAMETER User
         The user-account to access. Defaults to the main user connected as.
@@ -31,11 +31,11 @@
         If this switch is enabled, no actions are performed but informational messages will be displayed that explain what would happen if the command were to run.
 
     .EXAMPLE
-        PS C:\> $mails | Move-MgaMailMessage -DestinationFolder $destinationFolder
+        PS C:\> $mails | Copy-MgaMailMessage -DestinationFolder $destinationFolder
 
-        Moves messages in variable $mails to the folder in the variable $destinationFolder.
+        Copys messages in variable $mails to the folder in the variable $destinationFolder.
         also possible:
-        PS C:\> Move-MgaMailMessage -Message $mails -DestinationFolder $destinationFolder
+        PS C:\> Copy-MgaMailMessage -Message $mails -DestinationFolder $destinationFolder
 
         The variable $mails can be represent:
         PS C:\> $mails = Get-MgaMailMessage -Folder Inbox -ResultSize 1
@@ -44,9 +44,9 @@
         PS C:\> $destinationFolder = Get-MgaMailFolder -Name "Archive"
 
     .EXAMPLE
-        PS C:\> Move-MgaMailMessage -Id $mails.id -DestinationFolder $destinationFolder
+        PS C:\> Copy-MgaMailMessage -Id $mails.id -DestinationFolder $destinationFolder
 
-        Moves messages into the folder $destinationFolder.
+        Copys messages into the folder $destinationFolder.
 
         The variable $mails can be represent:
         PS C:\> $mails = Get-MgaMailMessage -Folder Inbox -ResultSize 1
@@ -55,9 +55,9 @@
         PS C:\> $destinationFolder = Get-MgaMailFolder -Name "Archive"
 
     .EXAMPLE
-        PS C:\> Get-MgaMailMessage -Folder Inbox | Move-MgaMailMessage -DestinationFolder $destinationFolder
+        PS C:\> Get-MgaMailMessage -Folder Inbox | Copy-MgaMailMessage -DestinationFolder $destinationFolder
 
-        Moves ALL messages from your inbox into the folder $destinationFolder.
+        Copys ALL messages from your inbox into the folder $destinationFolder.
         The variable $destinationFolder can be represent:
         PS C:\> $destinationFolder = Get-MgaMailFolder -Name "Archive"
 
@@ -108,7 +108,7 @@
         $bodyJSON = "{`n" + ([string]::Join(",`n", $bodyJsonParts)) + "`n}"
         #endregion Put parameters (JSON Parts) into a valid "message"-JSON-object together
 
-        #region move messages
+        #region copy messages
         foreach ($messageItem in $Message) {
             #region checking input object type and query message if required
             if ($messageItem.TypeName -like "System.String") {
@@ -130,10 +130,10 @@
             }
             #endregion checking input object type and query message if required
 
-            if ($pscmdlet.ShouldProcess("message '$($messageItem)'", "Move to folder '$($DestinationFolder.Name)'")) {
-                Write-PSFMessage -Tag "MessageUpdate" -Level Verbose -Message "Move message '$($messageItem)' to folder '$($DestinationFolder)'"
+            if ($pscmdlet.ShouldProcess("message '$($messageItem)'", "Copy to folder '$($DestinationFolder.Name)'")) {
+                Write-PSFMessage -Tag "MessageUpdate" -Level Verbose -Message "Copy message '$($messageItem)' to folder '$($DestinationFolder)'"
                 $invokeParam = @{
-                    "Field"        = "messages/$($messageItem.Id)/move"
+                    "Field"        = "messages/$($messageItem.Id)/copy"
                     "User"         = $User
                     "Body"         = $bodyJSON
                     "ContentType"  = "application/json"

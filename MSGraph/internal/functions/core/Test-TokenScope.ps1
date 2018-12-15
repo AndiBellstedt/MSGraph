@@ -4,7 +4,7 @@
         Test for scopes existence on a Token
 
     .DESCRIPTION
-        Test for existence on scopes (permussions) in a Token
+        Test for existence on scopes (permissions) in a Token
         Helper function used for internal commands.
 
     .PARAMETER Token
