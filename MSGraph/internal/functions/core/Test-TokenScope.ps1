@@ -1,4 +1,4 @@
-function Test-TokenScope {
+﻿function Test-TokenScope {
     <#
     .SYNOPSIS
         Test for scopes existence on a Token
