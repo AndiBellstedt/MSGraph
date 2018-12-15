@@ -1,4 +1,4 @@
-function Rename-MgaMailFolder {
+﻿function Rename-MgaMailFolder {
     <#
     .SYNOPSIS
         Rename a folder in Exchange Online using the graph api.
