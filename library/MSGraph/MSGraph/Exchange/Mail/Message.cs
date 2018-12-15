@@ -179,6 +179,12 @@ namespace MSGraph.Exchange.Mail
             }
         }
 
+        /// <summary>
+        /// The user name which owns the folder
+        /// </summary>
+        public String User;
+
+
         private string _returnValue;
 
         #endregion Properties

@@ -1,10 +1,10 @@
 ﻿function Get-MgaMailFolder {
     <#
     .SYNOPSIS
-        Searches mail folders in Exchange Online
+        Get mail folder(s) in Exchange Online
 
     .DESCRIPTION
-        Searches mail folders in Exchange Online
+        Get mail folder(s) with metadata from Exchange Online via Microsoft Graph API
 
     .PARAMETER Name
         The name of the folder(S) to query.
@@ -18,6 +18,8 @@
     .PARAMETER Filter
         The name to filter by.
         (Client Side filtering)
+
+        Try to avoid, when filtering on single name, use parameter -Name instead of -Filter.
 
     .PARAMETER User
         The user-account to access. Defaults to the main user connected as.
@@ -97,36 +99,26 @@
 
         if ($Recurse) { $IncludeChildFolders = $true }
 
-        function invoke-internalMgaGetMethod ($invokeParam, [int]$level, [MSGraph.Exchange.Mail.Folder]$parentFolder) {
-            $folderData = Invoke-MgaGetMethod @invokeParam | Where-Object displayName -Like $Filter
+        #region helper subfunctions
+        function invoke-internalMgaGetMethod ($invokeParam, [int]$level, [MSGraph.Exchange.Mail.Folder]$parentFolder, [String]$FunctionName) {
+            # Subfunction for query objects and creating valid new objects from the query result
+            $folderData = Invoke-MgaGetMethod @invokeParam
             foreach ($folderOutput in $folderData) {
-                $hash = @{
-                    Id                  = $folderOutput.Id
-                    DisplayName         = $folderOutput.DisplayName
-                    ParentFolderId      = $folderOutput.ParentFolderId
-                    ChildFolderCount    = $folderOutput.ChildFolderCount
-                    UnreadItemCount     = $folderOutput.UnreadItemCount
-                    TotalItemCount      = $folderOutput.TotalItemCount
-                    User                = $folderOutput.User
-                    HierarchyLevel      = $level
-                }
-                if($parentFolder) { $hash.Add("ParentFolder", $parentFolder) }
-                $folderOutputObject = New-Object -TypeName MSGraph.Exchange.Mail.Folder -Property $hash
-                $folderOutputObject
+                New-MgaMailFolderObject -RestData $folderOutput -ParentFolder $parentFolder -FunctionName $FunctionName
             }
         }
 
-        function get-childfolder ($output, $level, $invokeParam){
+        function get-childfolder ($output, $level, $invokeParam) {
             $FoldersWithChilds = $output | Where-Object ChildFolderCount -gt 0
             $childFolders = @()
 
             do {
                 $level = $level + 1
                 foreach ($folderItem in $FoldersWithChilds) {
-                    if($folderItem.ChildFolderCount -gt 0) {
+                    if ($folderItem.ChildFolderCount -gt 0) {
                         Write-PSFMessage -Level VeryVerbose -Message "Getting childfolders for folder '$($folderItem.Name)'" -Tag "QueryData"
                         $invokeParam.Field = "mailFolders/$($folderItem.Id)/childFolders"
-                        $childFolderOutput = invoke-internalMgaGetMethod -invokeParam $invokeParam -level $level -parentFolder $folderItem
+                        $childFolderOutput = invoke-internalMgaGetMethod -invokeParam $invokeParam -level $level -parentFolder $folderItem -FunctionName $MyInvocation.MyCommand
 
                         $FoldersWithChilds = $childFolderOutput | Where-Object ChildFolderCount -gt 0
                         $childFolders = $childFolders + $childFolderOutput
@@ -136,6 +128,7 @@
 
             $childFolders
         }
+        #endregion helper subfunctions
     }
 
     process {
@@ -151,18 +144,18 @@
                     "FunctionName" = $MyInvocation.MyCommand
                 }
 
-                $output = invoke-internalMgaGetMethod -invokeParam $invokeParam -level $level
+                $output = invoke-internalMgaGetMethod -invokeParam $invokeParam -level $level -FunctionName $MyInvocation.MyCommand  | Where-Object displayName -Like $Filter
 
                 if ($output -and $IncludeChildFolders) {
                     $childFolders = $output | Where-Object ChildFolderCount -gt 0 | ForEach-Object {
                         get-childfolder -output $_ -level $level -invokeParam $invokeParam
                     }
-                    if($childFolders) {
+                    if ($childFolders) {
                         [array]$output = [array]$output + $childFolders
                     }
                 }
-                $output
             }
+
             "ByFolderName" {
                 foreach ($folder in $Name) {
                     $level = 1
@@ -173,26 +166,32 @@
                         "ResultSize"   = $ResultSize
                         "FunctionName" = $MyInvocation.MyCommand
                     }
-                    if($folder.id) {
+                    if ($folder.id) {
                         $invokeParam.add("Field", "mailFolders/$($folder.Id)")
                     }
                     else {
                         $invokeParam.add("Field", "mailFolders?`$filter=DisplayName eq '$($folder.Name)'")
                     }
 
-                    $output = invoke-internalMgaGetMethod -invokeParam $invokeParam -level $level
+                    $output = invoke-internalMgaGetMethod -invokeParam $invokeParam -level $level -FunctionName $MyInvocation.MyCommand | Where-Object displayName -Like $Filter
 
                     if ($output -and $IncludeChildFolders) {
                         $childFolders = get-childfolder -output $output -level $level -invokeParam $invokeParam
-                        if($childFolders) {
+                        if ($childFolders) {
                             [array]$output = [array]$output + $childFolders
                         }
                     }
-                    $output
                 }
-
             }
+
             Default { stop-PSFMessage -Message "Unhandled parameter set. ($($PSCmdlet.ParameterSetName)) Developer mistage." -EnableException $true -Category "ParameterSetHandling" -FunctionName $MyInvocation.MyCommand }
+        }
+
+        if ($output) {
+            $output
+        }
+        else {
+            Write-PSFMessage -Level Warning -Message "Folder not found." -Tag "QueryData"
         }
     }
 
