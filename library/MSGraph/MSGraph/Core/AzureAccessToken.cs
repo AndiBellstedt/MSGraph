@@ -14,6 +14,14 @@ namespace MSGraph.Core
     public class AzureAccessToken
     {
         /// <summary>
+        /// Specifies the endpoint version of the logon platform (Microsoft identity platform) where to connect for logon.
+        /// Use 2.0 if you want to login with a Microsoft Account.
+        /// 
+        /// For more information goto https://docs.microsoft.com/en-us/azure/active-directory/develop/about-microsoft-identity-platform
+        /// </summary>
+        public string IdentityPlatformVersion;
+
+        /// <summary>
         /// The type of token. Generally, only when the token is of type "Bearer" is a valid connection established.
         /// </summary>
         public string TokenType;

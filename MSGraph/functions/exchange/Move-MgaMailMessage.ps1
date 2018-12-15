@@ -85,6 +85,9 @@
         $PassThru
     )
     begin {
+        $requiredPermission = "Mail.ReadWrite"
+        $Token = Invoke-TokenScopeValidation -Token $Token -Scope $requiredPermission -FunctionName $MyInvocation.MyCommand
+
         if($DestinationFolder.TypeName -like "System.String") {
             [MSGraph.Exchange.Mail.FolderParameter]$DestinationFolder = Get-MgaMailFolder -Name $DestinationFolder.ToString() -User $User -Token $Token
         }

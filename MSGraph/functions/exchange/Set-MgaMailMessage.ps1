@@ -207,6 +207,9 @@
         $PassThru
     )
     begin {
+        $requiredPermission = "Mail.ReadWrite"
+        $Token = Invoke-TokenScopeValidation -Token $Token -Scope $requiredPermission -FunctionName $MyInvocation.MyCommand
+
         $boundParameters = @()
         $mailAddressNames = @("sender", "from", "toRecipients", "ccRecipients", "bccRecipients", "replyTo")
 

@@ -1,4 +1,25 @@
 # Changelog
+# 1.2.7.1
+- New: Token scope validation on commands
+    - Mga-commands inspect token scope information to check if they are able to run against the api. If Identity Platform Version 2.0 is use, a new token will be aquired, with the appropriate scopes to run.
+        - Get-MgaMailAttachment
+        - Get-MgaMailFolder
+        - Get-MgaMailMessage
+        - Move-MgaMailMessage
+        - Set-MgaMailMessage
+- Upd: New-MgaAccessToken
+    - Add error handling on authentication errors
+
+## 1.2.7.0
+- Upd: New-MgaAccessToken
+    - BREAKING CHANGE: rename switch "Refresh" to "ShowLoginWindows"
+    - Implement logon against Identity Platform Version 2.0, to allow logon with Microsoft Account
+    - Add Parameter "IdentityPlatformVersion" for choosing which endpoint to use for authentication
+    - Add Parameter "Permission" to specify the requested permission in the token (this only apply to identity platform version 2.0)
+    - Add documentation and examples
+- Upd: Update-MgaAccessToken 
+    - Implement refresh for Identity Platform Version 2.0, to allow refresh with Microsoft Account
+
 ## 1.2.6.1 (2018-12-06)
 - Upd: Rename ParameterClasses
     - [MSGraph.Exchange.Mail.MailFolderParameter] -> [MSGraph.Exchange.Mail.FolderParameter]

@@ -61,8 +61,10 @@
         $FunctionName = $MyInvocation.MyCommand
     )
 
+    # tokek check
+    $Token = Invoke-TokenLifetimeValidation -Token $Token -FunctionName $FunctionName
+
     #region variable definition
-    $Token = Resolve-Token -Token $Token -FunctionName $FunctionName
     if($PSCmdlet.ParameterSetName -like "DeltaLink") {
         Write-PSFMessage -Level VeryVerbose -Message "ParameterSet $($PSCmdlet.ParameterSetName) - constructing delta query" -Tag "ParameterSetHandling"
         $restUri = $DeltaLink
