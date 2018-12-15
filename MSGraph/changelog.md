@@ -2,6 +2,8 @@
 # 1.2.8.0
 - New: Command Rename-MgaMailFolder
     - allows to rename a folder
+- New: Command Copy-MgaMailMessage
+    - copy a mail to another folder
 - Upd: Command Get-MgaMailFolder
     - Bugfix (clientside) filtering, that filter only applies to direct queried objects and not invokes on the subfolders (if additionally queried)
 

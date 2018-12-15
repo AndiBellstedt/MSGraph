@@ -70,6 +70,7 @@ function Rename-MgaMailFolder {
         Write-PSFMessage -Level Debug -Message "Gettings messages by parameter set $($PSCmdlet.ParameterSetName)" -Tag "ParameterSetHandling"
 
         foreach ($folderItem in $Folder) {
+            #region checking input object type and query folder if required
             if ($folderItem.TypeName -like "System.String") {
                 if ($folderItem.Id -and (Test-MgaMailObjectId -Id $folderItem.Id -Type Folder -FunctionName $MyInvocation.MyCommand)) {
                     [MSGraph.Exchange.Mail.FolderParameter]$folderItem = Get-MgaMailFolder -Name $folderItem.Id -User $User -Token $Token
@@ -90,6 +91,7 @@ function Rename-MgaMailFolder {
             elseif ((-not $User) -and ($folderItem.TypeName -like "MSGraph.Exchange.Mail.Folder")) {
                 $User = $folderItem.InputObject.User
             }
+            #endregion checking input object type and query message if required
 
             if ($pscmdlet.ShouldProcess("Folder '$($folderItem)'", "Rename to '$($NewName)'")) {
                 Write-PSFMessage -Tag "FolderUpdate" -Level Verbose -Message "Rename folder '$($folderItem)' to name '$($NewName)'"

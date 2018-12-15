@@ -74,6 +74,7 @@
         'Export-MgaMailAttachment',
         'Set-MgaMailMessage',
         'Move-MgaMailMessage',
+        'Copy-MgaMailMessage'
 
         # Core
         'Invoke-MgaGetMethod',
