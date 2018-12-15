@@ -1,4 +1,4 @@
-﻿function New-MgaMailMessageObject {
+function New-MgaMailMessageObject {
     <#
     .SYNOPSIS
         Create new MessageObject
