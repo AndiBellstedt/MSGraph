@@ -3,7 +3,7 @@
     ModuleToProcess = 'MSGraph.psm1'
 
     # Version number of this module.
-    ModuleVersion = '1.2.8.0'
+    ModuleVersion = '1.2.8.1'
 
     # ID used to uniquely identify this module
     GUID = '5f61c229-95d0-4423-ab50-938c0723ad21'
@@ -66,7 +66,9 @@
         # Exchange
         ## Folder
         'Get-MgaMailFolder',
-        'Rename-MgaMailFolder'
+        'Rename-MgaMailFolder',
+        'New-MgaMailFolder',
+        'Move-MgaMailFolder',
 
         ## Message
         'Get-MgaMailMessage',
