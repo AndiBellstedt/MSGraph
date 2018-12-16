@@ -17,15 +17,14 @@
         Outputs the token to the console, even when the register switch is set
 
     .EXAMPLE
-        PS C:\> New-MgaAccessToken -MailboxName 'max.musterman@contoso.com'
+        PS C:\> Update-MgaAccessToken -Register
 
-        Registers an application to run under 'max.mustermann@contoso.com'.
-        Requires an interactive session with a user handling the web UI.
+        Updates the default (registered) Accesstoken and register it again as the default token
 
     .EXAMPLE
-        PS C:\> New-MgaAccessToken -MailboxName 'max.musterman@contoso.com' -Credential $cred
+        PS C:\> $token = Update-MgaAccessToken -Token $token
 
-        Generates a token to a session as max.mustermann@contoso.com under the credentials specified in $cred.
+        Updates the AccessToken in $token and output a new AccessToken object.
     #>
     [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSAvoidUsingConvertToSecureStringWithPlainText", "")]
     [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseShouldProcessForStateChangingFunctions", "")]
@@ -63,7 +62,7 @@
             Write-PSFMessage -Level Warning -Message "Token lifetime already expired and can't be newed. New authentication is required. Calling New-MgaAccessToken..." -Tag "Authorization"
 
             $paramsNewToken = @{
-                PassThru                = "True"
+                PassThru                = $True
                 ClientId                = $ClientId
                 RedirectUrl             = $RedirectUrl
                 ResourceUri             = $ResourceUri
