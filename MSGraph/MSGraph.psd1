@@ -69,6 +69,7 @@
         'Rename-MgaMailFolder',
         'New-MgaMailFolder',
         'Move-MgaMailFolder',
+        'Remove-MgaMailFolder'
 
         ## Message
         'Get-MgaMailMessage',
@@ -82,6 +83,7 @@
         'Invoke-MgaGetMethod',
         'Invoke-MgaPatchMethod',
         'Invoke-MgaPostMethod',
+        'Invoke-MgaDeleteMethod',
         'New-MgaAccessToken',
         'Update-MgaAccessToken',
         'Get-MgaRegisteredAccessToken',

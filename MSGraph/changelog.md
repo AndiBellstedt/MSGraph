@@ -2,6 +2,7 @@
 # 1.2.8.1
 - New: Command New-MgaMailFolder
 - New: command Move-MgaMailFolder
+- New: command Remove-MgaMailFolder
 - Upd: example documentation on command Update-MgaAccessToken
 - Upd: internal code refactoring for better object checking on message and folder functions
 
