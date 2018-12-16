@@ -26,9 +26,6 @@
         Can be created by using New-MgaAccessToken.
         Can be omitted if a connection has been registered using the -Register parameter on New-MgaAccessToken.
 
-    .PARAMETER PassThru
-        Outputs the token to the console
-
     .PARAMETER Confirm
         If this switch is enabled, you will be prompted for confirmation before executing any operations that change state.
 
@@ -63,10 +60,7 @@
         $User,
 
         [MSGraph.Core.AzureAccessToken]
-        $Token,
-
-        [switch]
-        $PassThru
+        $Token
     )
     begin {
         $requiredPermission = "Mail.ReadWrite"
@@ -78,7 +72,9 @@
             if(-not $ParentFolder) { throw }
         }
 
-        $User = Resolve-UserInMailObject -Object $ParentFolder -User $User -ShowWarning -FunctionName $MyInvocation.MyCommand
+        if ($ParentFolder) {
+            $User = Resolve-UserInMailObject -Object $ParentFolder -User $User -ShowWarning -FunctionName $MyInvocation.MyCommand
+        }
         #endregion checking input object type and query message if required
     }
 
@@ -110,9 +106,7 @@
                 }
 
                 $output = Invoke-MgaPostMethod @invokeParam
-                if ($PassThru) {
-                    New-MgaMailFolderObject -RestData $output -ParentFolder $ParentFolder.InputObject -FunctionName $MyInvocation.MyCommand
-                }
+                New-MgaMailFolderObject -RestData $output -ParentFolder $ParentFolder.InputObject -FunctionName $MyInvocation.MyCommand
             }
         }
     }

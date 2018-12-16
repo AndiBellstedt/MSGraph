@@ -1,10 +1,10 @@
 ﻿function Rename-MgaMailFolder {
     <#
     .SYNOPSIS
-        Rename a folder in Exchange Online using the graph api.
+        Rename folder(s) in Exchange Online using the graph api.
 
     .DESCRIPTION
-        Change the displayname of a folder in Exchange Online using the graph api.
+        Change the displayname of folder(s) in Exchange Online using the graph api.
 
     .PARAMETER Folder
         The folder to be renamed. This can be a name of the folder, it can be the

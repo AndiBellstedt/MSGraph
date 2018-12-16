@@ -99,7 +99,7 @@
         }
         $data = Invoke-RestMethod @invokeParam -ErrorVariable "restError" -Verbose:$false -UseBasicParsing
         if($restError) {
-            Stop-PSFFunction -Tag "RestData" -Message $parseError[0].Exception -Exception $parseError[0].Exception -EnableException $false -Category ConnectionError -FunctionName $FunctionName
+            Stop-PSFFunction -Tag "RestData" -Message $parseError[0].Exception.Message -Exception $parseError[0].Exception -EnableException $false -Category ConnectionError -FunctionName $FunctionName
             return
         }
 
