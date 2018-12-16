@@ -79,6 +79,7 @@
         'Move-MgaMailMessage',
         'Copy-MgaMailMessage',
         'Remove-MgaMailMessage',
+        'New-MgaMailMessage',
 
         # Core
         'Invoke-MgaGetMethod',
