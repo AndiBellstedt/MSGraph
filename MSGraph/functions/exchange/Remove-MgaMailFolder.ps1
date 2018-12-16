@@ -15,7 +15,7 @@
 
         Tab completion is available on this parameter for a list of well known folders.
 
-    .PARAMETER Force 
+    .PARAMETER Force
         If specified the user will not prompted on confirmation.
 
     .PARAMETER User
@@ -39,24 +39,26 @@
     .EXAMPLE
         PS C:\> Remove-MgaMailFolder -Name 'MyFolder'
 
-        Removes  folder named "MyFolder".
+        Removes folder named "MyFolder".
         The folder has to be on the root level of the mailbox to be specified by individual name.
 
     .EXAMPLE
         PS C:\> Remove-MgaMailFolder -Name $folder
 
-        Removes  folder represented by the variable $folder.
+        Removes folder represented by the variable $folder.
+        You will be prompted for confirmation.
 
-        The variable $mails can be represent:
-        PS C:\> $folder = Get-MgaMailMessage -Folder "MyFolder"
+        The variable $folder can be represent:
+        PS C:\> $folder = Get-MgaMailFolder -Folder "MyFolder"
 
     .EXAMPLE
         PS C:\> $folder | Remove-MgaMailFolder -Force
 
-        Removes  folder represented by the variable $folder.
+        Removes folder represented by the variable $folder.
+        ATTENTION, There will be NO prompt for confirmation!
 
-        The variable $mails can be represent:
-        PS C:\> $folder = Get-MgaMailMessage -Folder "MyFolder"
+        The variable $folder can be represent:
+        PS C:\> $folder = Get-MgaMailFolder -Folder "MyFolder"
 
     #>
     [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'High')]
@@ -107,13 +109,13 @@
                 $invokeParam = @{
                     "Field"        = "mailFolders/$($folderItem.Id)"
                     "User"         = $User
-                    "Body"         = $bodyJSON
+                    "Body"         = ""
                     "ContentType"  = "application/json"
                     "Token"        = $Token
                     "Force"        = $true
                     "FunctionName" = $MyInvocation.MyCommand
                 }
-                $output = Invoke-MgaDeleteMethod @invokeParam
+                $null = Invoke-MgaDeleteMethod @invokeParam
                 if ($PassThru) {
                     $folderItem.InputObject
                 }
