@@ -126,7 +126,7 @@
     [Alias("Update-MgaMailMessage")]
     [OutputType([MSGraph.Exchange.Mail.Message])]
     param (
-        [Parameter(Mandatory=$true, Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
+        [Parameter(Mandatory = $true, Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
         [Alias('InputObject', 'MessageId', 'Id')]
         [MSGraph.Exchange.Mail.MessageParameter[]]
         $Message,
@@ -217,12 +217,12 @@
         foreach ($Name in $mailAddressNames) {
             if (Test-PSFParameterBinding -ParameterName $name) {
                 New-Variable -Name "$($name)Addresses" -Force -Scope 0
-                if( (Get-Variable -Name $Name -Scope 0).Value ) {
+                if ( (Get-Variable -Name $Name -Scope 0).Value ) {
                     try {
                         Set-Variable -Name "$($name)Addresses" -Value ( (Get-Variable -Name $Name -Scope 0).Value | ForEach-Object { [mailaddress]$_ } -ErrorAction Stop -ErrorVariable parseError )
                     }
                     catch {
-                        Stop-PSFFunction -Message "Unable to parse $($name) to a mailaddress. String should be 'name@domain.topleveldomain' or 'displayname name@domain.topleveldomain'. Error: $($parseError[0].Exception)" -Tag "ParameterParsing" -Category InvalidData -EnableException $true -Exception $parseError[0].Exception
+                        Stop-PSFFunction -Message "Unable to parse $($name) to a mailaddress. String should be 'name@domain.topleveldomain' or 'displayname name@domain.topleveldomain'. Error: $($parseError[0].Exception.Message)" -Tag "ParameterParsing" -Category InvalidData -EnableException $true -Exception $parseError[0].Exception
                     }
                 }
             }
@@ -234,20 +234,24 @@
         Write-PSFMessage -Level Debug -Message "Gettings folder(s) by parameterset $($PSCmdlet.ParameterSetName)" -Tag "ParameterSetHandling"
 
         #region Parsing string and boolean parameters to json data parts
-        $names = @("IsRead", "Subject", "Body", "Categories", "Importance", "InferenceClassification", "InternetMessageId", "IsDeliveryReceiptRequested", "IsReadReceiptRequested")
+        $names = @("IsRead", "Subject", "Categories", "Importance", "InferenceClassification", "InternetMessageId", "IsDeliveryReceiptRequested", "IsReadReceiptRequested")
         Write-PSFMessage -Level VeryVerbose -Message "Parsing string and boolean parameters to json data parts ($([string]::Join(", ", $names)))" -Tag "ParameterParsing"
-        foreach ( $name in $names ) {
+        foreach ($name in $names) {
             if (Test-PSFParameterBinding -ParameterName $name) {
                 $boundParameters = $boundParameters + $name
                 Write-PSFMessage -Level Debug -Message "Parsing text parameter $($name)" -Tag "ParameterParsing"
                 $bodyHash.Add($name, ((Get-Variable $name -Scope 0).Value| ConvertTo-Json))
             }
         }
+
+        if($Body) {
+            $bodyHash.Add("Body", ([MSGraph.Exchange.Mail.MessageBody]$Body | ConvertTo-Json))
+        }
         #endregion Parsing string and boolean parameters to json data parts
 
         #region Parsing mailaddress parameters to json data parts
         Write-PSFMessage -Level VeryVerbose -Message "Parsing mailaddress parameters to json data parts ($([string]::Join(", ", $mailAddressNames)))" -Tag "ParameterParsing"
-        foreach ( $name in $mailAddressNames ) {
+        foreach ($name in $mailAddressNames) {
             if (Test-PSFParameterBinding -ParameterName $name) {
                 $boundParameters = $boundParameters + $name
                 Write-PSFMessage -Level Debug -Message "Parsing mailaddress parameter $($name)" -Tag "ParameterParsing"
@@ -282,7 +286,8 @@
                     else {
                         $bodyHash.Add($name, ($addresses | ConvertTo-Json) )
                     }
-                } else {
+                }
+                else {
                     $bodyHash.Add($name, ($addresses | ConvertTo-Json) )
                 }
             }
@@ -302,7 +307,7 @@
             #region checking input object type and query message if required
             if ($messageItem.TypeName -like "System.String") {
                 $messageItem = Resolve-MailObjectFromString -Object $messageItem -User $User -Token $Token -NoNameResolving -FunctionName $MyInvocation.MyCommand
-                if(-not $messageItem) { continue }
+                if (-not $messageItem) { continue }
             }
 
             $User = Resolve-UserInMailObject -Object $messageItem -User $User -ShowWarning -FunctionName $MyInvocation.MyCommand
@@ -319,7 +324,7 @@
                     "FunctionName" = $MyInvocation.MyCommand
                 }
                 $output = Invoke-MgaPatchMethod @invokeParam
-                if ($PassThru) { New-MgaMailMessageObject -RestData $output }
+                if ($output -and $PassThru) { New-MgaMailMessageObject -RestData $output }
             }
         }
         #endregion Update messages
