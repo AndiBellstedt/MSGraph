@@ -10,6 +10,10 @@
     .PARAMETER RestData
         The RestData object containing the data for the new message object.
 
+    .PARAMETER Level
+        The hierarchy level of the folder.
+        1 means the folder is a root folder.
+
     .PARAMETER ParentFolder
         If known/ existing, the parent folder object of the folder object to create.
 
@@ -17,7 +21,7 @@
         Name of the higher function which is calling this function.
 
     .EXAMPLE
-        PS C:\> New-MgaMailFolderObject -RestData $output
+        PS C:\> New-MgaMailFolderObject -RestData $output -Level $Level -ParentFolder $ParentFolder -FunctionName $MyInvocation.MyCommand
 
         Create a MSGraph.Exchange.Mail.Folder object from data in variable $output
     #>
@@ -27,12 +31,22 @@
     param (
         $RestData,
 
-        [MSGraph.Exchange.Mail.Folder]
+        [MSGraph.Exchange.Mail.FolderParameter]
         $ParentFolder,
+
+        [int]
+        $Level,
 
         [String]
         $FunctionName
     )
+
+    if ((-not $Level) -and $ParentFolder) {
+        $Level = $ParentFolder.InputObject.HierarchyLevel + 1
+    }
+    elseif ((-not $Level) -and (-not $ParentFolder)) {
+        $Level = 1
+    }
 
     $hash = @{
         Id               = $RestData.Id
@@ -42,10 +56,12 @@
         UnreadItemCount  = $RestData.UnreadItemCount
         TotalItemCount   = $RestData.TotalItemCount
         User             = $RestData.User
-        HierarchyLevel   = $level
+        HierarchyLevel   = $Level
     }
-    if ($parentFolder) { $hash.Add("ParentFolder", $parentFolder) }
-    $OutputObject = New-Object -TypeName MSGraph.Exchange.Mail.Folder -Property $hash
-    $OutputObject
 
+    if ($ParentFolder) { $hash.Add("ParentFolder", $ParentFolder.InputObject) }
+
+    $OutputObject = New-Object -TypeName MSGraph.Exchange.Mail.Folder -Property $hash
+
+    $OutputObject
 }

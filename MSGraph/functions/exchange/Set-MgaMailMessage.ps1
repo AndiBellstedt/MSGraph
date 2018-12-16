@@ -231,7 +231,7 @@
 
     process {
         $bodyHash = @{}
-        Write-PSFMessage -Level Debug -Message "Gettings messages by parameter set $($PSCmdlet.ParameterSetName)" -Tag "ParameterSetHandling"
+        Write-PSFMessage -Level Debug -Message "Gettings folder(s) by parameterset $($PSCmdlet.ParameterSetName)" -Tag "ParameterSetHandling"
 
         #region Parsing string and boolean parameters to json data parts
         $names = @("IsRead", "Subject", "Body", "Categories", "Importance", "InferenceClassification", "InternetMessageId", "IsDeliveryReceiptRequested", "IsReadReceiptRequested")
@@ -299,23 +299,14 @@
 
         #region Update messages
         foreach ($messageItem in $Message) {
+            #region checking input object type and query message if required
             if ($messageItem.TypeName -like "System.String") {
-                if ($messageItem.Id -and ($messageItem.Id.Length -eq 152)) {
-                    [MSGraph.Exchange.Mail.MessageParameter]$messageItem = Get-MgaMailMessage -InputObject $messageItem.Id -User $User -Token $Token
-                }
-                else {
-                    Write-PSFMessage -Level Warning -Message "The specified input string seams not to be a valid Id. Skipping object '$($messageItem)'" -Tag "InputValidation"
-                    continue
-                }
+                $messageItem = Resolve-MailObjectFromString -Object $messageItem -User $User -Token $Token -NoNameResolving -FunctionName $MyInvocation.MyCommand
+                if(-not $messageItem) { continue }
             }
 
-            if ($User -and ($messageItem.TypeName -like "MSGraph.Exchange.Mail.Message") -and ($User -notlike $messageItem.InputObject.User)) {
-                Write-PSFMessage -Level Important -Message "Individual user specified with message object! User from message object ($($messageItem.InputObject.User))will take precedence on specified user ($($User))!" -Tag "InputValidation"
-                $User = $messageItem.InputObject.User
-            }
-            elseif ((-not $User) -and ($messageItem.TypeName -like "MSGraph.Exchange.Mail.Message")) {
-                $User = $messageItem.InputObject.User
-            }
+            $User = Resolve-UserInMailObject -Object $messageItem -User $User -ShowWarning -FunctionName $MyInvocation.MyCommand
+            #endregion checking input object type and query message if required
 
             if ($pscmdlet.ShouldProcess("message '$($messageItem)'", "Update properties '$([string]::Join("', '", $boundParameters))'")) {
                 Write-PSFMessage -Tag "MessageUpdate" -Level Verbose -Message "Update properties '$([string]::Join("', '", $boundParameters))' on message '$($messageItem)'"

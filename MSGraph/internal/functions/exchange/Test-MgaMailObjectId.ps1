@@ -47,8 +47,8 @@
 
         Write-PSFMessage -Level Debug -Message "Validating Id '$($Id)' for $($Type) length" -Tag "ValidateObjectId" -FunctionName $FunctionName
         switch ($Type) {
-            "Folder" { if ($Id.Length -eq 120 -or $Id.Length -eq 104) { $status = true } }
-            "Message" { if ($Id.Length -eq 152 -or $Id.Length -eq 136) { $status = true } }
+            "Folder" { if ($Id.Length -eq 120 -or $Id.Length -eq 104) { $status = $true } }
+            "Message" { if ($Id.Length -eq 152 -or $Id.Length -eq 136) { $status = $true } }
         }
     }
 

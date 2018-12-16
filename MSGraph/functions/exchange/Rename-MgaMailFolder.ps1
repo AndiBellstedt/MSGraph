@@ -67,30 +67,16 @@
     }
 
     process {
-        Write-PSFMessage -Level Debug -Message "Gettings messages by parameter set $($PSCmdlet.ParameterSetName)" -Tag "ParameterSetHandling"
+        Write-PSFMessage -Level Debug -Message "Gettings folder(s) by parameterset $($PSCmdlet.ParameterSetName)" -Tag "ParameterSetHandling"
 
         foreach ($folderItem in $Folder) {
             #region checking input object type and query folder if required
             if ($folderItem.TypeName -like "System.String") {
-                if ($folderItem.Id -and (Test-MgaMailObjectId -Id $folderItem.Id -Type Folder -FunctionName $MyInvocation.MyCommand)) {
-                    [MSGraph.Exchange.Mail.FolderParameter]$folderItem = Get-MgaMailFolder -Name $folderItem.Id -User $User -Token $Token
-                }
-                elseif ($folderItem.Name) {
-                    [MSGraph.Exchange.Mail.FolderParameter]$folderItem = Get-MgaMailFolder -Name $folderItem.Name -User $User -Token $Token -ErrorAction Stop
-                }
-                else {
-                    Write-PSFMessage -Level Warning -Message "The specified input string seams not to be a valid Id. Skipping object '$($folderItem)'" -Tag "InputValidation"
-                    continue
-                }
+                $folderItem = Resolve-MailObjectFromString -Object $folderItem -User $User -Token $Token -FunctionName $MyInvocation.MyCommand
+                if(-not $folderItem) { continue }
             }
 
-            if ($User -and ($folderItem.TypeName -like "MSGraph.Exchange.Mail.Folder") -and ($User -notlike $folderItem.InputObject.User)) {
-                Write-PSFMessage -Level Important -Message "Individual user specified with message object! User from message object ($($folderItem.InputObject.User))will take precedence on specified user ($($User))!" -Tag "InputValidation"
-                $User = $folderItem.InputObject.User
-            }
-            elseif ((-not $User) -and ($folderItem.TypeName -like "MSGraph.Exchange.Mail.Folder")) {
-                $User = $folderItem.InputObject.User
-            }
+            $User = Resolve-UserInMailObject -Object $folderItem -User $User -ShowWarning -FunctionName $MyInvocation.MyCommand
             #endregion checking input object type and query message if required
 
             if ($pscmdlet.ShouldProcess("Folder '$($folderItem)'", "Rename to '$($NewName)'")) {
@@ -105,7 +91,7 @@
                 }
                 $output = Invoke-MgaPatchMethod @invokeParam
                 if ($PassThru) {
-                    New-MgaMailFolderObject -RestData $output -ParentFolder $folderItem.InputObject.ParentFolder -FunctionName $FunctionName
+                    New-MgaMailFolderObject -RestData $output -ParentFolder $folderItem.InputObject.ParentFolder -FunctionName $MyInvocation.MyCommand
                 }
             }
         }
