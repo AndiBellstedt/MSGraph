@@ -120,6 +120,7 @@
         [AllowNull()]
         [AllowEmptyCollection()]
         [AllowEmptyString()]
+        [Alias('To', 'Recipients')]
         [string[]]
         $ToRecipients,
 
@@ -163,7 +164,6 @@
 
         [bool]
         $IsReadReceiptRequested,
-
 
         [string]
         $User,

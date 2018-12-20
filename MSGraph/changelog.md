@@ -1,4 +1,10 @@
 # Changelog
+# 1.2.8.3
+- Upd: command New-MgaMailMessage, Send-MgaMailMessage, Set-MgaMailMessage
+    - Update parameter "ToRecipients" -> add parameter alias names "To" and "Reciepients"
+- Upd: command Send-MgaMailMessage
+    - Add parameter set, to send new mail directly from command without need to use New-MgaMailMessage before Send-MgaMailMessage
+
 # 1.2.8.2
 - New: Command New-MgaMailFolder
 - New: command Move-MgaMailFolder

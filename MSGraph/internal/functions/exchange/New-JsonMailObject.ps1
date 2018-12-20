@@ -1,54 +1,38 @@
-﻿function Set-MgaMailMessage {
+﻿function New-JsonMailObject {
     <#
     .SYNOPSIS
-        Set properties on message(s)
+        Creates a json message object for use in Microsoft Graph REST api
 
     .DESCRIPTION
-        Set properties on message(s) in Exchange Online using the graph api.
-
-    .PARAMETER Message
-        Carrier object for Pipeline input. Accepts messages.
-
-    .PARAMETER User
-        The user-account to access. Defaults to the main user connected as.
-        Can be any primary email name of any user the connected token has access to.
-
-    .PARAMETER IsRead
-        Indicates whether the message has been read.
+        Creates a json message object for use in Microsoft Graph REST api
+        Helper function used for internal commands.
 
     .PARAMETER Subject
-        The subject of the message.
-        (Updatable only if isDraft = true.)
+        The subject of the new message.
 
     .PARAMETER Sender
         The account that is actually used to generate the message.
-        (Updatable only if isDraft = true, and when sending a message from a shared mailbox,
-        or sending a message as a delegate. In any case, the value must correspond to the actual mailbox used.)
+        (Updatable only when sending a message from a shared mailbox or sending a message as a delegate.
+        In any case, the value must correspond to the actual mailbox used.)
 
     .PARAMETER From
         The mailbox owner and sender of the message.
         Must correspond to the actual mailbox used.
-        (Updatable only if isDraft = true.)
 
     .PARAMETER ToRecipients
         The To recipients for the message.
-        (Updatable only if isDraft = true.)
 
     .PARAMETER CCRecipients
         The Cc recipients for the message.
-        (Updatable only if isDraft = true.)
 
     .PARAMETER BCCRecipients
         The Bcc recipients for the message.
-        (Updatable only if isDraft = true.)
 
     .PARAMETER ReplyTo
         The email addresses to use when replying.
-        (Updatable only if isDraft = true.)
 
     .PARAMETER Body
         The body of the message.
-        (Updatable only if isDraft = true.)
 
     .PARAMETER Categories
         The categories associated with the message.
@@ -63,7 +47,6 @@
 
     .PARAMETER InternetMessageId
         The message ID in the format specified by RFC2822.
-        (Updatable only if isDraft = true.)
 
     .PARAMETER IsDeliveryReceiptRequested
         Indicates whether a delivery receipt is requested for the message.
@@ -71,74 +54,30 @@
     .PARAMETER IsReadReceiptRequested
         Indicates whether a read receipt is requested for the message.
 
-    .PARAMETER Token
-        The token representing an established connection to the Microsoft Graph Api.
-        Can be created by using New-MgaAccessToken.
-        Can be omitted if a connection has been registered using the -Register parameter on New-MgaAccessToken.
+    .PARAMETER FunctionName
+        Name of the higher function which is calling this function.
+        (Just used for logging reasons)
 
-    .PARAMETER PassThru
-        Outputs the token to the console
+    .NOTES
+        For addiontional information go to:
+        https://docs.microsoft.com/en-us/graph/api/resources/message?view=graph-rest-1.0
 
-    .PARAMETER Confirm
-        If this switch is enabled, you will be prompted for confirmation before executing any operations that change state.
-
-    .PARAMETER WhatIf
-        If this switch is enabled, no actions are performed but informational messages will be displayed that explain what would happen if the command were to run.
+    .LINK
 
     .EXAMPLE
-        PS C:\> $mail | Set-MgaMailMessage -IsRead $false
+        PS C:\> New-JsonMailObject
 
-        Set messages represented by variable $mail to status "unread"
-        The variable $mails can be represent:
-        PS C:\> $mails = Get-MgaMailMessage -Folder Inbox -ResultSize 1
-
-    .EXAMPLE
-        PS C:\> $mail | Set-MgaMailMessage -IsRead $false -categories "Red category"
-
-        Set status "unread" and category "Red category" to messages represented by variable $mail
-        The variable $mails can be represent:
-        PS C:\> $mails = Get-MgaMailMessage -Folder Inbox -ResultSize 1
-
-    .EXAMPLE
-        PS C:\> $mail | Set-MgaMailMessage -ToRecipients "someone@something.org"
-
-        Set reciepent from draft mail represented by variable $mail
-        The variable $mails can be represent:
-        PS C:\> $mails = Get-MgaMailMessage -Folder Drafts
-
-    .EXAMPLE
-        PS C:\> Set-MgaMailMessage -Id $mail.Id -ToRecipients "someone@something.org" -Subject "Something important"
-
-        Set reciepent from draft mail represented by variable $mail
-        The variable $mails can be represent:
-        PS C:\> $mails = Get-MgaMailMessage -Folder Drafts
-
-    .EXAMPLE
-        PS C:\> $mail | Set-MgaMailMessage -ToRecipients $null
-
-        Clear reciepent from draft mail represented by variable $mail
-        The variable $mails can be represent:
-        PS C:\> $mails = Get-MgaMailMessage -Folder Drafts
-
+        Creates a json message object for use in Microsoft Graph REST api
 
     #>
-    [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'Medium', DefaultParameterSetName = 'Default')]
-    [Alias("Update-MgaMailMessage")]
-    [OutputType([MSGraph.Exchange.Mail.Message])]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseShouldProcessForStateChangingFunctions", "")]
+    [CmdletBinding(SupportsShouldProcess = $false, ConfirmImpact = 'Low')]
+    [OutputType([String])]
     param (
-        [Parameter(Mandatory = $true, Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
-        [Alias('InputObject', 'MessageId', 'Id')]
-        [MSGraph.Exchange.Mail.MessageParameter[]]
-        $Message,
-
-        [string]
-        $User,
-
-        [ValidateNotNullOrEmpty()]
-        [bool]
-        $IsRead,
-
-        [string]
+        [AllowNull()]
+        [AllowEmptyCollection()]
+        [AllowEmptyString()]
+        [string[]]
         $Subject,
 
         [AllowNull()]
@@ -156,7 +95,6 @@
         [AllowNull()]
         [AllowEmptyCollection()]
         [AllowEmptyString()]
-        [Alias('To', 'Recipients')]
         [string[]]
         $ToRecipients,
 
@@ -181,14 +119,23 @@
         [String]
         $Body,
 
+        [AllowNull()]
+        [AllowEmptyCollection()]
+        [AllowEmptyString()]
         [String[]]
         $Categories,
 
-        [ValidateSet("Low", "Normal", "High")]
+        [AllowNull()]
+        [AllowEmptyCollection()]
+        [AllowEmptyString()]
+        #[ValidateSet("Low", "Normal", "High")]
         [String]
-        $Importance,
+        $Importance = "Normal",
 
-        [ValidateSet("focused", "other")]
+        [AllowNull()]
+        [AllowEmptyCollection()]
+        [AllowEmptyString()]
+        #[ValidateSet("focused", "other")]
         [String]
         $InferenceClassification,
 
@@ -201,18 +148,14 @@
         [bool]
         $IsReadReceiptRequested,
 
-        [MSGraph.Core.AzureAccessToken]
-        $Token,
-
-        [switch]
-        $PassThru
+        [String]
+        $FunctionName
     )
     begin {
-        $requiredPermission = "Mail.ReadWrite"
-        $Token = Invoke-TokenScopeValidation -Token $Token -Scope $requiredPermission -FunctionName $MyInvocation.MyCommand
-
+        #region variable definition
         $boundParameters = @()
         $mailAddressNames = @("sender", "from", "toRecipients", "ccRecipients", "bccRecipients", "replyTo")
+        #endregion variable definition
 
         # parsing mailAddress parameter strings to mailaddress objects (if not empty)
         foreach ($Name in $mailAddressNames) {
@@ -223,25 +166,28 @@
                         Set-Variable -Name "$($name)Addresses" -Value ( (Get-Variable -Name $Name -Scope 0).Value | ForEach-Object { [mailaddress]$_ } -ErrorAction Stop -ErrorVariable parseError )
                     }
                     catch {
-                        Stop-PSFFunction -Message "Unable to parse $($name) to a mailaddress. String should be 'name@domain.topleveldomain' or 'displayname name@domain.topleveldomain'. Error: $($parseError[0].Exception.Message)" -Tag "ParameterParsing" -Category InvalidData -EnableException $true -Exception $parseError[0].Exception
+                        Stop-PSFFunction -Message "Unable to parse $($name) to a mailaddress. String should be 'name@domain.topleveldomain' or 'displayname name@domain.topleveldomain'. Error: $($parseError[0].Exception.Message)" -Tag "ParameterParsing" -Category InvalidData -EnableException $true -Exception $parseError[0].Exception -FunctionName $FunctionName
                     }
                 }
             }
         }
+
     }
 
     process {
         $bodyHash = @{}
-        Write-PSFMessage -Level Debug -Message "Gettings folder(s) by parameterset $($PSCmdlet.ParameterSetName)" -Tag "ParameterSetHandling"
+        Write-PSFMessage -Level Debug -Message "Create message JSON object" -Tag "ParameterSetHandling"
 
         #region Parsing string and boolean parameters to json data parts
-        $names = @("IsRead", "Subject", "Categories", "Importance", "InferenceClassification", "InternetMessageId", "IsDeliveryReceiptRequested", "IsReadReceiptRequested")
+        $names = @("Subject", "Categories", "Importance", "InferenceClassification", "InternetMessageId", "IsDeliveryReceiptRequested", "IsReadReceiptRequested")
         Write-PSFMessage -Level VeryVerbose -Message "Parsing string and boolean parameters to json data parts ($([string]::Join(", ", $names)))" -Tag "ParameterParsing"
         foreach ($name in $names) {
             if (Test-PSFParameterBinding -ParameterName $name) {
-                $boundParameters = $boundParameters + $name
-                Write-PSFMessage -Level Debug -Message "Parsing text parameter $($name)" -Tag "ParameterParsing"
-                $bodyHash.Add($name, ((Get-Variable $name -Scope 0).Value| ConvertTo-Json))
+                if( (Get-Variable $name -Scope 0).Value ) {
+                    $boundParameters = $boundParameters + $name
+                    Write-PSFMessage -Level Debug -Message "Parsing text parameter $($name)" -Tag "ParameterParsing"
+                    $bodyHash.Add($name, ((Get-Variable $name -Scope 0).Value | ConvertTo-Json))
+                }
             }
         }
 
@@ -253,7 +199,7 @@
         #region Parsing mailaddress parameters to json data parts
         Write-PSFMessage -Level VeryVerbose -Message "Parsing mailaddress parameters to json data parts ($([string]::Join(", ", $mailAddressNames)))" -Tag "ParameterParsing"
         foreach ($name in $mailAddressNames) {
-            if (Test-PSFParameterBinding -ParameterName $name) {
+            if ((Test-PSFParameterBinding -ParameterName $name) -and (Get-Variable -Name "$($name)Addresses" -Scope 0).Value) {
                 $boundParameters = $boundParameters + $name
                 Write-PSFMessage -Level Debug -Message "Parsing mailaddress parameter $($name)" -Tag "ParameterParsing"
                 $addresses = (Get-Variable -Name "$($name)Addresses" -Scope 0).Value
@@ -303,32 +249,11 @@
         $bodyJSON = "{`n" + ([string]::Join(",`n", $bodyJsonParts)) + "`n}"
         #endregion Put parameters (JSON Parts) into a valid "message"-JSON-object together
 
-        #region Update messages
-        foreach ($messageItem in $Message) {
-            #region checking input object type and query message if required
-            if ($messageItem.TypeName -like "System.String") {
-                $messageItem = Resolve-MailObjectFromString -Object $messageItem -User $User -Token $Token -NoNameResolving -FunctionName $MyInvocation.MyCommand
-                if (-not $messageItem) { continue }
-            }
-
-            $User = Resolve-UserInMailObject -Object $messageItem -User $User -ShowWarning -FunctionName $MyInvocation.MyCommand
-            #endregion checking input object type and query message if required
-
-            if ($pscmdlet.ShouldProcess("message '$($messageItem)'", "Update properties '$([string]::Join("', '", $boundParameters))'")) {
-                Write-PSFMessage -Tag "MessageUpdate" -Level Verbose -Message "Update properties '$([string]::Join("', '", $boundParameters))' on message '$($messageItem)'"
-                $invokeParam = @{
-                    "Field"        = "messages/$($messageItem.Id)"
-                    "User"         = $User
-                    "Body"         = $bodyJSON
-                    "ContentType"  = "application/json"
-                    "Token"        = $Token
-                    "FunctionName" = $MyInvocation.MyCommand
-                }
-                $output = Invoke-MgaPatchMethod @invokeParam
-                if ($output -and $PassThru) { New-MgaMailMessageObject -RestData $output }
-            }
-        }
-        #endregion Update messages
+        #region output created object
+        $bodyJSON
+        #endregion output created object
     }
 
+    end {
+    }
 }
