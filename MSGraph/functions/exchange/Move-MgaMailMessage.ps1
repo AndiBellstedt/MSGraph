@@ -111,7 +111,7 @@
         $bodyJSON = "{`n" + ([string]::Join(",`n", $bodyJsonParts)) + "`n}"
         #endregion Put parameters (JSON Parts) into a valid "message"-JSON-object together
 
-        #region move messages
+        #region move message
         foreach ($messageItem in $Message) {
             #region checking input object type and query message if required
             if ($messageItem.TypeName -like "System.String") {
@@ -136,7 +136,9 @@
                 if ($PassThru) { New-MgaMailMessageObject -RestData $output }
             }
         }
-        #endregion Update messages
+        #endregion move message
     }
 
+    end {
+    }
 }

@@ -38,25 +38,20 @@
     .LINK
 
     .EXAMPLE
-        PS C:\> New-MgaMailMessage -Subject 'A new Mail'
+        PS C:\> New-MgaMailMessage -ToRecipients 'someone@something.org' -Subject 'A new Mail' -Body 'This is a new mail'
 
         Creates a new message in the drafts folder
 
     .EXAMPLE
-        PS C:\> New-MgaMailMessage -Subject 'A new Mail' -Folder "MyFolder"
+        PS C:\> New-MgaMailMessage -Subject 'A new Mail' -Folder 'MyFolder'
 
         Creates a new message in the folder named "MyFolder"
-
-        .EXAMPLE
-        PS C:\> New-MgaMailMessage -Subject 'A new Mail' -Folder $folder
-
-        Creates a new message in the folder represented by the variable $folder
 
     #>
     [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'Medium', DefaultParameterSetName = 'Default')]
     [OutputType([MSGraph.Exchange.Mail.Message])]
     param (
-        [Parameter(Mandatory = $true, Position = 0)] #, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true
+        [Parameter(Mandatory = $true, Position = 0)]
         [Alias('Name', 'Title')]
         [string[]]
         $Subject,
