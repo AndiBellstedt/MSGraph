@@ -44,7 +44,7 @@
     # check input object type
     if($Object.psobject.TypeNames[0] -like "MSGraph.Exchange.Mail.FolderParameter") {
         $Type= "Folder"
-    } 
+    }
     elseif ($Object.psobject.TypeNames[0] -like "MSGraph.Exchange.Mail.MessageParameter") {
         $Type= "Message"
     }
@@ -59,7 +59,6 @@
     }
     else {
         $level = @{ Level = "Verbose" }
-        
     }
 
 

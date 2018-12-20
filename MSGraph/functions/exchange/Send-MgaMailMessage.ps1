@@ -87,7 +87,7 @@
                     "Token"        = $Token
                     "FunctionName" = $MyInvocation.MyCommand
                 }
-                $output = Invoke-MgaPostMethod @invokeParam
+                $null = Invoke-MgaPostMethod @invokeParam
                 if ($PassThru) { $messageItem.InputObject }
             }
         }

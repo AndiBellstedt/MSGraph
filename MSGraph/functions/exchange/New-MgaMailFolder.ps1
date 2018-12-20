@@ -10,7 +10,7 @@
         The name to be set as new name.
 
     .PARAMETER ParentFolder
-        The folder where the new folder should be created in. Do not specify to create 
+        The folder where the new folder should be created in. Do not specify to create
         a folder on the root level.
 
         Possible values are a valid folder Id or a Mga folder object passed in.

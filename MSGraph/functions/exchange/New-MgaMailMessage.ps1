@@ -7,7 +7,7 @@
         Creates a new folder in Exchange Online using the graph api.
 
     .PARAMETER Folder
-        The folder where the new folder should be created in. Do not specify to create 
+        The folder where the new folder should be created in. Do not specify to create
         a folder on the root level.
 
         Possible values are a valid folder Id or a Mga folder object passed in.
@@ -15,6 +15,50 @@
 
     .PARAMETER Subject
         The subject of the new message.
+
+    .PARAMETER Sender
+        The account that is actually used to generate the message.
+        (Updatable only when sending a message from a shared mailbox or sending a message as a delegate.
+        In any case, the value must correspond to the actual mailbox used.)
+
+    .PARAMETER From
+        The mailbox owner and sender of the message.
+        Must correspond to the actual mailbox used.
+
+    .PARAMETER ToRecipients
+        The To recipients for the message.
+
+    .PARAMETER CCRecipients
+        The Cc recipients for the message.
+
+    .PARAMETER BCCRecipients
+        The Bcc recipients for the message.
+
+    .PARAMETER ReplyTo
+        The email addresses to use when replying.
+
+    .PARAMETER Body
+        The body of the message.
+
+    .PARAMETER Categories
+        The categories associated with the message.
+
+    .PARAMETER Importance
+        The importance of the message.
+        The possible values are: Low, Normal, High.
+
+    .PARAMETER InferenceClassification
+        The classification of the message for the user, based on inferred relevance or importance, or on an explicit override.
+        The possible values are: focused or other.
+
+    .PARAMETER InternetMessageId
+        The message ID in the format specified by RFC2822.
+
+    .PARAMETER IsDeliveryReceiptRequested
+        Indicates whether a delivery receipt is requested for the message.
+
+    .PARAMETER IsReadReceiptRequested
+        Indicates whether a read receipt is requested for the message.
 
     .PARAMETER User
         The user-account to access. Defaults to the main user connected as.
@@ -146,7 +190,7 @@
         $boundParameters = @()
         $mailAddressNames = @("sender", "from", "toRecipients", "ccRecipients", "bccRecipients", "replyTo")
         #endregion variable definition
-        
+
         # parsing mailAddress parameter strings to mailaddress objects (if not empty)
         foreach ($Name in $mailAddressNames) {
             if (Test-PSFParameterBinding -ParameterName $name) {

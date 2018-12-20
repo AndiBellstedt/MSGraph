@@ -23,11 +23,18 @@
     .PARAMETER Token
         The access token to use to connect.
 
-    .PARAMETER Force 
+    .PARAMETER Force
         If specified the user will not prompted on confirmation.
 
     .PARAMETER FunctionName
         Name of the higher function which is calling this function.
+
+    .PARAMETER Confirm
+        If this switch is enabled, you will be prompted for confirmation before executing any operations that change state.
+
+    .PARAMETER WhatIf
+        If this switch is enabled, no actions are performed but informational messages will be displayed that explain what would happen if the command were to run.
+
 
     .EXAMPLE
         PS C:\> Invoke-MgaDeleteMethod -Field "mailFolders/$($id)"
