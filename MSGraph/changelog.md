@@ -1,10 +1,11 @@
 # Changelog
-# 1.2.8.1
+# 1.2.8.2
 - New: Command New-MgaMailFolder
 - New: command Move-MgaMailFolder
 - New: command Remove-MgaMailFolder
 - New: command Remove-MgaMailMessage
 - New: Command New-MgaMailMessage
+- New: Command Send-MgaMailMessage
 - Upd: example documentation on command Update-MgaAccessToken
 - Upd: internal code refactoring for better object checking on message and folder functions
 
