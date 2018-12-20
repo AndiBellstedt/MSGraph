@@ -1,17 +1,22 @@
-﻿function Rename-MgaMailFolder {
+﻿function Remove-MgaMailFolder {
     <#
     .SYNOPSIS
-        Rename folder(s) in Exchange Online using the graph api.
+        Remove folder(s) in Exchange Online using the graph api.
 
     .DESCRIPTION
-        Change the displayname of folder(s) in Exchange Online using the graph api.
+        Remove folder(s) in Exchange Online using the graph api.
+
+        ATTENTION! The command does what it is name to!
+        The folder will not be moved to 'deletedObjects', it will be deleted.
 
     .PARAMETER Folder
-        The folder to be renamed. This can be a name of the folder, it can be the
-        Id of the folder or it can be a folder object passed in.
+        The folder to be removed.
+        This can be a name of the folder, it can be the Id of the folder or it can be a folder object passed in.
 
-    .PARAMETER NewName
-        The name to be set as new name.
+        Tab completion is available on this parameter for a list of well known folders.
+
+    .PARAMETER Force
+        If specified the user will not prompted on confirmation.
 
     .PARAMETER User
         The user-account to access. Defaults to the main user connected as.
@@ -32,21 +37,40 @@
         If this switch is enabled, no actions are performed but informational messages will be displayed that explain what would happen if the command were to run.
 
     .EXAMPLE
-        PS C:\> Rename-MgaMailFolder -Folder 'Inbox' -NewName 'MyPersonalInbox'
+        PS C:\> Remove-MgaMailFolder -Name 'MyFolder'
 
-        Rename the "wellknown" folder inbox (regardless of it's current name), to 'MyPersonalInbox'.
+        Removes folder named "MyFolder".
+        The folder has to be on the root level of the mailbox to be specified by individual name.
+
+    .EXAMPLE
+        PS C:\> Remove-MgaMailFolder -Name $folder
+
+        Removes folder represented by the variable $folder.
+        You will be prompted for confirmation.
+
+        The variable $folder can be represent:
+        PS C:\> $folder = Get-MgaMailFolder -Folder "MyFolder"
+
+    .EXAMPLE
+        PS C:\> $folder | Remove-MgaMailFolder -Force
+
+        Removes folder represented by the variable $folder.
+        ATTENTION, There will be NO prompt for confirmation!
+
+        The variable $folder can be represent:
+        PS C:\> $folder = Get-MgaMailFolder -Folder "MyFolder"
+
     #>
-    [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'Medium', DefaultParameterSetName = 'Default')]
+    [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'High')]
     [OutputType([MSGraph.Exchange.Mail.Folder])]
     param (
-        [Parameter(Mandatory = $true, Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ByInputObject')]
+        [Parameter(Mandatory = $true, Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
         [Alias('FolderName', 'FolderId', 'InputObject', 'DisplayName', 'Name', 'Id')]
         [MSGraph.Exchange.Mail.FolderParameter[]]
         $Folder,
 
-        [Parameter(Mandatory = $true, Position = 1)]
-        [string]
-        $NewName,
+        [switch]
+        $Force,
 
         [string]
         $User,
@@ -60,10 +84,6 @@
     begin {
         $requiredPermission = "Mail.ReadWrite"
         $Token = Invoke-TokenScopeValidation -Token $Token -Scope $requiredPermission -FunctionName $MyInvocation.MyCommand
-
-        $bodyJSON = @{
-            displayName = $NewName
-        } | ConvertTo-Json
     }
 
     process {
@@ -72,6 +92,10 @@
         foreach ($folderItem in $Folder) {
             #region checking input object type and query folder if required
             if ($folderItem.TypeName -like "System.String") {
+                if(($folderItem.IsWellKnownName -and $folderItem.Id -like "recoverableitemsdeletions") -or $folderItem.name -like "recoverableitemsdeletions") {
+                    Write-PSFMessage -Level Important -Message "Can not delete well known folder 'recoverableitemsdeletions'. Continue without action on folder."
+                    continue
+                }
                 $folderItem = Resolve-MailObjectFromString -Object $folderItem -User $User -Token $Token -FunctionName $MyInvocation.MyCommand
                 if(-not $folderItem) { continue }
             }
@@ -79,19 +103,21 @@
             $User = Resolve-UserInMailObject -Object $folderItem -User $User -ShowWarning -FunctionName $MyInvocation.MyCommand
             #endregion checking input object type and query message if required
 
-            if ($pscmdlet.ShouldProcess("Folder '$($folderItem)'", "Rename to '$($NewName)'")) {
-                Write-PSFMessage -Tag "FolderUpdate" -Level Verbose -Message "Rename folder '$($folderItem)' to name '$($NewName)'"
+            if($Force) { $doAction = $true } else { $doAction = $pscmdlet.ShouldProcess($folderItem, "Remove (ATTENTION! Folder will not be moved to 'deletedObjects')") }
+            if ($doAction) {
+                Write-PSFMessage -Tag "FolderRemove" -Level Verbose -Message "Remove folder '$($folderItem)'"
                 $invokeParam = @{
                     "Field"        = "mailFolders/$($folderItem.Id)"
                     "User"         = $User
-                    "Body"         = $bodyJSON
+                    "Body"         = ""
                     "ContentType"  = "application/json"
                     "Token"        = $Token
+                    "Force"        = $true
                     "FunctionName" = $MyInvocation.MyCommand
                 }
-                $output = Invoke-MgaPatchMethod @invokeParam
+                $null = Invoke-MgaDeleteMethod @invokeParam
                 if ($PassThru) {
-                    New-MgaMailFolderObject -RestData $output -ParentFolder $folderItem.InputObject.ParentFolder -FunctionName $MyInvocation.MyCommand
+                    $folderItem.InputObject
                 }
             }
         }

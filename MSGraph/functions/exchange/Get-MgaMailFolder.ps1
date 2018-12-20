@@ -104,11 +104,11 @@
             # Subfunction for query objects and creating valid new objects from the query result
             $folderData = Invoke-MgaGetMethod @invokeParam
             foreach ($folderOutput in $folderData) {
-                New-MgaMailFolderObject -RestData $folderOutput -ParentFolder $parentFolder -FunctionName $FunctionName
+                New-MgaMailFolderObject -RestData $folderOutput -ParentFolder $parentFolder -Level $level #-FunctionName $FunctionName
             }
         }
 
-        function get-childfolder ($output, $level, $invokeParam) {
+        function get-childfolder ($output, [int]$level, $invokeParam) {
             $FoldersWithChilds = $output | Where-Object ChildFolderCount -gt 0
             $childFolders = @()
 
@@ -132,10 +132,10 @@
     }
 
     process {
-        Write-PSFMessage -Level VeryVerbose -Message "Gettings folder(s) by parameter set $($PSCmdlet.ParameterSetName)" -Tag "ParameterSetHandling"
+        Write-PSFMessage -Level VeryVerbose -Message "Gettings folder(s) by parameterset $($PSCmdlet.ParameterSetName)" -Tag "ParameterSetHandling"
         switch ($PSCmdlet.ParameterSetName) {
             "Default" {
-                $level = 1
+                $baseLevel = 1
                 $invokeParam = @{
                     "Field"        = 'mailFolders'
                     "Token"        = $Token
@@ -144,21 +144,25 @@
                     "FunctionName" = $MyInvocation.MyCommand
                 }
 
-                $output = invoke-internalMgaGetMethod -invokeParam $invokeParam -level $level -FunctionName $MyInvocation.MyCommand  | Where-Object displayName -Like $Filter
+                $output = invoke-internalMgaGetMethod -invokeParam $invokeParam -level $baseLevel -FunctionName $MyInvocation.MyCommand  | Where-Object displayName -Like $Filter
 
                 if ($output -and $IncludeChildFolders) {
                     $childFolders = $output | Where-Object ChildFolderCount -gt 0 | ForEach-Object {
-                        get-childfolder -output $_ -level $level -invokeParam $invokeParam
+                        get-childfolder -output $_ -level $baseLevel -invokeParam $invokeParam
                     }
                     if ($childFolders) {
                         [array]$output = [array]$output + $childFolders
                     }
                 }
+
+                if (-not $output) {
+                    Stop-PSFFunction -Message "Unexpected error. Could not query root folders from user '$($User)'." -Tag "QueryData" -EnableException $true
+                }
             }
 
             "ByFolderName" {
                 foreach ($folder in $Name) {
-                    $level = 1
+                    $baseLevel = 1
                     Write-PSFMessage -Level VeryVerbose -Message "Getting folder '$( if($folder.Name){$folder.Name}else{$folder.Id} )'" -Tag "ParameterSetHandling"
                     $invokeParam = @{
                         "Token"        = $Token
@@ -173,26 +177,25 @@
                         $invokeParam.add("Field", "mailFolders?`$filter=DisplayName eq '$($folder.Name)'")
                     }
 
-                    $output = invoke-internalMgaGetMethod -invokeParam $invokeParam -level $level -FunctionName $MyInvocation.MyCommand | Where-Object displayName -Like $Filter
+                    $output = invoke-internalMgaGetMethod -invokeParam $invokeParam -level $baseLevel -FunctionName $MyInvocation.MyCommand | Where-Object displayName -Like $Filter
 
                     if ($output -and $IncludeChildFolders) {
-                        $childFolders = get-childfolder -output $output -level $level -invokeParam $invokeParam
+                        $childFolders = get-childfolder -output $output -level $baseLevel -invokeParam $invokeParam
                         if ($childFolders) {
                             [array]$output = [array]$output + $childFolders
                         }
                     }
+
+                    if (-not $output) {
+                        Write-PSFMessage -Level Warning -Message "Folder '$($folder)' not found." -Tag "QueryData"
+                    }
                 }
             }
 
-            Default { stop-PSFMessage -Message "Unhandled parameter set. ($($PSCmdlet.ParameterSetName)) Developer mistage." -EnableException $true -Category "ParameterSetHandling" -FunctionName $MyInvocation.MyCommand }
+            Default { stop-PSFMessage -Message "Unhandled parameter set. ($($PSCmdlet.ParameterSetName)) Developer mistake." -EnableException $true -Category "ParameterSetHandling" -FunctionName $MyInvocation.MyCommand }
         }
 
-        if ($output) {
-            $output
-        }
-        else {
-            Write-PSFMessage -Level Warning -Message "Folder not found." -Tag "QueryData"
-        }
+        $output
     }
 
     end {

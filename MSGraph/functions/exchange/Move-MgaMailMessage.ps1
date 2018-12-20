@@ -12,7 +12,7 @@
     .PARAMETER DestinationFolder
         The destination folder where to move the message to
 
-        .PARAMETER User
+    .PARAMETER User
         The user-account to access. Defaults to the main user connected as.
         Can be any primary email name of any user the connected token has access to.
 
@@ -88,9 +88,12 @@
         $requiredPermission = "Mail.ReadWrite"
         $Token = Invoke-TokenScopeValidation -Token $Token -Scope $requiredPermission -FunctionName $MyInvocation.MyCommand
 
+        #region checking DestinationFolder and query folder if required
         if($DestinationFolder.TypeName -like "System.String") {
-            [MSGraph.Exchange.Mail.FolderParameter]$DestinationFolder = Get-MgaMailFolder -Name $DestinationFolder.ToString() -User $User -Token $Token
+            $DestinationFolder = Resolve-MailObjectFromString -Object $DestinationFolder -User $User -Token $Token -FunctionName $MyInvocation.MyCommand
+            if(-not $DestinationFolder) { throw }
         }
+        #endregion checking DestinationFolder and query folder if required
 
         $bodyHash = @{
             destinationId = ($DestinationFolder.Id | ConvertTo-Json)
@@ -108,26 +111,15 @@
         $bodyJSON = "{`n" + ([string]::Join(",`n", $bodyJsonParts)) + "`n}"
         #endregion Put parameters (JSON Parts) into a valid "message"-JSON-object together
 
-        #region move messages
+        #region move message
         foreach ($messageItem in $Message) {
             #region checking input object type and query message if required
             if ($messageItem.TypeName -like "System.String") {
-                if ($messageItem.Id -and ($messageItem.Id.Length -eq 152)) {
-                    [MSGraph.Exchange.Mail.MessageParameter]$messageItem = Get-MgaMailMessage -InputObject $messageItem.Id -User $User -Token $Token
-                }
-                else {
-                    Write-PSFMessage -Level Warning -Message "The specified input string seams not to be a valid Id. Skipping object '$($messageItem)'" -Tag "InputValidation"
-                    continue
-                }
+                $messageItem = Resolve-MailObjectFromString -Object $messageItem -User $User -Token $Token -NoNameResolving -FunctionName $MyInvocation.MyCommand
+                if(-not $messageItem) { continue }
             }
 
-            if ($User -and ($messageItem.TypeName -like "MSGraph.Exchange.Mail.Message") -and ($User -notlike $messageItem.InputObject.User)) {
-                Write-PSFMessage -Level Important -Message "Individual user specified with message object! User from message object ($($messageItem.InputObject.User))will take precedence on specified user ($($User))!" -Tag "InputValidation"
-                $User = $messageItem.InputObject.User
-            }
-            elseif ((-not $User) -and ($messageItem.TypeName -like "MSGraph.Exchange.Mail.Message")) {
-                $User = $messageItem.InputObject.User
-            }
+            $User = Resolve-UserInMailObject -Object $messageItem -User $User -ShowWarning -FunctionName $MyInvocation.MyCommand
             #endregion checking input object type and query message if required
 
             if ($pscmdlet.ShouldProcess("message '$($messageItem)'", "Move to folder '$($DestinationFolder.Name)'")) {
@@ -144,7 +136,9 @@
                 if ($PassThru) { New-MgaMailMessageObject -RestData $output }
             }
         }
-        #endregion Update messages
+        #endregion move message
     }
 
+    end {
+    }
 }
