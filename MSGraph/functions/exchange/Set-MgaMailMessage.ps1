@@ -131,9 +131,6 @@
         [MSGraph.Exchange.Mail.MessageParameter[]]
         $Message,
 
-        [string]
-        $User,
-
         [ValidateNotNullOrEmpty()]
         [bool]
         $IsRead,
@@ -201,6 +198,9 @@
         [bool]
         $IsReadReceiptRequested,
 
+        [string]
+        $User,
+
         [MSGraph.Core.AzureAccessToken]
         $Token,
 
@@ -210,97 +210,23 @@
     begin {
         $requiredPermission = "Mail.ReadWrite"
         $Token = Invoke-TokenScopeValidation -Token $Token -Scope $requiredPermission -FunctionName $MyInvocation.MyCommand
-
-        $boundParameters = @()
-        $mailAddressNames = @("sender", "from", "toRecipients", "ccRecipients", "bccRecipients", "replyTo")
-
-        # parsing mailAddress parameter strings to mailaddress objects (if not empty)
-        foreach ($Name in $mailAddressNames) {
-            if (Test-PSFParameterBinding -ParameterName $name) {
-                New-Variable -Name "$($name)Addresses" -Force -Scope 0
-                if ( (Get-Variable -Name $Name -Scope 0).Value ) {
-                    try {
-                        Set-Variable -Name "$($name)Addresses" -Value ( (Get-Variable -Name $Name -Scope 0).Value | ForEach-Object { [mailaddress]$_ } -ErrorAction Stop -ErrorVariable parseError )
-                    }
-                    catch {
-                        Stop-PSFFunction -Message "Unable to parse $($name) to a mailaddress. String should be 'name@domain.topleveldomain' or 'displayname name@domain.topleveldomain'. Error: $($parseError[0].Exception.Message)" -Tag "ParameterParsing" -Category InvalidData -EnableException $true -Exception $parseError[0].Exception
-                    }
-                }
-            }
-        }
     }
 
     process {
-        $bodyHash = @{}
         Write-PSFMessage -Level Debug -Message "Gettings folder(s) by parameterset $($PSCmdlet.ParameterSetName)" -Tag "ParameterSetHandling"
 
-        #region Parsing string and boolean parameters to json data parts
-        $names = @("IsRead", "Subject", "Categories", "Importance", "InferenceClassification", "InternetMessageId", "IsDeliveryReceiptRequested", "IsReadReceiptRequested")
-        Write-PSFMessage -Level VeryVerbose -Message "Parsing string and boolean parameters to json data parts ($([string]::Join(", ", $names)))" -Tag "ParameterParsing"
+        #region Put parameters (JSON Parts) into a valid "message"-JSON-object together
+        $jsonParams = @{}
+        $boundParameters = @()
+        $names = "IsRead","Subject","Sender","From","ToRecipients","CCRecipients","BCCRecipients","ReplyTo","Body","Categories","Importance","InferenceClassification","InternetMessageId","IsDeliveryReceiptRequested","IsReadReceiptRequested"
         foreach ($name in $names) {
             if (Test-PSFParameterBinding -ParameterName $name) {
+                Write-PSFMessage -Level Debug -Message "Add $($name) from parameters to message" -Tag "ParameterParsing"
                 $boundParameters = $boundParameters + $name
-                Write-PSFMessage -Level Debug -Message "Parsing text parameter $($name)" -Tag "ParameterParsing"
-                $bodyHash.Add($name, ((Get-Variable $name -Scope 0).Value| ConvertTo-Json))
+                $jsonParams.Add($name, (Get-Variable $name -Scope 0).Value)
             }
         }
-
-        if($Body) {
-            $bodyHash.Add("Body", ([MSGraph.Exchange.Mail.MessageBody]$Body | ConvertTo-Json))
-        }
-        #endregion Parsing string and boolean parameters to json data parts
-
-        #region Parsing mailaddress parameters to json data parts
-        Write-PSFMessage -Level VeryVerbose -Message "Parsing mailaddress parameters to json data parts ($([string]::Join(", ", $mailAddressNames)))" -Tag "ParameterParsing"
-        foreach ($name in $mailAddressNames) {
-            if (Test-PSFParameterBinding -ParameterName $name) {
-                $boundParameters = $boundParameters + $name
-                Write-PSFMessage -Level Debug -Message "Parsing mailaddress parameter $($name)" -Tag "ParameterParsing"
-                $addresses = (Get-Variable -Name "$($name)Addresses" -Scope 0).Value
-                if ($addresses) {
-                    # build valid mail address object, if address is specified
-                    [array]$addresses = foreach ($item in $addresses) {
-                        [PSCustomObject]@{
-                            emailAddress = [PSCustomObject]@{
-                                address = $item.Address
-                                name    = $item.DisplayName
-                            }
-                        }
-                    }
-                }
-                else {
-                    # place an empty mail address object in, if no address is specified (this will clear the field in the message)
-                    [array]$addresses = [PSCustomObject]@{
-                        emailAddress = [PSCustomObject]@{
-                            address = ""
-                            name    = ""
-                        }
-                    }
-                }
-
-                if ($name -in @("toRecipients", "ccRecipients", "bccRecipients", "replyTo")) {
-                    # these kind of objects need to be an JSON array
-                    if ($addresses.Count -eq 1) {
-                        # hardly format JSON object as an array, because ConvertTo-JSON will output a single object-json-string on an array with count 1 (PSVersion 5.1.17134.407 | PSVersion 6.1.1)
-                        $bodyHash.Add($name, ("[" + ($addresses | ConvertTo-Json) + "]") )
-                    }
-                    else {
-                        $bodyHash.Add($name, ($addresses | ConvertTo-Json) )
-                    }
-                }
-                else {
-                    $bodyHash.Add($name, ($addresses | ConvertTo-Json) )
-                }
-            }
-        }
-        #endregion Parsing mailaddress parameters to json data parts
-
-        #region Put parameters (JSON Parts) into a valid "message"-JSON-object together
-        $bodyJsonParts = @()
-        foreach ($key in $bodyHash.Keys) {
-            $bodyJsonParts = $bodyJsonParts + """$($key)"" : $($bodyHash[$Key])"
-        }
-        $bodyJSON = "{`n" + ([string]::Join(",`n", $bodyJsonParts)) + "`n}"
+        $bodyJSON = New-JsonMailObject @jsonParams -FunctionName $MyInvocation.MyCommand
         #endregion Put parameters (JSON Parts) into a valid "message"-JSON-object together
 
         #region Update messages

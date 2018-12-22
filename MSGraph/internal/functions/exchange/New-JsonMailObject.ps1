@@ -54,6 +54,9 @@
     .PARAMETER IsReadReceiptRequested
         Indicates whether a read receipt is requested for the message.
 
+    .PARAMETER IsRead
+        Indicates whether the message has been read.
+
     .PARAMETER FunctionName
         Name of the higher function which is calling this function.
         (Just used for logging reasons)
@@ -74,6 +77,9 @@
     [CmdletBinding(SupportsShouldProcess = $false, ConfirmImpact = 'Low')]
     [OutputType([String])]
     param (
+        [bool]
+        $IsRead,
+
         [AllowNull()]
         [AllowEmptyCollection()]
         [AllowEmptyString()]
@@ -128,14 +134,14 @@
         [AllowNull()]
         [AllowEmptyCollection()]
         [AllowEmptyString()]
-        #[ValidateSet("Low", "Normal", "High")]
+        [ValidateSet($null, "", "Low", "Normal", "High")]
         [String]
-        $Importance = "Normal",
+        $Importance,
 
         [AllowNull()]
         [AllowEmptyCollection()]
         [AllowEmptyString()]
-        #[ValidateSet("focused", "other")]
+        [ValidateSet($null, "", "focused", "other")]
         [String]
         $InferenceClassification,
 
@@ -161,9 +167,11 @@
         foreach ($Name in $mailAddressNames) {
             if (Test-PSFParameterBinding -ParameterName $name) {
                 New-Variable -Name "$($name)Addresses" -Force -Scope 0
-                if ( (Get-Variable -Name $Name -Scope 0).Value ) {
+                if ((Get-Variable -Name $Name -Scope 0).Value) {
                     try {
-                        Set-Variable -Name "$($name)Addresses" -Value ( (Get-Variable -Name $Name -Scope 0).Value | ForEach-Object { [mailaddress]$_ } -ErrorAction Stop -ErrorVariable parseError )
+                        $mailAddress = (Get-Variable -Name $Name -Scope 0).Value | ForEach-Object { [mailaddress]$_ } -ErrorAction Stop -ErrorVariable parseError
+                        Set-Variable -Name "$($name)Addresses" -Value $mailAddress
+                        Remove-Variable mailaddress -Force -WhatIf:$false -Confirm:$false -Verbose:$false -Debug:$false -ErrorAction Ignore
                     }
                     catch {
                         Stop-PSFFunction -Message "Unable to parse $($name) to a mailaddress. String should be 'name@domain.topleveldomain' or 'displayname name@domain.topleveldomain'. Error: $($parseError[0].Exception.Message)" -Tag "ParameterParsing" -Category InvalidData -EnableException $true -Exception $parseError[0].Exception -FunctionName $FunctionName
@@ -179,19 +187,17 @@
         Write-PSFMessage -Level Debug -Message "Create message JSON object" -Tag "ParameterSetHandling"
 
         #region Parsing string and boolean parameters to json data parts
-        $names = @("Subject", "Categories", "Importance", "InferenceClassification", "InternetMessageId", "IsDeliveryReceiptRequested", "IsReadReceiptRequested")
+        $names = @("IsRead", "Subject", "Categories", "Importance", "InferenceClassification", "InternetMessageId", "IsDeliveryReceiptRequested", "IsReadReceiptRequested")
         Write-PSFMessage -Level VeryVerbose -Message "Parsing string and boolean parameters to json data parts ($([string]::Join(", ", $names)))" -Tag "ParameterParsing"
         foreach ($name in $names) {
             if (Test-PSFParameterBinding -ParameterName $name) {
-                if( (Get-Variable $name -Scope 0).Value ) {
-                    $boundParameters = $boundParameters + $name
-                    Write-PSFMessage -Level Debug -Message "Parsing text parameter $($name)" -Tag "ParameterParsing"
-                    $bodyHash.Add($name, ((Get-Variable $name -Scope 0).Value | ConvertTo-Json))
-                }
+                $boundParameters = $boundParameters + $name
+                Write-PSFMessage -Level Debug -Message "Parsing text parameter $($name)" -Tag "ParameterParsing"
+                $bodyHash.Add($name, ((Get-Variable $name -Scope 0).Value | ConvertTo-Json))
             }
         }
 
-        if($Body) {
+        if ($Body) {
             $bodyHash.Add("Body", ([MSGraph.Exchange.Mail.MessageBody]$Body | ConvertTo-Json))
         }
         #endregion Parsing string and boolean parameters to json data parts
@@ -199,7 +205,7 @@
         #region Parsing mailaddress parameters to json data parts
         Write-PSFMessage -Level VeryVerbose -Message "Parsing mailaddress parameters to json data parts ($([string]::Join(", ", $mailAddressNames)))" -Tag "ParameterParsing"
         foreach ($name in $mailAddressNames) {
-            if ((Test-PSFParameterBinding -ParameterName $name) -and (Get-Variable -Name "$($name)Addresses" -Scope 0).Value) {
+            if (Test-PSFParameterBinding -ParameterName $name) {
                 $boundParameters = $boundParameters + $name
                 Write-PSFMessage -Level Debug -Message "Parsing mailaddress parameter $($name)" -Tag "ParameterParsing"
                 $addresses = (Get-Variable -Name "$($name)Addresses" -Scope 0).Value

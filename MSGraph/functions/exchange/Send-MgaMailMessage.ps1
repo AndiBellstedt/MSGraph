@@ -103,18 +103,8 @@
         $Subject,
 
         [Parameter(ParameterSetName = 'DirectSend')]
-        [AllowNull()]
-        [AllowEmptyCollection()]
-        [AllowEmptyString()]
-        [string]
-        $Sender,
-
-        [Parameter(ParameterSetName = 'DirectSend')]
-        [AllowNull()]
-        [AllowEmptyCollection()]
-        [AllowEmptyString()]
-        [string]
-        $From,
+        [String]
+        $Body,
 
         [Parameter(ParameterSetName = 'DirectSend', Mandatory = $true)]
         [Alias('To', 'Recipients')]
@@ -132,6 +122,20 @@
         [AllowNull()]
         [AllowEmptyCollection()]
         [AllowEmptyString()]
+        [string]
+        $Sender,
+
+        [Parameter(ParameterSetName = 'DirectSend')]
+        [AllowNull()]
+        [AllowEmptyCollection()]
+        [AllowEmptyString()]
+        [string]
+        $From,
+
+        [Parameter(ParameterSetName = 'DirectSend')]
+        [AllowNull()]
+        [AllowEmptyCollection()]
+        [AllowEmptyString()]
         [string[]]
         $BCCRecipients,
 
@@ -143,30 +147,26 @@
         $ReplyTo,
 
         [Parameter(ParameterSetName = 'DirectSend')]
-        [String]
-        $Body,
-
-        [Parameter(ParameterSetName = 'DirectSend')]
         [String[]]
         $Categories,
 
         [Parameter(ParameterSetName = 'DirectSend')]
         [ValidateSet("Low", "Normal", "High")]
         [String]
-        $Importance,
+        $Importance = "Normal",
 
         [Parameter(ParameterSetName = 'DirectSend')]
         [ValidateSet("focused", "other")]
         [String]
-        $InferenceClassification,
+        $InferenceClassification = "other",
 
         [Parameter(ParameterSetName = 'DirectSend')]
         [bool]
-        $IsDeliveryReceiptRequested,
+        $IsDeliveryReceiptRequested = $false,
 
         [Parameter(ParameterSetName = 'DirectSend')]
         [bool]
-        $IsReadReceiptRequested,
+        $IsReadReceiptRequested = $false,
 
         [Parameter(ParameterSetName = 'DirectSend')]
         [bool]
@@ -202,6 +202,7 @@
                     $User = Resolve-UserInMailObject -Object $messageItem -User $User -ShowWarning -FunctionName $MyInvocation.MyCommand
                     #endregion checking input object type and query message if required
 
+                    #region send message
                     if ($pscmdlet.ShouldProcess($messageItem, "Send")) {
                         Write-PSFMessage -Tag "MessageSend" -Level Verbose -Message "Send message '$($messageItem)'"
                         $invokeParam = @{
@@ -215,39 +216,35 @@
                         $null = Invoke-MgaPostMethod @invokeParam
                         if ($PassThru) { $messageItem.InputObject }
                     }
+                    #endregion send message
                 }
             }
 
             'DirectSend' {
-                $jsonParams = @{
-                    Subject                    = $Subject
-                    Sender                     = $Sender
-                    From                       = $From
-                    ToRecipients               = $ToRecipients
-                    CCRecipients               = $CCRecipients
-                    BCCRecipients              = $BCCRecipients
-                    ReplyTo                    = $ReplyTo
-                    Body                       = $Body
-                    Categories                 = $Categories
-                    Importance                 = $Importance
-                    InferenceClassification    = $InferenceClassification
-                    IsDeliveryReceiptRequested = $IsDeliveryReceiptRequested
-                    IsReadReceiptRequested     = $IsReadReceiptRequested
-                    FunctionName               = $MyInvocation.MyCommand
+                #region Put parameters (JSON Parts) into a valid "message"-JSON-object together
+                $jsonParams = @{}
+                $bodyJsonParts = @()
+
+                $names = "Subject","Sender","From","ToRecipients","CCRecipients","BCCRecipients","ReplyTo","Body","Categories","Importance","InferenceClassification","IsDeliveryReceiptRequested","IsReadReceiptRequested"
+                foreach ($name in $names) {
+                    if (Test-PSFParameterBinding -ParameterName $name) {
+                        Write-PSFMessage -Level Debug -Message "Add $($name) from parameters to message" -Tag "ParameterParsing"
+                        $jsonParams.Add($name, (Get-Variable $name -Scope 0).Value)
+                    }
                 }
 
-                #region Put parameters (JSON Parts) into a valid "message"-JSON-object together
-                $bodyJsonParts = @()
                 $bodyHash = @{
-                    "message"         = (New-JsonMailObject @jsonParams)
+                    "message"         = (New-JsonMailObject @jsonParams -FunctionName $MyInvocation.MyCommand)
                     "saveToSentItems" = ($SaveToSentItems | ConvertTo-Json)
                 }
                 foreach ($key in $bodyHash.Keys) {
                     $bodyJsonParts = $bodyJsonParts + """$($key)"" : $($bodyHash[$Key])"
                 }
+
                 $bodyJSON = "{`n" + ([string]::Join(",`n", $bodyJsonParts)) + "`n}"
                 #endregion Put parameters (JSON Parts) into a valid "message"-JSON-object together
 
+                #region send message
                 if ($pscmdlet.ShouldProcess($Subject, "Send")) {
                     Write-PSFMessage -Tag "MessageSend" -Level Verbose -Message "Send message with subject '$($Subject)' to recipient '$($ToRecipients)'"
                     $invokeParam = @{
@@ -261,6 +258,7 @@
                     $null = Invoke-MgaPostMethod @invokeParam
                     if ($PassThru) { $messageItem.InputObject }
                 }
+                #endregion send message
             }
 
             Default { stop-PSFMessage -Message "Unhandled parameter set. ($($PSCmdlet.ParameterSetName)) Developer mistake." -EnableException $true -Category "ParameterSetHandling" -FunctionName $MyInvocation.MyCommand }
