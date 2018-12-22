@@ -57,15 +57,17 @@
     .PARAMETER IsRead
         Indicates whether the message has been read.
 
+    .PARAMETER Comment
+        The comment in a body of a forwarded message.
+        Only used when forwarding messages.
+
     .PARAMETER FunctionName
         Name of the higher function which is calling this function.
         (Just used for logging reasons)
 
     .NOTES
-        For addiontional information go to:
+        For addiontional information about Microsoft Graph API go to:
         https://docs.microsoft.com/en-us/graph/api/resources/message?view=graph-rest-1.0
-
-    .LINK
 
     .EXAMPLE
         PS C:\> New-JsonMailObject
@@ -155,6 +157,9 @@
         $IsReadReceiptRequested,
 
         [String]
+        $Comment,
+
+        [String]
         $FunctionName
     )
     begin {
@@ -187,7 +192,7 @@
         Write-PSFMessage -Level Debug -Message "Create message JSON object" -Tag "ParameterSetHandling"
 
         #region Parsing string and boolean parameters to json data parts
-        $names = @("IsRead", "Subject", "Categories", "Importance", "InferenceClassification", "InternetMessageId", "IsDeliveryReceiptRequested", "IsReadReceiptRequested")
+        $names = @("Comment", "IsRead", "Subject", "Categories", "Importance", "InferenceClassification", "InternetMessageId", "IsDeliveryReceiptRequested", "IsReadReceiptRequested")
         Write-PSFMessage -Level VeryVerbose -Message "Parsing string and boolean parameters to json data parts ($([string]::Join(", ", $names)))" -Tag "ParameterParsing"
         foreach ($name in $names) {
             if (Test-PSFParameterBinding -ParameterName $name) {

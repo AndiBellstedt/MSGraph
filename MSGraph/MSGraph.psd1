@@ -81,6 +81,8 @@
         'Remove-MgaMailMessage',
         'New-MgaMailMessage',
         'Send-MgaMailMessage',
+        'Add-MgaMailReplyMessage',
+        'Add-MgaMailForwardMessage',
 
         # Core
         'Invoke-MgaGetMethod',

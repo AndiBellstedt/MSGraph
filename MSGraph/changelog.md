@@ -1,16 +1,18 @@
 # Changelog
 # 1.2.8.3
-- Upd: command New-MgaMailMessage, Send-MgaMailMessage, Set-MgaMailMessage
+- New: Command Add-MgaMailReplyMessage
+- New: Command Add-MgaMailForwardMessage
+- Upd: Command New-MgaMailMessage, Send-MgaMailMessage, Set-MgaMailMessage
     - Update parameter "ToRecipients" -> add parameter alias names "To" and "Reciepients"
     - some internal code refactoring
-- Upd: command Send-MgaMailMessage
+- Upd: Command Send-MgaMailMessage
     - Add parameter set, to send new mail directly from command without need to use New-MgaMailMessage before Send-MgaMailMessage
 
 # 1.2.8.2
 - New: Command New-MgaMailFolder
-- New: command Move-MgaMailFolder
-- New: command Remove-MgaMailFolder
-- New: command Remove-MgaMailMessage
+- New: Command Move-MgaMailFolder
+- New: Command Remove-MgaMailFolder
+- New: Command Remove-MgaMailMessage
 - New: Command New-MgaMailMessage
 - New: Command Send-MgaMailMessage
 - Upd: example documentation on command Update-MgaAccessToken
