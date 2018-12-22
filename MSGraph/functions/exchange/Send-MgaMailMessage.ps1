@@ -1,11 +1,11 @@
 ﻿function Send-MgaMailMessage {
     <#
     .SYNOPSIS
-        Send a previously created draft message(s)
+        Send message(s) in Exchange Online using the graph api.
 
     .DESCRIPTION
-        Send a previously created draft message(s) within Exchange Online using the graph api.
-        The message is saved in the SendItems folder.
+        Send a previously created draft message(s) and save the message in the SendItems folder.
+        Alternatively, the command can directly send a message by specifing a recipient, subject, ...
 
     .PARAMETER Message
         Carrier object for Pipeline input.
@@ -76,6 +76,11 @@
 
     .PARAMETER WhatIf
         If this switch is enabled, no actions are performed but informational messages will be displayed that explain what would happen if the command were to run.
+
+    .NOTES
+        For addiontional information about Microsoft Graph API go to:
+        https://docs.microsoft.com/en-us/graph/api/message-send?view=graph-rest-1.0
+        https://docs.microsoft.com/en-us/graph/api/user-sendmail?view=graph-rest-1.0
 
     .EXAMPLE
         PS C:\> $mail | Send-MgaMailMessage
