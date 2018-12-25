@@ -503,27 +503,22 @@
         </member>
         <member name="M:MSGraph.Exchange.Attachment.AttachmentParameter.#ctor(MSGraph.Exchange.Attachment.Attachment)">
             <summary>
-            
+            Constructor for parsing in a basic Attachment
             </summary>
         </member>
         <member name="M:MSGraph.Exchange.Attachment.AttachmentParameter.#ctor(MSGraph.Exchange.Attachment.FileAttachment)">
             <summary>
-            
+            Constructor for parsing in a FileAttachment
             </summary>
         </member>
         <member name="M:MSGraph.Exchange.Attachment.AttachmentParameter.#ctor(MSGraph.Exchange.Attachment.ItemAttachment)">
             <summary>
-            
+            Constructor for parsing in a ItemAttachment
             </summary>
         </member>
         <member name="M:MSGraph.Exchange.Attachment.AttachmentParameter.#ctor(MSGraph.Exchange.Attachment.ReferenceAttachment)">
             <summary>
-            
-            </summary>
-        </member>
-        <member name="M:MSGraph.Exchange.Attachment.AttachmentParameter.#ctor(System.String)">
-            <summary>
-            String input
+            Constructor for parsing in a ReferenceAttachment
             </summary>
         </member>
         <member name="T:MSGraph.Exchange.Attachment.AttachmentTypes">
