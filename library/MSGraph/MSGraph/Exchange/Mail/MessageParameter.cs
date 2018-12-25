@@ -96,7 +96,7 @@ namespace MSGraph.Exchange.Mail
                 Name = Text.ToLower();
                 Id = Name;
             }
-            else if (Text.Length == 152 && Text.EndsWith("="))
+            else if (Text.Length == 152 || Text.Length == 136)
             {
                 Id = Text;
             }

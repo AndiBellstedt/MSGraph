@@ -192,7 +192,7 @@ namespace MSGraph.Exchange.Mail
 
         #region Statics & Stuff
         /// <summary>
-        /// Overrides the default ToString() method 
+        /// Overrides the default ToString() method
         /// </summary>
         /// <returns></returns>
         public override string ToString()

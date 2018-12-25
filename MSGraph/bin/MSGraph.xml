@@ -294,6 +294,268 @@
             Indicates the version of the access token.
             </summary>
         </member>
+        <member name="T:MSGraph.Exchange.Attachment.ReferenceAttachment">
+            <summary>
+            Attachments in exchange online
+            referenceAttachment resource type
+            
+            https://docs.microsoft.com/en-us/graph/api/resources/referenceattachment?view=graph-rest-1.0
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.ReferenceAttachment.SourceUrl">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.ReferenceAttachment.ProviderType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.ReferenceAttachment.ThumbnailUrl">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.ReferenceAttachment.PreviewUrl">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.ReferenceAttachment.Permission">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.ReferenceAttachment.IsFolder">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.Attachment.ReferenceAttachment.ToString">
+            <summary>
+            Overrides the default ToString() method
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:MSGraph.Exchange.Attachment.ItemAttachment">
+            <summary>
+            Attachments in exchange online
+            fileAttachment resource type
+            
+            https://docs.microsoft.com/en-us/graph/api/resources/itemattachment?view=graph-rest-1.0
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.ItemAttachment.Item">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.Attachment.ItemAttachment.ToString">
+            <summary>
+            Overrides the default ToString() method
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:MSGraph.Exchange.Attachment.FileAttachment">
+            <summary>
+            Attachments in exchange online
+            fileAttachment resource type
+            
+            https://docs.microsoft.com/en-us/graph/api/resources/fileattachment?view=graph-rest-1.0
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.FileAttachment.ContentId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.FileAttachment.ContentLocation">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.FileAttachment.contentBytes">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.Attachment.FileAttachment.ToString">
+            <summary>
+            Overrides the default ToString() method
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:MSGraph.Exchange.Attachment.Attachment">
+            <summary>
+            Attachment in exchange online
+            
+            Attachment is the base resource for the following derived types of attachments:
+            A file(fileAttachment resource)
+            An item(contact, event or message, represented by an itemAttachment resource)
+            A link to a file(referenceAttachment resource)
+            
+            https://docs.microsoft.com/en-us/graph/api/resources/attachment?view=graph-rest-1.0
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.Attachment.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.Attachment.Name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:MSGraph.Exchange.Attachment.Attachment.DisplayName">
+            <summary>
+            Alias property from name.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.Attachment.AttachmentType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.Attachment.ContentType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.Attachment.IsInline">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.Attachment.LastModifiedDateTime">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.Attachment.Size">
+            <summary>
+            </summary>
+            
+        </member>
+        <member name="P:MSGraph.Exchange.Attachment.Attachment.SizeKB">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:MSGraph.Exchange.Attachment.Attachment.SizeMB">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.Attachment.User">
+            <summary>
+            The user name which owns the folder
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.Attachment.BaseObject">
+            <summary>
+            carrier object for the original api result
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.Attachment.ParentObject">
+            <summary>
+            The parent object, where the attachmentcame from
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.Attachment.Attachment.ToString">
+            <summary>
+            Overrides the default ToString() method
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:MSGraph.Exchange.Attachment.AttachmentParameter">
+            <summary>
+            Mail message parameter class for convinient pipeline 
+            input on parameters in *-MgaMail* commands
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.AttachmentParameter.Id">
+            <summary>
+            message or folder id
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.AttachmentParameter.Name">
+            <summary>
+            name of a folder
+            </summary>
+        </member>
+        <member name="P:MSGraph.Exchange.Attachment.AttachmentParameter.TypeName">
+            <summary>
+            The type name of inputobject
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.AttachmentParameter.InputObject">
+            <summary>
+            carrier object for the input object
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.Attachment.AttachmentParameter.ToString">
+            <summary>
+            Overrides the default ToString() method 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MSGraph.Exchange.Attachment.AttachmentParameter.#ctor(MSGraph.Exchange.Attachment.Attachment)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.Attachment.AttachmentParameter.#ctor(MSGraph.Exchange.Attachment.FileAttachment)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.Attachment.AttachmentParameter.#ctor(MSGraph.Exchange.Attachment.ItemAttachment)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.Attachment.AttachmentParameter.#ctor(MSGraph.Exchange.Attachment.ReferenceAttachment)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.Attachment.AttachmentParameter.#ctor(System.String)">
+            <summary>
+            String input
+            </summary>
+        </member>
+        <member name="T:MSGraph.Exchange.Attachment.AttachmentTypes">
+            <summary>
+            names of the attachment types in Microsoft Graph API
+            
+            https://docs.microsoft.com/en-us/graph/api/resources/attachment?view=graph-rest-1.0
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.AttachmentTypes.fileAttachment">
+            <summary>
+            A file (such as a text file or Word document) attached to an event, message or post.
+            The contentBytes property contains the base64-encoded contents of the file.
+            
+            https://docs.microsoft.com/en-us/graph/api/resources/fileattachment?view=graph-rest-1.0
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.AttachmentTypes.itemAttachment">
+            <summary>
+            A contact, event, or message that's attached to another event, message, or post.
+            
+            https://docs.microsoft.com/en-us/graph/api/resources/itemattachment?view=graph-rest-1.0
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.AttachmentTypes.referenceAttachment">
+            <summary>
+            A link to a file (such as a text file or Word document) on a OneDrive for Business cloud drive 
+            or other supported storage locations, attached to an event, message, or post.
+            
+            https://docs.microsoft.com/en-us/graph/api/resources/referenceattachment?view=graph-rest-1.0
+            </summary>
+        </member>
         <member name="T:MSGraph.Exchange.FollowupFlag">
             <summary>
             followupFlag resource type
@@ -350,69 +612,6 @@
         <member name="M:MSGraph.Exchange.FollowupFlag.#ctor">
             <summary>
             empty object
-            </summary>
-        </member>
-        <member name="T:MSGraph.Exchange.Mail.Attachment">
-            <summary>
-            Mail attachments in exchange online
-            fileAttachment resource type
-            
-            https://docs.microsoft.com/en-us/graph/api/resources/fileattachment?view=graph-rest-1.0
-            </summary>
-        </member>
-        <member name="F:MSGraph.Exchange.Mail.Attachment.BaseObject">
-            <summary>
-            raw data carrier object
-            </summary>
-        </member>
-        <member name="F:MSGraph.Exchange.Mail.Attachment.Id">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="F:MSGraph.Exchange.Mail.Attachment.Name">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="F:MSGraph.Exchange.Mail.Attachment.ContentType">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="F:MSGraph.Exchange.Mail.Attachment.ContentId">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="F:MSGraph.Exchange.Mail.Attachment.ContentLocation">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="F:MSGraph.Exchange.Mail.Attachment.IsInline">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="F:MSGraph.Exchange.Mail.Attachment.LastModifiedDateTime">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="F:MSGraph.Exchange.Mail.Attachment.Size">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:MSGraph.Exchange.Mail.Attachment.SizeKB">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:MSGraph.Exchange.Mail.Attachment.SizeMB">
-            <summary>
-            
             </summary>
         </member>
         <member name="T:MSGraph.Exchange.Mail.MessageParameter">
@@ -781,7 +980,7 @@
         </member>
         <member name="M:MSGraph.Exchange.Mail.Message.ToString">
             <summary>
-            Overrides the default ToString() method 
+            Overrides the default ToString() method
             </summary>
             <returns></returns>
         </member>
@@ -839,7 +1038,7 @@
         </member>
         <member name="T:MSGraph.Exchange.Mail.WellKnownFolder">
             <summary>
-            name fo well-known-folders in a outlook mailboxes
+            name of well-known-folders in a outlook mailboxes
             
             Outlook creates certain folders for users by default. 
             Instead of using the corresponding folder id value, for convenience, 

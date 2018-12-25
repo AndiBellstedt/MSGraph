@@ -1,7 +1,7 @@
 ﻿namespace MSGraph.Exchange.Mail
 {
     /// <summary>
-    /// name fo well-known-folders in a outlook mailboxes
+    /// name of well-known-folders in a outlook mailboxes
     /// 
     /// Outlook creates certain folders for users by default. 
     /// Instead of using the corresponding folder id value, for convenience, 

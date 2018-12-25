@@ -115,7 +115,7 @@ namespace MSGraph.Exchange.Mail
                 IsWellKnownName = true;
                 Name = Text.ToLower();
             }
-            else if ((Text.Length == 120 || Text.Length == 152) && Text.EndsWith("="))
+            else if (Text.Length == 120 || Text.Length == 104 || Text.Length == 152 || Text.Length == 136)
             {
                 IsWellKnownName = false;
                 Id = Text;

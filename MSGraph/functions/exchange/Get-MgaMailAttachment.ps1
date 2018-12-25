@@ -30,27 +30,28 @@
         Can be omitted if a connection has been registered using the -Register parameter on New-MgaAccessToken.
 
     .EXAMPLE
-        PS C:\> MgaMailMessage | Get-MgaMailAttachment
+        PS C:\> Get-MgaMailMessage | Get-MgaMailAttachment
 
         Return all emails attachments in the inbox of the user connected to through a token.
     #>
     [CmdletBinding(DefaultParameterSetName = 'Default')]
-    [OutputType([MSGraph.Exchange.Mail.Attachment])]
+    #[OutputType([MSGraph.Exchange.Attachment.])]
     param (
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ByInputObject', Position = 0)]
-        [Alias('Id', 'Mail', 'MailMessage', 'MessageId', 'MailId')]
+        [Alias('InputObject', 'Id', 'Mail', 'MailMessage', 'MessageId', 'MailId')]
         [MSGraph.Exchange.Mail.MessageParameter[]]
         $Message,
 
         [Parameter(Position = 1)]
+        [Alias('Filter', 'NameFilter')]
         [string]
         $Name = "*",
 
-        [string]
-        $User,
-
         [switch]
         $IncludeInlineAttachment,
+
+        [string]
+        $User,
 
         [Int64]
         $ResultSize = (Get-PSFConfigValue -FullName 'MSGraph.Query.ResultSize' -Fallback 100),
@@ -64,36 +65,82 @@
     }
 
     process {
-        foreach ($item in $Message) {
-            if($item.Name -and (-not $item.Id)) {
-                Write-PSFMessage -Level Warning -Message "'$($item.Name)' has no valid ID to query. You have to input message objects or message Id to query attachments." -Tag "ParameterSetHandling"
-                continue
+        foreach ($messageItem in $Message) {
+            #region checking input object type and query message if required
+            if ($messageItem.TypeName -like "System.String") {
+                $messageItem = Resolve-MailObjectFromString -Object $messageItem -User $User -Token $Token -NoNameResolving -FunctionName $MyInvocation.MyCommand
+                if (-not $messageItem) { continue }
             }
+
+            $User = Resolve-UserInMailObject -Object $messageItem -User $User -ShowWarning -FunctionName $MyInvocation.MyCommand
+            #endregion checking input object type and query message if required
+
+            #region query data
             $invokeParam = @{
-                "Field"        = "messages/$($item.Id)/attachments"
+                "Field"        = "messages/$($messageItem.Id)/attachments"
                 "Token"        = $Token
-                "User"         = Resolve-UserString -User $User
+                "User"         = $User
                 "ResultSize"   = $ResultSize
+                "ApiVersion"   = "beta"
                 "FunctionName" = $MyInvocation.MyCommand
             }
 
-            Write-PSFMessage -Level Verbose -Message "Getting attachment from mail" -Tag "QueryData"
-
+            Write-PSFMessage -Level Verbose -Message "Getting attachment from message '$($messageItem)'" -Tag "QueryData"
             $data = Invoke-MgaGetMethod @invokeParam | Where-Object { $_.name -like $Name }
-            if (-not $IncludeInlineAttachment) { $data = $data | Where-Object isInline -eq $false}
+            if (-not $IncludeInlineAttachment) { $data = $data | Where-Object isInline -eq $false }
+            #endregion query data
+
+            #region output data
             foreach ($output in $data) {
-                [MSGraph.Exchange.Mail.Attachment]@{
-                    BaseObject           = $output
+                $outputHash = [ordered]@{
                     Id                   = $output.Id
                     Name                 = $output.Name
+                    AttachmentType       = [MSGraph.Exchange.Attachment.AttachmentTypes]$output.'@odata.type'.split(".")[($output.'@odata.type'.split(".").count - 1)]
                     ContentType          = $output.ContentType
-                    ContentId            = $output.ContentId
-                    ContentLocation      = $output.ContentLocation
                     IsInline             = $output.isInline
                     LastModifiedDateTime = $output.LastModifiedDateTime
                     Size                 = $output.Size
+                    User                 = $output.user
+                    ParentObject         = $messageItem.InputObject
+                    BaseObject           = $output
+                }
+                switch ($output.'@odata.type') {
+                    '#microsoft.graph.itemAttachment' {
+                        $invokeParam.Field = $invokeParam.Field + "/$($data.id)/?`$expand=microsoft.graph.itemattachment/item"
+                        $itemData = Invoke-MgaGetMethod @invokeParam
+
+                        $outputHash.BaseObject = $itemData
+                        $outputHash.Id = $itemData.id
+                        $outputHash.Add("Item", $itemData.Item)
+
+                        New-Object -TypeName MSGraph.Exchange.Attachment.ItemAttachment -Property $outputHash
+                    }
+
+                    '#microsoft.graph.referenceAttachment' {
+                        $outputHash.Add("SourceUrl", $output.SourceUrl)
+                        $outputHash.Add("ProviderType", $output.ProviderType)
+                        $outputHash.Add("ThumbnailUrl", $output.ThumbnailUrl)
+                        $outputHash.Add("PreviewUrl", $output.PreviewUrl)
+                        $outputHash.Add("Permission", $output.Permission)
+                        $outputHash.Add("IsFolder", $output.IsFolder)
+
+                        New-Object -TypeName MSGraph.Exchange.Attachment.ReferenceAttachment -Property $outputHash
+                    }
+
+                    '#microsoft.graph.fileAttachment' {
+                        $outputHash.Add("ContentId", $output.ContentId)
+                        $outputHash.Add("ContentLocation", $output.ContentLocation)
+                        $outputHash.Add("ContentBytes", [system.convert]::FromBase64String($output.contentBytes))
+
+                        New-Object -TypeName MSGraph.Exchange.Attachment.FileAttachment -Property $outputHash
+                    }
+
+                    Default {
+                        New-Object -TypeName MSGraph.Exchange.Attachment.Attachment -Property $outputHash
+                    }
                 }
             }
+            #endregion output data
         }
     }
 

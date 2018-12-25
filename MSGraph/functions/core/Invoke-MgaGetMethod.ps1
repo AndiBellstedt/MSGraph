@@ -23,6 +23,12 @@
     .PARAMETER ResultSize
         The user to execute this under. Defaults to the user the token belongs to.
 
+    .PARAMETER ApiConnection
+        The URI for the Microsoft Graph connection
+
+    .PARAMETER ApiVersion
+        The version used for queries in Microsoft Graph connection
+
     .PARAMETER Token
         The access token to use to connect.
 
@@ -54,6 +60,12 @@
         [Int64]
         $ResultSize = (Get-PSFConfigValue -FullName 'MSGraph.Query.ResultSize' -Fallback 100),
 
+        [String]
+        $ApiConnection = (Get-PSFConfigValue -FullName 'MSGraph.Tenant.ApiConnection' -Fallback 'https://graph.microsoft.com'),
+
+        [string]
+        $ApiVersion = (Get-PSFConfigValue -FullName 'MSGraph.Tenant.ApiVersion' -Fallback 'v1.0'),
+
         [MSGraph.Core.AzureAccessToken]
         $Token,
 
@@ -73,7 +85,7 @@
     }
     else {
         if(-not $User) { $User = $Token.UserprincipalName }
-        $restUri = "https://graph.microsoft.com/v1.0/$(Resolve-UserString -User $User)/$($Field)"
+        $restUri = "$($ApiConnection)/$($ApiVersion)/$(Resolve-UserString -User $User)/$($Field)"
         if($Delta) { $restUri = $restUri + "/delta" }
     }
     if ($ResultSize -eq 0) { $ResultSize = [Int64]::MaxValue }

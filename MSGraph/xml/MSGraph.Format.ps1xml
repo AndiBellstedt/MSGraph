@@ -382,13 +382,18 @@
         </View>
 
         <View>
-            <Name>MSGraph.Exchange.Mail.Attachment_table</Name>
+            <Name>MSGraph.Exchange.Attachment.Attachments_table</Name>
             <ViewSelectedBy>
-                <TypeName>MSGraph.Exchange.Mail.Attachment</TypeName>
+                <TypeName>MSGraph.Exchange.Attachment.Attachment</TypeName>
+                <TypeName>MSGraph.Exchange.Attachment.FileAttachment</TypeName>
+                <TypeName>MSGraph.Exchange.Attachment.ItemAttachment</TypeName>
+                <TypeName>MSGraph.Exchange.Attachment.ReferenceAttachment</TypeName>
             </ViewSelectedBy>
             <TableControl>
                 <AutoSize/>
                 <TableHeaders>
+                    <TableColumnHeader/>
+                    <TableColumnHeader/>
                     <TableColumnHeader/>
                     <TableColumnHeader/>
                     <TableColumnHeader/>
@@ -405,6 +410,9 @@
                                 <PropertyName>SizeKB</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
+                                <PropertyName>AttachmentType</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
                                 <PropertyName>ContentType</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
@@ -413,6 +421,9 @@
                             <TableColumnItem>
                                 <PropertyName>isInline</PropertyName>
                             </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>ParentObject</PropertyName>
+                            </TableColumnItem>
                         </TableColumnItems>
                     </TableRowEntry>
                 </TableRowEntries>
@@ -420,9 +431,12 @@
         </View>
 
         <View>
-            <Name>MSGraph.Exchange.Mail.Attachment_list</Name>
+            <Name>MSGraph.Exchange.Attachment.Attachments_list</Name>
             <ViewSelectedBy>
-                <TypeName>MSGraph.Exchange.Mail.Attachment</TypeName>
+                <TypeName>MSGraph.Exchange.Attachment.FileAttachment</TypeName>
+                <TypeName>MSGraph.Exchange.Attachment.ItemAttachment</TypeName>
+                <TypeName>MSGraph.Exchange.Attachment.ReferenceAttachment</TypeName>
+                <TypeName>MSGraph.Exchange.Attachment.Attachment</TypeName>
             </ViewSelectedBy>
             <ListControl>
                 <ListEntries>
@@ -435,16 +449,70 @@
                                 <PropertyName>Name</PropertyName>
                             </ListItem>
                             <ListItem>
+                                <PropertyName>AttachmentType</PropertyName>
+                            </ListItem>
+                            <ListItem>
                                 <PropertyName>ContentType</PropertyName>
-                            </ListItem>
-                            <ListItem>
-                                <PropertyName>ContentId</PropertyName>
-                            </ListItem>
-                            <ListItem>
-                                <PropertyName>ContentLocation</PropertyName>
+                                <ItemSelectionCondition>
+                                    <ScriptBlock>$_.ContentType</ScriptBlock>
+                                </ItemSelectionCondition>
                             </ListItem>
                             <ListItem>
                                 <PropertyName>IsInline</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>ContentId</PropertyName>
+                                <ItemSelectionCondition>
+                                    <ScriptBlock>$_.AttachmentType -eq 'fileAttachment'</ScriptBlock>
+                                </ItemSelectionCondition>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>ContentLocation</PropertyName>
+                                <ItemSelectionCondition>
+                                    <ScriptBlock>$_.AttachmentType -eq 'fileAttachment'</ScriptBlock>
+                                </ItemSelectionCondition>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>Item</PropertyName>
+                                <ItemSelectionCondition>
+                                    <ScriptBlock>$_.AttachmentType -eq 'itemAttachment'</ScriptBlock>
+                                </ItemSelectionCondition>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>ProviderType</PropertyName>
+                                <ItemSelectionCondition>
+                                    <ScriptBlock>$_.AttachmentType -like 'referenceAttachment'</ScriptBlock>
+                                </ItemSelectionCondition>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>Permission</PropertyName>
+                                <ItemSelectionCondition>
+                                    <ScriptBlock>$_.AttachmentType -like 'referenceAttachment'</ScriptBlock>
+                                </ItemSelectionCondition>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>IsFolder</PropertyName>
+                                <ItemSelectionCondition>
+                                    <ScriptBlock>$_.AttachmentType -like 'referenceAttachment'</ScriptBlock>
+                                </ItemSelectionCondition>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>SourceUrl</PropertyName>
+                                <ItemSelectionCondition>
+                                    <ScriptBlock>$_.AttachmentType -like 'referenceAttachment'</ScriptBlock>
+                                </ItemSelectionCondition>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>ThumbnailUrl</PropertyName>
+                                <ItemSelectionCondition>
+                                    <ScriptBlock>$_.AttachmentType -like 'referenceAttachment'</ScriptBlock>
+                                </ItemSelectionCondition>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>PreviewUrl</PropertyName>
+                                <ItemSelectionCondition>
+                                    <ScriptBlock>$_.AttachmentType -like 'referenceAttachment'</ScriptBlock>
+                                </ItemSelectionCondition>
                             </ListItem>
                             <ListItem>
                                 <PropertyName>Size</PropertyName>
@@ -458,11 +526,19 @@
                             <ListItem>
                                 <PropertyName>LastModifiedDateTime</PropertyName>
                             </ListItem>
+                            <ListItem>
+                                <PropertyName>ContentBytes</PropertyName>
+                                <ItemSelectionCondition>
+                                    <ScriptBlock>$_.AttachmentType -like 'fileAttachment'</ScriptBlock>
+                                </ItemSelectionCondition>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>ParentObject</PropertyName>
+                            </ListItem>
                         </ListItems>
                     </ListEntry>
                 </ListEntries>
             </ListControl>
         </View>
-
     </ViewDefinitions>
 </Configuration>

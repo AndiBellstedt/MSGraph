@@ -236,7 +236,7 @@
 
 
     <Type>
-        <Name>Deserialized.MSGraph.Exchange.Mail.Attachment</Name>
+        <Name>Deserialized.MSGraph.Exchange.Attachment.FileAttachment</Name>
         <Members>
             <MemberSet>
                 <Name>PSStandardMembers</Name>
@@ -246,7 +246,7 @@
                             TargetTypeForDeserialization
                         </Name>
                         <Value>
-                            MSGraph.Exchange.Mail.Attachment
+                            MSGraph.Exchange.Attachment.FileAttachment
                         </Value>
                     </NoteProperty>
                 </Members>
@@ -255,15 +255,8 @@
     </Type>
 
     <Type>
-        <Name>MSGraph.Exchange.Mail.Attachment</Name>
+        <Name>MSGraph.Exchange.Attachment.FileAttachment</Name>
         <Members>
-            <AliasProperty>
-                <Name>DisplayName</Name>
-                <ReferencedMemberName>
-                    Name
-                </ReferencedMemberName>
-            </AliasProperty>
-
             <CodeProperty IsHidden="true">
                 <Name>SerializationData</Name>
                 <GetCodeReference>
