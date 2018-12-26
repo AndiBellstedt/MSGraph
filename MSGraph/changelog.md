@@ -1,5 +1,6 @@
 # Changelog
 # 1.2.8.3
+- New: Command Add-MgaMailAttachment
 - New: Command Add-MgaMailReplyMessage
 - New: Command Add-MgaMailForwardMessage
 - New: object types Attachments:

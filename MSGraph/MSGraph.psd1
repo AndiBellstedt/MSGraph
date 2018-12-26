@@ -73,8 +73,6 @@
 
         ## Message
         'Get-MgaMailMessage',
-        'Get-MgaMailAttachment',
-        'Export-MgaMailAttachment',
         'Set-MgaMailMessage',
         'Move-MgaMailMessage',
         'Copy-MgaMailMessage',
@@ -83,6 +81,12 @@
         'Send-MgaMailMessage',
         'Add-MgaMailReplyMessage',
         'Add-MgaMailForwardMessage',
+        
+        ## Attachments
+        'Get-MgaMailAttachment',
+        'Export-MgaMailAttachment',
+        "Add-MgaMailAttachment",
+        'Remove-MgaMailAttachment',
 
         # Core
         'Invoke-MgaGetMethod',
