@@ -13,34 +13,34 @@ namespace MSGraph.Exchange.Attachment
     {
         #region Properties
         /// <summary>
-        /// 
+        /// SourceUrl
         /// </summary>
-        public string SourceUrl;
+        public Uri SourceUrl;
 
         /// <summary>
-        /// 
+        /// ProviderType
         /// </summary>
-        public string ProviderType;
+        public ReferenceAttachmentProvider ProviderType;
 
         /// <summary>
-        /// 
+        /// ThumbnailUrl
         /// </summary>
-        public string ThumbnailUrl;
+        public Uri ThumbnailUrl;
 
         /// <summary>
-        /// 
+        /// PreviewUrl
         /// </summary>
-        public string PreviewUrl;
+        public Uri PreviewUrl;
 
         /// <summary>
-        /// 
+        /// Permission
         /// </summary>
-        public string Permission;
+        public referenceAttachmentPermission Permission;
 
         /// <summary>
-        /// 
+        /// IsFolder
         /// </summary>
-        public string IsFolder;
+        public bool IsFolder;
 
         private string _returnValue;
 
@@ -61,7 +61,6 @@ namespace MSGraph.Exchange.Attachment
         /// <summary>
         /// Overrides the default ToString() method
         /// </summary>
-        /// <returns></returns>
         public override string ToString()
         {
             if (!string.IsNullOrEmpty(Name))

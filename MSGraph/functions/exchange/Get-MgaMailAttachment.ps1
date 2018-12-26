@@ -7,8 +7,8 @@
         Retrieves the attachment object from a email message in Exchange Online using the graph api.
 
     .PARAMETER Message
-        The display name of the folder to search.
-        Defaults to the inbox.
+        Carrier object for Pipeline input.
+        This can be the id of the message or a message object passed in.
 
     .PARAMETER Name
         The name to filter by.
@@ -32,12 +32,21 @@
     .EXAMPLE
         PS C:\> Get-MgaMailMessage | Get-MgaMailAttachment
 
-        Return all emails attachments in the inbox of the user connected to through a token.
+        Return all emails attachments from all mails in the inbox of the user connected to through a token.
+
+    .EXAMPLE
+        PS C:\> Get-MgaMailMessage | Get-MgaMailAttachment -Name "MyName*"
+
+        Return all emails attachments with name MyName* from all mails in the inbox of the user connected to through a token.
+
+    .EXAMPLE
+        PS C:\> Get-MgaMailMessage | Get-MgaMailAttachment -IncludeInlineAttachment
+
+        Return also "inline" attachments, like pictures in html mails from all emails in the inbox of the user connected to through a token.
     #>
-    [CmdletBinding(DefaultParameterSetName = 'Default')]
-    #[OutputType([MSGraph.Exchange.Attachment.])]
+    [CmdletBinding(ConfirmImpact = 'Low', DefaultParameterSetName = 'Default')]
     param (
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ByInputObject', Position = 0)]
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Position = 0)]
         [Alias('InputObject', 'Id', 'Mail', 'MailMessage', 'MessageId', 'MailId')]
         [MSGraph.Exchange.Mail.MessageParameter[]]
         $Message,
@@ -92,53 +101,8 @@
 
             #region output data
             foreach ($output in $data) {
-                $outputHash = [ordered]@{
-                    Id                   = $output.Id
-                    Name                 = $output.Name
-                    AttachmentType       = [MSGraph.Exchange.Attachment.AttachmentTypes]$output.'@odata.type'.split(".")[($output.'@odata.type'.split(".").count - 1)]
-                    ContentType          = $output.ContentType
-                    IsInline             = $output.isInline
-                    LastModifiedDateTime = $output.LastModifiedDateTime
-                    Size                 = $output.Size
-                    User                 = $output.user
-                    ParentObject         = $messageItem.InputObject
-                    BaseObject           = $output
-                }
-                switch ($output.'@odata.type') {
-                    '#microsoft.graph.itemAttachment' {
-                        $invokeParam.Field = $invokeParam.Field + "/$($data.id)/?`$expand=microsoft.graph.itemattachment/item"
-                        $itemData = Invoke-MgaGetMethod @invokeParam
-
-                        $outputHash.BaseObject = $itemData
-                        $outputHash.Id = $itemData.id
-                        $outputHash.Add("Item", $itemData.Item)
-
-                        New-Object -TypeName MSGraph.Exchange.Attachment.ItemAttachment -Property $outputHash
-                    }
-
-                    '#microsoft.graph.referenceAttachment' {
-                        $outputHash.Add("SourceUrl", $output.SourceUrl)
-                        $outputHash.Add("ProviderType", $output.ProviderType)
-                        $outputHash.Add("ThumbnailUrl", $output.ThumbnailUrl)
-                        $outputHash.Add("PreviewUrl", $output.PreviewUrl)
-                        $outputHash.Add("Permission", $output.Permission)
-                        $outputHash.Add("IsFolder", $output.IsFolder)
-
-                        New-Object -TypeName MSGraph.Exchange.Attachment.ReferenceAttachment -Property $outputHash
-                    }
-
-                    '#microsoft.graph.fileAttachment' {
-                        $outputHash.Add("ContentId", $output.ContentId)
-                        $outputHash.Add("ContentLocation", $output.ContentLocation)
-                        $outputHash.Add("ContentBytes", [system.convert]::FromBase64String($output.contentBytes))
-
-                        New-Object -TypeName MSGraph.Exchange.Attachment.FileAttachment -Property $outputHash
-                    }
-
-                    Default {
-                        New-Object -TypeName MSGraph.Exchange.Attachment.Attachment -Property $outputHash
-                    }
-                }
+                $AttachmentObject = New-MgaAttachmentObject -RestData $output -ParentObject $messageItem.InputObject -ApiVersion "beta" -ResultSize $ResultSize -User $User -Token $Token -FunctionName $MyInvocation.MyCommand
+                $AttachmentObject
             }
             #endregion output data
         }

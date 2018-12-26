@@ -304,39 +304,103 @@
         </member>
         <member name="F:MSGraph.Exchange.Attachment.ReferenceAttachment.SourceUrl">
             <summary>
-            
+            SourceUrl
             </summary>
         </member>
         <member name="F:MSGraph.Exchange.Attachment.ReferenceAttachment.ProviderType">
             <summary>
-            
+            ProviderType
             </summary>
         </member>
         <member name="F:MSGraph.Exchange.Attachment.ReferenceAttachment.ThumbnailUrl">
             <summary>
-            
+            ThumbnailUrl
             </summary>
         </member>
         <member name="F:MSGraph.Exchange.Attachment.ReferenceAttachment.PreviewUrl">
             <summary>
-            
+            PreviewUrl
             </summary>
         </member>
         <member name="F:MSGraph.Exchange.Attachment.ReferenceAttachment.Permission">
             <summary>
-            
+            Permission
             </summary>
         </member>
         <member name="F:MSGraph.Exchange.Attachment.ReferenceAttachment.IsFolder">
             <summary>
-            
+            IsFolder
             </summary>
         </member>
         <member name="M:MSGraph.Exchange.Attachment.ReferenceAttachment.ToString">
             <summary>
             Overrides the default ToString() method
             </summary>
-            <returns></returns>
+        </member>
+        <member name="T:MSGraph.Exchange.Attachment.ReferenceAttachmentProvider">
+            <summary>
+            names of reference attachment provider types in Microsoft Graph API
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.ReferenceAttachmentProvider.oneDriveBusiness">
+            <summary>
+            oneDriveBusiness
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.ReferenceAttachmentProvider.oneDriveConsumer">
+            <summary>
+            oneDriveConsumer
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.ReferenceAttachmentProvider.dropbox">
+            <summary>
+            dropbox
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.ReferenceAttachmentProvider.other">
+            <summary>
+            other
+            </summary>
+        </member>
+        <member name="T:MSGraph.Exchange.Attachment.referenceAttachmentPermission">
+            <summary>
+            names of possible permissions in referenceAttachments in Microsoft Graph API
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.referenceAttachmentPermission.view">
+            <summary>
+            view
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.referenceAttachmentPermission.edit">
+            <summary>
+            edit
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.referenceAttachmentPermission.anonymousView">
+            <summary>
+            anonymousView
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.referenceAttachmentPermission.anonymousEdit">
+            <summary>
+            anonymousEdit
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.referenceAttachmentPermission.organizationView">
+            <summary>
+            organizationView
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.referenceAttachmentPermission.organizationEdit">
+            <summary>
+            organizationEdit
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.referenceAttachmentPermission.other">
+            <summary>
+            other
+            </summary>
         </member>
         <member name="T:MSGraph.Exchange.Attachment.ItemAttachment">
             <summary>
