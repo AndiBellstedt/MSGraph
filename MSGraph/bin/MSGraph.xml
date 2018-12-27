@@ -1106,6 +1106,11 @@
             For example, you can get the Drafts folder using its well-known name with the following query.
             </summary>
         </member>
+        <member name="F:MSGraph.Exchange.Mail.WellKnownFolder.AllItems">
+            <summary>
+            Represent all folders in the mailbox.
+            </summary>
+        </member>
         <member name="F:MSGraph.Exchange.Mail.WellKnownFolder.Archive">
             <summary>
             The archive folder messages are sent to when using the One_Click Archive feature in Outlook clients that support it. 

@@ -2,6 +2,8 @@
 # 1.2.8.4
 - Upd: module folder structure
     - For better clarity, moving function files into more granular subfolder structure
+- Upd: WellKnownFolder Enum
+    - Add "AllItems" to Enum
 
 # 1.2.8.3
 - New: Command Add-MgaMailAttachment

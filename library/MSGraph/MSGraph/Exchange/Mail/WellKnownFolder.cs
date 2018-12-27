@@ -12,6 +12,11 @@
     public enum WellKnownFolder
     {
         /// <summary>
+        /// Represent all folders in the mailbox.
+        /// </summary>
+        AllItems,
+
+        /// <summary>
         /// The archive folder messages are sent to when using the One_Click Archive feature in Outlook clients that support it. 
         /// Note: this is not the same as the Archive Mailbox feature of Exchange online.
         /// </summary>
