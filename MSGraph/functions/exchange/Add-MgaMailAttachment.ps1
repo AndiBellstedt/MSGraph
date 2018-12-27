@@ -111,7 +111,7 @@
                         $filesToAttach = $filesToAttach + $fileItem
                     }
                     catch {
-                        Stop-PSFFunction -Message "Specified path is invalid or not a file. Please specify a valid file." -EnableException $true -Exception $errorvariable.Exception -Category InvalidData -Tag "Attachment"
+                        Stop-PSFFunction -Message "Specified path '$($filePath)' is invalid or not a file. Please specify a valid file." -EnableException $true -Exception $errorvariable.Exception -Category InvalidData -Tag "Attachment"
                     }
                 }
                 $namesFileToAttach = "'$([string]::Join("', '",$filesToAttach.Name))'"
