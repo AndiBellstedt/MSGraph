@@ -1,13 +1,17 @@
 # Changelog
+# 1.2.8.4
+- Upd: module folder structure
+    - For better clarity, moving function files into more granular subfolder structure
+
 # 1.2.8.3
 - New: Command Add-MgaMailAttachment
 - New: Command Add-MgaMailReplyMessage
 - New: Command Add-MgaMailForwardMessage
 - New: object types Attachments:
-        - [MSGraph.Exchange.Attachment.ItemAttachment]
-        - [MSGraph.Exchange.Attachment.ReferenceAttachment]
-        - [MSGraph.Exchange.Attachment.Attachment] -> as base object
-        - new format types.ps1xml for attachment types 
+    - [MSGraph.Exchange.Attachment.ItemAttachment]
+    - [MSGraph.Exchange.Attachment.ReferenceAttachment]
+    - [MSGraph.Exchange.Attachment.Attachment] -> as base object
+    - new format types.ps1xml for attachment types 
 - Upd: object type [MSGraph.Exchange.Mail.Attachment]
     - rename to [MSGraph.Exchange.Attachment.FileAttachment]
     - add properties to the class, for convinience
