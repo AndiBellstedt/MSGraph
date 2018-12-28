@@ -86,6 +86,7 @@
                 "Field"        = "outlook/masterCategories/$($categoryItem.Id)"
                 "Token"        = $Token
                 "User"         = $User
+                "Confirm"      = $false
                 "FunctionName" = $MyInvocation.MyCommand
             }
             #endregion prepare rest call to create data

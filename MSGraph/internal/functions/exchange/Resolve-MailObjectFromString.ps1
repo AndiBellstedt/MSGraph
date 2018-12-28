@@ -50,7 +50,7 @@
 
     # variable definition
     $invokeParam = @{
-        "User" = $User
+        "User"  = $User
         "Token" = $Token
     }
 
@@ -71,7 +71,7 @@
         $type = "Category"
         $typeNamespace = "MSGraph.Exchange.Category"
         $nounPreFix = "MgaExch"
-        $parameterName = "Name"
+        if ($Object.Id) { $parameterName = "Id" } else { $parameterName = "Name" }
     }
     else {
         $msg = "Object '$($Object)' is not valid. Must be one of: 'MSGraph.Exchange.Mail.FolderParameter', 'MSGraph.Exchange.Mail.MessageParameter', 'MSGraph.Exchange.Category.CategoryParameter'."
@@ -88,7 +88,7 @@
     elseif ($Object.Name -and (-not $NoNameResolving)) {
         Write-PSFMessage -Level Debug -Message "Going to resolve '$($Object)' with name" -Tag "InputValidation" -FunctionName $FunctionName
         $invokeParam.Add($parameterName, $Object.Name)
-        $invokeParam.Add("ErrorAction","Stop")
+        $invokeParam.Add("ErrorAction", "Stop")
         $output = .("Get-" + $nounPreFix + $type) @invokeParam
     }
     else {

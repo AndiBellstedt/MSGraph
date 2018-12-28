@@ -149,7 +149,7 @@
         #endregion filter data
 
         #region output data
-        Write-PSFMessage -Level VeryVerbose -Message "Output $($data.Count) objects." -Tag "OutputData"
+        Write-PSFMessage -Level VeryVerbose -Message "Output $( ($data | Measure-Object).Count ) objects." -Tag "OutputData"
         foreach ($output in $data) {
             if($output.User) { $User = $output.User }
             $categoryObject = [MSGraph.Exchange.Category.OutlookCategory]::new( $output.id, $output.displayName, $output.color, $User, $output)
