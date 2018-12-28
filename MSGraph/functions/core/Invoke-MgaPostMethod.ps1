@@ -78,10 +78,10 @@
 
     Clear-Variable -Name data -Force -WhatIf:$false -Confirm:$false -Verbose:$false -ErrorAction Ignore
     $invokeParam = @{
-        Method          = "Post"
-        Uri             = $restUri
-        Body            = $Body
-        Headers         = @{
+        Method  = "Post"
+        Uri     = $restUri
+        Body    = $Body
+        Headers = @{
             "Authorization" = "Bearer $( [System.Runtime.InteropServices.Marshal]::PtrToStringAuto([System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($token.AccessToken)) )"
             "Content-Type"  = "application/json"
         }
@@ -93,6 +93,8 @@
         return
     }
 
-    $data | Add-Member -MemberType NoteProperty -Name 'User' -Value $User -Force
-    $data
+    if ($data) {
+        $data | Add-Member -MemberType NoteProperty -Name 'User' -Value $User -Force
+        $data
+    }
 }

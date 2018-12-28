@@ -47,7 +47,7 @@
 
         Delete a mailfolder with the id stored in variable $id.
     #>
-    [CmdletBinding(ConfirmImpact='High', SupportsShouldProcess=$true)]
+    [CmdletBinding(ConfirmImpact = 'High', SupportsShouldProcess = $true)]
     param (
         [Parameter(Mandatory = $true)]
         [string]
@@ -90,16 +90,16 @@
 
     Clear-Variable -Name data -Force -WhatIf:$false -Confirm:$false -Verbose:$false -ErrorAction Ignore
     $invokeParam = @{
-        Method          = "DELETE"
-        Uri             = $restUri
-        Body            = $Body
-        Headers         = @{
+        Method  = "DELETE"
+        Uri     = $restUri
+        Body    = $Body
+        Headers = @{
             "Authorization" = "Bearer $( [System.Runtime.InteropServices.Marshal]::PtrToStringAuto([System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($token.AccessToken)) )"
             "Content-Type"  = "application/json"
         }
     }
 
-    if($Force) { $doAction = $true } else { $doAction = $pscmdlet.ShouldProcess($restUri, "Invoke DELETE") }
+    if ($Force) { $doAction = $true } else { $doAction = $pscmdlet.ShouldProcess($restUri, "Invoke DELETE") }
     if ($doAction) {
         $data = Invoke-RestMethod @invokeParam -ErrorVariable "restError" -Verbose:$false -UseBasicParsing
     }
@@ -109,6 +109,8 @@
         return
     }
 
-    $data | Add-Member -MemberType NoteProperty -Name 'User' -Value $User -Force
-    $data
+    if ($data) {
+        $data | Add-Member -MemberType NoteProperty -Name 'User' -Value $User -Force
+        $data
+    }
 }

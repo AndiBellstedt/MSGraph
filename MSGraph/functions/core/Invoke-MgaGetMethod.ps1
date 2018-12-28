@@ -77,16 +77,16 @@
     $Token = Invoke-TokenLifetimeValidation -Token $Token -FunctionName $FunctionName
 
     #region variable definition
-    if($PSCmdlet.ParameterSetName -like "DeltaLink") {
+    if ($PSCmdlet.ParameterSetName -like "DeltaLink") {
         Write-PSFMessage -Level VeryVerbose -Message "ParameterSet $($PSCmdlet.ParameterSetName) - constructing delta query" -Tag "ParameterSetHandling"
         $restUri = $DeltaLink
         $Delta = $true
         $User = ([uri]$restUri).AbsolutePath.split('/')[2]
     }
     else {
-        if(-not $User) { $User = $Token.UserprincipalName }
+        if (-not $User) { $User = $Token.UserprincipalName }
         $restUri = "$($ApiConnection)/$($ApiVersion)/$(Resolve-UserString -User $User)/$($Field)"
-        if($Delta) { $restUri = $restUri + "/delta" }
+        if ($Delta) { $restUri = $restUri + "/delta" }
     }
     if ($ResultSize -eq 0) { $ResultSize = [Int64]::MaxValue }
     #if ($ResultSize -le 10 -and $restUri -notmatch '\$top=') { $restUri = $restUri + "?`$top=$($ResultSize)" }
@@ -102,25 +102,25 @@
 
         Clear-Variable -Name data -Force -WhatIf:$false -Confirm:$false -Verbose:$false -ErrorAction Ignore
         $invokeParam = @{
-            Method          = "Get"
-            Uri             = $restUri
-            Headers         = @{
+            Method  = "Get"
+            Uri     = $restUri
+            Headers = @{
                 "Authorization" = "Bearer $( [System.Runtime.InteropServices.Marshal]::PtrToStringAuto([System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($token.AccessToken)) )"
                 "Content-Type"  = "application/json"
             }
         }
         $data = Invoke-RestMethod @invokeParam -ErrorVariable "restError" -Verbose:$false -UseBasicParsing
-        if($restError) {
+        if ($restError) {
             Stop-PSFFunction -Tag "RestData" -Message $parseError[0].Exception.Message -Exception $parseError[0].Exception -EnableException $false -Category ConnectionError -FunctionName $FunctionName
             return
         }
 
-        if("Value" -in $data.psobject.Properties.Name) {
+        if ("Value" -in $data.psobject.Properties.Name) {
             # Multi object with value property returned by api call
             [array]$value = $data.Value
             Write-PSFMessage -Tag "RestData" -Level VeryVerbose -Message "Retrieving $($value.Count) records from query"
             $i = $i + $value.Count
-            if($i -lt $ResultSize) {
+            if ($i -lt $ResultSize) {
                 $restUri = $data.'@odata.nextLink'
             }
             else {
@@ -137,10 +137,10 @@
             $restUri = ""
         }
 
-        if((-not $tooManyItems) -or ($overResult -gt 0)) {
+        if ((-not $tooManyItems) -or ($overResult -gt 0)) {
             # check if resultsize is reached
-            if($overResult -gt 0) {
-                $output = $output + $Value[0..($overResult-1)]
+            if ($overResult -gt 0) {
+                $output = $output + $Value[0..($overResult - 1)]
             }
             else {
                 $output = $output + $Value
@@ -152,8 +152,8 @@
 
     #region output data
     $output | Add-Member -MemberType NoteProperty -Name 'User' -Value $User -Force
-    if($Delta) {
-        if('@odata.deltaLink' -in $data.psobject.Properties.Name) {
+    if ($Delta) {
+        if ('@odata.deltaLink' -in $data.psobject.Properties.Name) {
             $output | Add-Member -MemberType NoteProperty -Name '@odata.deltaLink' -Value $data.'@odata.deltaLink' -PassThru
         }
         else {
@@ -164,9 +164,9 @@
         $output
     }
 
-    if($tooManyItems) {
+    if ($tooManyItems) {
         # write information to console if resultsize exceeds
-        if($Delta) {
+        if ($Delta) {
             Write-PSFMessage -Tag "GetData" -Level Host -Message "Reaching maximum ResultSize before finishing delta query. Next delta query will continue on pending objects. Current ResultSize: $($ResultSize)" -FunctionName $FunctionName
         }
         else {
