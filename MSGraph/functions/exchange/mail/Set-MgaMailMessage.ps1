@@ -218,7 +218,7 @@
         #region Put parameters (JSON Parts) into a valid "message"-JSON-object together
         $jsonParams = @{}
         $boundParameters = @()
-        $names = "IsRead","Subject","Sender","From","ToRecipients","CCRecipients","BCCRecipients","ReplyTo","Body","Categories","Importance","InferenceClassification","InternetMessageId","IsDeliveryReceiptRequested","IsReadReceiptRequested"
+        $names = "IsRead", "Subject", "Sender", "From", "ToRecipients", "CCRecipients", "BCCRecipients", "ReplyTo", "Body", "Categories", "Importance", "InferenceClassification", "InternetMessageId", "IsDeliveryReceiptRequested", "IsReadReceiptRequested"
         foreach ($name in $names) {
             if (Test-PSFParameterBinding -ParameterName $name) {
                 Write-PSFMessage -Level Debug -Message "Add $($name) from parameters to message" -Tag "ParameterParsing"

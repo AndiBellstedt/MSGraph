@@ -26,7 +26,7 @@
         Can be omitted if a connection has been registered using the -Register parameter on New-MgaAccessToken.
 
     .PARAMETER PassThru
-        Outputs the token to the console
+        Outputs the object to the console.
 
     .PARAMETER Confirm
         If this switch is enabled, you will be prompted for confirmation before executing any operations that change state.
