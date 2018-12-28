@@ -1,5 +1,7 @@
 # Changelog
 # 1.2.8.4
+- New: command Get-MgaExchCategory
+    - Query categories within exchange mailbox
 - Upd: module folder structure
     - For better clarity, moving function files into more granular subfolder structure
 - Upd: WellKnownFolder Enum
