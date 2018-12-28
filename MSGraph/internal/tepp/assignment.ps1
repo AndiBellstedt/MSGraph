@@ -14,3 +14,5 @@ Register-PSFTeppArgumentCompleter -Command Get-MgaMailMessage -Parameter "Folder
 Register-PSFTeppArgumentCompleter -Command Move-MgaMailMessage -Parameter "DestinationFolder" -Name "MSGraph.Exchange.Mail.WellKnowFolders"
 
 Register-PSFTeppArgumentCompleter -Command Get-MgaExchCategory -Parameter "Color" -Name "MSGraph.Exchange.Category.Colors"
+Register-PSFTeppArgumentCompleter -Command New-MgaExchCategory -Parameter "Color" -Name "MSGraph.Exchange.Category.Colors"
+Register-PSFTeppArgumentCompleter -Command Set-MgaExchCategory -Parameter "Color" -Name "MSGraph.Exchange.Category.Colors"

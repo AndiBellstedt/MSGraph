@@ -30,7 +30,7 @@
         $Id,
 
         [Parameter(Mandatory = $true)]
-        [validateset("Folder","Message")]
+        [validateset("Folder", "Message", "Category")]
         [string]
         $Type,
 
@@ -40,6 +40,7 @@
 
     begin {
         $status = $false
+        [guid]$guidId = [guid]::Empty
     }
 
     process {
@@ -49,6 +50,7 @@
         switch ($Type) {
             "Folder" { if ($Id.Length -eq 120 -or $Id.Length -eq 104) { $status = $true } }
             "Message" { if ($Id.Length -eq 152 -or $Id.Length -eq 136) { $status = $true } }
+            "Category" { if ( [guid]::TryParse($Id, [ref]$guidId) ) { $status = $true } }
         }
     }
 

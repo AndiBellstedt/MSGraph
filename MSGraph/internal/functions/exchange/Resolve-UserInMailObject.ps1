@@ -43,13 +43,19 @@
 
     # check input object type
     if($Object.psobject.TypeNames[0] -like "MSGraph.Exchange.Mail.FolderParameter") {
+        $namespace = "MSGraph.Exchange.Mail"
         $Type= "Folder"
     }
     elseif ($Object.psobject.TypeNames[0] -like "MSGraph.Exchange.Mail.MessageParameter") {
+        $namespace = "MSGraph.Exchange.Mail"
         $Type= "Message"
     }
+    elseif ($Object.psobject.TypeNames[0] -like "MSGraph.Exchange.Category.CategoryParameter") {
+        $namespace = "MSGraph.Exchange.Category"
+        $Type= "Category"
+    }
     else {
-        $msg = "Object '$($Object)' is not valid. Must be a 'MSGraph.Exchange.Mail.FolderParameter' or a 'MSGraph.Exchange.Mail.MessageParameter'."
+        $msg = "Object '$($Object)' is not valid. Must be one of: 'MSGraph.Exchange.Mail.FolderParameter', 'MSGraph.Exchange.Mail.MessageParameter', 'MSGraph.Exchange.Category.CategoryParameter'."
         Stop-PSFFunction -Message $msg -Tag "InputValidation" -FunctionName $FunctionName -EnableException $true -Exception ([System.Management.Automation.RuntimeException]::new($msg))
     }
     Write-PSFMessage -Level Debug -Message "Object '$($Object)' is qualified as a $($Type)" -Tag "InputValidation" -FunctionName $FunctionName
@@ -61,13 +67,13 @@
         $level = @{ Level = "Verbose" }
     }
 
-
+    $output = ""
     # Resolve the object
-    if ($User -and ($Object.TypeName -like "MSGraph.Exchange.Mail.$($Type)") -and ($User -notlike $Object.InputObject.User)) {
+    if ($User -and ($Object.TypeName -like "$($namespace).$($Type)") -and ($User -notlike $Object.InputObject.User)) {
         Write-PSFMessage @Level -Message "Individual user specified! User from $($Type)Object ($($Object.InputObject.User)) will take precedence on specified user ($($User))!" -Tag "InputValidation" -FunctionName $FunctionName
         $output = $Object.InputObject.User
     }
-    elseif ((-not $User) -and ($Object.TypeName -like "MSGraph.Exchange.Mail.$($Type)")) {
+    elseif ((-not $User) -and ($Object.TypeName -like "$($namespace).$($Type)")) {
         $output = $Object.InputObject.User
     }
 
