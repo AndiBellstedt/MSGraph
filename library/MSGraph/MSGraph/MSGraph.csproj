@@ -51,6 +51,9 @@
     <Compile Include="Core\JWTAccessTokenInfo.cs" />
     <Compile Include="Exchange\Attachment\ReferenceAttachment.cs" />
     <Compile Include="Exchange\Attachment\referenceAttachmentEnums.cs" />
+    <Compile Include="Exchange\Category\CategoryEnums.cs" />
+    <Compile Include="Exchange\Category\CategoryParameter.cs" />
+    <Compile Include="Exchange\Category\OutlookCategory.cs" />
     <Compile Include="Exchange\FollowupFlag.cs" />
     <Compile Include="Exchange\Attachment\ItemAttachment.cs" />
     <Compile Include="Exchange\Attachment\FileAttachment.cs" />

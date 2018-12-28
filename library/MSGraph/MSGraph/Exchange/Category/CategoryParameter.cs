@@ -1,23 +1,23 @@
 ﻿using System;
 using System.Linq;
 
-namespace MSGraph.Exchange.Mail
+namespace MSGraph.Exchange.Category
 {
     /// <summary>
-    /// Mail message parameter class for convinient pipeline 
-    /// input on parameters in *-MgaMail* commands
+    /// category parameter class for convinient pipeline 
+    /// input on parameters in *-MgaExchCategory commands
     /// </summary>
     [Serializable]
-    public class MessageParameter
+    public class CategoryParameter
     {
         #region Properties
         /// <summary>
-        /// message or folder id
+        /// category id
         /// </summary>
         public string Id;
 
         /// <summary>
-        /// name of a folder
+        /// name of the category
         /// </summary>
         public string Name;
 
@@ -34,13 +34,13 @@ namespace MSGraph.Exchange.Mail
             set { }
         }
 
-        private string _typeName;
-        private string _returnValue;
-
         /// <summary>
         /// carrier object for the input object
         /// </summary>
         public object InputObject;
+
+        private string _typeName;
+        private string _returnValue;
 
         #endregion Properties
 
@@ -72,31 +72,32 @@ namespace MSGraph.Exchange.Mail
 
         #region Constructors
         /// <summary>
-        /// Mail message input
+        /// Mail Folderinput
         /// </summary>
-        public MessageParameter(Message Message)
+        public CategoryParameter(OutlookCategory Category)
         {
-            InputObject = Message;
-            _typeName = InputObject.GetType().ToString();
-            Id = Message.Id;
-            Name = Message.Subject;
+            this.InputObject = Category;
+            this._typeName = InputObject.GetType().ToString();
+            this.Id = Category.Id.ToString();
+            this.Name = Category.DisplayName;
         }
 
         /// <summary>
         /// String input
         /// </summary>
-        public MessageParameter(string Text)
+        public CategoryParameter(string Text)
         {
-            InputObject = Text;
-            _typeName = InputObject.GetType().ToString();
+            this.InputObject = Text;
+            this._typeName = InputObject.GetType().ToString();
 
-            if (Text.Length == 152 || Text.Length == 136)
+            Guid _id;
+            if (!String.IsNullOrEmpty(Text) && Guid.TryParse(Text, out _id))
             {
-                Id = Text;
+                this.Id = Text;
             }
             else
             {
-                Name = Text;
+                this.Name = Text;
             }
         }
         #endregion Constructors

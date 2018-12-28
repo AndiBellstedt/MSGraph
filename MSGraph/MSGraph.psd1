@@ -88,6 +88,9 @@
         "Add-MgaMailAttachment",
         'Remove-MgaMailAttachment',
 
+        ## Categories
+        'Get-MgaExchCategory',
+
         # Core
         'Invoke-MgaGetMethod',
         'Invoke-MgaPatchMethod',

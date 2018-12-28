@@ -615,6 +615,419 @@
             https://docs.microsoft.com/en-us/graph/api/resources/referenceattachment?view=graph-rest-1.0
             </summary>
         </member>
+        <member name="T:MSGraph.Exchange.Category.ColorKey">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorKey.None">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorKey.Preset0">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorKey.Preset1">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorKey.Preset2">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorKey.Preset3">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorKey.Preset4">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorKey.Preset5">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorKey.Preset6">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorKey.Preset7">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorKey.Preset8">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorKey.Preset9">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorKey.Preset10">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorKey.Preset11">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorKey.Preset12">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorKey.Preset13">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorKey.Preset14">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorKey.Preset15">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorKey.Preset16">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorKey.Preset17">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorKey.Preset18">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorKey.Preset19">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorKey.Preset20">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorKey.Preset21">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorKey.Preset22">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorKey.Preset23">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorKey.Preset24">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:MSGraph.Exchange.Category.ColorName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorName.NoColorMapped">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorName.Red">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorName.Orange">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorName.Brown">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorName.Yellow">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorName.Green">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorName.Teal">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorName.Olive">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorName.Blue">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorName.Purple">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorName.Cranberry">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorName.Steel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorName.DarkSteel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorName.Gray">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorName.DarkGray">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorName.Black">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorName.DarkRed">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorName.DarkOrange">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorName.DarkBrown">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorName.DarkYellow">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorName.DarkGreen">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorName.DarkTeal">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorName.DarkOlive">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorName.DarkBlue">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorName.DarkPurple">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorName.DarkCranberry">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:MSGraph.Exchange.Category.CategoryParameter">
+            <summary>
+            category parameter class for convinient pipeline 
+            input on parameters in *-MgaExchCategory commands
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.CategoryParameter.Id">
+            <summary>
+            category id
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.CategoryParameter.Name">
+            <summary>
+            name of the category
+            </summary>
+        </member>
+        <member name="P:MSGraph.Exchange.Category.CategoryParameter.TypeName">
+            <summary>
+            The type name of inputobject
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.CategoryParameter.InputObject">
+            <summary>
+            carrier object for the input object
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.Category.CategoryParameter.ToString">
+            <summary>
+            Overrides the default ToString() method 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MSGraph.Exchange.Category.CategoryParameter.#ctor(MSGraph.Exchange.Category.OutlookCategory)">
+            <summary>
+            Mail Folderinput
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.Category.CategoryParameter.#ctor(System.String)">
+            <summary>
+            String input
+            </summary>
+        </member>
+        <member name="T:MSGraph.Exchange.Category.OutlookCategory">
+            <summary>
+            Category in exchange online
+            
+            Represents a category by which a user can group Outlook items such as messages and events.
+            The user defines categories in a master list, and can apply one or more of these user-defined categories to an item.
+            
+            https://docs.microsoft.com/en-us/graph/api/resources/outlookcategory?view=graph-rest-1.0
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.OutlookCategory.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.OutlookCategory.DisplayName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:MSGraph.Exchange.Category.OutlookCategory.Name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.OutlookCategory.Color">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:MSGraph.Exchange.Category.OutlookCategory.ColorName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:MSGraph.Exchange.Category.OutlookCategory.ColorCode">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.OutlookCategory.User">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.OutlookCategory.BaseObject">
+            <summary>
+            carrier object for the original api result
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.Category.OutlookCategory.ToString">
+            <summary>
+            Overrides the default ToString() method 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MSGraph.Exchange.Category.OutlookCategory.Parse(System.String)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.Category.OutlookCategory.Parse(MSGraph.Exchange.Category.ColorKey)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.Category.OutlookCategory.Parse(MSGraph.Exchange.Category.ColorName)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.Category.OutlookCategory.#ctor">
+            <summary>
+            empty
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.Category.OutlookCategory.#ctor(System.String)">
+            <summary>
+            Only name input
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.Category.OutlookCategory.#ctor(System.Guid)">
+            <summary>
+            Only Id input
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.Category.OutlookCategory.#ctor(MSGraph.Exchange.Category.ColorKey)">
+            <summary>
+            Only ColorKey
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.Category.OutlookCategory.#ctor(System.Guid,System.String,MSGraph.Exchange.Category.ColorKey,System.String)">
+            <summary>
+            All relevant properties
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.Category.OutlookCategory.#ctor(System.Guid,System.String,MSGraph.Exchange.Category.ColorKey,System.String,System.Object)">
+            <summary>
+            All relevant properties including Baseobject
+            </summary>
+        </member>
         <member name="T:MSGraph.Exchange.FollowupFlag">
             <summary>
             followupFlag resource type
@@ -707,7 +1120,7 @@
         </member>
         <member name="M:MSGraph.Exchange.Mail.MessageParameter.#ctor(MSGraph.Exchange.Mail.Message)">
             <summary>
-            Mail Folderinput
+            Mail message input
             </summary>
         </member>
         <member name="M:MSGraph.Exchange.Mail.MessageParameter.#ctor(System.String)">
