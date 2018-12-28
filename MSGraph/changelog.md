@@ -2,6 +2,16 @@
 # 1.2.8.4
 - New: command Get-MgaExchCategory
     - Query categories within exchange mailbox
+    - Convinient object output including "translated" colors to readable ColorNames
+    - Filter possibilities to get specific output
+    - Tab completion on Color parameter
+- New: Command New-MgaExchCategory
+    - Create new categories within exchange mailbox
+    - Tab completion on Color parameter
+- New: Command Set-MgaExchCategory
+    - Modify categories within exchange mailbox
+    - Tab completion on Color parameter
+- New: Command Remove-MgaExchCategory
 - Upd: module folder structure
     - For better clarity, moving function files into more granular subfolder structure
 - Upd: WellKnownFolder Enum

@@ -90,6 +90,9 @@
 
         ## Categories
         'Get-MgaExchCategory',
+        'New-MgaExchCategory',
+        'Set-MgaExchCategory',
+        'Remove-MgaExchCategory',
 
         # Core
         'Invoke-MgaGetMethod',
