@@ -922,6 +922,11 @@
             Mail Folderinput
             </summary>
         </member>
+        <member name="M:MSGraph.Exchange.Category.CategoryParameter.#ctor(System.Guid)">
+            <summary>
+            String input
+            </summary>
+        </member>
         <member name="M:MSGraph.Exchange.Category.CategoryParameter.#ctor(System.String)">
             <summary>
             String input

@@ -85,6 +85,16 @@ namespace MSGraph.Exchange.Category
         /// <summary>
         /// String input
         /// </summary>
+        public CategoryParameter(Guid Id)
+        {
+            this.InputObject = Id.ToString();
+            this._typeName = InputObject.GetType().ToString();
+            this.Id = Id.ToString();
+        }
+
+        /// <summary>
+        /// String input
+        /// </summary>
         public CategoryParameter(string Text)
         {
             this.InputObject = Text;
