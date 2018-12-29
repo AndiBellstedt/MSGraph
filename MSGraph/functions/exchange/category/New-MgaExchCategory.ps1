@@ -70,7 +70,7 @@
 
         if($Color) {
             [String]$colorValue = [MSGraph.Exchange.Category.OutlookCategory]::Parse($Color)
-        } 
+        }
         else {
             [String]$colorValue = [MSGraph.Exchange.Category.ColorKey]::None
         }
@@ -97,7 +97,7 @@
 
             # create data
             if ($pscmdlet.ShouldProcess($categoryName, "Create")) {
-                $data = Invoke-MgaPostMethod @invokeParam 
+                $data = Invoke-MgaPostMethod @invokeParam
             }
 
             #region output data
