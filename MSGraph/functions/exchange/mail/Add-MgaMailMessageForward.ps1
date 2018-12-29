@@ -1,4 +1,4 @@
-﻿function Add-MgaMailForwardMessage {
+﻿function Add-MgaMailMessageForward {
     <#
     .SYNOPSIS
         Forward message(s) in Exchange Online using the graph api.
@@ -43,17 +43,17 @@
         https://docs.microsoft.com/en-us/graph/api/message-forward?view=graph-rest-1.0
 
     .EXAMPLE
-        PS C:\> $mail | Add-MgaMailForwardMessage
+        PS C:\> $mail | Add-MgaMailMessageForward
 
         Create forward message(s) and save it in the drafts folder for messages from variable $mail.
         also possible:
-        PS C:\> Add-MgaMailForwardMessage -Message $mail
+        PS C:\> Add-MgaMailMessageForward -Message $mail
 
         The variable $mail can be represent:
         PS C:\> $mail = Get-MgaMailMessage -Subject "Important mail"
 
     .EXAMPLE
-        PS C:\> $mail | Add-MgaMailForwardMessage -ToRecipients 'someone@something.org' -Comment 'For your information.'
+        PS C:\> $mail | Add-MgaMailMessageForward -ToRecipients 'someone@something.org' -Comment 'For your information.'
 
         This one directly forwards message(s) from variable $mail. The message(s) is saved in the sendItems folder
 
@@ -62,7 +62,7 @@
 
     #>
     [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'Medium', DefaultParameterSetName = 'Default')]
-    [Alias()]
+    [Alias('Add-MgaMailForwardMessage')]
     [OutputType([MSGraph.Exchange.Mail.Message])]
     param (
         [Parameter(Mandatory = $true, Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)] #, ParameterSetName = 'ByInputObject'
@@ -138,7 +138,7 @@
                     Default { stop-PSFMessage -Message "Unhandled parameter set. ($($PSCmdlet.ParameterSetName)) Developer mistake." -EnableException $true -Category "ParameterSetHandling" -FunctionName $MyInvocation.MyCommand }
                 }
 
-                $output = Invoke-MgaPostMethod @invokeParam
+                $output = Invoke-MgaRestMethodPost @invokeParam
                 if ($PSCmdlet.ParameterSetName -like 'Default' -and $output) {
                     New-MgaMailMessageObject -RestData $output -FunctionName $MyInvocation.MyCommand
                 }

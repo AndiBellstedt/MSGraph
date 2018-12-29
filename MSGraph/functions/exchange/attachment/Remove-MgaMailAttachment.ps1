@@ -161,7 +161,7 @@
             }
             if ($proceed) {
                 Write-PSFMessage -Level Verbose -Message "Delete attachment '$($attachmentItem)' from message '$($attachmentItem.InputObject.ParentObject.Name)'" -Tag "RemoveData"
-                Invoke-MgaDeleteMethod @invokeParam
+                Invoke-MgaRestMethodDelete @invokeParam
             }
 
             #region passthru data

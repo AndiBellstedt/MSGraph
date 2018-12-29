@@ -1,4 +1,4 @@
-﻿function Get-MgaRegisteredAccessToken {
+﻿function Get-MgaAccessTokenRegistered {
     <#
     .SYNOPSIS
         Output the registered access token
@@ -12,6 +12,7 @@
         Output the registered access token
     #>
     [CmdletBinding()]
+    [Alias('Get-MgaRegisteredAccessToken')]
     param ()
 
     if ($script:msgraph_Token) {

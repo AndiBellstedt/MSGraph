@@ -1,4 +1,4 @@
-﻿function Invoke-MgaPostMethod {
+﻿function Invoke-MgaRestMethodPost {
     <#
     .SYNOPSIS
         Performs a REST POST against the graph API
@@ -33,12 +33,13 @@
         Name of the higher function which is calling this function.
 
     .EXAMPLE
-        PS C:\> Invoke-MgaPostMethod -Field "messages/$($id)/reply" -Body '{"comment": "comment-value"}' -Token $Token
+        PS C:\> Invoke-MgaRestMethodPost -Field "messages/$($id)/reply" -Body '{"comment": "comment-value"}' -Token $Token
 
         Reply to the sender of a message with the id, stored in variable $id. The message is then saved in the Sent Items folder.
         The token stored in $Token is used for the api call.
     #>
     [CmdletBinding(DefaultParameterSetName = 'Default')]
+    [Alias('Invoke-MgaPostMethod')]
     param (
         [Parameter(Mandatory = $true)]
         [string]

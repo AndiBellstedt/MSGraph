@@ -89,7 +89,7 @@
                     "Token"        = $Token
                     "FunctionName" = $MyInvocation.MyCommand
                 }
-                $output = Invoke-MgaPatchMethod @invokeParam
+                $output = Invoke-MgaRestMethodPatch @invokeParam
                 if ($PassThru) {
                     New-MgaMailFolderObject -RestData $output -ParentFolder $folderItem.InputObject.ParentFolder -FunctionName $MyInvocation.MyCommand
                 }

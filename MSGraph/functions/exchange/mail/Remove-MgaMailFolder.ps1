@@ -115,7 +115,7 @@
                     "Force"        = $true
                     "FunctionName" = $MyInvocation.MyCommand
                 }
-                $null = Invoke-MgaDeleteMethod @invokeParam
+                $null = Invoke-MgaRestMethodDelete @invokeParam
                 if ($PassThru) {
                     $folderItem.InputObject
                 }

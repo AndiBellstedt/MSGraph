@@ -121,7 +121,7 @@
                     "Token"        = $Token
                     "FunctionName" = $MyInvocation.MyCommand
                 }
-                $output = Invoke-MgaPostMethod @invokeParam
+                $output = Invoke-MgaRestMethodPost @invokeParam
                 if ($PassThru) {
                     New-MgaMailFolderObject -RestData $output -ParentFolder $DestinationFolder.InputObject -FunctionName $MyInvocation.MyCommand
                 }

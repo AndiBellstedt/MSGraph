@@ -116,14 +116,14 @@
 
                 $invokeParam.Add("Field","outlook/masterCategories/$($categoryItem.Id)")
                 Write-PSFMessage -Level Verbose -Message "Get refresh on category '$($categoryItem)'" -Tag "QueryData"
-                $data = $data + (Invoke-MgaGetMethod @invokeParam)
+                $data = $data + (Invoke-MgaRestMethodGet @invokeParam)
                 $invokeParam.Remove("Field")
             }
         }
         else {
             $invokeParam.Add("Field","outlook/masterCategories")
             Write-PSFMessage -Level Verbose -Message "Getting available categories" -Tag "QueryData"
-            $data = $data + (Invoke-MgaGetMethod @invokeParam)
+            $data = $data + (Invoke-MgaRestMethodGet @invokeParam)
         }
         #endregion query data
 

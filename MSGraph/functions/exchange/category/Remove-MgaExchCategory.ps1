@@ -103,7 +103,7 @@
             }
             if ($proceed) {
                 Write-PSFMessage -Level Verbose -Message "Delete category '$($categoryItem)'." -Tag "RemoveData"
-                Invoke-MgaDeleteMethod @invokeParam
+                Invoke-MgaRestMethodDelete @invokeParam
             }
 
             #region output data

@@ -224,7 +224,7 @@
                 $invokeParam.Add("Field", "messages")
             }
 
-            $output = Invoke-MgaPostMethod @invokeParam
+            $output = Invoke-MgaRestMethodPost @invokeParam
             if($output) {
                 New-MgaMailMessageObject -RestData $output -FunctionName $MyInvocation.MyCommand
             }

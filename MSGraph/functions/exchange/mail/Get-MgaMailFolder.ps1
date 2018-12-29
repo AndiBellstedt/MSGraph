@@ -102,7 +102,7 @@
         #region helper subfunctions
         function invoke-internalMgaGetMethod ($invokeParam, [int]$level, [MSGraph.Exchange.Mail.Folder]$parentFolder, [String]$FunctionName) {
             # Subfunction for query objects and creating valid new objects from the query result
-            $folderData = Invoke-MgaGetMethod @invokeParam
+            $folderData = Invoke-MgaRestMethodGet @invokeParam
             foreach ($folderOutput in $folderData) {
                 New-MgaMailFolderObject -RestData $folderOutput -ParentFolder $parentFolder -Level $level #-FunctionName $FunctionName
             }

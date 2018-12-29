@@ -1,4 +1,4 @@
-﻿function Invoke-MgaGetMethod {
+﻿function Invoke-MgaRestMethodGet {
     <#
     .SYNOPSIS
         Performs a rest GET against the graph API
@@ -36,11 +36,12 @@
         Name of the higher function which is calling this function.
 
     .EXAMPLE
-        PS C:\> Invoke-MgaGetMethod -Field 'mailFolders' -Token $Token -User $User
+        PS C:\> Invoke-MgaRestMethodGet -Field 'mailFolders' -Token $Token -User $User
 
         Retrieves a list of email folders for the user $User, using the token stored in $Token
     #>
     [CmdletBinding(DefaultParameterSetName = 'Default')]
+    [Alias('Invoke-MgaGetMethod')]
     param (
         [ValidateNotNullOrEmpty()]
         [string]

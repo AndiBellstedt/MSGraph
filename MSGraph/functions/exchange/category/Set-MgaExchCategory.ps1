@@ -116,7 +116,7 @@
 
             # set data
             if ($pscmdlet.ShouldProcess($categoryItem, "Set property '$([string]::Join("', '", $boundParameters))'")) {
-                $data = Invoke-MgaPatchMethod @invokeParam
+                $data = Invoke-MgaRestMethodPatch @invokeParam
             }
 
             #region output data

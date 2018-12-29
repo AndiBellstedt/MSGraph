@@ -1,4 +1,4 @@
-﻿function Invoke-MgaDeleteMethod {
+﻿function Invoke-MgaRestMethodDelete {
     <#
     .SYNOPSIS
         Performs a REST DELETE against the graph API
@@ -43,11 +43,12 @@
 
 
     .EXAMPLE
-        PS C:\> Invoke-MgaDeleteMethod -Field "mailFolders/$($id)"
+        PS C:\> Invoke-MgaRestMethodDelete -Field "mailFolders/$($id)"
 
         Delete a mailfolder with the id stored in variable $id.
     #>
-    [CmdletBinding(ConfirmImpact = 'High', SupportsShouldProcess = $true)]
+    [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'High')]
+    [Alias('Invoke-MgaDeleteMethod')]
     param (
         [Parameter(Mandatory = $true)]
         [string]

@@ -218,7 +218,7 @@
                             "Token"        = $Token
                             "FunctionName" = $MyInvocation.MyCommand
                         }
-                        $null = Invoke-MgaPostMethod @invokeParam
+                        $null = Invoke-MgaRestMethodPost @invokeParam
                         if ($PassThru) { $messageItem.InputObject }
                     }
                     #endregion send message
@@ -260,7 +260,7 @@
                         "Token"        = $Token
                         "FunctionName" = $MyInvocation.MyCommand
                     }
-                    $null = Invoke-MgaPostMethod @invokeParam
+                    $null = Invoke-MgaRestMethodPost @invokeParam
                     if ($PassThru) { $messageItem.InputObject }
                 }
                 #endregion send message

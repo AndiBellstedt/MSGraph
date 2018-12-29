@@ -105,7 +105,7 @@
                     $invokeParam.Add("Field", "mailFolders")
                 }
 
-                $output = Invoke-MgaPostMethod @invokeParam
+                $output = Invoke-MgaRestMethodPost @invokeParam
                 New-MgaMailFolderObject -RestData $output -ParentFolder $ParentFolder.InputObject -FunctionName $MyInvocation.MyCommand
             }
         }

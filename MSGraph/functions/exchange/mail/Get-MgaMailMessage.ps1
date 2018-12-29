@@ -227,7 +227,7 @@
 
         # run the message query and process the output
         foreach ($invokeParam in $InvokeParamsUniqueList) {
-            $data = Invoke-MgaGetMethod @invokeParam | Where-Object { $_.subject -like $Subject }
+            $data = Invoke-MgaRestMethodGet @invokeParam | Where-Object { $_.subject -like $Subject }
             $output = foreach ($messageOutput in $data) {
                 New-MgaMailMessageObject -RestData $messageOutput
             }

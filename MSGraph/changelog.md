@@ -1,4 +1,14 @@
 # Changelog
+# 1.2.8.5
+- Upd: Rename commands for consistent command name pattern. Put old names as aliases, for backward compatibility
+    - Invoke-MgaDeleteMethod --> Invoke-MgaRestMethodDelete
+    - Invoke-MgaGetMethod --> Invoke-MgaRestMethodGet
+    - Invoke-MgaPatchMethod --> Invoke-MgaRestMethodPatch
+    - Invoke-MgaPostMethod --> Invoke-MgaRestMethodPost
+    - Get-MgaRegisteredAccessToken --> Get-MgaAccessTokenRegistered
+    - Add-MgaMailForwardMessage --> Add-MgaMailMessageForward
+    - Add-MgaMailReplyMessage --> Add-MgaMailForwardReply
+
 # 1.2.8.4
 - New: command Get-MgaExchCategory
     - Query categories within exchange mailbox

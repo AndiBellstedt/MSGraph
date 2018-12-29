@@ -250,7 +250,7 @@
                     "Token"        = $Token
                     "FunctionName" = $MyInvocation.MyCommand
                 }
-                $output = Invoke-MgaPatchMethod @invokeParam
+                $output = Invoke-MgaRestMethodPatch @invokeParam
                 if ($output -and $PassThru) { New-MgaMailMessageObject -RestData $output }
             }
         }

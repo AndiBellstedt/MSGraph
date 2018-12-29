@@ -97,7 +97,7 @@
 
             # create data
             if ($pscmdlet.ShouldProcess($categoryName, "Create")) {
-                $data = Invoke-MgaPostMethod @invokeParam
+                $data = Invoke-MgaRestMethodPost @invokeParam
             }
 
             #region output data

@@ -176,7 +176,7 @@
                         # add attachment
                         if ($pscmdlet.ShouldProcess("Message '$($messageItem)'", "Add FileAttachment '$($fileToAttach.FullName)'")) {
                             Write-PSFMessage -Level Verbose -Message "Add '$($fileToAttach.FullName)' to message '$($messageItem)'" -Tag "AddData"
-                            $data = $data + (Invoke-MgaPostMethod @invokeParam)
+                            $data = $data + (Invoke-MgaRestMethodPost @invokeParam)
                         }
                         $invokeParam.Remove("Body")
                     }
@@ -191,7 +191,7 @@
                         # add attachment
                         if ($pscmdlet.ShouldProcess("Message '$($messageItem)'", "Add ReferenceAttachment '$($linkItem.Name)'")) {
                             Write-PSFMessage -Level Verbose -Message "Getting '$($linkItem.ToString())' as ReferenceAttachment to message '$($messageItem)'" -Tag "AddData"
-                            $data = $data + (Invoke-MgaPostMethod @invokeParam)
+                            $data = $data + (Invoke-MgaRestMethodPost @invokeParam)
                         }
                         $invokeParam.Remove("Body")
                     }

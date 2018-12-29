@@ -1,4 +1,4 @@
-﻿function Add-MgaMailReplyMessage {
+﻿function Add-MgaMailMessageReply {
     <#
     .SYNOPSIS
         Create reply (all) message(s) in Exchange Online using the graph api.
@@ -45,17 +45,17 @@
         https://docs.microsoft.com/en-us/graph/api/message-replyall?view=graph-rest-1.0
 
     .EXAMPLE
-        PS C:\> $mail | Add-MgaMailReplyMessage
+        PS C:\> $mail | Add-MgaMailMessageReply
 
         Create reply message(s) for messages in variable $mail.
         also possible:
-        PS C:\> Add-MgaMailReplyMessage -Message $mail
+        PS C:\> Add-MgaMailMessageReply -Message $mail
 
         The variable $mail can be represent:
         PS C:\> $mail = Get-MgaMailMessage -Subject "Important mail"
 
     .EXAMPLE
-        PS C:\> $mail | Add-MgaMailReplyMessage -Comment 'Reply for confirmation to your message.'
+        PS C:\> $mail | Add-MgaMailMessageReply -Comment 'Reply for confirmation to your message.'
 
         This one directly send reply message(s) for messages from variable $mail.
         The message(s) is saved in the sendItems folder
@@ -65,7 +65,7 @@
 
     #>
     [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'Medium', DefaultParameterSetName = 'Default')]
-    [Alias()]
+    [Alias('Add-MgaMailReplyMessage')]
     [OutputType([MSGraph.Exchange.Mail.Message])]
     param (
         [Parameter(Mandatory = $true, Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)] #, ParameterSetName = 'ByInputObject'
@@ -142,7 +142,7 @@
                     Default { stop-PSFMessage -Message "Unhandled parameter set. ($($PSCmdlet.ParameterSetName)) Developer mistake." -EnableException $true -Category "ParameterSetHandling" -FunctionName $MyInvocation.MyCommand }
                 }
 
-                $output = Invoke-MgaPostMethod @invokeParam
+                $output = Invoke-MgaRestMethodPost @invokeParam
                 if ($PSCmdlet.ParameterSetName -like 'Default' -and $output) {
                     New-MgaMailMessageObject -RestData $output -FunctionName $MyInvocation.MyCommand
                 }

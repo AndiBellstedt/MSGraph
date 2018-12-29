@@ -1,4 +1,4 @@
-﻿function Invoke-MgaPatchMethod {
+﻿function Invoke-MgaRestMethodPatch {
     <#
     .SYNOPSIS
         Performs a REST PATCH against the graph API
@@ -33,12 +33,13 @@
         Name of the higher function which is calling this function.
 
     .EXAMPLE
-        PS C:\> Invoke-MgaPatchMethod -Field "messages/$($id)" -Body '{ "isRead": true }' -Token $Token
+        PS C:\> Invoke-MgaRestMethodPatch -Field "messages/$($id)" -Body '{ "isRead": true }' -Token $Token
 
         Set a message as readed.
         The token stored in $Token is used for the api call.
     #>
     [CmdletBinding(DefaultParameterSetName = 'Default')]
+    [Alias('Invoke-MgaPatchMethod')]
     param (
         [Parameter(Mandatory = $true)]
         [string]

@@ -3,7 +3,7 @@
     ModuleToProcess = 'MSGraph.psm1'
 
     # Version number of this module.
-    ModuleVersion = '1.2.8.3'
+    ModuleVersion = '1.2.8.5'
 
     # ID used to uniquely identify this module
     GUID = '5f61c229-95d0-4423-ab50-938c0723ad21'
@@ -79,9 +79,9 @@
         'Remove-MgaMailMessage',
         'New-MgaMailMessage',
         'Send-MgaMailMessage',
-        'Add-MgaMailReplyMessage',
-        'Add-MgaMailForwardMessage',
-        
+        'Add-MgaMailMessageReply',
+        'Add-MgaMailMessageForward',
+
         ## Attachments
         'Get-MgaMailAttachment',
         'Export-MgaMailAttachment',
@@ -95,14 +95,33 @@
         'Remove-MgaExchCategory',
 
         # Core
+        'Invoke-MgaRestMethodGet',
+        'Invoke-MgaRestMethodPatch',
+        'Invoke-MgaRestMethodPost',
+        'Invoke-MgaRestMethodDelete',
+        'New-MgaAccessToken',
+        'Update-MgaAccessToken',
+        'Get-MgaAccessTokenRegistered',
+        'Register-MgaAccessToken'
+    )
+
+    # Aliases to export from this module
+    AliasesToExport = @(
+        # Exchange
+        ## Message
+        'Update-MgaMailMessage',
+        'Add-MgaMailForwardMessage',
+        'Add-MgaMailForwardMessage',
+
+        ## Attachments
+        'Save-MgaMailAttachment', 
+
+        # COre
+        'Invoke-MgaDeleteMethod'
         'Invoke-MgaGetMethod',
         'Invoke-MgaPatchMethod',
         'Invoke-MgaPostMethod',
-        'Invoke-MgaDeleteMethod',
-        'New-MgaAccessToken',
-        'Update-MgaAccessToken',
-        'Get-MgaRegisteredAccessToken',
-        'Register-MgaAccessToken'
+        'Get-MgaRegisteredAccessToken'
     )
 
     # Cmdlets to export from this module
@@ -110,12 +129,6 @@
 
     # Variables to export from this module
     VariablesToExport = ''
-
-    # Aliases to export from this module
-    AliasesToExport = @(
-        'Save-MgaMailAttachment', 
-        'Update-MgaMailMessage'
-    )
 
     # List of all modules packaged with this module
     ModuleList = @()
