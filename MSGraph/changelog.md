@@ -8,6 +8,7 @@
     - Get-MgaRegisteredAccessToken --> Get-MgaAccessTokenRegistered
     - Add-MgaMailForwardMessage --> Add-MgaMailMessageForward
     - Add-MgaMailReplyMessage --> Add-MgaMailForwardReply
+- Upd: module folder structure update
 
 # 1.2.8.4
 - New: command Get-MgaExchCategory
