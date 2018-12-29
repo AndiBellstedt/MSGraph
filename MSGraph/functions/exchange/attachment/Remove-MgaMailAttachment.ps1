@@ -10,8 +10,16 @@
         Carrier object for Pipeline input.
         This can be the id of the message or a message object passed in.
 
+    .PARAMETER Attachment
+        Carrier object for Pipeline input.
+        This can be the id of the attachment or a attachment object passed in.
+
     .PARAMETER Name
         The name of the attachment to delete.
+
+    .PARAMETER IncludeInlineAttachment
+        Also search and remove InlineAttachment.
+        Per default, only attachments outside a html body are recognized.
 
     .PARAMETER Force
         Suppress any confirmation request and enforce removing attachment on any kind of message.
@@ -121,7 +129,7 @@
                 }
                 if ($IncludeInlineAttachment) { $getAttachmentParam.Add("IncludeInlineAttachment", $true) }
                 $output = (Get-MgaMailAttachment @getAttachmentParam | Where-Object { $_.name -like $Name })
-                if ($output) { 
+                if ($output) {
                     foreach ($outputItem in $output) {
                         $Attachment = $Attachment + [MSGraph.Exchange.Attachment.AttachmentParameter]$outputItem
                     }

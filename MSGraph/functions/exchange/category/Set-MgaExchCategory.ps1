@@ -6,6 +6,9 @@
     .DESCRIPTION
         Set a category in Exchange Online using the graph api.
 
+    .PARAMETER InputObject
+        Carrier object for Pipeline input.Accepts CategoryObjects and strings.
+
     .PARAMETER Color
         The color for the category.
 
@@ -98,7 +101,7 @@
                 $boundParameters = $boundParameters + "Color"
                 [String]$colorValue = [MSGraph.Exchange.Category.OutlookCategory]::Parse($Color)
                 $bodyJSON.Add("color", $colorValue.ToLower())
-            } 
+            }
             $bodyJSON = $bodyJSON | ConvertTo-Json
 
             $invokeParam = @{

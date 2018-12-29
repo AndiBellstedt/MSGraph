@@ -33,6 +33,24 @@
     .PARAMETER Item
         The attached message or event. Navigation property.
 
+    .PARAMETER IsFolder
+        Property indicates, wether the object is a folder or not.
+
+    .PARAMETER Permission
+        The stated permission on the reference attachment.
+
+    .PARAMETER PreviewUrl
+        The url the preview the reference attachment.
+
+    .PARAMETER ProviderType
+        Specifies what type of reference is it.
+
+    .PARAMETER SourceUrl
+        The Url where the reference attachment points to.
+
+    .PARAMETER ThumbnailUrl
+        The Url of the thumbnail for the reference attachment.
+
     .PARAMETER FunctionName
         Name of the higher function which is calling this function.
         (Just used for logging reasons)

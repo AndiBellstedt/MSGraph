@@ -6,6 +6,9 @@
     .DESCRIPTION
         Remove a category in Exchange Online using the graph api.
 
+    .PARAMETER InputObject
+        Carrier object for Pipeline input.Accepts CategoryObjects and strings.
+
     .PARAMETER Force
         Suppress any confirmation request and enforce removing.
 

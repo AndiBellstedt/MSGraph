@@ -6,6 +6,9 @@
     .DESCRIPTION
         Retrieves categories in Exchange Online using the graph api.
 
+    .PARAMETER InputObject
+        Carrier object for Pipeline input.Accepts CategoryObjects and strings.
+
     .PARAMETER Id
         The Id to filter by.
         (Client Side filtering)
@@ -126,7 +129,7 @@
 
         #region filter data
         switch ($PSCmdlet.ParameterSetName) {
-            'ById' { 
+            'ById' {
                 $data = foreach ($filter in $Id) {
                     Write-PSFMessage -Level VeryVerbose -Message "Filtering on id '$($filter)'." -Tag "FilterData"
                     $data | Where-Object Id -like $filter.Guid
