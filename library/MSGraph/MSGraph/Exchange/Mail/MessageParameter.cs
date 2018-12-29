@@ -72,7 +72,7 @@ namespace MSGraph.Exchange.Mail
 
         #region Constructors
         /// <summary>
-        /// Mail Folderinput
+        /// Mail message input
         /// </summary>
         public MessageParameter(Message Message)
         {
@@ -88,15 +88,9 @@ namespace MSGraph.Exchange.Mail
         public MessageParameter(string Text)
         {
             InputObject = Text;
-            string[] names = Enum.GetNames(typeof(WellKnownFolder));
             _typeName = InputObject.GetType().ToString();
 
-            if (names.Contains(Text, StringComparer.InvariantCultureIgnoreCase))
-            {
-                Name = Text.ToLower();
-                Id = Name;
-            }
-            else if (Text.Length == 152 && Text.EndsWith("="))
+            if (Text.Length == 152 || Text.Length == 136)
             {
                 Id = Text;
             }

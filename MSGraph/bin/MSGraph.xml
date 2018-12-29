@@ -294,6 +294,745 @@
             Indicates the version of the access token.
             </summary>
         </member>
+        <member name="T:MSGraph.Exchange.Attachment.ReferenceAttachment">
+            <summary>
+            Attachments in exchange online
+            referenceAttachment resource type
+            
+            https://docs.microsoft.com/en-us/graph/api/resources/referenceattachment?view=graph-rest-1.0
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.ReferenceAttachment.SourceUrl">
+            <summary>
+            SourceUrl
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.ReferenceAttachment.ProviderType">
+            <summary>
+            ProviderType
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.ReferenceAttachment.ThumbnailUrl">
+            <summary>
+            ThumbnailUrl
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.ReferenceAttachment.PreviewUrl">
+            <summary>
+            PreviewUrl
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.ReferenceAttachment.Permission">
+            <summary>
+            Permission
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.ReferenceAttachment.IsFolder">
+            <summary>
+            IsFolder
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.Attachment.ReferenceAttachment.ToString">
+            <summary>
+            Overrides the default ToString() method
+            </summary>
+        </member>
+        <member name="T:MSGraph.Exchange.Attachment.ReferenceAttachmentProvider">
+            <summary>
+            names of reference attachment provider types in Microsoft Graph API
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.ReferenceAttachmentProvider.oneDriveBusiness">
+            <summary>
+            oneDriveBusiness
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.ReferenceAttachmentProvider.oneDriveConsumer">
+            <summary>
+            oneDriveConsumer
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.ReferenceAttachmentProvider.dropbox">
+            <summary>
+            dropbox
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.ReferenceAttachmentProvider.other">
+            <summary>
+            other
+            </summary>
+        </member>
+        <member name="T:MSGraph.Exchange.Attachment.referenceAttachmentPermission">
+            <summary>
+            names of possible permissions in referenceAttachments in Microsoft Graph API
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.referenceAttachmentPermission.view">
+            <summary>
+            view
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.referenceAttachmentPermission.edit">
+            <summary>
+            edit
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.referenceAttachmentPermission.anonymousView">
+            <summary>
+            anonymousView
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.referenceAttachmentPermission.anonymousEdit">
+            <summary>
+            anonymousEdit
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.referenceAttachmentPermission.organizationView">
+            <summary>
+            organizationView
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.referenceAttachmentPermission.organizationEdit">
+            <summary>
+            organizationEdit
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.referenceAttachmentPermission.other">
+            <summary>
+            other
+            </summary>
+        </member>
+        <member name="T:MSGraph.Exchange.Attachment.ItemAttachment">
+            <summary>
+            Attachments in exchange online
+            fileAttachment resource type
+            
+            https://docs.microsoft.com/en-us/graph/api/resources/itemattachment?view=graph-rest-1.0
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.ItemAttachment.Item">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.Attachment.ItemAttachment.ToString">
+            <summary>
+            Overrides the default ToString() method
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:MSGraph.Exchange.Attachment.FileAttachment">
+            <summary>
+            Attachments in exchange online
+            fileAttachment resource type
+            
+            https://docs.microsoft.com/en-us/graph/api/resources/fileattachment?view=graph-rest-1.0
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.FileAttachment.ContentId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.FileAttachment.ContentLocation">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.FileAttachment.contentBytes">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.Attachment.FileAttachment.ToString">
+            <summary>
+            Overrides the default ToString() method
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:MSGraph.Exchange.Attachment.Attachment">
+            <summary>
+            Attachment in exchange online
+            
+            Attachment is the base resource for the following derived types of attachments:
+            A file(fileAttachment resource)
+            An item(contact, event or message, represented by an itemAttachment resource)
+            A link to a file(referenceAttachment resource)
+            
+            https://docs.microsoft.com/en-us/graph/api/resources/attachment?view=graph-rest-1.0
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.Attachment.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.Attachment.Name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:MSGraph.Exchange.Attachment.Attachment.DisplayName">
+            <summary>
+            Alias property from name.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.Attachment.AttachmentType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.Attachment.ContentType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.Attachment.IsInline">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.Attachment.LastModifiedDateTime">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.Attachment.Size">
+            <summary>
+            </summary>
+            
+        </member>
+        <member name="P:MSGraph.Exchange.Attachment.Attachment.SizeKB">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:MSGraph.Exchange.Attachment.Attachment.SizeMB">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.Attachment.User">
+            <summary>
+            The user name which owns the folder
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.Attachment.BaseObject">
+            <summary>
+            carrier object for the original api result
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.Attachment.ParentObject">
+            <summary>
+            The parent object, where the attachmentcame from
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.Attachment.Attachment.ToString">
+            <summary>
+            Overrides the default ToString() method
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:MSGraph.Exchange.Attachment.AttachmentParameter">
+            <summary>
+            Mail message parameter class for convinient pipeline 
+            input on parameters in *-MgaMail* commands
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.AttachmentParameter.Id">
+            <summary>
+            message or folder id
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.AttachmentParameter.Name">
+            <summary>
+            name of a folder
+            </summary>
+        </member>
+        <member name="P:MSGraph.Exchange.Attachment.AttachmentParameter.TypeName">
+            <summary>
+            The type name of inputobject
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.AttachmentParameter.InputObject">
+            <summary>
+            carrier object for the input object
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.Attachment.AttachmentParameter.ToString">
+            <summary>
+            Overrides the default ToString() method 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MSGraph.Exchange.Attachment.AttachmentParameter.#ctor(MSGraph.Exchange.Attachment.Attachment)">
+            <summary>
+            Constructor for parsing in a basic Attachment
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.Attachment.AttachmentParameter.#ctor(MSGraph.Exchange.Attachment.FileAttachment)">
+            <summary>
+            Constructor for parsing in a FileAttachment
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.Attachment.AttachmentParameter.#ctor(MSGraph.Exchange.Attachment.ItemAttachment)">
+            <summary>
+            Constructor for parsing in a ItemAttachment
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.Attachment.AttachmentParameter.#ctor(MSGraph.Exchange.Attachment.ReferenceAttachment)">
+            <summary>
+            Constructor for parsing in a ReferenceAttachment
+            </summary>
+        </member>
+        <member name="T:MSGraph.Exchange.Attachment.AttachmentTypes">
+            <summary>
+            names of the attachment types in Microsoft Graph API
+            
+            https://docs.microsoft.com/en-us/graph/api/resources/attachment?view=graph-rest-1.0
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.AttachmentTypes.fileAttachment">
+            <summary>
+            A file (such as a text file or Word document) attached to an event, message or post.
+            The contentBytes property contains the base64-encoded contents of the file.
+            
+            https://docs.microsoft.com/en-us/graph/api/resources/fileattachment?view=graph-rest-1.0
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.AttachmentTypes.itemAttachment">
+            <summary>
+            A contact, event, or message that's attached to another event, message, or post.
+            
+            https://docs.microsoft.com/en-us/graph/api/resources/itemattachment?view=graph-rest-1.0
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Attachment.AttachmentTypes.referenceAttachment">
+            <summary>
+            A link to a file (such as a text file or Word document) on a OneDrive for Business cloud drive 
+            or other supported storage locations, attached to an event, message, or post.
+            
+            https://docs.microsoft.com/en-us/graph/api/resources/referenceattachment?view=graph-rest-1.0
+            </summary>
+        </member>
+        <member name="T:MSGraph.Exchange.Category.ColorKey">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorKey.None">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorKey.Preset0">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorKey.Preset1">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorKey.Preset2">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorKey.Preset3">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorKey.Preset4">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorKey.Preset5">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorKey.Preset6">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorKey.Preset7">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorKey.Preset8">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorKey.Preset9">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorKey.Preset10">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorKey.Preset11">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorKey.Preset12">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorKey.Preset13">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorKey.Preset14">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorKey.Preset15">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorKey.Preset16">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorKey.Preset17">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorKey.Preset18">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorKey.Preset19">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorKey.Preset20">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorKey.Preset21">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorKey.Preset22">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorKey.Preset23">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorKey.Preset24">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:MSGraph.Exchange.Category.ColorName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorName.NoColorMapped">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorName.Red">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorName.Orange">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorName.Brown">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorName.Yellow">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorName.Green">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorName.Teal">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorName.Olive">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorName.Blue">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorName.Purple">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorName.Cranberry">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorName.Steel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorName.DarkSteel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorName.Gray">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorName.DarkGray">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorName.Black">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorName.DarkRed">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorName.DarkOrange">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorName.DarkBrown">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorName.DarkYellow">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorName.DarkGreen">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorName.DarkTeal">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorName.DarkOlive">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorName.DarkBlue">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorName.DarkPurple">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.ColorName.DarkCranberry">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:MSGraph.Exchange.Category.CategoryParameter">
+            <summary>
+            category parameter class for convinient pipeline 
+            input on parameters in *-MgaExchCategory commands
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.CategoryParameter.Id">
+            <summary>
+            category id
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.CategoryParameter.Name">
+            <summary>
+            name of the category
+            </summary>
+        </member>
+        <member name="P:MSGraph.Exchange.Category.CategoryParameter.TypeName">
+            <summary>
+            The type name of inputobject
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.CategoryParameter.InputObject">
+            <summary>
+            carrier object for the input object
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.Category.CategoryParameter.ToString">
+            <summary>
+            Overrides the default ToString() method 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MSGraph.Exchange.Category.CategoryParameter.#ctor(MSGraph.Exchange.Category.OutlookCategory)">
+            <summary>
+            Mail Folderinput
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.Category.CategoryParameter.#ctor(System.Guid)">
+            <summary>
+            String input
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.Category.CategoryParameter.#ctor(System.String)">
+            <summary>
+            String input
+            </summary>
+        </member>
+        <member name="T:MSGraph.Exchange.Category.OutlookCategory">
+            <summary>
+            Category in exchange online
+            
+            Represents a category by which a user can group Outlook items such as messages and events.
+            The user defines categories in a master list, and can apply one or more of these user-defined categories to an item.
+            
+            https://docs.microsoft.com/en-us/graph/api/resources/outlookcategory?view=graph-rest-1.0
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.OutlookCategory.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.OutlookCategory.DisplayName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:MSGraph.Exchange.Category.OutlookCategory.Name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.OutlookCategory.Color">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:MSGraph.Exchange.Category.OutlookCategory.ColorName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:MSGraph.Exchange.Category.OutlookCategory.ColorCode">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.OutlookCategory.User">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Category.OutlookCategory.BaseObject">
+            <summary>
+            carrier object for the original api result
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.Category.OutlookCategory.ToString">
+            <summary>
+            Overrides the default ToString() method 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MSGraph.Exchange.Category.OutlookCategory.Parse(System.String)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.Category.OutlookCategory.Parse(MSGraph.Exchange.Category.ColorKey)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.Category.OutlookCategory.Parse(MSGraph.Exchange.Category.ColorName)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.Category.OutlookCategory.#ctor">
+            <summary>
+            empty
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.Category.OutlookCategory.#ctor(System.String)">
+            <summary>
+            Only name input
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.Category.OutlookCategory.#ctor(System.Guid)">
+            <summary>
+            Only Id input
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.Category.OutlookCategory.#ctor(MSGraph.Exchange.Category.ColorKey)">
+            <summary>
+            Only ColorKey
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.Category.OutlookCategory.#ctor(System.Guid,System.String,MSGraph.Exchange.Category.ColorKey,System.String)">
+            <summary>
+            All relevant properties
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.Category.OutlookCategory.#ctor(System.Guid,System.String,MSGraph.Exchange.Category.ColorKey,System.String,System.Object)">
+            <summary>
+            All relevant properties including Baseobject
+            </summary>
+        </member>
         <member name="T:MSGraph.Exchange.FollowupFlag">
             <summary>
             followupFlag resource type
@@ -352,69 +1091,6 @@
             empty object
             </summary>
         </member>
-        <member name="T:MSGraph.Exchange.Mail.Attachment">
-            <summary>
-            Mail attachments in exchange online
-            fileAttachment resource type
-            
-            https://docs.microsoft.com/en-us/graph/api/resources/fileattachment?view=graph-rest-1.0
-            </summary>
-        </member>
-        <member name="F:MSGraph.Exchange.Mail.Attachment.BaseObject">
-            <summary>
-            raw data carrier object
-            </summary>
-        </member>
-        <member name="F:MSGraph.Exchange.Mail.Attachment.Id">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="F:MSGraph.Exchange.Mail.Attachment.Name">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="F:MSGraph.Exchange.Mail.Attachment.ContentType">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="F:MSGraph.Exchange.Mail.Attachment.ContentId">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="F:MSGraph.Exchange.Mail.Attachment.ContentLocation">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="F:MSGraph.Exchange.Mail.Attachment.IsInline">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="F:MSGraph.Exchange.Mail.Attachment.LastModifiedDateTime">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="F:MSGraph.Exchange.Mail.Attachment.Size">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:MSGraph.Exchange.Mail.Attachment.SizeKB">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:MSGraph.Exchange.Mail.Attachment.SizeMB">
-            <summary>
-            
-            </summary>
-        </member>
         <member name="T:MSGraph.Exchange.Mail.MessageParameter">
             <summary>
             Mail message parameter class for convinient pipeline 
@@ -449,7 +1125,7 @@
         </member>
         <member name="M:MSGraph.Exchange.Mail.MessageParameter.#ctor(MSGraph.Exchange.Mail.Message)">
             <summary>
-            Mail Folderinput
+            Mail message input
             </summary>
         </member>
         <member name="M:MSGraph.Exchange.Mail.MessageParameter.#ctor(System.String)">
@@ -781,7 +1457,7 @@
         </member>
         <member name="M:MSGraph.Exchange.Mail.Message.ToString">
             <summary>
-            Overrides the default ToString() method 
+            Overrides the default ToString() method
             </summary>
             <returns></returns>
         </member>
@@ -839,13 +1515,18 @@
         </member>
         <member name="T:MSGraph.Exchange.Mail.WellKnownFolder">
             <summary>
-            name fo well-known-folders in a outlook mailboxes
+            name of well-known-folders in a outlook mailboxes
             
             Outlook creates certain folders for users by default. 
             Instead of using the corresponding folder id value, for convenience, 
             you can use the well-known folder names from the table below when accessing these folders. 
             
             For example, you can get the Drafts folder using its well-known name with the following query.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.Mail.WellKnownFolder.AllItems">
+            <summary>
+            Represent all folders in the mailbox.
             </summary>
         </member>
         <member name="F:MSGraph.Exchange.Mail.WellKnownFolder.Archive">

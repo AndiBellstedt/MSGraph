@@ -20,6 +20,12 @@
     .PARAMETER ContentType
         Nature of the data in the body of an entity. Required.
 
+    .PARAMETER ApiConnection
+        The URI for the Microsoft Graph connection
+
+    .PARAMETER ApiVersion
+        The version used for queries in Microsoft Graph connection
+
     .PARAMETER Token
         The access token to use to connect.
 
@@ -48,6 +54,12 @@
         [String]
         $ContentType = "application/json",
 
+        [String]
+        $ApiConnection = (Get-PSFConfigValue -FullName 'MSGraph.Tenant.ApiConnection' -Fallback 'https://graph.microsoft.com'),
+
+        [string]
+        $ApiVersion = (Get-PSFConfigValue -FullName 'MSGraph.Tenant.ApiVersion' -Fallback 'v1.0'),
+
         [MSGraph.Core.AzureAccessToken]
         $Token,
 
@@ -59,17 +71,17 @@
     $Token = Invoke-TokenLifetimeValidation -Token $Token -FunctionName $FunctionName
 
     if (-not $User) { $User = $Token.UserprincipalName }
-    $restUri = "https://graph.microsoft.com/v1.0/$(Resolve-UserString -User $User)/$($Field)"
+    $restUri = "$($ApiConnection)/$($ApiVersion)/$(Resolve-UserString -User $User)/$($Field)"
 
     Write-PSFMessage -Tag "RestData" -Level VeryVerbose -Message "Invoking REST POST to uri: $($restUri)"
     Write-PSFMessage -Tag "RestData" -Level Debug -Message "REST body data: $($Body)"
 
     Clear-Variable -Name data -Force -WhatIf:$false -Confirm:$false -Verbose:$false -ErrorAction Ignore
     $invokeParam = @{
-        Method          = "Post"
-        Uri             = $restUri
-        Body            = $Body
-        Headers         = @{
+        Method  = "Post"
+        Uri     = $restUri
+        Body    = $Body
+        Headers = @{
             "Authorization" = "Bearer $( [System.Runtime.InteropServices.Marshal]::PtrToStringAuto([System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($token.AccessToken)) )"
             "Content-Type"  = "application/json"
         }
@@ -81,6 +93,8 @@
         return
     }
 
-    $data | Add-Member -MemberType NoteProperty -Name 'User' -Value $User -Force
-    $data
+    if ($data) {
+        $data | Add-Member -MemberType NoteProperty -Name 'User' -Value $User -Force
+        $data
+    }
 }

@@ -3,7 +3,7 @@
     ModuleToProcess = 'MSGraph.psm1'
 
     # Version number of this module.
-    ModuleVersion = '1.2.8.2'
+    ModuleVersion = '1.2.8.3'
 
     # ID used to uniquely identify this module
     GUID = '5f61c229-95d0-4423-ab50-938c0723ad21'
@@ -73,14 +73,26 @@
 
         ## Message
         'Get-MgaMailMessage',
-        'Get-MgaMailAttachment',
-        'Export-MgaMailAttachment',
         'Set-MgaMailMessage',
         'Move-MgaMailMessage',
         'Copy-MgaMailMessage',
         'Remove-MgaMailMessage',
         'New-MgaMailMessage',
         'Send-MgaMailMessage',
+        'Add-MgaMailReplyMessage',
+        'Add-MgaMailForwardMessage',
+        
+        ## Attachments
+        'Get-MgaMailAttachment',
+        'Export-MgaMailAttachment',
+        "Add-MgaMailAttachment",
+        'Remove-MgaMailAttachment',
+
+        ## Categories
+        'Get-MgaExchCategory',
+        'New-MgaExchCategory',
+        'Set-MgaExchCategory',
+        'Remove-MgaExchCategory',
 
         # Core
         'Invoke-MgaGetMethod',

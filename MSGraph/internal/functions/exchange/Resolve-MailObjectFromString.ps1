@@ -48,28 +48,48 @@
         $FunctionName = $MyInvocation.MyCommand
     )
 
+    # variable definition
+    $invokeParam = @{
+        "User"  = $User
+        "Token" = $Token
+    }
+
     # check input object type
-    if($Object.psobject.TypeNames[0] -like "MSGraph.Exchange.Mail.FolderParameter") {
-        $Type= "Folder"
+    if ($Object.psobject.TypeNames[0] -like "MSGraph.Exchange.Mail.FolderParameter") {
+        $type = "Folder"
+        $typeNamespace = "MSGraph.Exchange.Mail"
+        $nounPreFix = "MgaMail"
+        $parameterName = "InputObject"
     }
     elseif ($Object.psobject.TypeNames[0] -like "MSGraph.Exchange.Mail.MessageParameter") {
-        $Type= "Message"
+        $type = "Message"
+        $typeNamespace = "MSGraph.Exchange.Mail"
+        $nounPreFix = "MgaMail"
+        $parameterName = "InputObject"
+    }
+    elseif ($Object.psobject.TypeNames[0] -like "MSGraph.Exchange.Category.CategoryParameter") {
+        $type = "Category"
+        $typeNamespace = "MSGraph.Exchange.Category"
+        $nounPreFix = "MgaExch"
+        if ($Object.Id) { $parameterName = "Id" } else { $parameterName = "Name" }
     }
     else {
-        $msg = "Object '$($Object)' is not valid. Must be a 'MSGraph.Exchange.Mail.FolderParameter' or a 'MSGraph.Exchange.Mail.MessageParameter'."
+        $msg = "Object '$($Object)' is not valid. Must be one of: 'MSGraph.Exchange.Mail.FolderParameter', 'MSGraph.Exchange.Mail.MessageParameter', 'MSGraph.Exchange.Category.CategoryParameter'."
         Stop-PSFFunction -Message $msg -Tag "InputValidation" -FunctionName $FunctionName -EnableException $true -Exception ([System.Management.Automation.RuntimeException]::new($msg))
     }
-    Write-PSFMessage -Level Debug -Message "Object '$($Object)' is qualified as a $($Type)" -Tag "InputValidation" -FunctionName $FunctionName
-
+    Write-PSFMessage -Level Debug -Message "Object '$($Object)' is qualified as a $($type)" -Tag "InputValidation" -FunctionName $FunctionName
 
     # Resolve the object
-    if ($Object.Id -and (Test-MgaMailObjectId -Id $Object.Id -Type $Type -FunctionName $FunctionName)) {
+    if ($Object.Id -and (Test-MgaMailObjectId -Id $Object.Id -Type $type -FunctionName $FunctionName)) {
         Write-PSFMessage -Level Debug -Message "Going to resolve '$($Object)' with Id" -Tag "InputValidation" -FunctionName $FunctionName
-        $output = .("Get-MgaMail"+$Type) -InputObject $Object.Id -User $User -Token $Token
+        $invokeParam.Add($parameterName, $Object.Id)
+        $output = .("Get-" + $nounPreFix + $type) @invokeParam
     }
     elseif ($Object.Name -and (-not $NoNameResolving)) {
         Write-PSFMessage -Level Debug -Message "Going to resolve '$($Object)' with name" -Tag "InputValidation" -FunctionName $FunctionName
-        $output = .("Get-MgaMail"+$Type) -InputObject $Object.Name -User $User -Token $Token -ErrorAction Stop
+        $invokeParam.Add($parameterName, $Object.Name)
+        $invokeParam.Add("ErrorAction", "Stop")
+        $output = .("Get-" + $nounPreFix + $type) @invokeParam
     }
     else {
         # not valid, end function without output
@@ -77,9 +97,8 @@
         return
     }
 
-
     # output the result
-    if($output) {
-        New-Object -TypeName "MSGraph.Exchange.Mail.$($Type)Parameter" -ArgumentList $output
+    if ($output) {
+        New-Object -TypeName "$($typeNamespace).$($type)Parameter" -ArgumentList $output
     }
 }

@@ -1,12 +1,65 @@
 # Changelog
+# 1.2.8.4
+- New: command Get-MgaExchCategory
+    - Query categories within exchange mailbox
+    - Convinient object output including "translated" colors to readable ColorNames
+    - Filter possibilities to get specific output
+    - Tab completion on Color parameter
+- New: Command New-MgaExchCategory
+    - Create new categories within exchange mailbox
+    - Tab completion on Color parameter
+- New: Command Set-MgaExchCategory
+    - Modify categories within exchange mailbox
+    - Tab completion on Color parameter
+- New: Command Remove-MgaExchCategory
+- Upd: module folder structure
+    - For better clarity, moving function files into more granular subfolder structure
+- Upd: WellKnownFolder Enum
+    - Add "AllItems" to Enum
+
+# 1.2.8.3
+- New: Command Add-MgaMailAttachment
+- New: Command Add-MgaMailReplyMessage
+- New: Command Add-MgaMailForwardMessage
+- New: object types Attachments:
+    - [MSGraph.Exchange.Attachment.ItemAttachment]
+    - [MSGraph.Exchange.Attachment.ReferenceAttachment]
+    - [MSGraph.Exchange.Attachment.Attachment] -> as base object
+    - new format types.ps1xml for attachment types 
+- Upd: object type [MSGraph.Exchange.Mail.Attachment]
+    - rename to [MSGraph.Exchange.Attachment.FileAttachment]
+    - add properties to the class, for convinience
+- Upd: Command New-MgaMailMessage, Send-MgaMailMessage, Set-MgaMailMessage
+    - Update parameter "ToRecipients" -> add parameter alias names "To" and "Reciepients"
+    - some internal code refactoring
+- Upd: Command Send-MgaMailMessage
+    - Add parameter set, to send new mail directly from command without need to use New-MgaMailMessage before Send-MgaMailMessage
+- Upd: command Get-MgaMailAttachment
+    - add same inputobject check as other MgaMail commands
+    - change output logic -> outputs different types of attachment including type specific properties
+        - [MSGraph.Exchange.Attachment.FileAttachment]
+        - [MSGraph.Exchange.Attachment.ItemAttachment]
+        - [MSGraph.Exchange.Attachment.ReferenceAttachment]
+        - [MSGraph.Exchange.Attachment.Attachment]
+        - additinal properties on all object (ParentObject, AttachmentType)
+- Upd: command Export-MgaMailAttachment
+    - Implement export options on different attachment types
+- Upd: Command Invoke-MgaGetMethod, Invoke-MgaDeleteMethod, Invoke-MgaPatchMethod, Invoke-MgaPostMethod
+    - new parameters for config values used for api connection and version
+- Fix: command Get-MgaMailMessage
+    - query message objects from MicrosoftAccounts via ID didn't return the message object, because of wrong ID checking. Fixed, messages are returned correct, now.
+- Fix: internal command New-MgaMailMessageObject
+    - fixing address conversion error, when name field is the same then address field
+
 # 1.2.8.2
 - New: Command New-MgaMailFolder
-- New: command Move-MgaMailFolder
-- New: command Remove-MgaMailFolder
-- New: command Remove-MgaMailMessage
+- New: Command Move-MgaMailFolder
+- New: Command Remove-MgaMailFolder
+- New: Command Remove-MgaMailMessage
 - New: Command New-MgaMailMessage
 - New: Command Send-MgaMailMessage
-- Upd: example documentation on command Update-MgaAccessToken
+- Upd: command Update-MgaAccessToken
+    - example documentation on
 - Upd: internal code refactoring for better object checking on message and folder functions
 
 # 1.2.8.0

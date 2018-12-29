@@ -1,6 +1,8 @@
 ﻿
 Register-PSFTeppScriptblock -Name "MSGraph.Exchange.Mail.WellKnowFolders" -ScriptBlock { [enum]::GetNames([MSGraph.Exchange.Mail.WellKnownFolder]) | ForEach-Object { (Get-Culture).TextInfo.ToTitleCase( $_ ) } }
 
+Register-PSFTeppScriptblock -Name "MSGraph.Exchange.Category.Colors" -ScriptBlock { [enum]::GetNames([MSGraph.Exchange.Category.ColorName]) }
+
 Register-PSFTeppScriptblock -Name "MSGraph.Core.Permission.Consent.User" -ScriptBlock { @(
     'email',
     'openid',
