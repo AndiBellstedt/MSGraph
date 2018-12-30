@@ -1,6 +1,7 @@
 # Changelog
 # 1.2.8.5
-- Upd: Rename commands for consistent command name pattern. Put old names as aliases, for backward compatibility
+- New: Command Get-MgaMailboxSettings
+- Upd: IMPORTANT CHANGE - Rename commands for consistent command name pattern. Put old names as aliases, for backward compatibility.
     - Invoke-MgaDeleteMethod --> Invoke-MgaRestMethodDelete
     - Invoke-MgaGetMethod --> Invoke-MgaRestMethodGet
     - Invoke-MgaPatchMethod --> Invoke-MgaRestMethodPatch

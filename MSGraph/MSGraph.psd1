@@ -94,6 +94,9 @@
         'Set-MgaExchCategory',
         'Remove-MgaExchCategory',
 
+        ## MailboxSettings
+        'Get-MgaMailboxSettings',
+
         # Core
         'Invoke-MgaRestMethodGet',
         'Invoke-MgaRestMethodPatch',
