@@ -139,7 +139,7 @@
                 switch ($PSCmdlet.ParameterSetName) {
                     'Default' { $invokeParam.Add("Field", "messages/$($messageItem.Id)/createReply$(if($ReplyAll){"All"})") }
                     'DirectReply' { $invokeParam.Add("Field", "messages/$($messageItem.Id)/reply$(if($ReplyAll){"All"})") }
-                    Default { stop-PSFMessage -Message "Unhandled parameter set. ($($PSCmdlet.ParameterSetName)) Developer mistake." -EnableException $true -Category "ParameterSetHandling" -FunctionName $MyInvocation.MyCommand }
+                    Default { Stop-PSFFunction -Message "Unhandled parameter set. ($($PSCmdlet.ParameterSetName)) Developer mistake." -EnableException $true -Category MetadataError -FunctionName $MyInvocation.MyCommand }
                 }
 
                 $output = Invoke-MgaRestMethodPost @invokeParam

@@ -42,34 +42,8 @@
     $tokenSignature = ConvertFrom-Base64StringWithNoPadding $tokenParts[2]
 
     # Output
-    #$resultObject = New-Object MSGraph.Core.JWTAccessTokenInfo -Property @{
-    #    Header               = $tokenHeader
-    #    Payload              = $tokenPayload
-    #    Signature            = $tokenSignature
-    #    Algorithm            = $tokenHeaderJSON.alg
-    #    Type                 = $tokenHeaderJSON.typ
-    #    ApplicationID        = $tokenPayloadJSON.appid
-    #    ApplicationName      = $tokenPayloadJSON.app_displayname
-    #    Audience             = $tokenPayloadJSON.aud
-    #    AuthenticationMethod = $tokenPayloadJSON.amr
-    #    ExpirationTime       = ([datetime]"1970-01-01Z00:00:00").AddSeconds($tokenPayloadJSON.exp).ToUniversalTime()
-    #    GivenName            = $tokenPayloadJSON.given_name
-    #    IssuedAt             = ([datetime]"1970-01-01Z00:00:00").AddSeconds($tokenPayloadJSON.iat).ToUniversalTime()
-    #    Name                 = $tokenPayloadJSON.name
-    #    NotBefore            = ([datetime]"1970-01-01Z00:00:00").AddSeconds($tokenPayloadJSON.nbf).ToUniversalTime()
-    #    OID                  = $tokenPayloadJSON.oid
-    #    Plattform            = $tokenPayloadJSON.platf
-    #    Scope                = $tokenPayloadJSON.scp
-    #    SID                  = $tokenPayloadJSON.onprem_sid
-    #    SourceIPAddr         = $tokenPayloadJSON.ipaddr
-    #    SureName             = $tokenPayloadJSON.family_name
-    #    TenantID             = $tokenPayloadJSON.tid
-    #    UniqueName           = $tokenPayloadJSON.unique_name
-    #    UPN                  = $tokenPayloadJSON.upn
-    #    Version              = $tokenPayloadJSON.ver
-    #}
-
     $resultObject = New-Object MSGraph.Core.JWTAccessTokenInfo
+
     $resultObject.Header = $tokenHeader
     $resultObject.Payload = $tokenPayload
     $resultObject.Signature = $tokenSignature

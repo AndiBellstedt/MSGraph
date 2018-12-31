@@ -1033,6 +1033,51 @@
             All relevant properties including Baseobject
             </summary>
         </member>
+        <member name="T:MSGraph.Exchange.DateTimeTimeZone">
+            <summary>
+            Describes the date, time, and time zone of a point in time.
+            
+            https://docs.microsoft.com/en-us/graph/api/resources/datetimetimezone?view=graph-rest-1.0
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.DateTimeTimeZone.DateTime">
+            <summary>
+            A single point of time in a combined date and time representation (date)T(time).
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.DateTimeTimeZone.TimeZone">
+            <summary>
+            The date and time that the follow-up is to be finished.
+            
+            type format: microsoft.graph.dateTimeTimeZone
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.DateTimeTimeZone.ToString">
+            <summary>
+            Overrides the default ToString() method 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MSGraph.Exchange.DateTimeTimeZone.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.DateTimeTimeZone.#ctor(MSGraph.Exchange.DateTimeTimeZone)">
+            <summary>
+            input DateTimeTimeZone
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.DateTimeTimeZone.#ctor(System.DateTime)">
+            <summary>
+            input only DateTime, sets UTC as default to TimeZone
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.DateTimeTimeZone.#ctor(System.DateTime,System.String)">
+            <summary>
+            input DateTime and TimeZone
+            </summary>
+        </member>
         <member name="T:MSGraph.Exchange.FollowupFlag">
             <summary>
             followupFlag resource type
@@ -1089,6 +1134,306 @@
         <member name="M:MSGraph.Exchange.FollowupFlag.#ctor">
             <summary>
             empty object
+            </summary>
+        </member>
+        <member name="T:MSGraph.Exchange.MailboxSetting.WorkingHoursSetting">
+            <summary>
+            WorkingHour settings in exchange online
+            
+            Represents the days of the week and hours in a specific time zone that the user works.
+            
+            https://docs.microsoft.com/en-us/graph/api/resources/workinghours?view=graph-rest-1.0
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.MailboxSetting.WorkingHoursSetting.DaysOfWeek">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.MailboxSetting.WorkingHoursSetting.StartTime">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.MailboxSetting.WorkingHoursSetting.EndTime">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.MailboxSetting.WorkingHoursSetting.TimeZone">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.MailboxSetting.WorkingHoursSetting.User">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.MailboxSetting.WorkingHoursSetting.BaseObject">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.MailboxSetting.WorkingHoursSetting.Name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.MailboxSetting.WorkingHoursSetting.ToString">
+            <summary>
+            Overrides the default ToString() method 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MSGraph.Exchange.MailboxSetting.WorkingHoursSetting.#ctor">
+            <summary>
+            empty
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.MailboxSetting.WorkingHoursSetting.#ctor(MSGraph.Exchange.MailboxSetting.WorkingHoursSetting)">
+            <summary>
+            object it self
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.MailboxSetting.WorkingHoursSetting.#ctor(System.DayOfWeek[],System.DateTime,System.DateTime,MSGraph.Exchange.TimeZoneBase)">
+            <summary>
+            Main properties
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.MailboxSetting.WorkingHoursSetting.#ctor(System.DayOfWeek[],System.DateTime,System.DateTime,MSGraph.Exchange.TimeZoneBase,System.String,System.Object,System.String)">
+            <summary>
+            All properties
+            </summary>
+        </member>
+        <member name="T:MSGraph.Exchange.MailboxSetting.LocaleInfoSetting">
+            <summary>
+            Language settings in exchange online
+            
+            Information about the locale, including the preferred language and country/region, of the signed-in user.
+            
+            https://docs.microsoft.com/en-us/graph/api/resources/localeinfo?view=graph-rest-1.0
+            </summary>
+        </member>
+        <member name="P:MSGraph.Exchange.MailboxSetting.LocaleInfoSetting.Locale">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.MailboxSetting.LocaleInfoSetting.DisplayName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.MailboxSetting.LocaleInfoSetting.User">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.MailboxSetting.LocaleInfoSetting.BaseObject">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.MailboxSetting.LocaleInfoSetting.Name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.MailboxSetting.LocaleInfoSetting.ToString">
+            <summary>
+            Overrides the default ToString() method 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MSGraph.Exchange.MailboxSetting.LocaleInfoSetting.#ctor">
+            <summary>
+            empty
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.MailboxSetting.LocaleInfoSetting.#ctor(System.Globalization.CultureInfo)">
+            <summary>
+            All properties
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.MailboxSetting.LocaleInfoSetting.#ctor(System.Globalization.CultureInfo,System.String)">
+            <summary>
+            Main properties
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.MailboxSetting.LocaleInfoSetting.#ctor(System.Globalization.CultureInfo,System.String,System.String,System.Object,System.String)">
+            <summary>
+            All properties
+            </summary>
+        </member>
+        <member name="T:MSGraph.Exchange.MailboxSetting.AutomaticRepliesStatus">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.MailboxSetting.AutomaticRepliesStatus.Disabled">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.MailboxSetting.AutomaticRepliesStatus.AlwaysEnabled">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.MailboxSetting.AutomaticRepliesStatus.Scheduled">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:MSGraph.Exchange.MailboxSetting.ExternalAudienceScope">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.MailboxSetting.ExternalAudienceScope.None">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.MailboxSetting.ExternalAudienceScope.ContactsOnly">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.MailboxSetting.ExternalAudienceScope.All">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:MSGraph.Exchange.MailboxSetting.AutomaticRepliesSetting">
+            <summary>
+            AutoReply / Out of Office settings in exchange online
+            
+            Configuration settings to automatically notify the sender of an incoming email with a message from the signed-in user.
+            For example, an automatic reply to notify that the signed-in user is unavailable to respond to emails.
+            
+            https://docs.microsoft.com/en-us/graph/api/resources/automaticrepliessetting?view=graph-rest-1.0
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.MailboxSetting.AutomaticRepliesSetting.Status">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.MailboxSetting.AutomaticRepliesSetting.ExternalAudience">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.MailboxSetting.AutomaticRepliesSetting.ExternalReplyMessage">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.MailboxSetting.AutomaticRepliesSetting.InternalReplyMessage">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.MailboxSetting.AutomaticRepliesSetting.ScheduledEndDateTime">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.MailboxSetting.AutomaticRepliesSetting.ScheduledStartDateTime">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.MailboxSetting.AutomaticRepliesSetting.User">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.MailboxSetting.AutomaticRepliesSetting.BaseObject">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.MailboxSetting.AutomaticRepliesSetting.Name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.MailboxSetting.AutomaticRepliesSetting.#ctor">
+            <summary>
+            empty
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.MailboxSetting.AutomaticRepliesSetting.#ctor(MSGraph.Exchange.MailboxSetting.AutomaticRepliesStatus,MSGraph.Exchange.MailboxSetting.ExternalAudienceScope,System.String,System.String,MSGraph.Exchange.DateTimeTimeZone,MSGraph.Exchange.DateTimeTimeZone)">
+            <summary>
+            Main properties
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.MailboxSetting.AutomaticRepliesSetting.#ctor(MSGraph.Exchange.MailboxSetting.AutomaticRepliesStatus,MSGraph.Exchange.MailboxSetting.ExternalAudienceScope,System.String,System.String,MSGraph.Exchange.DateTimeTimeZone,MSGraph.Exchange.DateTimeTimeZone,System.String,System.Object,System.String)">
+            <summary>
+            All properties
+            </summary>
+        </member>
+        <member name="T:MSGraph.Exchange.MailboxSetting.MailboxSettings">
+            <summary>
+            Mailbox settings in exchange online
+            
+            This includes settings for automatic replies (notify people automatically upon receipt of their email), locale (language and country/region), and time zone, and working hours.
+            
+            https://docs.microsoft.com/en-us/graph/api/user-get-mailboxsettings?view=graph-rest-1.0
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.MailboxSetting.MailboxSettings.Name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.MailboxSetting.MailboxSettings.ArchiveFolder">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.MailboxSetting.MailboxSettings.TimeZone">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.MailboxSetting.MailboxSettings.AutomaticRepliesSetting">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.MailboxSetting.MailboxSettings.Language">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.MailboxSetting.MailboxSettings.WorkingHours">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.MailboxSetting.MailboxSettings.User">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.MailboxSetting.MailboxSettings.BaseObject">
+            <summary>
+            carrier object for the original api result
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.MailboxSetting.MailboxSettings.ToString">
+            <summary>
+            Overrides the default ToString() method 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MSGraph.Exchange.MailboxSetting.MailboxSettings.#ctor">
+            <summary>
+            empty
             </summary>
         </member>
         <member name="T:MSGraph.Exchange.Mail.MessageParameter">
@@ -1616,6 +1961,49 @@
         <member name="F:MSGraph.Exchange.Mail.WellKnownFolder.SyncIssues">
             <summary>
             The folder that contains synchronization logs created by Outlook.
+            </summary>
+        </member>
+        <member name="T:MSGraph.Exchange.TimeZoneBase">
+            <summary>
+            The basic representation of a time zone.
+            
+            https://docs.microsoft.com/en-us/graph/api/resources/timezonebase?view=graph-rest-1.0
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.TimeZoneBase.DisplayName">
+            <summary>
+            The name of a time zone. It can be a standard time zone name such as "Hawaii-Aleutian Standard Time", or "Customized Time Zone" for a custom time zone.
+            </summary>
+        </member>
+        <member name="P:MSGraph.Exchange.TimeZoneBase.Name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.TimeZoneBase.ToString">
+            <summary>
+            Overrides the default ToString() method 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MSGraph.Exchange.TimeZoneBase.#ctor">
+            <summary>
+            empty
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.TimeZoneBase.#ctor(MSGraph.Exchange.TimeZoneBase)">
+            <summary>
+            input TimeZoneBase
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.TimeZoneBase.#ctor(System.TimeZoneInfo)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.TimeZoneBase.#ctor(System.String)">
+            <summary>
+            
             </summary>
         </member>
     </members>

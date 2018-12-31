@@ -1,6 +1,13 @@
 # Changelog
 # 1.2.8.5
 - New: Command Get-MgaMailboxSettings
+    - returns the settings from the exchange online mailbox
+    - switch parameters available, for return only a subset of settings
+        - AllSettings
+        - AutomaticReplySetting
+        - LanguageSetting
+        - TimeZoneSetting
+        - WorkingHourSetting
 - Upd: IMPORTANT CHANGE - Rename commands for consistent command name pattern. Put old names as aliases, for backward compatibility.
     - Invoke-MgaDeleteMethod --> Invoke-MgaRestMethodDelete
     - Invoke-MgaGetMethod --> Invoke-MgaRestMethodGet
@@ -9,7 +16,9 @@
     - Get-MgaRegisteredAccessToken --> Get-MgaAccessTokenRegistered
     - Add-MgaMailForwardMessage --> Add-MgaMailMessageForward
     - Add-MgaMailReplyMessage --> Add-MgaMailForwardReply
-- Upd: module folder structure update
+- Upd: restructure internal module file and folder structure
+    - module folder structure update
+    - split type- and format-files
 
 # 1.2.8.4
 - New: command Get-MgaExchCategory
@@ -37,7 +46,7 @@
     - [MSGraph.Exchange.Attachment.ItemAttachment]
     - [MSGraph.Exchange.Attachment.ReferenceAttachment]
     - [MSGraph.Exchange.Attachment.Attachment] -> as base object
-    - new format types.ps1xml for attachment types 
+    - new format types.ps1xml for attachment types
 - Upd: object type [MSGraph.Exchange.Mail.Attachment]
     - rename to [MSGraph.Exchange.Attachment.FileAttachment]
     - add properties to the class, for convinience
@@ -100,7 +109,7 @@
     - Add Parameter "IdentityPlatformVersion" for choosing which endpoint to use for authentication
     - Add Parameter "Permission" to specify the requested permission in the token (this only apply to identity platform version 2.0)
     - Add documentation and examples
-- Upd: Command Update-MgaAccessToken 
+- Upd: Command Update-MgaAccessToken
     - Implement refresh for Identity Platform Version 2.0, to allow refresh with Microsoft Account
 
 ## 1.2.6.1 (2018-12-06)
@@ -150,7 +159,7 @@
 - Fix: Bugfix property "PercentRemaining" on [MSGraph.Core.AzureAccessToken] objects
 
 ## 1.2.0 (2018-10-25)
- 
+
  - New: Command Get-MgaMailAttachment
  - New: Command Export-MgaMailAttachment
  - New: Command Get-MgaRegisteredAccessToken
