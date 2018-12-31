@@ -1196,7 +1196,7 @@
             object it self
             </summary>
         </member>
-        <member name="M:MSGraph.Exchange.MailboxSetting.WorkingHoursSetting.#ctor(System.DayOfWeek[],System.DateTime,System.DateTime,MSGraph.Exchange.TimeZoneBase)">
+        <member name="M:MSGraph.Exchange.MailboxSetting.WorkingHoursSetting.#ctor(System.DayOfWeek[],System.DateTime,System.DateTime,MSGraph.Exchange.TimeZoneBase,System.String)">
             <summary>
             Main properties
             </summary>
@@ -1256,7 +1256,7 @@
             All properties
             </summary>
         </member>
-        <member name="M:MSGraph.Exchange.MailboxSetting.LocaleInfoSetting.#ctor(System.Globalization.CultureInfo,System.String)">
+        <member name="M:MSGraph.Exchange.MailboxSetting.LocaleInfoSetting.#ctor(System.Globalization.CultureInfo,System.String,System.String)">
             <summary>
             Main properties
             </summary>
@@ -1366,7 +1366,7 @@
             empty
             </summary>
         </member>
-        <member name="M:MSGraph.Exchange.MailboxSetting.AutomaticRepliesSetting.#ctor(MSGraph.Exchange.MailboxSetting.AutomaticRepliesStatus,MSGraph.Exchange.MailboxSetting.ExternalAudienceScope,System.String,System.String,MSGraph.Exchange.DateTimeTimeZone,MSGraph.Exchange.DateTimeTimeZone)">
+        <member name="M:MSGraph.Exchange.MailboxSetting.AutomaticRepliesSetting.#ctor(MSGraph.Exchange.MailboxSetting.AutomaticRepliesStatus,MSGraph.Exchange.MailboxSetting.ExternalAudienceScope,System.String,System.String,MSGraph.Exchange.DateTimeTimeZone,MSGraph.Exchange.DateTimeTimeZone,System.String)">
             <summary>
             Main properties
             </summary>
