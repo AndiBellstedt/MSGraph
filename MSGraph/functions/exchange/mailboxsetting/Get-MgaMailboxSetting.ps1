@@ -124,12 +124,13 @@
             Default { Stop-PSFFunction -Message "Unhandled parameter set. ($($PSCmdlet.ParameterSetName)) Developer mistake." -EnableException $true -Category MetadataError -FunctionName $MyInvocation.MyCommand }
         }
 
-        $data = Invoke-MgaRestMethodGet @invokeParam | Where-Object { $_.name -like $Name }
+        $data = Invoke-MgaRestMethodGet @invokeParam
         #endregion query data
 
         #region output data
         foreach ($output in $data) {
-            New-MgaMailboxSettingObject -RestData $data -Type $PSCmdlet.ParameterSetName -User $User -Token $Token -FunctionName $MyInvocation.MyCommand
+            $mailboxSettingObject = New-MgaMailboxSettingObject -RestData $output -Type $PSCmdlet.ParameterSetName -User $User -Token $Token -FunctionName $MyInvocation.MyCommand
+            $mailboxSettingObject
         }
         #endregion output data
     }
