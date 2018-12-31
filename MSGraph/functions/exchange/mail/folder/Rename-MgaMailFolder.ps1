@@ -73,7 +73,7 @@
             #region checking input object type and query folder if required
             if ($folderItem.TypeName -like "System.String") {
                 $folderItem = Resolve-MailObjectFromString -Object $folderItem -User $User -Token $Token -FunctionName $MyInvocation.MyCommand
-                if(-not $folderItem) { continue }
+                if (-not $folderItem) { continue }
             }
 
             $User = Resolve-UserInMailObject -Object $folderItem -User $User -ShowWarning -FunctionName $MyInvocation.MyCommand

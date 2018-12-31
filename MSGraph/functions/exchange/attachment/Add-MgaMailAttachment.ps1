@@ -109,8 +109,7 @@
                         $fileItem = Get-ChildItem -Path $filePath -File -ErrorAction Stop
                         $fileItem | Add-Member -MemberType NoteProperty -Name contentBytes -Value ( [System.Convert]::ToBase64String( [System.IO.File]::ReadAllBytes($fileItem.FullName) ) )
                         $filesToAttach = $filesToAttach + $fileItem
-                    }
-                    catch {
+                    } catch {
                         Stop-PSFFunction -Message "Specified path '$($filePath)' is invalid or not a file. Please specify a valid file." -EnableException $true -Exception $errorvariable.Exception -Category InvalidData -Tag "Attachment"
                     }
                 }
@@ -146,8 +145,7 @@
             if (-not $messageItem.InputObject.IsDraft -and (-not $Force)) {
                 if ($PSCmdlet.ShouldContinue("The mesaage is not a draft message! Would you really like to add attachment(s) $($namesFileToAttach) to message '$($messageItem)'?", "$($messageItem) is not a draft message") ) {
                     Write-PSFMessage -Level Verbose -Message "Confirmation specified to add attachment(s) to non draft message '$($messageItem)'" -Tag "AddAttachmentEnforce"
-                }
-                else {
+                } else {
                     Write-PSFMessage -Level Important -Message "Abort adding attachment(s) to non draft message '$($messageItem)'" -Tag "AddAttachmentEnforce"
                     return
                 }

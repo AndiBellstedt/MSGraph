@@ -114,14 +114,13 @@
                 $User = Resolve-UserInMailObject -Object $categoryItem -User $User -ShowWarning -FunctionName $MyInvocation.MyCommand
                 #endregion checking input object type and query message if required
 
-                $invokeParam.Add("Field","outlook/masterCategories/$($categoryItem.Id)")
+                $invokeParam.Add("Field", "outlook/masterCategories/$($categoryItem.Id)")
                 Write-PSFMessage -Level Verbose -Message "Get refresh on category '$($categoryItem)'" -Tag "QueryData"
                 $data = $data + (Invoke-MgaRestMethodGet @invokeParam)
                 $invokeParam.Remove("Field")
             }
-        }
-        else {
-            $invokeParam.Add("Field","outlook/masterCategories")
+        } else {
+            $invokeParam.Add("Field", "outlook/masterCategories")
             Write-PSFMessage -Level Verbose -Message "Getting available categories" -Tag "QueryData"
             $data = $data + (Invoke-MgaRestMethodGet @invokeParam)
         }
@@ -154,7 +153,7 @@
         #region output data
         Write-PSFMessage -Level VeryVerbose -Message "Output $( ($data | Measure-Object).Count ) objects." -Tag "OutputData"
         foreach ($output in $data) {
-            if($output.User) { $User = $output.User }
+            if ($output.User) { $User = $output.User }
             $categoryObject = [MSGraph.Exchange.Category.OutlookCategory]::new( $output.id, $output.displayName, $output.color, $User, $output)
             Write-PSFMessage -Level Debug -Message "Output new object '$($categoryObject)'." -Tag "OutputData"
             $categoryObject

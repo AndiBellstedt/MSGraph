@@ -230,7 +230,7 @@
                 $jsonParams = @{}
                 $bodyJsonParts = @()
 
-                $names = "Subject","Sender","From","ToRecipients","CCRecipients","BCCRecipients","ReplyTo","Body","Categories","Importance","InferenceClassification","IsDeliveryReceiptRequested","IsReadReceiptRequested"
+                $names = "Subject", "Sender", "From", "ToRecipients", "CCRecipients", "BCCRecipients", "ReplyTo", "Body", "Categories", "Importance", "InferenceClassification", "IsDeliveryReceiptRequested", "IsReadReceiptRequested"
                 foreach ($name in $names) {
                     if (Test-PSFParameterBinding -ParameterName $name) {
                         Write-PSFMessage -Level Debug -Message "Add $($name) from parameters to message" -Tag "ParameterParsing"

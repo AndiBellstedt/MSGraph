@@ -58,7 +58,7 @@
     [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'High')]
     [OutputType([MSGraph.Exchange.Mail.Message])]
     param (
-        [Parameter(Mandatory=$true, Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
+        [Parameter(Mandatory = $true, Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
         [Alias('InputObject', 'MessageId', 'Id', 'Mail', 'MailId')]
         [MSGraph.Exchange.Mail.MessageParameter[]]
         $Message,
@@ -87,13 +87,13 @@
             #region checking input object type and query message if required
             if ($messageItem.TypeName -like "System.String") {
                 $messageItem = Resolve-MailObjectFromString -Object $messageItem -User $User -Token $Token -NoNameResolving -FunctionName $MyInvocation.MyCommand
-                if(-not $messageItem) { continue }
+                if (-not $messageItem) { continue }
             }
 
             $User = Resolve-UserInMailObject -Object $messageItem -User $User -ShowWarning -FunctionName $MyInvocation.MyCommand
             #endregion checking input object type and query message if required
 
-            if($Force) { $doAction = $true } else { $doAction = $pscmdlet.ShouldProcess($messageItem, "Remove (ATTENTION! Message will not be moved to 'deletedObjects')") }
+            if ($Force) { $doAction = $true } else { $doAction = $pscmdlet.ShouldProcess($messageItem, "Remove (ATTENTION! Message will not be moved to 'deletedObjects')") }
             if ($doAction) {
                 Write-PSFMessage -Tag "MessageRemove" -Level Verbose -Message "Remove message '$($messageItem)'"
                 $invokeParam = @{

@@ -111,8 +111,7 @@
                 if (-not $messageItem.InputObject.IsDraft -and (-not $Force)) {
                     if ($PSCmdlet.ShouldContinue("The mesaage is not a draft message! Would you really like to add attachment(s) $($namesFileToAttach) to message '$($messageItem)'?", "$($messageItem) is not a draft message") ) {
                         Write-PSFMessage -Level Verbose -Message "Confirmation specified to add attachment(s) to non draft message '$($messageItem)'" -Tag "AddAttachmentEnforce"
-                    }
-                    else {
+                    } else {
                         Write-PSFMessage -Level Important -Message "Abort adding attachment(s) to non draft message '$($messageItem)'" -Tag "AddAttachmentEnforce"
                         return
                     }
@@ -155,8 +154,7 @@
             # remove attachment
             if ($Force) {
                 $proceed = $true
-            }
-            else {
+            } else {
                 $proceed = $pscmdlet.ShouldProcess("Message '$($attachmentItem.InputObject.ParentObject.Name)'", "Delete attachment '$($attachmentItem)'")
             }
             if ($proceed) {

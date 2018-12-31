@@ -68,10 +68,9 @@
         $requiredPermission = "MailboxSettings.ReadWrite"
         $Token = Invoke-TokenScopeValidation -Token $Token -Scope $requiredPermission -FunctionName $MyInvocation.MyCommand
 
-        if($Color) {
+        if ($Color) {
             [String]$colorValue = [MSGraph.Exchange.Category.OutlookCategory]::Parse($Color)
-        }
-        else {
+        } else {
             [String]$colorValue = [MSGraph.Exchange.Category.ColorKey]::None
         }
     }
@@ -83,7 +82,7 @@
             #region prepare rest call to create data
             $bodyJSON = @{
                 displayName = $categoryName
-                color = $colorValue
+                color       = $colorValue
             } | ConvertTo-Json
 
             $invokeParam = @{
@@ -102,7 +101,7 @@
 
             #region output data
             foreach ($output in $data) {
-                if($output.User) { $User = $output.User }
+                if ($output.User) { $User = $output.User }
                 $categoryObject = [MSGraph.Exchange.Category.OutlookCategory]::new( $output.id, $output.displayName, $output.color, $User, $output)
                 $categoryObject
             }

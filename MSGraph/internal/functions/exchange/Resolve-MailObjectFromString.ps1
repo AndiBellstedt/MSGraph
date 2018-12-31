@@ -60,20 +60,17 @@
         $typeNamespace = "MSGraph.Exchange.Mail"
         $nounPreFix = "MgaMail"
         $parameterName = "InputObject"
-    }
-    elseif ($Object.psobject.TypeNames[0] -like "MSGraph.Exchange.Mail.MessageParameter") {
+    } elseif ($Object.psobject.TypeNames[0] -like "MSGraph.Exchange.Mail.MessageParameter") {
         $type = "Message"
         $typeNamespace = "MSGraph.Exchange.Mail"
         $nounPreFix = "MgaMail"
         $parameterName = "InputObject"
-    }
-    elseif ($Object.psobject.TypeNames[0] -like "MSGraph.Exchange.Category.CategoryParameter") {
+    } elseif ($Object.psobject.TypeNames[0] -like "MSGraph.Exchange.Category.CategoryParameter") {
         $type = "Category"
         $typeNamespace = "MSGraph.Exchange.Category"
         $nounPreFix = "MgaExch"
         if ($Object.Id) { $parameterName = "Id" } else { $parameterName = "Name" }
-    }
-    else {
+    } else {
         $msg = "Object '$($Object)' is not valid. Must be one of: 'MSGraph.Exchange.Mail.FolderParameter', 'MSGraph.Exchange.Mail.MessageParameter', 'MSGraph.Exchange.Category.CategoryParameter'."
         Stop-PSFFunction -Message $msg -Tag "InputValidation" -FunctionName $FunctionName -EnableException $true -Exception ([System.Management.Automation.RuntimeException]::new($msg))
     }
@@ -84,14 +81,12 @@
         Write-PSFMessage -Level Debug -Message "Going to resolve '$($Object)' with Id" -Tag "InputValidation" -FunctionName $FunctionName
         $invokeParam.Add($parameterName, $Object.Id)
         $output = .("Get-" + $nounPreFix + $type) @invokeParam
-    }
-    elseif ($Object.Name -and (-not $NoNameResolving)) {
+    } elseif ($Object.Name -and (-not $NoNameResolving)) {
         Write-PSFMessage -Level Debug -Message "Going to resolve '$($Object)' with name" -Tag "InputValidation" -FunctionName $FunctionName
         $invokeParam.Add($parameterName, $Object.Name)
         $invokeParam.Add("ErrorAction", "Stop")
         $output = .("Get-" + $nounPreFix + $type) @invokeParam
-    }
-    else {
+    } else {
         # not valid, end function without output
         Write-PSFMessage -Level Warning -Message "The specified input string seams not to be a valid Id. Skipping object '$($Object)'" -Tag "InputValidation" -FunctionName $FunctionName
         return

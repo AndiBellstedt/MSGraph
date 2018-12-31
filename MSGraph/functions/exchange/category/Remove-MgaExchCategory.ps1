@@ -97,8 +97,7 @@
             # set data
             if ($Force) {
                 $proceed = $true
-            }
-            else {
+            } else {
                 $proceed = $pscmdlet.ShouldProcess($categoryItem.Name, "Delete")
             }
             if ($proceed) {

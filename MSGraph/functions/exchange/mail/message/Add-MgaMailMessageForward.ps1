@@ -114,8 +114,7 @@
             if ($PSCmdlet.ParameterSetName -like 'DirectReply') {
                 $bodyJSON = New-JsonMailObject -ToRecipients $ToRecipients -Comment $Comment -FunctionName $MyInvocation.MyCommand
                 $msgAction = "Send"
-            }
-            else {
+            } else {
                 $bodyJSON = ""
                 $msgAction = "create"
             }
@@ -141,8 +140,7 @@
                 $output = Invoke-MgaRestMethodPost @invokeParam
                 if ($PSCmdlet.ParameterSetName -like 'Default' -and $output) {
                     New-MgaMailMessageObject -RestData $output -FunctionName $MyInvocation.MyCommand
-                }
-                elseif ($PSCmdlet.ParameterSetName -like 'DirectReply' -and $PassThru) {
+                } elseif ($PSCmdlet.ParameterSetName -like 'DirectReply' -and $PassThru) {
                     Write-PSFMessage -Tag "MessageQuery" -Level Verbose -Message "PassThru specified, query forward message from sentItems folder."
                     Get-MgaMailMessage -FolderName Sentitems -Subject "FW: $($messageItem.Name)" -ResultSize 5
                 }

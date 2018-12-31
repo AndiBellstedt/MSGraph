@@ -92,18 +92,18 @@
         foreach ($folderItem in $Folder) {
             #region checking input object type and query folder if required
             if ($folderItem.TypeName -like "System.String") {
-                if(($folderItem.IsWellKnownName -and $folderItem.Id -like "recoverableitemsdeletions") -or $folderItem.name -like "recoverableitemsdeletions") {
+                if (($folderItem.IsWellKnownName -and $folderItem.Id -like "recoverableitemsdeletions") -or $folderItem.name -like "recoverableitemsdeletions") {
                     Write-PSFMessage -Level Important -Message "Can not delete well known folder 'recoverableitemsdeletions'. Continue without action on folder."
                     continue
                 }
                 $folderItem = Resolve-MailObjectFromString -Object $folderItem -User $User -Token $Token -FunctionName $MyInvocation.MyCommand
-                if(-not $folderItem) { continue }
+                if (-not $folderItem) { continue }
             }
 
             $User = Resolve-UserInMailObject -Object $folderItem -User $User -ShowWarning -FunctionName $MyInvocation.MyCommand
             #endregion checking input object type and query message if required
 
-            if($Force) { $doAction = $true } else { $doAction = $pscmdlet.ShouldProcess($folderItem, "Remove (ATTENTION! Folder will not be moved to 'deletedObjects')") }
+            if ($Force) { $doAction = $true } else { $doAction = $pscmdlet.ShouldProcess($folderItem, "Remove (ATTENTION! Folder will not be moved to 'deletedObjects')") }
             if ($doAction) {
                 Write-PSFMessage -Tag "FolderRemove" -Level Verbose -Message "Remove folder '$($folderItem)'"
                 $invokeParam = @{

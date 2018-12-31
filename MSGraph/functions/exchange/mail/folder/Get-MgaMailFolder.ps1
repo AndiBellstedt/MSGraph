@@ -172,8 +172,7 @@
                     }
                     if ($folder.id) {
                         $invokeParam.add("Field", "mailFolders/$($folder.Id)")
-                    }
-                    else {
+                    } else {
                         $invokeParam.add("Field", "mailFolders?`$filter=DisplayName eq '$($folder.Name)'")
                     }
 

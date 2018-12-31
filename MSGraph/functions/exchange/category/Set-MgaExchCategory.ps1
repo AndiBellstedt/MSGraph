@@ -55,7 +55,7 @@
         [MSGraph.Exchange.Category.CategoryParameter[]]
         $InputObject,
 
-<# Currently not available as writeable property on microsoft graph version 1.0 and beta
+        <# Currently not available as writeable property on microsoft graph version 1.0 and beta
         [Parameter(Mandatory = $false)]
         [string]
         $NewName,

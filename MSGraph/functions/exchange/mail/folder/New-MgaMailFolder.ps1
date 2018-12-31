@@ -69,7 +69,7 @@
         #region checking input object type and query folder if required
         if ($ParentFolder.TypeName -like "System.String") {
             $ParentFolder = Resolve-MailObjectFromString -Object $ParentFolder -User $User -Token $Token -FunctionName $MyInvocation.MyCommand
-            if(-not $ParentFolder) { throw }
+            if (-not $ParentFolder) { throw }
         }
 
         if ($ParentFolder) {
@@ -84,7 +84,7 @@
         foreach ($NameItem in $Name) {
             if ($pscmdlet.ShouldProcess($NameItem, "New")) {
                 $msg = "Creating subfolder '$($NameItem)'"
-                if($ParentFolder) { $msg = $msg + " in '$($ParentFolder)'"}
+                if ($ParentFolder) { $msg = $msg + " in '$($ParentFolder)'"}
                 Write-PSFMessage -Tag "FolderCreation" -Level Verbose -Message $msg
 
                 $bodyJSON = @{
@@ -98,10 +98,9 @@
                     "Token"        = $Token
                     "FunctionName" = $MyInvocation.MyCommand
                 }
-                if($ParentFolder.Id) {
+                if ($ParentFolder.Id) {
                     $invokeParam.Add("Field", "mailFolders/$($ParentFolder.Id)/childFolders")
-                }
-                else {
+                } else {
                     $invokeParam.Add("Field", "mailFolders")
                 }
 

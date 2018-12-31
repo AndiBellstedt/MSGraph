@@ -83,8 +83,7 @@
         $restUri = $DeltaLink
         $Delta = $true
         $User = ([uri]$restUri).AbsolutePath.split('/')[2]
-    }
-    else {
+    } else {
         if (-not $User) { $User = $Token.UserprincipalName }
         $restUri = "$($ApiConnection)/$($ApiVersion)/$(Resolve-UserString -User $User)/$($Field)"
         if ($Delta) { $restUri = $restUri + "/delta" }
@@ -123,15 +122,13 @@
             $i = $i + $value.Count
             if ($i -lt $ResultSize) {
                 $restUri = $data.'@odata.nextLink'
-            }
-            else {
+            } else {
                 $restUri = ""
                 $tooManyItems = $true
                 $overResult = $ResultSize - ($i - $value.Count)
                 Write-PSFMessage -Tag "ResultSize" -Level Verbose -Message "Resultsize ($ResultSize) exeeded. Output $($overResult) object(s) in record set."
             }
-        }
-        else {
+        } else {
             # Multi object with value property returned by api call
             Write-PSFMessage -Tag "RestData" -Level VeryVerbose -Message "Single item retrived. Outputting data."
             [array]$value = $data
@@ -142,8 +139,7 @@
             # check if resultsize is reached
             if ($overResult -gt 0) {
                 $output = $output + $Value[0..($overResult - 1)]
-            }
-            else {
+            } else {
                 $output = $output + $Value
             }
         }
@@ -156,12 +152,10 @@
     if ($Delta) {
         if ('@odata.deltaLink' -in $data.psobject.Properties.Name) {
             $output | Add-Member -MemberType NoteProperty -Name '@odata.deltaLink' -Value $data.'@odata.deltaLink' -PassThru
-        }
-        else {
+        } else {
             $output | Add-Member -MemberType NoteProperty -Name '@odata.deltaLink' -Value $data.'@odata.nextLink' -PassThru
         }
-    }
-    else {
+    } else {
         $output
     }
 
@@ -169,8 +163,7 @@
         # write information to console if resultsize exceeds
         if ($Delta) {
             Write-PSFMessage -Tag "GetData" -Level Host -Message "Reaching maximum ResultSize before finishing delta query. Next delta query will continue on pending objects. Current ResultSize: $($ResultSize)" -FunctionName $FunctionName
-        }
-        else {
+        } else {
             Write-PSFMessage -Tag "GetData" -Level Warning -Message "Too many items. Reaching maximum ResultSize before finishing query. You may want to increase the ResultSize. Current ResultSize: $($ResultSize)" -FunctionName $FunctionName
         }
     }

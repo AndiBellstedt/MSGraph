@@ -61,7 +61,7 @@
     [Alias()]
     [OutputType([MSGraph.Exchange.Mail.Folder])]
     param (
-        [Parameter(Mandatory=$true, Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
+        [Parameter(Mandatory = $true, Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
         [Alias('InputObject', 'FolderId', 'Id')]
         [MSGraph.Exchange.Mail.FolderParameter[]]
         $Folder,
@@ -87,7 +87,7 @@
         #region checking DestinationFolder and query folder if required
         if ($DestinationFolder.TypeName -like "System.String") {
             $DestinationFolder = Resolve-MailObjectFromString -Object $DestinationFolder -User $User -Token $Token -FunctionName $MyInvocation.MyCommand
-            if(-not $DestinationFolder) { throw }
+            if (-not $DestinationFolder) { throw }
         }
 
         $User = Resolve-UserInMailObject -Object $DestinationFolder -User $User -ShowWarning -FunctionName $MyInvocation.MyCommand
@@ -105,7 +105,7 @@
             #region checking input object type and query folder if required
             if ($folderItem.TypeName -like "System.String") {
                 $folderItem = Resolve-MailObjectFromString -Object $folderItem -User $User -Token $Token -FunctionName $MyInvocation.MyCommand
-                if(-not $folderItem) { continue }
+                if (-not $folderItem) { continue }
             }
 
             $User = Resolve-UserInMailObject -Object $folderItem -User $User -FunctionName $MyInvocation.MyCommand

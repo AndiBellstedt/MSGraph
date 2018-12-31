@@ -193,7 +193,7 @@
         #region Put parameters (JSON Parts) into a valid "message"-JSON-object together
         $jsonParams = @{}
 
-        $names = "Subject","Sender","From","ToRecipients","CCRecipients","BCCRecipients","ReplyTo","Body","Categories","Importance","InferenceClassification","IsDeliveryReceiptRequested","IsReadReceiptRequested"
+        $names = "Subject", "Sender", "From", "ToRecipients", "CCRecipients", "BCCRecipients", "ReplyTo", "Body", "Categories", "Importance", "InferenceClassification", "IsDeliveryReceiptRequested", "IsReadReceiptRequested"
         foreach ($name in $names) {
             if (Test-PSFParameterBinding -ParameterName $name) {
                 Write-PSFMessage -Level Debug -Message "Add $($name) from parameters to message" -Tag "ParameterParsing"
@@ -219,13 +219,12 @@
             }
             if ($Folder.Id) {
                 $invokeParam.Add("Field", "mailFolders/$($Folder.Id)/messages")
-            }
-            else {
+            } else {
                 $invokeParam.Add("Field", "messages")
             }
 
             $output = Invoke-MgaRestMethodPost @invokeParam
-            if($output) {
+            if ($output) {
                 New-MgaMailMessageObject -RestData $output -FunctionName $MyInvocation.MyCommand
             }
         }

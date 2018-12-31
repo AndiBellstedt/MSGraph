@@ -118,8 +118,7 @@
                     comment = $Comment
                 } | ConvertTo-Json
                 $msgAction = "Send"
-            }
-            else {
+            } else {
                 $bodyJSON = ""
                 $msgAction = "create"
             }
@@ -145,8 +144,7 @@
                 $output = Invoke-MgaRestMethodPost @invokeParam
                 if ($PSCmdlet.ParameterSetName -like 'Default' -and $output) {
                     New-MgaMailMessageObject -RestData $output -FunctionName $MyInvocation.MyCommand
-                }
-                elseif ($PSCmdlet.ParameterSetName -like 'DirectReply' -and $PassThru) {
+                } elseif ($PSCmdlet.ParameterSetName -like 'DirectReply' -and $PassThru) {
                     Write-PSFMessage -Tag "MessageQuery" -Level Verbose -Message "PassThru specified, query reply message from sentItems folder."
                     Get-MgaMailMessage -FolderName Sentitems -Subject "RE: $($messageItem.Name)" -ResultSize 5
                 }

@@ -66,7 +66,7 @@
     [Alias()]
     [OutputType([MSGraph.Exchange.Mail.Message])]
     param (
-        [Parameter(Mandatory=$true, Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
+        [Parameter(Mandatory = $true, Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
         [Alias('InputObject', 'MessageId', 'Id', 'Mail', 'MailId')]
         [MSGraph.Exchange.Mail.MessageParameter[]]
         $Message,
@@ -89,9 +89,9 @@
         $Token = Invoke-TokenScopeValidation -Token $Token -Scope $requiredPermission -FunctionName $MyInvocation.MyCommand
 
         #region checking DestinationFolder and query folder if required
-        if($DestinationFolder.TypeName -like "System.String") {
+        if ($DestinationFolder.TypeName -like "System.String") {
             $DestinationFolder = Resolve-MailObjectFromString -Object $DestinationFolder -User $User -Token $Token -FunctionName $MyInvocation.MyCommand
-            if(-not $DestinationFolder) { throw }
+            if (-not $DestinationFolder) { throw }
         }
         #endregion checking DestinationFolder and query folder if required
 
@@ -116,7 +116,7 @@
             #region checking input object type and query message if required
             if ($messageItem.TypeName -like "System.String") {
                 $messageItem = Resolve-MailObjectFromString -Object $messageItem -User $User -Token $Token -NoNameResolving -FunctionName $MyInvocation.MyCommand
-                if(-not $messageItem) { continue }
+                if (-not $messageItem) { continue }
             }
 
             $User = Resolve-UserInMailObject -Object $messageItem -User $User -ShowWarning -FunctionName $MyInvocation.MyCommand

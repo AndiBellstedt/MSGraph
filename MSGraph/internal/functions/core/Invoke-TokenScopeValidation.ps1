@@ -67,12 +67,10 @@
                 }
 
                 $Token = New-MgaAccessToken @paramsNewToken
-            }
-            else {
+            } else {
                 Stop-PSFFunction -Message "FAILED, missing required scope information ($([String]::Join(", ",$Scope))) and Microsoft Identity Platform 1.0 is used.`nNo dynamic permission request available. Permissions has to be specified/granted in app registration process or portal." -EnableException $true -Category AuthenticationError -FunctionName $FunctionName
             }
-        }
-        else {
+        } else {
             Write-PSFMessage -Level VeryVerbose -Message "OK, required scope information are present. ($([String]::Join(", ",$Scope)))" -Tag "Authentication" -FunctionName $FunctionName
         }
 

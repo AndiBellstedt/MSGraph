@@ -119,7 +119,7 @@
         if ($PSCmdlet.ParameterSetName -like "ByFolderName") {
             foreach ($folderItem in $FolderName) {
                 $folderItem = [MSGraph.Exchange.Mail.MessageOrFolderParameter]$folderItem
-                if($folderItem.Name -and (-not $folderItem.IsWellKnownName)) {
+                if ($folderItem.Name -and (-not $folderItem.IsWellKnownName)) {
                     [MSGraph.Exchange.Mail.MessageOrFolderParameter]$folderItem = Get-MgaMailFolder -Name $folderItem.Name -User $User -Token $Token
                 }
                 $InputObject = $InputObject + $folderItem
@@ -139,8 +139,7 @@
                             "ResultSize"   = $ResultSize
                             "FunctionName" = $MyInvocation.MyCommand
                         }
-                    }
-                    else {
+                    } else {
                         # if non delta message is parsed in, the message will be queried again (refreshed)
                         # Not really necessary, but works as intend from pipeline usage
                         Write-PSFMessage -Level VeryVerbose -Message "Refresh message '$($InputObjectItem)' from the pipeline"
@@ -179,22 +178,18 @@
                     if ($Delta) { $invokeParam.Add("Delta", $true) }
 
                     $name = if ($InputObjectItem.IsWellKnownName) { $InputObjectItem.Name } else { $InputObjectItem.Id }
-                    if($name.length -eq 152 -or $name.length -eq 136) {
+                    if ($name.length -eq 152 -or $name.length -eq 136) {
                         # Id is a message
                         Write-PSFMessage -Level VeryVerbose -Message "Gettings messages with Id '$($InputObjectItem)'" -Tag "InputValidation"
-                        $invokeParam.Add("Field","messages/$($name)")
-                    }
-                    elseif ($name.length -eq 120 -or $name.length -eq 104)
-                    {
+                        $invokeParam.Add("Field", "messages/$($name)")
+                    } elseif ($name.length -eq 120 -or $name.length -eq 104) {
                         # Id is a folder
                         Write-PSFMessage -Level VeryVerbose -Message "Gettings messages in folder with Id '$($InputObjectItem)'" -Tag "InputValidation"
-                        $invokeParam.Add("Field","mailFolders/$($name)/messages")
-                    }
-                    elseif ($InputObjectItem.IsWellKnownName -and $name) {
+                        $invokeParam.Add("Field", "mailFolders/$($name)/messages")
+                    } elseif ($InputObjectItem.IsWellKnownName -and $name) {
                         # a well known folder is specified by name
-                        $invokeParam.Add("Field","mailFolders/$($name)/messages")
-                    }
-                    else {
+                        $invokeParam.Add("Field", "mailFolders/$($name)/messages")
+                    } else {
                         # not a valid Id -> should not happen
                         Write-PSFMessage -Level Warning -Message "The specified Id seeams not be a valid Id. Skipping object '$($name)'" -Tag "InputValidation"
                         continue
@@ -217,8 +212,7 @@
             if ($invokeParam.Field -and ($invokeParam.Field -notin $fielList)) {
                 $InvokeParamsUniqueList = $InvokeParamsUniqueList + $invokeParam
                 $fielList = $fielList + $invokeParam.Field
-            }
-            elseif ($invokeParam.deltaLink -notin $fielList) {
+            } elseif ($invokeParam.deltaLink -notin $fielList) {
                 $InvokeParamsUniqueList = $InvokeParamsUniqueList + $invokeParam
                 $fielList = $fielList + $invokeParam.deltaLink
             }
@@ -235,8 +229,7 @@
 
         if ($output) {
             $output
-        }
-        else {
+        } else {
             Write-PSFMessage -Level Warning -Message "Message not found." -Tag "QueryData"
         }
     }
