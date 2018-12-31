@@ -1,10 +1,8 @@
-﻿namespace MSGraph.Exchange.Attachment
-{
+﻿namespace MSGraph.Exchange.Attachment {
     /// <summary>
     /// names of reference attachment provider types in Microsoft Graph API
     /// </summary>
-    public enum ReferenceAttachmentProvider
-    {
+    public enum ReferenceAttachmentProvider {
         /// <summary>
         /// oneDriveBusiness
         /// </summary>
@@ -29,8 +27,7 @@
     /// <summary>
     /// names of possible permissions in referenceAttachments in Microsoft Graph API
     /// </summary>
-    public enum referenceAttachmentPermission
-    {
+    public enum referenceAttachmentPermission {
         /// <summary>
         /// view
         /// </summary>

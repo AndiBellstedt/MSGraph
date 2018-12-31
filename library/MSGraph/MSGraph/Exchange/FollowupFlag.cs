@@ -1,7 +1,6 @@
 ﻿using System;
 
-namespace MSGraph.Exchange
-{
+namespace MSGraph.Exchange {
     /// <summary>
     /// followupFlag resource type
     /// Allows setting a flag in an item for the user to follow up on later.
@@ -9,8 +8,7 @@ namespace MSGraph.Exchange
     /// https://docs.microsoft.com/en-us/graph/api/resources/followupflag?view=graph-rest-1.0
     /// </summary>
     [Serializable]
-    public class FollowupFlag
-    {
+    public class FollowupFlag {
         #region Properties
         /// <summary>
         /// The date and time that the follow-up was finished.
@@ -47,8 +45,7 @@ namespace MSGraph.Exchange
         /// Overrides the default ToString() method 
         /// </summary>
         /// <returns></returns>
-        public override string ToString()
-        {
+        public override string ToString() {
             return FlagStatus;
         }
 
@@ -60,8 +57,7 @@ namespace MSGraph.Exchange
         /// MessageBody input
         /// </summary>
         /// <param name="Flag"></param>
-        public FollowupFlag(FollowupFlag Flag)
-        {
+        public FollowupFlag(FollowupFlag Flag) {
             CompletedDateTime = Flag.CompletedDateTime;
             DueDateTime = Flag.CompletedDateTime;
             FlagStatus = Flag.FlagStatus;
@@ -72,16 +68,12 @@ namespace MSGraph.Exchange
         /// String input parser
         /// </summary>
         /// <param name="StatusText"></param>
-        public FollowupFlag(String StatusText)
-        {
+        public FollowupFlag(String StatusText) {
             string[] possibleValues = { "notflagged", "complete", "flagged" };
-            
-            if (Array.IndexOf(possibleValues, StatusText.ToLower()) >= 0)
-            {
+
+            if(Array.IndexOf(possibleValues, StatusText.ToLower()) >= 0) {
                 FlagStatus = StatusText;
-            }
-            else
-            {
+            } else {
                 throw new InvalidCastException("FlagStatus '" + StatusText + "' is invalid. This is not a possible status. Must be one of: notFlagged, complete, flagged");
             }
         }
@@ -89,8 +81,7 @@ namespace MSGraph.Exchange
         /// <summary>
         /// empty object
         /// </summary>
-        public FollowupFlag()
-        {
+        public FollowupFlag() {
         }
         #endregion Constructors
     }

@@ -1,4 +1,3 @@
-﻿namespace MSGraph.Exchange
-{
+﻿namespace MSGraph.Exchange {
 
 }

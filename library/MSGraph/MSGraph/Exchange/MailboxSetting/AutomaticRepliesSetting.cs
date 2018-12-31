@@ -2,8 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace MSGraph.Exchange.MailboxSetting
-{
+namespace MSGraph.Exchange.MailboxSetting {
     /// <summary>
     /// AutoReply / Out of Office settings in exchange online
     /// 
@@ -13,8 +12,7 @@ namespace MSGraph.Exchange.MailboxSetting
     /// https://docs.microsoft.com/en-us/graph/api/resources/automaticrepliessetting?view=graph-rest-1.0
     /// </summary>
     [Serializable]
-    public class AutomaticRepliesSetting
-    {
+    public class AutomaticRepliesSetting {
         #region Properties
         /// <summary>
         /// 
@@ -34,17 +32,69 @@ namespace MSGraph.Exchange.MailboxSetting
         /// <summary>
         /// 
         /// </summary>
+        public bool ExternalReplyMessageIsPresent {
+            get {
+                if(!String.IsNullOrEmpty(ExternalReplyMessage) || !String.IsNullOrWhiteSpace(ExternalReplyMessage)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            set { }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public String InternalReplyMessage;
 
         /// <summary>
         /// 
         /// </summary>
-        public DateTimeTimeZone ScheduledEndDateTime;
+        public bool InternalReplyMessageIsPresent {
+            get {
+                if(!String.IsNullOrEmpty(InternalReplyMessage) || !String.IsNullOrWhiteSpace(InternalReplyMessage)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            set { }
+        }
 
         /// <summary>
         /// 
         /// </summary>
-        public DateTimeTimeZone ScheduledStartDateTime;
+        public DateTimeTimeZone ScheduledEndDateTimeUTC;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public DateTime ScheduledEndDateTime {
+            get {
+                return ScheduledEndDateTimeUTC.DateTime.ToLocalTime();
+            }
+            set {
+                ScheduledEndDateTimeUTC = new DateTimeTimeZone(value.ToUniversalTime());
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public DateTimeTimeZone ScheduledStartDateTimeUTC;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public DateTime ScheduledStartDateTime {
+            get {
+                return ScheduledStartDateTimeUTC.DateTime.ToLocalTime();
+            }
+            set {
+                ScheduledStartDateTimeUTC = new DateTimeTimeZone(value.ToUniversalTime());
+            }
+        }
 
         /// <summary>
         /// 
@@ -73,35 +123,32 @@ namespace MSGraph.Exchange.MailboxSetting
         /// <summary>
         /// empty
         /// </summary>
-        public AutomaticRepliesSetting()
-        {
+        public AutomaticRepliesSetting() {
         }
 
         /// <summary>
         /// Main properties
         /// </summary>
-        public AutomaticRepliesSetting(AutomaticRepliesStatus Status, ExternalAudienceScope ExternalAudience, String ExternalReplyMessage, String InternalReplyMessage, DateTimeTimeZone ScheduledStartDateTime, DateTimeTimeZone ScheduledEndDateTime, String Name)
-        {
+        public AutomaticRepliesSetting(AutomaticRepliesStatus Status, ExternalAudienceScope ExternalAudience, String ExternalReplyMessage, String InternalReplyMessage, DateTimeTimeZone ScheduledStartDateTimeUTC, DateTimeTimeZone ScheduledEndDateTimeUTC, String Name) {
             this.Status = Status;
             this.ExternalAudience = ExternalAudience;
             this.ExternalReplyMessage = ExternalReplyMessage;
             this.InternalReplyMessage = InternalReplyMessage;
-            this.ScheduledStartDateTime = ScheduledStartDateTime;
-            this.ScheduledEndDateTime = ScheduledEndDateTime;
+            this.ScheduledStartDateTimeUTC = ScheduledStartDateTimeUTC;
+            this.ScheduledEndDateTimeUTC = ScheduledEndDateTimeUTC;
             this.Name = Name;
         }
 
         /// <summary>
         /// All properties
         /// </summary>
-        public AutomaticRepliesSetting(AutomaticRepliesStatus Status, ExternalAudienceScope ExternalAudience, String ExternalReplyMessage, String InternalReplyMessage, DateTimeTimeZone ScheduledStartDateTime, DateTimeTimeZone ScheduledEndDateTime, String User, object BaseObject, String Name)
-        {
+        public AutomaticRepliesSetting(AutomaticRepliesStatus Status, ExternalAudienceScope ExternalAudience, String ExternalReplyMessage, String InternalReplyMessage, DateTimeTimeZone ScheduledStartDateTimeUTC, DateTimeTimeZone ScheduledEndDateTimeUTC, String User, object BaseObject, String Name) {
             this.Status = Status;
             this.ExternalAudience = ExternalAudience;
             this.ExternalReplyMessage = ExternalReplyMessage;
             this.InternalReplyMessage = InternalReplyMessage;
-            this.ScheduledStartDateTime = ScheduledStartDateTime;
-            this.ScheduledEndDateTime = ScheduledEndDateTime;
+            this.ScheduledStartDateTimeUTC = ScheduledStartDateTimeUTC;
+            this.ScheduledEndDateTimeUTC = ScheduledEndDateTimeUTC;
             this.User = User;
             this.BaseObject = BaseObject;
             this.Name = Name;

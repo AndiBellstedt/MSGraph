@@ -1,7 +1,6 @@
 ﻿using System;
 
-namespace MSGraph.Exchange.Attachment
-{
+namespace MSGraph.Exchange.Attachment {
     /// <summary>
     /// Attachment in exchange online
     /// 
@@ -13,8 +12,7 @@ namespace MSGraph.Exchange.Attachment
     /// https://docs.microsoft.com/en-us/graph/api/resources/attachment?view=graph-rest-1.0
     /// </summary>
     [Serializable]
-    public class Attachment
-    {
+    public class Attachment {
         #region Properties
 
         /// <summary>
@@ -30,10 +28,8 @@ namespace MSGraph.Exchange.Attachment
         /// <summary>
         /// Alias property from name.
         /// </summary>
-        public string DisplayName
-        {
-            get
-            {
+        public string DisplayName {
+            get {
                 return Name;
             }
 
@@ -68,11 +64,9 @@ namespace MSGraph.Exchange.Attachment
         /// <summary>
         /// 
         /// </summary>
-        public double SizeKB
-        {
-            get
-            {
-                double kb = (double)(Math.Round( ConvertBytesToKiloBytes(Size), 2));
+        public double SizeKB {
+            get {
+                double kb = (double)(Math.Round(ConvertBytesToKiloBytes(Size), 2));
                 return kb;
             }
 
@@ -82,10 +76,8 @@ namespace MSGraph.Exchange.Attachment
         /// <summary>
         /// 
         /// </summary>
-        public double SizeMB
-        {
-            get
-            {
+        public double SizeMB {
+            get {
                 double mb = (double)(Math.Round(ConvertBytesToMegaBytes(Size), 2));
                 return mb;
             }
@@ -114,13 +106,11 @@ namespace MSGraph.Exchange.Attachment
 
 
         #region Statics & Stuff
-        static double ConvertBytesToMegaBytes(long bytes)
-        {
+        static double ConvertBytesToMegaBytes(long bytes) {
             return (bytes / 1024f) / 1024f;
         }
 
-        static double ConvertBytesToKiloBytes(long kilobytes)
-        {
+        static double ConvertBytesToKiloBytes(long kilobytes) {
             return kilobytes / 1024f;
         }
 
@@ -128,18 +118,12 @@ namespace MSGraph.Exchange.Attachment
         /// Overrides the default ToString() method
         /// </summary>
         /// <returns></returns>
-        public override string ToString()
-        {
-            if (!string.IsNullOrEmpty(Name))
-            {
+        public override string ToString() {
+            if(!string.IsNullOrEmpty(Name)) {
                 _returnValue = Name;
-            }
-            else if (!string.IsNullOrEmpty(Id))
-            {
+            } else if(!string.IsNullOrEmpty(Id)) {
                 _returnValue = Id;
-            }
-            else
-            {
+            } else {
                 _returnValue = this.GetType().Name;
             }
 

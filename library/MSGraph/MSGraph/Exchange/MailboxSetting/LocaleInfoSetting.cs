@@ -2,8 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace MSGraph.Exchange.MailboxSetting
-{
+namespace MSGraph.Exchange.MailboxSetting {
     /// <summary>
     /// Language settings in exchange online
     /// 
@@ -12,23 +11,18 @@ namespace MSGraph.Exchange.MailboxSetting
     /// https://docs.microsoft.com/en-us/graph/api/resources/localeinfo?view=graph-rest-1.0
     /// </summary>
     [Serializable]
-    public class LocaleInfoSetting
-    {
+    public class LocaleInfoSetting {
         #region Properties
         /// <summary>
         /// 
         /// </summary>
-        public System.Globalization.CultureInfo Locale
-        {
-            get
-            {
+        public System.Globalization.CultureInfo Locale {
+            get {
                 return _locale;
             }
-            set
-            {
+            set {
                 _locale = value;
-                if(!String.Equals(_locale.DisplayName, DisplayName))
-                {
+                if(!String.Equals(_locale.DisplayName, DisplayName)) {
                     DisplayName = _locale.DisplayName;
                 }
             }
@@ -64,8 +58,7 @@ namespace MSGraph.Exchange.MailboxSetting
         /// Overrides the default ToString() method 
         /// </summary>
         /// <returns></returns>
-        public override string ToString()
-        {
+        public override string ToString() {
             return DisplayName;
         }
 
@@ -76,23 +69,20 @@ namespace MSGraph.Exchange.MailboxSetting
         /// <summary>
         /// empty
         /// </summary>
-        public LocaleInfoSetting()
-        {
+        public LocaleInfoSetting() {
         }
 
         /// <summary>
         /// All properties
         /// </summary>
-        public LocaleInfoSetting(System.Globalization.CultureInfo Locale)
-        {
+        public LocaleInfoSetting(System.Globalization.CultureInfo Locale) {
             this.Locale = Locale;
         }
 
         /// <summary>
         /// Main properties
         /// </summary>
-        public LocaleInfoSetting(System.Globalization.CultureInfo Locale, String DisplayName, String Name)
-        {
+        public LocaleInfoSetting(System.Globalization.CultureInfo Locale, String DisplayName, String Name) {
             this.Locale = Locale;
             this.DisplayName = DisplayName;
             this.Name = Name;
@@ -101,8 +91,7 @@ namespace MSGraph.Exchange.MailboxSetting
         /// <summary>
         /// All properties
         /// </summary>
-        public LocaleInfoSetting(System.Globalization.CultureInfo Locale, String DisplayName, String User, object BaseObject, String Name)
-        {
+        public LocaleInfoSetting(System.Globalization.CultureInfo Locale, String DisplayName, String User, object BaseObject, String Name) {
             this.Locale = Locale;
             this.DisplayName = DisplayName;
             this.User = User;

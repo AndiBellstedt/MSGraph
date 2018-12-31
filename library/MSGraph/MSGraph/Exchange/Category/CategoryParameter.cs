@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Linq;
 
-namespace MSGraph.Exchange.Category
-{
+namespace MSGraph.Exchange.Category {
     /// <summary>
     /// category parameter class for convinient pipeline 
     /// input on parameters in *-MgaExchCategory commands
     /// </summary>
     [Serializable]
-    public class CategoryParameter
-    {
+    public class CategoryParameter {
         #region Properties
         /// <summary>
         /// category id
@@ -24,10 +22,8 @@ namespace MSGraph.Exchange.Category
         /// <summary>
         /// The type name of inputobject
         /// </summary>
-        public string TypeName
-        {
-            get
-            {
+        public string TypeName {
+            get {
                 return _typeName;
             }
 
@@ -50,18 +46,12 @@ namespace MSGraph.Exchange.Category
         /// Overrides the default ToString() method 
         /// </summary>
         /// <returns></returns>
-        public override string ToString()
-        {
-            if (!string.IsNullOrEmpty(Name))
-            {
+        public override string ToString() {
+            if(!string.IsNullOrEmpty(Name)) {
                 _returnValue = Name;
-            }
-            else if (!string.IsNullOrEmpty(Id))
-            {
+            } else if(!string.IsNullOrEmpty(Id)) {
                 _returnValue = Id;
-            }
-            else
-            {
+            } else {
                 _returnValue = InputObject.ToString();
             }
 
@@ -74,8 +64,7 @@ namespace MSGraph.Exchange.Category
         /// <summary>
         /// Mail Folderinput
         /// </summary>
-        public CategoryParameter(OutlookCategory Category)
-        {
+        public CategoryParameter(OutlookCategory Category) {
             this.InputObject = Category;
             this._typeName = InputObject.GetType().ToString();
             this.Id = Category.Id.ToString();
@@ -85,8 +74,7 @@ namespace MSGraph.Exchange.Category
         /// <summary>
         /// String input
         /// </summary>
-        public CategoryParameter(Guid Id)
-        {
+        public CategoryParameter(Guid Id) {
             this.InputObject = Id.ToString();
             this._typeName = InputObject.GetType().ToString();
             this.Id = Id.ToString();
@@ -95,18 +83,14 @@ namespace MSGraph.Exchange.Category
         /// <summary>
         /// String input
         /// </summary>
-        public CategoryParameter(string Text)
-        {
+        public CategoryParameter(string Text) {
             this.InputObject = Text;
             this._typeName = InputObject.GetType().ToString();
 
             Guid _id;
-            if (!String.IsNullOrEmpty(Text) && Guid.TryParse(Text, out _id))
-            {
+            if(!String.IsNullOrEmpty(Text) && Guid.TryParse(Text, out _id)) {
                 this.Id = Text;
-            }
-            else
-            {
+            } else {
                 this.Name = Text;
             }
         }

@@ -1155,7 +1155,17 @@
             
             </summary>
         </member>
+        <member name="P:MSGraph.Exchange.MailboxSetting.WorkingHoursSetting.StartTimeUTC">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="F:MSGraph.Exchange.MailboxSetting.WorkingHoursSetting.EndTime">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:MSGraph.Exchange.MailboxSetting.WorkingHoursSetting.EndTimeUTC">
             <summary>
             
             </summary>
@@ -1331,17 +1341,37 @@
             
             </summary>
         </member>
+        <member name="P:MSGraph.Exchange.MailboxSetting.AutomaticRepliesSetting.ExternalReplyMessageIsPresent">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="F:MSGraph.Exchange.MailboxSetting.AutomaticRepliesSetting.InternalReplyMessage">
             <summary>
             
             </summary>
         </member>
-        <member name="F:MSGraph.Exchange.MailboxSetting.AutomaticRepliesSetting.ScheduledEndDateTime">
+        <member name="P:MSGraph.Exchange.MailboxSetting.AutomaticRepliesSetting.InternalReplyMessageIsPresent">
             <summary>
             
             </summary>
         </member>
-        <member name="F:MSGraph.Exchange.MailboxSetting.AutomaticRepliesSetting.ScheduledStartDateTime">
+        <member name="F:MSGraph.Exchange.MailboxSetting.AutomaticRepliesSetting.ScheduledEndDateTimeUTC">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:MSGraph.Exchange.MailboxSetting.AutomaticRepliesSetting.ScheduledEndDateTime">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.MailboxSetting.AutomaticRepliesSetting.ScheduledStartDateTimeUTC">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:MSGraph.Exchange.MailboxSetting.AutomaticRepliesSetting.ScheduledStartDateTime">
             <summary>
             
             </summary>

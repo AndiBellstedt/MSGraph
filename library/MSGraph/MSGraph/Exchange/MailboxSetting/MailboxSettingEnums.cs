@@ -1,10 +1,8 @@
-﻿namespace MSGraph.Exchange.MailboxSetting
-{
+﻿namespace MSGraph.Exchange.MailboxSetting {
     /// <summary>
     /// 
     /// </summary>
-    public enum AutomaticRepliesStatus
-    {
+    public enum AutomaticRepliesStatus {
         /// <summary>
         /// 
         /// </summary>
@@ -24,8 +22,7 @@
     /// <summary>
     /// 
     /// </summary>
-    public enum ExternalAudienceScope
-    {
+    public enum ExternalAudienceScope {
         /// <summary>
         /// 
         /// </summary>

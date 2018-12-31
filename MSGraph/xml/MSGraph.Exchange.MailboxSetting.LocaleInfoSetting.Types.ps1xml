@@ -2,7 +2,7 @@
 <Types>
 
     <Type>
-        <Name>Deserialized.MSGraph.Exchange.Category.OutlookCategory</Name>
+        <Name>Deserialized.MSGraph.Exchange.MailboxSetting.LocaleInfoSetting</Name>
         <Members>
             <MemberSet>
                 <Name>PSStandardMembers</Name>
@@ -12,7 +12,7 @@
                             TargetTypeForDeserialization
                         </Name>
                         <Value>
-                            MSGraph.Exchange.Category.OutlookCategory
+                            MSGraph.Exchange.MailboxSetting.LocaleInfoSetting
                         </Value>
                     </NoteProperty>
                 </Members>
@@ -21,7 +21,7 @@
     </Type>
 
     <Type>
-        <Name>MSGraph.Exchange.Category.OutlookCategory</Name>
+        <Name>MSGraph.Exchange.MailboxSetting.LocaleInfoSetting</Name>
         <Members>
             <CodeProperty IsHidden="true">
                 <Name>SerializationData</Name>

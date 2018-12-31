@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Net.Mail;
 
-namespace MSGraph.Exchange.Mail
-{
+namespace MSGraph.Exchange.Mail {
     /// <summary>
     /// Mail message in exchange online
     /// </summary>
     [Serializable]
-    public class Message
-    {
+    public class Message {
         #region Properties
         /// <summary>
         /// data carrier object
@@ -166,15 +164,12 @@ namespace MSGraph.Exchange.Mail
         /// <summary>
         /// 
         /// </summary>
-        public bool UnRead
-        {
-            get
-            {
+        public bool UnRead {
+            get {
                 return !IsRead;
             }
 
-            set
-            {
+            set {
                 IsRead = !UnRead;
             }
         }
@@ -195,18 +190,12 @@ namespace MSGraph.Exchange.Mail
         /// Overrides the default ToString() method
         /// </summary>
         /// <returns></returns>
-        public override string ToString()
-        {
-            if (!string.IsNullOrEmpty(Subject))
-            {
+        public override string ToString() {
+            if(!string.IsNullOrEmpty(Subject)) {
                 _returnValue = Subject;
-            }
-            else if (!string.IsNullOrEmpty(Id))
-            {
+            } else if(!string.IsNullOrEmpty(Id)) {
                 _returnValue = Id;
-            }
-            else
-            {
+            } else {
                 _returnValue = this.GetType().Name;
             }
 

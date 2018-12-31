@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Linq;
 
-namespace MSGraph.Exchange.Mail
-{
+namespace MSGraph.Exchange.Mail {
     /// <summary>
     /// Mail message parameter class for convinient pipeline 
     /// input on parameters in *-MgaMail* commands
     /// </summary>
     [Serializable]
-    public class FolderParameter
-    {
+    public class FolderParameter {
         #region Properties
         /// <summary>
         /// message or folder id
@@ -24,10 +22,8 @@ namespace MSGraph.Exchange.Mail
         /// <summary>
         /// The type name of inputobject
         /// </summary>
-        public string TypeName
-        {
-            get
-            {
+        public string TypeName {
+            get {
                 return _typeName;
             }
 
@@ -55,18 +51,12 @@ namespace MSGraph.Exchange.Mail
         /// Overrides the default ToString() method 
         /// </summary>
         /// <returns></returns>
-        public override string ToString()
-        {
-            if (!string.IsNullOrEmpty(Name))
-            {
+        public override string ToString() {
+            if(!string.IsNullOrEmpty(Name)) {
                 _returnValue = Name;
-            }
-            else if (!string.IsNullOrEmpty(Id))
-            {
+            } else if(!string.IsNullOrEmpty(Id)) {
                 _returnValue = Id;
-            }
-            else
-            {
+            } else {
                 _returnValue = InputObject.ToString();
             }
 
@@ -79,8 +69,7 @@ namespace MSGraph.Exchange.Mail
         /// <summary>
         /// Mail Folderinput
         /// </summary>
-        public FolderParameter(Folder Folder)
-        {
+        public FolderParameter(Folder Folder) {
             InputObject = Folder;
             _typeName = InputObject.GetType().ToString();
             Id = Folder.Id;
@@ -90,25 +79,19 @@ namespace MSGraph.Exchange.Mail
         /// <summary>
         /// String input
         /// </summary>
-        public FolderParameter(string Text)
-        {
+        public FolderParameter(string Text) {
             InputObject = Text;
             string[] names = Enum.GetNames(typeof(WellKnownFolder));
             _typeName = InputObject.GetType().ToString();
 
-            if (names.Contains(Text, StringComparer.InvariantCultureIgnoreCase))
-            {
+            if(names.Contains(Text, StringComparer.InvariantCultureIgnoreCase)) {
                 IsWellKnownName = true;
                 Name = Text.ToLower();
                 Id = Name;
-            }
-            else if (Text.Length == 120 || Text.Length == 104)
-            {
+            } else if(Text.Length == 120 || Text.Length == 104) {
                 IsWellKnownName = false;
                 Id = Text;
-            }
-            else
-            {
+            } else {
                 IsWellKnownName = false;
                 Name = Text;
             }

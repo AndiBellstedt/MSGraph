@@ -2,8 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace MSGraph.Exchange.MailboxSetting
-{
+namespace MSGraph.Exchange.MailboxSetting {
     /// <summary>
     /// Mailbox settings in exchange online
     /// 
@@ -12,8 +11,7 @@ namespace MSGraph.Exchange.MailboxSetting
     /// https://docs.microsoft.com/en-us/graph/api/user-get-mailboxsettings?view=graph-rest-1.0
     /// </summary>
     [Serializable]
-    public class MailboxSettings
-    {
+    public class MailboxSettings {
         #region Properties
         /// <summary>
         /// 
@@ -62,8 +60,7 @@ namespace MSGraph.Exchange.MailboxSetting
         /// Overrides the default ToString() method 
         /// </summary>
         /// <returns></returns>
-        public override string ToString()
-        {
+        public override string ToString() {
             return Name;
         }
 
@@ -74,8 +71,7 @@ namespace MSGraph.Exchange.MailboxSetting
         /// <summary>
         /// empty
         /// </summary>
-        public MailboxSettings()
-        {
+        public MailboxSettings() {
         }
 
         #endregion Constructors

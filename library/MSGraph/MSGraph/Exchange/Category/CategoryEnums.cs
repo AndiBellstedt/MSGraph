@@ -1,10 +1,8 @@
-﻿namespace MSGraph.Exchange.Category
-{
+﻿namespace MSGraph.Exchange.Category {
     /// <summary>
     /// 
     /// </summary>
-    public enum ColorKey
-    {
+    public enum ColorKey {
         /// <summary>
         /// 
         /// </summary>
@@ -139,8 +137,7 @@
     /// <summary>
     /// 
     /// </summary>
-    public enum ColorName
-    {
+    public enum ColorName {
         /// <summary>
         /// 
         /// </summary>

@@ -53,20 +53,44 @@
 
     # Format files (.ps1xml) to be loaded when importing this module
     FormatsToProcess   = @(
+        # Core
         'xml\MSGraph.Core.AzureAccessToken.Format.ps1xml',
+
+        # Exchange
+        ## Attachments
         'xml\MSGraph.Exchange.Attachment.Format.ps1xml',
+        ## Categories
         'xml\MSGraph.Exchange.Category.Format.ps1xml',
+        ## Folder
         'xml\MSGraph.Exchange.Mail.Folder.Format.ps1xml',
-        'xml\MSGraph.Exchange.Mail.Message.Format.ps1xml'
+        ## Message
+        'xml\MSGraph.Exchange.Mail.Message.Format.ps1xml',
+        ## MailboxSettings
+        'xml\MSGraph.Exchange.MailboxSetting.MailboxSettings.Format.ps1xml',
+        'xml\MSGraph.Exchange.MailboxSetting.AutomaticRepliesSetting.Format.ps1xml',
+        'xml\MSGraph.Exchange.MailboxSetting.WorkingHoursSetting.Format.ps1xml',
+        'xml\MSGraph.Exchange.MailboxSetting.LocaleInfoSetting.Format.ps1xml'
     )
 
     # Type files (.ps1xml) to be loaded when importing this module
     TypesToProcess     = @(
+        # Core
         'xml\MSGraph.Core.AzureAccessToken.Types.ps1xml',
+
+        # Exchange
+        ## Attachments
         'xml\MSGraph.Exchange.Attachment.Types.ps1xml',
+        ## Categories
         'xml\MSGraph.Exchange.Category.Types.ps1xml',
+        ## Folder
         'xml\MSGraph.Exchange.Mail.Folder.Types.ps1xml',
+        ## Message
         'xml\MSGraph.Exchange.Mail.Message.Types.ps1xml'
+        ## MailboxSettings
+        'xml\MSGraph.Exchange.MailboxSetting.MailboxSettings.Types.ps1xml'
+        'xml\MSGraph.Exchange.MailboxSetting.AutomaticRepliesSetting.Types.ps1xml',
+        'xml\MSGraph.Exchange.MailboxSetting.WorkingHoursSetting.Types.ps1xml',
+        'xml\MSGraph.Exchange.MailboxSetting.LocaleInfoSetting.Types.ps1xml'
     )
 
     # Modules to import as nested modules of the module specified in

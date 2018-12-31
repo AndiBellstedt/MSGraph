@@ -3,12 +3,12 @@
     <ViewDefinitions>
 
         <View>
-            <Name>MSGraph.Exchange.Category.OutlookCategory_table</Name>
+            <Name>MSGraph.Exchange.MailboxSetting.WorkingHoursSetting_table</Name>
             <ViewSelectedBy>
-                <TypeName>MSGraph.Exchange.Category.OutlookCategory</TypeName>
+                <TypeName>MSGraph.Exchange.MailboxSetting.WorkingHoursSetting</TypeName>
             </ViewSelectedBy>
             <TableControl>
-                <AutoSize />
+                <AutoSize/>
                 <TableHeaders>
                     <TableColumnHeader />
                     <TableColumnHeader />
@@ -18,21 +18,22 @@
                 </TableHeaders>
                 <TableRowEntries>
                     <TableRowEntry>
+                        <Wrap/>
                         <TableColumnItems>
                             <TableColumnItem>
-                                <PropertyName>Id</PropertyName>
+                                <PropertyName>DaysOfWeek</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>StartTime</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>EndTime</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>TimeZone</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
                                 <PropertyName>Name</PropertyName>
-                            </TableColumnItem>
-                            <TableColumnItem>
-                                <PropertyName>ColorName</PropertyName>
-                            </TableColumnItem>
-                            <TableColumnItem>
-                                <PropertyName>Color</PropertyName>
-                            </TableColumnItem>
-                            <TableColumnItem>
-                                <PropertyName>ColorCode</PropertyName>
                             </TableColumnItem>
                         </TableColumnItems>
                     </TableRowEntry>
@@ -41,28 +42,34 @@
         </View>
 
         <View>
-            <Name>MSGraph.Exchange.Category.OutlookCategory_list</Name>
+            <Name>MSGraph.Exchange.MailboxSetting.WorkingHoursSetting_list</Name>
             <ViewSelectedBy>
-                <TypeName>MSGraph.Exchange.Category.OutlookCategory</TypeName>
+                <TypeName>MSGraph.Exchange.MailboxSetting.WorkingHoursSetting</TypeName>
             </ViewSelectedBy>
             <ListControl>
                 <ListEntries>
                     <ListEntry>
                         <ListItems>
                             <ListItem>
-                                <PropertyName>Id</PropertyName>
-                            </ListItem>
-                            <ListItem>
                                 <PropertyName>Name</PropertyName>
                             </ListItem>
                             <ListItem>
-                                <PropertyName>ColorName</PropertyName>
+                                <PropertyName>DaysOfWeek</PropertyName>
                             </ListItem>
                             <ListItem>
-                                <PropertyName>Color</PropertyName>
+                                <PropertyName>StartTime</PropertyName>
                             </ListItem>
                             <ListItem>
-                                <PropertyName>ColorCode</PropertyName>
+                                <PropertyName>EndTime</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>StartTimeUTC</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>EndTimeUTC</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>TimeZone</PropertyName>
                             </ListItem>
                         </ListItems>
                     </ListEntry>

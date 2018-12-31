@@ -1,15 +1,13 @@
 ﻿using System;
 
-namespace MSGraph.Exchange
-{
+namespace MSGraph.Exchange {
     /// <summary>
     /// Describes the date, time, and time zone of a point in time.
     /// 
     /// https://docs.microsoft.com/en-us/graph/api/resources/datetimetimezone?view=graph-rest-1.0
     /// </summary>
     [Serializable]
-    public class DateTimeTimeZone
-    {
+    public class DateTimeTimeZone {
         #region Properties
         /// <summary>
         /// A single point of time in a combined date and time representation (date)T(time).
@@ -31,9 +29,8 @@ namespace MSGraph.Exchange
         /// Overrides the default ToString() method 
         /// </summary>
         /// <returns></returns>
-        public override string ToString()
-        {
-            return string.Format("{0:yyyy-MM-dd HH:mm:ss}", DateTime) + "(" + TimeZone + ")";
+        public override string ToString() {
+            return string.Format("{0:yyyy-MM-dd HH:mm:ss}", DateTime) + " (" + TimeZone + ")";
         }
 
         #endregion Statics & Stuff
@@ -43,15 +40,13 @@ namespace MSGraph.Exchange
         /// <summary>
         /// 
         /// </summary>
-        public DateTimeTimeZone()
-        {
+        public DateTimeTimeZone() {
         }
 
         /// <summary>
         /// input DateTimeTimeZone
         /// </summary>
-        public DateTimeTimeZone(DateTimeTimeZone DateTimeTimeZone)
-        {
+        public DateTimeTimeZone(DateTimeTimeZone DateTimeTimeZone) {
             this.DateTime = DateTimeTimeZone.DateTime;
             this.TimeZone = DateTimeTimeZone.TimeZone;
         }
@@ -59,8 +54,7 @@ namespace MSGraph.Exchange
         /// <summary>
         /// input only DateTime, sets UTC as default to TimeZone
         /// </summary>
-        public DateTimeTimeZone(DateTime DateTime)
-        {
+        public DateTimeTimeZone(DateTime DateTime) {
             this.DateTime = DateTime;
             this.TimeZone = "UTC";
         }
@@ -68,8 +62,7 @@ namespace MSGraph.Exchange
         /// <summary>
         /// input DateTime and TimeZone
         /// </summary>
-        public DateTimeTimeZone(DateTime DateTime, String TimeZone)
-        {
+        public DateTimeTimeZone(DateTime DateTime, String TimeZone) {
             this.DateTime = DateTime;
             this.TimeZone = TimeZone;
         }

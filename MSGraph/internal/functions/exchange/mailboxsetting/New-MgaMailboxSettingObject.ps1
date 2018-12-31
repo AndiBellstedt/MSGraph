@@ -71,7 +71,8 @@
             $autoReplySetting = [MSGraph.Exchange.MailboxSetting.AutomaticRepliesSetting]::new(
                 [MSGraph.Exchange.MailboxSetting.AutomaticRepliesStatus]$RestData.automaticRepliesSetting.Status,
                 [MSGraph.Exchange.MailboxSetting.ExternalAudienceScope]$RestData.automaticRepliesSetting.ExternalAudience,
-                $RestData.automaticRepliesSetting.ExternalReplyMessage, $RestData.automaticRepliesSetting.internalReplyMessage,
+                $RestData.automaticRepliesSetting.ExternalReplyMessage.Trim([char]65279),
+                $RestData.automaticRepliesSetting.internalReplyMessage.Trim([char]65279),
                 [MSGraph.Exchange.DateTimeTimeZone]$RestData.automaticRepliesSetting.ScheduledStartDateTime,
                 [MSGraph.Exchange.DateTimeTimeZone]$RestData.automaticRepliesSetting.ScheduledEndDateTime,
                 "$($name)/automaticRepliesSetting"
@@ -101,10 +102,10 @@
             # create auto reply settings object
             $outputHash.Add("Status", [MSGraph.Exchange.MailboxSetting.AutomaticRepliesStatus]$RestData.Status)
             $outputHash.Add("ExternalAudience", [MSGraph.Exchange.MailboxSetting.ExternalAudienceScope]$RestData.ExternalAudience)
-            $outputHash.Add("ExternalReplyMessage", $RestData.ExternalReplyMessage)
-            $outputHash.Add("InternalReplyMessage", $RestData.internalReplyMessage)
-            $outputHash.Add("ScheduledStartDateTime", [MSGraph.Exchange.DateTimeTimeZone]$RestData.ScheduledStartDateTime)
-            $outputHash.Add("ScheduledEndDateTime", [MSGraph.Exchange.DateTimeTimeZone]$RestData.ScheduledEndDateTime)
+            $outputHash.Add("ExternalReplyMessage", $RestData.ExternalReplyMessage.Trim([char]65279))
+            $outputHash.Add("InternalReplyMessage", $RestData.internalReplyMessage.Trim([char]65279))
+            $outputHash.Add("ScheduledStartDateTimeUTC", [MSGraph.Exchange.DateTimeTimeZone]$RestData.ScheduledStartDateTime)
+            $outputHash.Add("ScheduledEndDateTimeUTC", [MSGraph.Exchange.DateTimeTimeZone]$RestData.ScheduledEndDateTime)
 
             New-Object -TypeName MSGraph.Exchange.MailboxSetting.AutomaticRepliesSetting -Property $outputHash
         }
