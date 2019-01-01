@@ -109,10 +109,11 @@
                 "Content-Type"  = "application/json"
             }
         }
-        $data = Invoke-RestMethod @invokeParam -ErrorVariable "restError" -Verbose:$false -UseBasicParsing
-        if ($restError) {
-            Stop-PSFFunction -Tag "RestData" -Message $parseError[0].Exception.Message -Exception $parseError[0].Exception -EnableException $false -Category ConnectionError -FunctionName $FunctionName
-            return
+
+        try {
+            $data = Invoke-RestMethod @invokeParam -ErrorVariable "restError" -ErrorAction Stop -Verbose:$false -UseBasicParsing
+        } catch {
+            Stop-PSFFunction -Tag "RestDataError" -Message $_.Exception.Message -Exception $_.Exception -ErrorRecord $_ -EnableException $true -Category ConnectionError -FunctionName $FunctionName
         }
 
         if ("Value" -in $data.psobject.Properties.Name) {
