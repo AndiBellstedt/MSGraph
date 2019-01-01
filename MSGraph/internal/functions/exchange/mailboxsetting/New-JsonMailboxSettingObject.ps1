@@ -1,55 +1,18 @@
-﻿function New-JsonAttachmentObject {
+﻿function New-JsonMailboxSettingObject {
     <#
     .SYNOPSIS
-        Creates a json attachment object for use in Microsoft Graph REST api
+        Creates a json mailsettings object for use in Microsoft Graph REST api
 
     .DESCRIPTION
-        Creates a json attachment object for use in Microsoft Graph REST api
+        Creates a json mailsettings object for use in Microsoft Graph REST api
         Helper function used for internal commands.
 
-    .PARAMETER Name
-        The name of attachment.
+    .PARAMETER SettingObject
+        The object to be converted into JSON format containing the data for the new message object.
 
-    .PARAMETER Size
-        The size in bytes of the attachment.
-
-    .PARAMETER IsInline
-        Set to true if this is an inline attachment.
-
-    .PARAMETER LastModifiedDateTime
-        The date and time when the attachment was last modified.
-        The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time.
-        For example, midnight UTC on Jan 1, 2014 would look like this: '2014-01-01T00:00:00Z'
-
-    .PARAMETER ContentType
-        The content type of the attachment.
-
-    .PARAMETER contentBytes
-        The base64-encoded contents of the file.
-
-    .PARAMETER contentLocation
-        The Uniform Resource Identifier (URI) that corresponds to the location of the content of the attachment.
-
-    .PARAMETER Item
-        The attached message or event. Navigation property.
-
-    .PARAMETER IsFolder
-        Property indicates, wether the object is a folder or not.
-
-    .PARAMETER Permission
-        The stated permission on the reference attachment.
-
-    .PARAMETER PreviewUrl
-        The url the preview the reference attachment.
-
-    .PARAMETER ProviderType
-        Specifies what type of reference is it.
-
-    .PARAMETER SourceUrl
-        The Url where the reference attachment points to.
-
-    .PARAMETER ThumbnailUrl
-        The Url of the thumbnail for the reference attachment.
+    .PARAMETER User
+        The user-account to access. Defaults to the main user connected as.
+        Can be any primary email name of any user the connected token has access to.
 
     .PARAMETER FunctionName
         Name of the higher function which is calling this function.
@@ -57,93 +20,23 @@
 
     .NOTES
         For addiontional information about Microsoft Graph API go to:
-        https://docs.microsoft.com/en-us/graph/api/resources/attachment?view=graph-rest-1.0
-
-        https://docs.microsoft.com/en-us/graph/api/resources/fileattachment?view=graph-rest-1.0
-        https://docs.microsoft.com/en-us/graph/api/resources/itemattachment?view=graph-rest-1.0
-        https://docs.microsoft.com/en-us/graph/api/resources/referenceattachment?view=graph-rest-1.0
+        https://docs.microsoft.com/en-us/graph/api/user-update-mailboxsettings?view=graph-rest-1.0
 
     .EXAMPLE
-        PS C:\> New-JsonAttachmentObject
+        PS C:\> New-JsonMailboxSettingObject -SettingObject $settingObject -User $user -FunctionName $MyInvocation.MyCommand
 
-        Creates a json attachment object for use in Microsoft Graph REST api
+        Creates a json MailboxSetting object for use in Microsoft Graph REST api
 
     #>
     [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseShouldProcessForStateChangingFunctions", "")]
-    [CmdletBinding(SupportsShouldProcess = $false, ConfirmImpact = 'Low', DefaultParameterSetName = 'FileAttachment')]
+    [CmdletBinding(SupportsShouldProcess = $false, ConfirmImpact = 'Low')]
     [OutputType([String])]
     param (
-        [AllowNull()]
-        [AllowEmptyCollection()]
-        [AllowEmptyString()]
+        [MSGraph.Exchange.MailboxSetting.MailboxSettingParameter]
+        $SettingObject,
+
         [string]
-        $Name,
-
-        [AllowNull()]
-        [AllowEmptyCollection()]
-        [AllowEmptyString()]
-        [int32]
-        $Size,
-
-        [AllowNull()]
-        [AllowEmptyCollection()]
-        [AllowEmptyString()]
-        [bool]
-        $IsInline,
-
-        [AllowNull()]
-        [AllowEmptyCollection()]
-        [AllowEmptyString()]
-        [string]
-        $LastModifiedDateTime,
-
-        [AllowNull()]
-        [AllowEmptyCollection()]
-        [AllowEmptyString()]
-        [string]
-        $ContentType,
-
-        [Parameter(ParameterSetName = 'FileAttachment')]
-        [AllowNull()]
-        [AllowEmptyCollection()]
-        [AllowEmptyString()]
-        [string]
-        $contentBytes,
-
-        [Parameter(ParameterSetName = 'FileAttachment')]
-        [AllowNull()]
-        [AllowEmptyCollection()]
-        [AllowEmptyString()]
-        [string]
-        $contentLocation,
-
-        [Parameter(ParameterSetName = 'ItemAttachment')]
-        [psobject]
-        $Item,
-
-        [Parameter(ParameterSetName = 'ReferenceAttachment')]
-        [String]
-        $SourceUrl,
-
-        [Parameter(ParameterSetName = 'ReferenceAttachment')]
-        [String]
-        $ProviderType,
-
-        [Parameter(ParameterSetName = 'ReferenceAttachment')]
-        [String]
-        $ThumbnailUrl,
-
-        [Parameter(ParameterSetName = 'ReferenceAttachment')]
-        [String]
-        $PreviewUrl,
-
-        [Parameter(ParameterSetName = 'ReferenceAttachment')]
-        [String]
-        $Permission,
-
-        [Parameter(ParameterSetName = 'ReferenceAttachment')]
-        [bool]
-        $IsFolder,
+        $User,
 
         [String]
         $FunctionName
@@ -152,44 +45,95 @@
     }
 
     process {
-        Write-PSFMessage -Level Debug -Message "Create attachment JSON object" -Tag "ParameterSetHandling"
-
+        Write-PSFMessage -Level Debug -Message "Working on '$($SettingObject)' to create mailboxSetting JSON object" -Tag "ParameterSetHandling"
         #region variable definition
-        $boundParameters = @()
         $bodyHash = [ordered]@{}
-        $variableNames = @("Name", "Size", "IsInline", "LastModifiedDateTime", "ContentType")
-        switch ($PSCmdlet.ParameterSetName) {
-            'FileAttachment' { $variableNames = $variableNames + @("contentBytes", "contentLocation") }
-            'ItemAttachment' { $variableNames = $variableNames + @("item") }
-            'ReferenceAttachment' { $variableNames = $variableNames + @("SourceUrl", "ProviderType", "ThumbnailUrl", "PreviewUrl", "Permission", "IsFolder") }
-        }
+
         #endregion variable definition
 
-        #region Parsing string and boolean parameters to json data parts
-        Write-PSFMessage -Level VeryVerbose -Message "Parsing parameters to json data parts ($([string]::Join(", ", $variableNames)))" -Tag "ParameterParsing" -FunctionName $FunctionName
+        #region Parsing input to json data parts
+        # set field @odata.context - required
+        if ($SettingObject.InputObject.BaseObject.'@odata.context') {
+            $context = $SettingObject.InputObject.BaseObject.'@odata.context'
+            if ($context -match '\/mailboxSettings\/\w*$') { $context = $context.Replace($Matches.Values, "/mailboxsettings") }
+            Remove-Variable -Name Matches -Force -WhatIf:$false -Confirm:$false -Verbose:$false -Debug:$false -WarningAction Ignore -ErrorAction Ignore
+        } else {
+            $apiConnection = Get-PSFConfigValue -FullName 'MSGraph.Tenant.ApiConnection' -Fallback 'https://graph.microsoft.com'
+            $apiVersion = Get-PSFConfigValue -FullName 'MSGraph.Tenant.ApiVersion' -Fallback 'v1.0'
+            $resolvedUser = Resolve-UserString -User $User -ContextData
+            $context = "$($apiConnection)/$($apiVersion)/`$metadata#$($resolvedUser)/mailboxsettings"
+            Remove-Variable -Name apiConnection, apiVersion -Force -WhatIf:$false -Confirm:$false -Verbose:$false -Debug:$false -WarningAction Ignore -ErrorAction Ignore
+        }
+        $bodyHash.Add('@odata.context', """$context""")
 
-        $bodyHash.Add("@odata.type", """#microsoft.graph.$($PSCmdlet.ParameterSetName)""")
+        # depending on type of object
+        switch ($SettingObject.TypeName) {
+            'MSGraph.Exchange.MailboxSetting.MailboxSettings' {
+                # set archive folder
+                Write-PSFMessage -Level VeryVerbose -Message "Prepare setting archive folder to '$($SettingObject.InputObject.ArchiveFolder)'" -Tag "CreateJSON" -FunctionName $FunctionName
+                $bodyHash.Add('archiveFolder', ($SettingObject.InputObject.ArchiveFolder.Id | ConvertTo-Json))
 
-        foreach ($variableName in $variableNames) {
-            if (Test-PSFParameterBinding -ParameterName $variableName) {
-                $boundParameters = $boundParameters + $variableName
-                Write-PSFMessage -Level Debug -Message "Parsing parameter $($variableName)" -Tag "ParameterParsing"
-                $bodyHash.Add($variableName, ((Get-Variable $variableName -Scope 0).Value | ConvertTo-Json))
+                # set time zone
+                Write-PSFMessage -Level VeryVerbose -Message "Prepare setting timezone to '$($SettingObject.InputObject.TimeZone.Id)'" -Tag "CreateJSON" -FunctionName $FunctionName
+                $bodyHash.Add('timeZone', ($SettingObject.InputObject.TimeZone.Id | ConvertTo-Json))
+                #$bodyHash.Add('timeZone', ('"' + "W. Europe Standard Time" + '"'))
+
+                # set auto reply
+                Write-PSFMessage -Level VeryVerbose -Message "Prepare setting autoreply to '$($SettingObject.InputObject.automaticRepliesSetting.Status)'" -Tag "CreateJSON" -FunctionName $FunctionName
+                $automaticRepliesSettingJSON = New-JsonAutomaticRepliesSettingFraction -AutomaticRepliesSetting $SettingObject.InputObject.automaticRepliesSetting
+                $bodyHash.Add('automaticRepliesSetting', $automaticRepliesSettingJSON)
+
+                # set language
+                Write-PSFMessage -Level VeryVerbose -Message "Prepare setting language to '$($SettingObject.InputObject.Language)'" -Tag "CreateJSON" -FunctionName $FunctionName
+                $languageSettingJSON = New-JsonLanguageSettingFraction -LanguageSetting $SettingObject.InputObject.Language
+                $bodyHash.Add('language', $languageSettingJSON)
+
+                # set working hours
+                Write-PSFMessage -Level VeryVerbose -Message "Prepare setting workingHours to '$($SettingObject.InputObject.WorkingHours)'" -Tag "CreateJSON" -FunctionName $FunctionName
+                $workingHoursSettingJSON = New-JsonWorkingHoursSettingFraction -WorkingHoursSetting $SettingObject.InputObject.WorkingHours
+                $bodyHash.Add('workingHours', $workingHoursSettingJSON)
             }
-        }
-        #endregion Parsing string and boolean parameters to json data parts
 
-        #region Put parameters (JSON Parts) into a valid "message"-JSON-object together
-        $bodyJsonParts = @()
-        foreach ($key in $bodyHash.Keys) {
-            $bodyJsonParts = $bodyJsonParts + """$($key)"" : $($bodyHash[$Key])"
-        }
-        $bodyJSON = "{`n" + ([string]::Join(",`n", $bodyJsonParts)) + "`n}"
-        #endregion Put parameters (JSON Parts) into a valid "message"-JSON-object together
+            'MSGraph.Exchange.Mail.Folder' {
+                # set archive folder
+                Write-PSFMessage -Level VeryVerbose -Message "Prepare setting archive folder to '$($SettingObject.InputObject)'" -Tag "CreateJSON" -FunctionName $FunctionName
+                $bodyHash.Add('archiveFolder', ($SettingObject.InputObject.Id | ConvertTo-Json))
+            }
 
-        #region output created object
+            'System.TimeZoneInfo' {
+                # set time zone
+                Write-PSFMessage -Level VeryVerbose -Message "Prepare setting timezone to '$($SettingObject.InputObject.Id)'" -Tag "CreateJSON" -FunctionName $FunctionName
+                $bodyHash.Add('timeZone', ($SettingObject.InputObject.Id | ConvertTo-Json))
+            }
+
+            'MSGraph.Exchange.MailboxSetting.AutomaticRepliesSetting' {
+                # set auto reply
+                Write-PSFMessage -Level VeryVerbose -Message "Prepare setting autoreply to '$($SettingObject.InputObject.Status)'" -Tag "CreateJSON" -FunctionName $FunctionName
+                $automaticRepliesSettingJSON = New-JsonAutomaticRepliesSettingFraction -AutomaticRepliesSetting $SettingObject.InputObject
+                $bodyHash.Add('automaticRepliesSetting', $automaticRepliesSettingJSON)
+            }
+
+            'MSGraph.Exchange.MailboxSetting.LocaleInfoSetting' {
+                # set language
+                Write-PSFMessage -Level VeryVerbose -Message "Prepare setting language to '$($SettingObject.InputObject)'" -Tag "CreateJSON" -FunctionName $FunctionName
+                $languageSettingJSON = New-JsonLanguageSettingFraction -LanguageSetting $SettingObject.InputObject
+                $bodyHash.Add('language', $languageSettingJSON)
+            }
+
+            'MSGraph.Exchange.MailboxSetting.WorkingHoursSetting' {
+                # set working hours
+                Write-PSFMessage -Level VeryVerbose -Message "Prepare setting workingHours to '$($SettingObject.InputObject)'" -Tag "CreateJSON" -FunctionName $FunctionName
+                $workingHoursSettingJSON = New-JsonWorkingHoursSettingFraction -WorkingHoursSetting $SettingObject.InputObject
+                $bodyHash.Add('workingHours', $workingHoursSettingJSON)
+            }
+
+            Default { Stop-PSFFunction -Message "Unhandled type ($($SettingObject.TypeName)) of SettingObject. Developer mistake!" -EnableException $true -Category InvalidType -FunctionName $MyInvocation.MyCommand }
+        }
+        #endregion Parsing input to json data parts
+
+        # Put parameters (JSON Parts) into a valid JSON-object and output the result
+        $bodyJSON = Merge-HashToJSON $bodyHash
         $bodyJSON
-        #endregion output created object
     }
 
     end {

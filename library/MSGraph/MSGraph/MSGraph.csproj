@@ -61,6 +61,7 @@
     <Compile Include="Exchange\Attachment\Attachment.cs" />
     <Compile Include="Exchange\Attachment\AttachmentParameter.cs" />
     <Compile Include="Exchange\ExchangeCommonEnums.cs" />
+    <Compile Include="Exchange\MailboxSetting\MailboxSettingParameter.cs" />
     <Compile Include="Exchange\MailboxSetting\WorkingHoursSetting.cs" />
     <Compile Include="Exchange\MailboxSetting\LocaleInfoSetting.cs" />
     <Compile Include="Exchange\MailboxSetting\MailboxSettingEnums.cs" />

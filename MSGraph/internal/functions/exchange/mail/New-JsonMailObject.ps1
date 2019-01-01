@@ -248,17 +248,9 @@
         }
         #endregion Parsing mailaddress parameters to json data parts
 
-        #region Put parameters (JSON Parts) into a valid "message"-JSON-object together
-        $bodyJsonParts = @()
-        foreach ($key in $bodyHash.Keys) {
-            $bodyJsonParts = $bodyJsonParts + """$($key)"" : $($bodyHash[$Key])"
-        }
-        $bodyJSON = "{`n" + ([string]::Join(",`n", $bodyJsonParts)) + "`n}"
-        #endregion Put parameters (JSON Parts) into a valid "message"-JSON-object together
-
-        #region output created object
+        # Put parameters (JSON Parts) into a valid JSON-object together and output the result
+        $bodyJSON = Merge-HashToJson $bodyHash
         $bodyJSON
-        #endregion output created object
     }
 
     end {

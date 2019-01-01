@@ -25,9 +25,11 @@
                             </TableColumnItem>
                             <TableColumnItem>
                                 <PropertyName>StartTime</PropertyName>
+                                <FormatString>{0:T}</FormatString>
                             </TableColumnItem>
                             <TableColumnItem>
                                 <PropertyName>EndTime</PropertyName>
+                                <FormatString>{0:T}</FormatString>
                             </TableColumnItem>
                             <TableColumnItem>
                                 <PropertyName>TimeZone</PropertyName>

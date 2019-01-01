@@ -1136,6 +1136,63 @@
             empty object
             </summary>
         </member>
+        <member name="T:MSGraph.Exchange.MailboxSetting.MailboxSettingParameter">
+            <summary>
+            mailboxSetting parameter class for convinient pipeline 
+            input on parameters in Set-MgaMailboxSettings command
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.MailboxSetting.MailboxSettingParameter.Name">
+            <summary>
+            name of the category
+            </summary>
+        </member>
+        <member name="P:MSGraph.Exchange.MailboxSetting.MailboxSettingParameter.TypeName">
+            <summary>
+            The type name of inputobject
+            </summary>
+        </member>
+        <member name="F:MSGraph.Exchange.MailboxSetting.MailboxSettingParameter.InputObject">
+            <summary>
+            carrier object for the input object
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.MailboxSetting.MailboxSettingParameter.ToString">
+            <summary>
+            Overrides the default ToString() method 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MSGraph.Exchange.MailboxSetting.MailboxSettingParameter.#ctor(MSGraph.Exchange.MailboxSetting.MailboxSettings)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.MailboxSetting.MailboxSettingParameter.#ctor(MSGraph.Exchange.MailboxSetting.AutomaticRepliesSetting)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.MailboxSetting.MailboxSettingParameter.#ctor(MSGraph.Exchange.MailboxSetting.LocaleInfoSetting)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.MailboxSetting.MailboxSettingParameter.#ctor(MSGraph.Exchange.MailboxSetting.WorkingHoursSetting)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.MailboxSetting.MailboxSettingParameter.#ctor(System.TimeZoneInfo)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.MailboxSetting.MailboxSettingParameter.#ctor(MSGraph.Exchange.Mail.Folder)">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:MSGraph.Exchange.MailboxSetting.WorkingHoursSetting">
             <summary>
             WorkingHour settings in exchange online
@@ -1263,7 +1320,12 @@
         </member>
         <member name="M:MSGraph.Exchange.MailboxSetting.LocaleInfoSetting.#ctor(System.Globalization.CultureInfo)">
             <summary>
-            All properties
+            locale only
+            </summary>
+        </member>
+        <member name="M:MSGraph.Exchange.MailboxSetting.LocaleInfoSetting.#ctor(System.String)">
+            <summary>
+            locale only by String
             </summary>
         </member>
         <member name="M:MSGraph.Exchange.MailboxSetting.LocaleInfoSetting.#ctor(System.Globalization.CultureInfo,System.String,System.String)">
@@ -1996,7 +2058,7 @@
         <member name="T:MSGraph.Exchange.TimeZoneBase">
             <summary>
             The basic representation of a time zone.
-            
+            adoption class from sealed class TimezoneInfo for convinient output name and displayname
             https://docs.microsoft.com/en-us/graph/api/resources/timezonebase?view=graph-rest-1.0
             </summary>
         </member>

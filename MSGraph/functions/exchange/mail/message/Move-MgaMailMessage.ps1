@@ -103,13 +103,8 @@
     process {
         Write-PSFMessage -Level Debug -Message "Gettings messages by parameter set $($PSCmdlet.ParameterSetName)" -Tag "ParameterSetHandling"
 
-        #region Put parameters (JSON Parts) into a valid "message"-JSON-object together
-        $bodyJsonParts = @()
-        foreach ($key in $bodyHash.Keys) {
-            $bodyJsonParts = $bodyJsonParts + """$($key)"" : $($bodyHash[$Key])"
-        }
-        $bodyJSON = "{`n" + ([string]::Join(",`n", $bodyJsonParts)) + "`n}"
-        #endregion Put parameters (JSON Parts) into a valid "message"-JSON-object together
+        # Put parameters (JSON Parts) into a valid JSON-object together and output the result
+        $bodyJSON = Merge-HashToJson $bodyHash
 
         #region move message
         foreach ($messageItem in $Message) {

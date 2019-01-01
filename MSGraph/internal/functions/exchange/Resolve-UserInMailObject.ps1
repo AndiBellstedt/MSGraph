@@ -42,17 +42,32 @@
     )
 
     # check input object type
-    if ($Object.psobject.TypeNames[0] -like "MSGraph.Exchange.Mail.FolderParameter") {
-        $namespace = "MSGraph.Exchange.Mail"
-        $Type = "Folder"
-    } elseif ($Object.psobject.TypeNames[0] -like "MSGraph.Exchange.Mail.MessageParameter") {
-        $namespace = "MSGraph.Exchange.Mail"
-        $Type = "Message"
-    } elseif ($Object.psobject.TypeNames[0] -like "MSGraph.Exchange.Category.CategoryParameter") {
-        $namespace = "MSGraph.Exchange.Category"
-        $Type = "Category"
-    } else {
-        $msg = "Object '$($Object)' is not valid. Must be one of: 'MSGraph.Exchange.Mail.FolderParameter', 'MSGraph.Exchange.Mail.MessageParameter', 'MSGraph.Exchange.Category.CategoryParameter'."
+    [bool]$failed = $false
+    switch ($Object.psobject.TypeNames[0]) {
+        "MSGraph.Exchange.Mail.FolderParameter" {
+            $namespace = "MSGraph.Exchange.Mail"
+            $Type = "Folder"
+        }
+
+        "MSGraph.Exchange.Mail.MessageParameter" {
+            $namespace = "MSGraph.Exchange.Mail"
+            $Type = "Message"
+        }
+
+        "MSGraph.Exchange.Category.CategoryParameter" {
+            $namespace = "MSGraph.Exchange.Category"
+            $Type = "Category"
+        }
+
+        "MSGraph.Exchange.MailboxSetting.MailboxSettingParameter" {
+            $namespace = "MSGraph.Exchange.MailboxSetting"
+            $Type = "MailboxSettings"
+        }
+
+        Default { $failed = $true }
+    }
+    if($failed) {
+        $msg = "Object '$($Object)' is not valid. Must be one of: 'MSGraph.Exchange.*.*Parameter' object types. Developers mistake!"
         Stop-PSFFunction -Message $msg -Tag "InputValidation" -FunctionName $FunctionName -EnableException $true -Exception ([System.Management.Automation.RuntimeException]::new($msg))
     }
     Write-PSFMessage -Level Debug -Message "Object '$($Object)' is qualified as a $($Type)" -Tag "InputValidation" -FunctionName $FunctionName

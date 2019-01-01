@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace MSGraph.Exchange {
     /// <summary>
     /// The basic representation of a time zone.
-    /// 
+    /// adoption class from sealed class TimezoneInfo for convinient output name and displayname
     /// https://docs.microsoft.com/en-us/graph/api/resources/timezonebase?view=graph-rest-1.0
     /// </summary>
     [Serializable]

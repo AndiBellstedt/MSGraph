@@ -132,6 +132,7 @@
 
         ## MailboxSettings
         'Get-MgaMailboxSetting',
+        'Set-MgaMailboxSetting',
 
         # Core
         'Invoke-MgaRestMethodGet',

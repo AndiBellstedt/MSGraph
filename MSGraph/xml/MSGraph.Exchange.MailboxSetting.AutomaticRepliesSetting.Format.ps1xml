@@ -34,10 +34,10 @@
                                 <PropertyName>ExternalAudience</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
-                                <PropertyName>ScheduledStartDateTime</PropertyName>
+                                <PropertyName>StartDateTime</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
-                                <PropertyName>ScheduledEndDateTime</PropertyName>
+                                <PropertyName>EndDateTime</PropertyName>
                             </TableColumnItem>
                         </TableColumnItems>
                     </TableRowEntry>
@@ -70,10 +70,10 @@
                                 <PropertyName>ExternalAudience</PropertyName>
                             </ListItem>
                             <ListItem>
-                                <PropertyName>ScheduledStartDateTime</PropertyName>
+                                <PropertyName>StartDateTime</PropertyName>
                             </ListItem>
                             <ListItem>
-                                <PropertyName>ScheduledEndDateTime</PropertyName>
+                                <PropertyName>EndDateTime</PropertyName>
                             </ListItem>
                             <ListItem>
                                 <PropertyName>ScheduledStartDateTimeUTC</PropertyName>

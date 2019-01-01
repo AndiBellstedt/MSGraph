@@ -46,7 +46,7 @@
     )
     Write-PSFMessage -Level Debug -Message "Create $($Type) mailbox Setting object" -Tag "CreateObject"
 
-    if ($Type -notlike "TimeZoneSetting") {
+    if ($Type -notlike "TimeZoneSetting" -and $Type -notlike "ArchiveFolderSetting") {
         $name = [System.Web.HttpUtility]::UrlDecode(([uri]$RestData.'@odata.context').Fragment).TrimStart("#")
         $outputHash = [ordered]@{
             Name       = $name
@@ -56,14 +56,23 @@
     }
 
     switch ($Type) {
-        'AllSettings' {
+        {$_ -like 'AllSettings' -or $_ -like 'ArchiveFolderSetting'} {
             # create the full set of mailbox settings
-            try {
-                $archivFolder = Get-MgaMailFolder -Name $RestData.archiveFolder -User $User -Token $Token -ErrorAction Stop
-            } catch {
-                Stop-PSFFunction -Message "Failed to get information about archiv folder on $($outputHash.Name)" -EnableException $true -Exception $_.Exception -Category ReadError -ErrorRecord $_ -Tag "QueryData" -FunctionName $FunctionName
+            if ($RestData.archiveFolder) {
+                try {
+                    $archivFolder = Get-MgaMailFolder -Name $RestData.archiveFolder -User $User -Token $Token -ErrorAction Stop
+                } catch {
+                    Stop-PSFFunction -Message "Failed to get information about archiv folder on $($outputHash.Name)" -EnableException $true -Exception $_.Exception -Category ReadError -ErrorRecord $_ -Tag "QueryData" -FunctionName $FunctionName
+                }
+
+                if ($Type -like 'ArchiveFolderSetting') {
+                    return $archivFolder
+                } else {
+                    $outputHash.Add("ArchiveFolder", $archivFolder)
+                }
+            } else {
+                $archivFolder = ""
             }
-            $outputHash.Add("ArchiveFolder", $archivFolder)
 
             $timeZone = [System.TimeZoneInfo]::FindSystemTimeZoneById($RestData.timeZone)
             $outputHash.Add("TimeZone", $timeZone)
@@ -100,37 +109,45 @@
 
         'AutomaticReplySetting' {
             # create auto reply settings object
-            $outputHash.Add("Status", [MSGraph.Exchange.MailboxSetting.AutomaticRepliesStatus]$RestData.Status)
-            $outputHash.Add("ExternalAudience", [MSGraph.Exchange.MailboxSetting.ExternalAudienceScope]$RestData.ExternalAudience)
-            $outputHash.Add("ExternalReplyMessage", $RestData.ExternalReplyMessage.Trim([char]65279))
-            $outputHash.Add("InternalReplyMessage", $RestData.internalReplyMessage.Trim([char]65279))
-            $outputHash.Add("ScheduledStartDateTimeUTC", [MSGraph.Exchange.DateTimeTimeZone]$RestData.ScheduledStartDateTime)
-            $outputHash.Add("ScheduledEndDateTimeUTC", [MSGraph.Exchange.DateTimeTimeZone]$RestData.ScheduledEndDateTime)
+            if ($RestData.automaticRepliesSetting) { $autoReplySetting = $RestData.automaticRepliesSetting } else { $autoReplySetting = $RestData }
+            $outputHash.Add("Status", [MSGraph.Exchange.MailboxSetting.AutomaticRepliesStatus]$autoReplySetting.Status)
+            $outputHash.Add("ExternalAudience", [MSGraph.Exchange.MailboxSetting.ExternalAudienceScope]$autoReplySetting.ExternalAudience)
+            $outputHash.Add("ExternalReplyMessage", $autoReplySetting.ExternalReplyMessage.Trim([char]65279))
+            $outputHash.Add("InternalReplyMessage", $autoReplySetting.internalReplyMessage.Trim([char]65279))
+            $outputHash.Add("ScheduledStartDateTimeUTC", [MSGraph.Exchange.DateTimeTimeZone]$autoReplySetting.ScheduledStartDateTime)
+            $outputHash.Add("ScheduledEndDateTimeUTC", [MSGraph.Exchange.DateTimeTimeZone]$autoReplySetting.ScheduledEndDateTime)
 
             New-Object -TypeName MSGraph.Exchange.MailboxSetting.AutomaticRepliesSetting -Property $outputHash
+            Remove-Variable -Name autoReplySetting -Force -WhatIf:$false -Confirm:$false -Verbose:$false -Debug:$false -WarningAction Ignore -ErrorAction Ignore
         }
 
         'LanguageSetting' {
             # create language setting object
-            $outputHash.Add("Locale", [cultureinfo]$RestData.locale)
-            $outputHash.Add("DisplayName", $RestData.displayName)
+            if($RestData.language) { $languageSetting = $RestData.language } else { $languageSetting = $RestData }
+            $outputHash.Add("Locale", [cultureinfo]$languageSetting.locale)
+            $outputHash.Add("DisplayName", $languageSetting.displayName)
 
             New-Object -TypeName MSGraph.Exchange.MailboxSetting.LocaleInfoSetting -Property $outputHash
+            Remove-Variable -Name languageSetting -Force -WhatIf:$false -Confirm:$false -Verbose:$false -Debug:$false -WarningAction Ignore -ErrorAction Ignore
         }
 
         'TimeZoneSetting' {
             # create timeZone object
-            [System.TimeZoneInfo]::FindSystemTimeZoneById($RestData)
+            if($RestData.timeZone) { $timeZoneSetting = $RestData.timeZone } else { $timeZoneSetting = $RestData }
+            [System.TimeZoneInfo]::FindSystemTimeZoneById($timeZoneSetting)
+            Remove-Variable -Name timeZoneSetting -Force -WhatIf:$false -Confirm:$false -Verbose:$false -Debug:$false -WarningAction Ignore -ErrorAction Ignore
         }
 
-        'WorkingHourSetting' {
+        'WorkingHoursSetting' {
             # create workingHours object
-            $outputHash.Add("DaysOfWeek", $RestData.daysOfWeek.ForEach( {[dayOfWeek]$_}))
-            $outputHash.Add("StartTime", [datetime]$RestData.startTime)
-            $outputHash.Add("EndTime", [datetime]$RestData.endTime)
-            $outputHash.Add("TimeZone", [MSGraph.Exchange.TimeZoneBase]::new($RestData.timeZone.name))
+            if($RestData.workingHours) { $workingHourSetting = $RestData.workingHours } else { $workingHourSetting = $RestData }
+            $outputHash.Add("DaysOfWeek", $workingHourSetting.daysOfWeek.ForEach( {[dayOfWeek]$_}))
+            $outputHash.Add("StartTime", [datetime]$workingHourSetting.startTime)
+            $outputHash.Add("EndTime", [datetime]$workingHourSetting.endTime)
+            $outputHash.Add("TimeZone", [MSGraph.Exchange.TimeZoneBase]::new($workingHourSetting.timeZone.name))
 
             New-Object -TypeName MSGraph.Exchange.MailboxSetting.WorkingHoursSetting -Property $outputHash
+            Remove-Variable -Name workingHourSetting -Force -WhatIf:$false -Confirm:$false -Verbose:$false -Debug:$false -WarningAction Ignore -ErrorAction Ignore
         }
 
         Default {

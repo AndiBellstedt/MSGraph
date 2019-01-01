@@ -73,10 +73,17 @@ namespace MSGraph.Exchange.MailboxSetting {
         }
 
         /// <summary>
-        /// All properties
+        /// locale only
         /// </summary>
         public LocaleInfoSetting(System.Globalization.CultureInfo Locale) {
             this.Locale = Locale;
+        }
+
+        /// <summary>
+        /// locale only by String
+        /// </summary>
+        public LocaleInfoSetting(String Locale) {
+            this.Locale = System.Globalization.CultureInfo.GetCultureInfo(Locale);
         }
 
         /// <summary>

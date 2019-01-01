@@ -8,6 +8,8 @@
         - LanguageSetting
         - TimeZoneSetting
         - WorkingHourSetting
+- New: Command Set-MgaMailboxSettings
+    - for now, only accept input from Get-MgaMailboxSettings. more to come...
 - Upd: IMPORTANT CHANGE - Rename commands for consistent command name pattern. Put old names as aliases, for backward compatibility.
     - Invoke-MgaDeleteMethod --> Invoke-MgaRestMethodDelete
     - Invoke-MgaGetMethod --> Invoke-MgaRestMethodGet

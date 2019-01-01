@@ -90,10 +90,15 @@
         [switch]
         $TimeZoneSetting,
 
-        [Parameter(ParameterSetName = 'WorkingHourSetting')]
-        [Alias('WorkingHour')]
+        [Parameter(ParameterSetName = 'WorkingHoursSetting')]
+        [Alias('WorkingsHour')]
         [switch]
-        $WorkingHourSetting,
+        $WorkingHoursSetting,
+
+        [Parameter(ParameterSetName = 'ArchiveFolderSetting')]
+        [Alias('ArchiveFolder')]
+        [switch]
+        $ArchiveFolderSetting,
 
         [string]
         $User,
@@ -107,7 +112,7 @@
     }
 
     process {
-        Write-PSFMessage -Level Verbose -Message "Getting mailbox settings for '$(Resolve-UserString -User $User)' by parameter set $($PSCmdlet.ParameterSetName)" -Tag "ParameterSetHandling"
+        Write-PSFMessage -Level Verbose -Message "Getting mailbox settings for '$(Resolve-UserString -User $User)' by ParameterSet $($PSCmdlet.ParameterSetName)" -Tag "ParameterSetHandling"
 
         #region query data
         $invokeParam = @{
@@ -116,11 +121,12 @@
             "FunctionName" = $MyInvocation.MyCommand
         }
         switch ($PSCmdlet.ParameterSetName) {
-            'AllSettings' { $invokeParam.Add('Field', 'mailboxSettings') }
+            {$_ -like 'AllSettings' -or $_ -like 'ArchiveFolderSetting'} { $invokeParam.Add('Field', 'mailboxSettings') }
+            #'AllSettings' { $invokeParam.Add('Field', 'mailboxSettings') }
             'AutomaticReplySetting' { $invokeParam.Add('Field', 'mailboxSettings/automaticRepliesSetting') }
             'LanguageSetting' { $invokeParam.Add('Field', 'mailboxSettings/language') }
             'TimeZoneSetting' { $invokeParam.Add('Field', 'mailboxSettings/timeZone') }
-            'WorkingHourSetting' { $invokeParam.Add('Field', 'mailboxSettings/workingHours') }
+            'WorkingHoursSetting' { $invokeParam.Add('Field', 'mailboxSettings/workingHours') }
             Default { Stop-PSFFunction -Message "Unhandled parameter set. ($($PSCmdlet.ParameterSetName)) Developer mistake." -EnableException $true -Category MetadataError -FunctionName $MyInvocation.MyCommand }
         }
 

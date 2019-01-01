@@ -23,6 +23,14 @@
     <Type>
         <Name>MSGraph.Exchange.MailboxSetting.AutomaticRepliesSetting</Name>
         <Members>
+            <AliasProperty>
+                <Name>StartDateTime</Name>
+                <ReferencedMemberName>ScheduledStartDateTime</ReferencedMemberName>
+            </AliasProperty>
+            <AliasProperty>
+                <Name>EndDateTime</Name>
+                <ReferencedMemberName>ScheduledEndDateTime</ReferencedMemberName>
+            </AliasProperty>
             <CodeProperty IsHidden="true">
                 <Name>SerializationData</Name>
                 <GetCodeReference>

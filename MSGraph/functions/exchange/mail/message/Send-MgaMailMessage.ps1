@@ -242,11 +242,8 @@
                     "message"         = (New-JsonMailObject @jsonParams -FunctionName $MyInvocation.MyCommand)
                     "saveToSentItems" = ($SaveToSentItems | ConvertTo-Json)
                 }
-                foreach ($key in $bodyHash.Keys) {
-                    $bodyJsonParts = $bodyJsonParts + """$($key)"" : $($bodyHash[$Key])"
-                }
 
-                $bodyJSON = "{`n" + ([string]::Join(",`n", $bodyJsonParts)) + "`n}"
+                $bodyJSON = Merge-HashToJson $bodyHash
                 #endregion Put parameters (JSON Parts) into a valid "message"-JSON-object together
 
                 #region send message
