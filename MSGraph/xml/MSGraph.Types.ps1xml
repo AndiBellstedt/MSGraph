@@ -236,7 +236,7 @@
 
 
     <Type>
-        <Name>Deserialized.MSGraph.Exchange.Mail.Attachment</Name>
+        <Name>Deserialized.MSGraph.Exchange.Attachment.FileAttachment</Name>
         <Members>
             <MemberSet>
                 <Name>PSStandardMembers</Name>
@@ -246,7 +246,7 @@
                             TargetTypeForDeserialization
                         </Name>
                         <Value>
-                            MSGraph.Exchange.Mail.Attachment
+                            MSGraph.Exchange.Attachment.FileAttachment
                         </Value>
                     </NoteProperty>
                 </Members>
@@ -255,15 +255,45 @@
     </Type>
 
     <Type>
-        <Name>MSGraph.Exchange.Mail.Attachment</Name>
+        <Name>MSGraph.Exchange.Attachment.FileAttachment</Name>
         <Members>
-            <AliasProperty>
-                <Name>DisplayName</Name>
-                <ReferencedMemberName>
-                    Name
-                </ReferencedMemberName>
-            </AliasProperty>
+            <CodeProperty IsHidden="true">
+                <Name>SerializationData</Name>
+                <GetCodeReference>
+                    <TypeName>PSFramework.Serialization.SerializationTypeConverter</TypeName>
+                    <MethodName>GetSerializationData</MethodName>
+                </GetCodeReference>
+            </CodeProperty>
+        </Members>
 
+        <TypeConverter>
+            <TypeName>PSFramework.Serialization.SerializationTypeConverter</TypeName>
+        </TypeConverter>
+    </Type>
+
+
+    <Type>
+        <Name>Deserialized.MSGraph.Exchange.Category.OutlookCategory</Name>
+        <Members>
+            <MemberSet>
+                <Name>PSStandardMembers</Name>
+                <Members>
+                    <NoteProperty>
+                        <Name>
+                            TargetTypeForDeserialization
+                        </Name>
+                        <Value>
+                            MSGraph.Exchange.Category.OutlookCategory
+                        </Value>
+                    </NoteProperty>
+                </Members>
+            </MemberSet>
+        </Members>
+    </Type>
+
+    <Type>
+        <Name>MSGraph.Exchange.Category.OutlookCategory</Name>
+        <Members>
             <CodeProperty IsHidden="true">
                 <Name>SerializationData</Name>
                 <GetCodeReference>

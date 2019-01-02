@@ -10,7 +10,7 @@ Example:
 "Sqlcollaborative.Dbatools.Connection.ManagementConnectionType[]"
 #>
 $global:HelpTestEnumeratedArrays = @(
-
+    'MSGraph.Exchange.Category.ColorName[]'
 )
 
 <#

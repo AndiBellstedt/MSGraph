@@ -179,12 +179,12 @@
                     if ($Delta) { $invokeParam.Add("Delta", $true) }
 
                     $name = if ($InputObjectItem.IsWellKnownName) { $InputObjectItem.Name } else { $InputObjectItem.Id }
-                    if($name.length -eq 152) {
+                    if($name.length -eq 152 -or $name.length -eq 136) {
                         # Id is a message
                         Write-PSFMessage -Level VeryVerbose -Message "Gettings messages with Id '$($InputObjectItem)'" -Tag "InputValidation"
                         $invokeParam.Add("Field","messages/$($name)")
                     }
-                    elseif ($name.length -eq 120)
+                    elseif ($name.length -eq 120 -or $name.length -eq 104)
                     {
                         # Id is a folder
                         Write-PSFMessage -Level VeryVerbose -Message "Gettings messages in folder with Id '$($InputObjectItem)'" -Tag "InputValidation"

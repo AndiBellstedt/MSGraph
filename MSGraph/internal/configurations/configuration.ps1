@@ -12,13 +12,13 @@ Set-PSFConfig -Module 'MSGraph' -Name 'Import.IndividualFiles' -Value $false -In
 
 #region Settings inside the module
 # Azure Active Directory App
-Set-PSFConfig -Module 'MSGraph' -Name 'Tenant.Application.ClientID' -Value "1930085c-c139-42f5-8d1a-0b9c88ca43e3" -Initialize -Validation 'string' -Description "Well known ClientID from registered Application in Azure tenant"
-Set-PSFConfig -Module 'MSGraph' -Name 'Tenant.Application.RedirectUrl' -Value "urn:ietf:wg:oauth:2.0:oob" -Initialize -Validation 'string' -Description "Redirection URL specified in MS Azure Application portal for the registered application"
+Set-PSFConfig -Module 'MSGraph' -Name 'Tenant.Application.ClientID' -Value "bbc256f6-f642-44a4-add5-7f665e8b90cb" -Initialize -Validation 'string' -Description "Well known ClientID from registered Application in Azure tenant"
+Set-PSFConfig -Module 'MSGraph' -Name 'Tenant.Application.RedirectUrl' -Value "https://login.microsoftonline.com/common/oauth2/nativeclient" -Initialize -Validation 'string' -Description "Redirection URL specified in MS Azure Application portal for the registered application"
 Set-PSFConfig -Module 'MSGraph' -Name 'Tenant.Application.DefaultPermission' -Value @("Mail.ReadWrite.Shared") -Initialize -Validation 'string' -Description "The default permission to consent when getting a token"
 Set-PSFConfig -Module 'MSGraph' -Name 'Tenant.ApiConnection' -Value "https://graph.microsoft.com" -Initialize -Validation 'string' -Description "The App ID URI of the target web API (secured resource). To find the App ID URI, in the Azure Portal, click Azure Active Directory, click Application registrations, open the application's Settings page, then click Properties."
+Set-PSFConfig -Module 'MSGraph' -Name 'Tenant.ApiVersion' -Value "v1.0" -Initialize -Validation 'string' -Description "Specifies the API version used to query objects in Microsoft Graph. For more information goto https://docs.microsoft.com/en-us/graph/versioning-and-support"
 Set-PSFConfig -Module 'MSGraph' -Name 'Tenant.Authentiation.IdentityPlatformVersion' -Value "2.0" -Initialize -Validation 'string' -Description "Specifies the endpoint version of the logon platform (Microsoft identity platform) where to connect for logon. For more information goto https://docs.microsoft.com/en-us/azure/active-directory/develop/about-microsoft-identity-platform"
 Set-PSFConfig -Module 'MSGraph' -Name 'Tenant.Authentiation.Endpoint' -Value "https://login.microsoftonline.com" -Initialize -Validation 'string' -Description "The URI for authentication and query tokens (access and refresh)"
-
 
 # web client
 Set-PSFConfig -Module 'MSGraph' -Name 'WebClient.UserAgentName' -Value "PowerShellModule.MSGraph.RestClient" -Initialize -Validation 'string' -Description "Name of the user agent in the web client used by module"
