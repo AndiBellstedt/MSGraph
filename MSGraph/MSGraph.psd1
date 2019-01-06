@@ -1,9 +1,9 @@
 ﻿@{
     # Script module or binary module file associated with this manifest
-    ModuleToProcess    = 'MSGraph.psm1'
+    RootModule         = 'MSGraph.psm1'
 
     # Version number of this module.
-    ModuleVersion      = '1.2.8.5'
+    ModuleVersion      = '1.2.9.0'
 
     # ID used to uniquely identify this module
     GUID               = '5f61c229-95d0-4423-ab50-938c0723ad21'

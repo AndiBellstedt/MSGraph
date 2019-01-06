@@ -1,4 +1,7 @@
 # Changelog
+# 1.2.9.0
+-
+
 # 1.2.8.5
 - New: Command Get-MgaMailboxSettings
     - returns the settings from the exchange online mailbox
