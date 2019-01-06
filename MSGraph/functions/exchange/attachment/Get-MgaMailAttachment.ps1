@@ -95,7 +95,7 @@
             }
 
             Write-PSFMessage -Level Verbose -Message "Getting attachment from message '$($messageItem)'" -Tag "QueryData"
-            $data = Invoke-MgaGetMethod @invokeParam | Where-Object { $_.name -like $Name }
+            $data = Invoke-MgaRestMethodGet @invokeParam | Where-Object { $_.name -like $Name }
             if (-not $IncludeInlineAttachment) { $data = $data | Where-Object isInline -eq $false }
             #endregion query data
 

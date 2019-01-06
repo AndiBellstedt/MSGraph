@@ -1,12 +1,10 @@
-﻿namespace MSGraph.Exchange.Attachment
-{
+﻿namespace MSGraph.Exchange.Attachment {
     /// <summary>
     /// names of the attachment types in Microsoft Graph API
     /// 
     /// https://docs.microsoft.com/en-us/graph/api/resources/attachment?view=graph-rest-1.0
     /// </summary>
-    public enum AttachmentTypes
-    {
+    public enum AttachmentTypes {
         /// <summary>
         /// A file (such as a text file or Word document) attached to an event, message or post.
         /// The contentBytes property contains the base64-encoded contents of the file.

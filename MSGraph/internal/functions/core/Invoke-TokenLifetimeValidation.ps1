@@ -41,8 +41,7 @@
             if ($script:msgraph_Token.AccessTokenInfo.Payload -eq $Token.AccessTokenInfo.Payload) { $paramsTokenRefresh.Add("Register", $true) }
             if ($Token.Credential) { $paramsTokenRefresh.Add("Credential", $Token.Credential) }
             $Token = Update-MgaAccessToken @paramsTokenRefresh
-        }
-        else {
+        } else {
             Write-PSFMessage -Level Verbose -Message "Valid token for user $($Token.UserprincipalName) - Time remaining $($Token.TimeRemaining)" -Tag "Authentication" -FunctionName $FunctionName
         }
 

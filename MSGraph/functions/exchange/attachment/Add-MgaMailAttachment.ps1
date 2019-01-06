@@ -109,8 +109,7 @@
                         $fileItem = Get-ChildItem -Path $filePath -File -ErrorAction Stop
                         $fileItem | Add-Member -MemberType NoteProperty -Name contentBytes -Value ( [System.Convert]::ToBase64String( [System.IO.File]::ReadAllBytes($fileItem.FullName) ) )
                         $filesToAttach = $filesToAttach + $fileItem
-                    }
-                    catch {
+                    } catch {
                         Stop-PSFFunction -Message "Specified path '$($filePath)' is invalid or not a file. Please specify a valid file." -EnableException $true -Exception $errorvariable.Exception -Category InvalidData -Tag "Attachment"
                     }
                 }
@@ -129,7 +128,7 @@
                 }
             }
 
-            Default { Stop-PSFMessage -Message "Unhandled parameter set. ($($PSCmdlet.ParameterSetName)) Developer mistake." -EnableException $true -Category "ParameterSetHandling" -FunctionName $MyInvocation.MyCommand }
+            Default { Stop-PSFFunction -Message "Unhandled parameter set. ($($PSCmdlet.ParameterSetName)) Developer mistake." -EnableException $true -Category MetadataError -FunctionName $MyInvocation.MyCommand }
         }
     }
 
@@ -146,8 +145,7 @@
             if (-not $messageItem.InputObject.IsDraft -and (-not $Force)) {
                 if ($PSCmdlet.ShouldContinue("The mesaage is not a draft message! Would you really like to add attachment(s) $($namesFileToAttach) to message '$($messageItem)'?", "$($messageItem) is not a draft message") ) {
                     Write-PSFMessage -Level Verbose -Message "Confirmation specified to add attachment(s) to non draft message '$($messageItem)'" -Tag "AddAttachmentEnforce"
-                }
-                else {
+                } else {
                     Write-PSFMessage -Level Important -Message "Abort adding attachment(s) to non draft message '$($messageItem)'" -Tag "AddAttachmentEnforce"
                     return
                 }
@@ -176,7 +174,7 @@
                         # add attachment
                         if ($pscmdlet.ShouldProcess("Message '$($messageItem)'", "Add FileAttachment '$($fileToAttach.FullName)'")) {
                             Write-PSFMessage -Level Verbose -Message "Add '$($fileToAttach.FullName)' to message '$($messageItem)'" -Tag "AddData"
-                            $data = $data + (Invoke-MgaPostMethod @invokeParam)
+                            $data = $data + (Invoke-MgaRestMethodPost @invokeParam)
                         }
                         $invokeParam.Remove("Body")
                     }
@@ -191,7 +189,7 @@
                         # add attachment
                         if ($pscmdlet.ShouldProcess("Message '$($messageItem)'", "Add ReferenceAttachment '$($linkItem.Name)'")) {
                             Write-PSFMessage -Level Verbose -Message "Getting '$($linkItem.ToString())' as ReferenceAttachment to message '$($messageItem)'" -Tag "AddData"
-                            $data = $data + (Invoke-MgaPostMethod @invokeParam)
+                            $data = $data + (Invoke-MgaRestMethodPost @invokeParam)
                         }
                         $invokeParam.Remove("Body")
                     }
@@ -203,7 +201,7 @@
                     }
                 }
 
-                Default { stop-PSFMessage -Message "Unhandled parameter set. ($($PSCmdlet.ParameterSetName)) Developer mistake." -EnableException $true -Category "ParameterSetHandling" -FunctionName $MyInvocation.MyCommand }
+                Default { Stop-PSFFunction -Message "Unhandled parameter set. ($($PSCmdlet.ParameterSetName)) Developer mistake." -EnableException $true -Category MetadataError -FunctionName $MyInvocation.MyCommand }
             }
 
             #region output data

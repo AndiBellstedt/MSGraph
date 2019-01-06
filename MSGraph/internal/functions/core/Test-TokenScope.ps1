@@ -47,7 +47,7 @@
         Write-PSFMessage -Level VeryVerbose -Message "Validating token scope ($([String]::Join(", ",$Token.Scope))) against specified scope(s) ($([String]::Join(", ",$Scope)))" -Tag "Authenication" -FunctionName $FunctionName
         foreach ($scopeName in $Scope) {
             foreach ($tokenScope in $Token.Scope) {
-                if($tokenScope -like "$scopeName*") {
+                if ($tokenScope -like "$scopeName*") {
                     Write-PSFMessage -Level Debug -Message "Token has appropriate scope ($($scopeName))" -Tag "Authenication" -FunctionName $FunctionName
                     $Status = $true
                 }

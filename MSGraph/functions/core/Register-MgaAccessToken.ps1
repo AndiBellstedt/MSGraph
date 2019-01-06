@@ -17,13 +17,12 @@
 
         Output the registered access token
     #>
-    [CmdletBinding (SupportsShouldProcess=$false,
-                    ConfirmImpact='Medium')]
+    [CmdletBinding (SupportsShouldProcess = $false, ConfirmImpact = 'Medium')]
     [OutputType([MSGraph.Core.AzureAccessToken])]
     param (
-        [Parameter(ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,ValueFromRemainingArguments=$false)]
+        [Parameter(ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, ValueFromRemainingArguments = $false)]
         [ValidateNotNullOrEmpty()]
-        #[MSGraph.Core.AzureAccessToken]
+        [MSGraph.Core.AzureAccessToken]
         $Token,
 
         [switch]
@@ -32,7 +31,7 @@
     )
 
     $script:msgraph_Token = $Token
-    if($PassThru) {
+    if ($PassThru) {
         $script:msgraph_Token
     }
 }

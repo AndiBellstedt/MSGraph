@@ -43,8 +43,7 @@
 
     if ((-not $Level) -and $ParentFolder) {
         $Level = $ParentFolder.InputObject.HierarchyLevel + 1
-    }
-    elseif ((-not $Level) -and (-not $ParentFolder)) {
+    } elseif ((-not $Level) -and (-not $ParentFolder)) {
         $Level = 1
     }
 

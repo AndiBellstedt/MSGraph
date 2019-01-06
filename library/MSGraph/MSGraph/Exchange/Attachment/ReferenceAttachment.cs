@@ -1,7 +1,6 @@
 ﻿using System;
 
-namespace MSGraph.Exchange.Attachment
-{
+namespace MSGraph.Exchange.Attachment {
     /// <summary>
     /// Attachments in exchange online
     /// referenceAttachment resource type
@@ -9,8 +8,7 @@ namespace MSGraph.Exchange.Attachment
     /// https://docs.microsoft.com/en-us/graph/api/resources/referenceattachment?view=graph-rest-1.0
     /// </summary>
     [Serializable]
-    public class ReferenceAttachment : Attachment
-    {
+    public class ReferenceAttachment : Attachment {
         #region Properties
         /// <summary>
         /// SourceUrl
@@ -48,31 +46,23 @@ namespace MSGraph.Exchange.Attachment
 
 
         #region Statics & Stuff
-        static double ConvertBytesToMegaBytes(long bytes)
-        {
+        static double ConvertBytesToMegaBytes(long bytes) {
             return (bytes / 1024f) / 1024f;
         }
 
-        static double ConvertBytesToKiloBytes(long kilobytes)
-        {
+        static double ConvertBytesToKiloBytes(long kilobytes) {
             return kilobytes / 1024f;
         }
 
         /// <summary>
         /// Overrides the default ToString() method
         /// </summary>
-        public override string ToString()
-        {
-            if (!string.IsNullOrEmpty(Name))
-            {
+        public override string ToString() {
+            if(!string.IsNullOrEmpty(Name)) {
                 _returnValue = Name;
-            }
-            else if (!string.IsNullOrEmpty(Id))
-            {
+            } else if(!string.IsNullOrEmpty(Id)) {
                 _returnValue = Id;
-            }
-            else
-            {
+            } else {
                 _returnValue = this.GetType().Name;
             }
 

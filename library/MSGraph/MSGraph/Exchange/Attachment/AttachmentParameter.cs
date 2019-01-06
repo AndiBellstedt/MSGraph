@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Linq;
 
-namespace MSGraph.Exchange.Attachment
-{
+namespace MSGraph.Exchange.Attachment {
     /// <summary>
     /// Mail message parameter class for convinient pipeline 
     /// input on parameters in *-MgaMail* commands
     /// </summary>
     [Serializable]
-    public class AttachmentParameter
-    {
+    public class AttachmentParameter {
         #region Properties
         /// <summary>
         /// message or folder id
@@ -24,10 +22,8 @@ namespace MSGraph.Exchange.Attachment
         /// <summary>
         /// The type name of inputobject
         /// </summary>
-        public string TypeName
-        {
-            get
-            {
+        public string TypeName {
+            get {
                 return _typeName;
             }
 
@@ -50,18 +46,12 @@ namespace MSGraph.Exchange.Attachment
         /// Overrides the default ToString() method 
         /// </summary>
         /// <returns></returns>
-        public override string ToString()
-        {
-            if (!string.IsNullOrEmpty(Name))
-            {
+        public override string ToString() {
+            if(!string.IsNullOrEmpty(Name)) {
                 _returnValue = Name;
-            }
-            else if (!string.IsNullOrEmpty(Id))
-            {
+            } else if(!string.IsNullOrEmpty(Id)) {
                 _returnValue = Id;
-            }
-            else
-            {
+            } else {
                 _returnValue = InputObject.ToString();
             }
 
@@ -74,8 +64,7 @@ namespace MSGraph.Exchange.Attachment
         /// <summary>
         /// Constructor for parsing in a basic Attachment
         /// </summary>
-        public AttachmentParameter(Attachment Attachment)
-        {
+        public AttachmentParameter(Attachment Attachment) {
             InputObject = Attachment;
             _typeName = InputObject.GetType().ToString();
             Id = Attachment.Id;
@@ -85,8 +74,7 @@ namespace MSGraph.Exchange.Attachment
         /// <summary>
         /// Constructor for parsing in a FileAttachment
         /// </summary>
-        public AttachmentParameter(FileAttachment Attachment)
-        {
+        public AttachmentParameter(FileAttachment Attachment) {
             InputObject = Attachment;
             _typeName = InputObject.GetType().ToString();
             Id = Attachment.Id;
@@ -96,8 +84,7 @@ namespace MSGraph.Exchange.Attachment
         /// <summary>
         /// Constructor for parsing in a ItemAttachment
         /// </summary>
-        public AttachmentParameter(ItemAttachment Attachment)
-        {
+        public AttachmentParameter(ItemAttachment Attachment) {
             InputObject = Attachment;
             _typeName = InputObject.GetType().ToString();
             Id = Attachment.Id;
@@ -107,8 +94,7 @@ namespace MSGraph.Exchange.Attachment
         /// <summary>
         /// Constructor for parsing in a ReferenceAttachment
         /// </summary>
-        public AttachmentParameter(ReferenceAttachment Attachment)
-        {
+        public AttachmentParameter(ReferenceAttachment Attachment) {
             InputObject = Attachment;
             _typeName = InputObject.GetType().ToString();
             Id = Attachment.Id;

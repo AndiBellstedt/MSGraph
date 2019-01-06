@@ -54,11 +54,19 @@
     <Compile Include="Exchange\Category\CategoryEnums.cs" />
     <Compile Include="Exchange\Category\CategoryParameter.cs" />
     <Compile Include="Exchange\Category\OutlookCategory.cs" />
+    <Compile Include="Exchange\DateTimeTimeZone.cs" />
     <Compile Include="Exchange\FollowupFlag.cs" />
     <Compile Include="Exchange\Attachment\ItemAttachment.cs" />
     <Compile Include="Exchange\Attachment\FileAttachment.cs" />
     <Compile Include="Exchange\Attachment\Attachment.cs" />
     <Compile Include="Exchange\Attachment\AttachmentParameter.cs" />
+    <Compile Include="Exchange\ExchangeCommonEnums.cs" />
+    <Compile Include="Exchange\MailboxSetting\MailboxSettingParameter.cs" />
+    <Compile Include="Exchange\MailboxSetting\WorkingHoursSetting.cs" />
+    <Compile Include="Exchange\MailboxSetting\LocaleInfoSetting.cs" />
+    <Compile Include="Exchange\MailboxSetting\MailboxSettingEnums.cs" />
+    <Compile Include="Exchange\MailboxSetting\AutomaticRepliesSetting.cs" />
+    <Compile Include="Exchange\MailboxSetting\MailboxSettings.cs" />
     <Compile Include="Exchange\Mail\MessageParameter.cs" />
     <Compile Include="Exchange\Mail\MessageBody.cs" />
     <Compile Include="Exchange\Mail\Folder.cs" />
@@ -67,6 +75,7 @@
     <Compile Include="Exchange\Mail\MessageOrFolderParameter.cs" />
     <Compile Include="Exchange\Attachment\AttachmentTypes.cs" />
     <Compile Include="Exchange\Mail\WellKnownFolder.cs" />
+    <Compile Include="Exchange\TimeZoneBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

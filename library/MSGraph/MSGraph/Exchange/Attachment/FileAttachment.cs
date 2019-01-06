@@ -1,7 +1,6 @@
 ﻿using System;
 
-namespace MSGraph.Exchange.Attachment
-{
+namespace MSGraph.Exchange.Attachment {
     /// <summary>
     /// Attachments in exchange online
     /// fileAttachment resource type
@@ -9,8 +8,7 @@ namespace MSGraph.Exchange.Attachment
     /// https://docs.microsoft.com/en-us/graph/api/resources/fileattachment?view=graph-rest-1.0
     /// </summary>
     [Serializable]
-    public class FileAttachment : Attachment
-    {
+    public class FileAttachment : Attachment {
         #region Properties
 
         /// <summary>
@@ -34,13 +32,11 @@ namespace MSGraph.Exchange.Attachment
 
 
         #region Statics & Stuff
-        static double ConvertBytesToMegaBytes(long bytes)
-        {
+        static double ConvertBytesToMegaBytes(long bytes) {
             return (bytes / 1024f) / 1024f;
         }
 
-        static double ConvertBytesToKiloBytes(long kilobytes)
-        {
+        static double ConvertBytesToKiloBytes(long kilobytes) {
             return kilobytes / 1024f;
         }
 
@@ -48,18 +44,12 @@ namespace MSGraph.Exchange.Attachment
         /// Overrides the default ToString() method
         /// </summary>
         /// <returns></returns>
-        public override string ToString()
-        {
-            if (!string.IsNullOrEmpty(Name))
-            {
+        public override string ToString() {
+            if(!string.IsNullOrEmpty(Name)) {
                 _returnValue = Name;
-            }
-            else if (!string.IsNullOrEmpty(Id))
-            {
+            } else if(!string.IsNullOrEmpty(Id)) {
                 _returnValue = Id;
-            }
-            else
-            {
+            } else {
                 _returnValue = this.GetType().Name;
             }
 
