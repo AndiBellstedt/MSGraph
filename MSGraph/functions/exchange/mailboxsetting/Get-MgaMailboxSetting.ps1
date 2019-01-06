@@ -28,9 +28,12 @@
     .PARAMETER TimeZoneSetting
         If specified, only the timezone settings from the users mailbox are displayed.
 
-    .PARAMETER WorkingHourSetting
+    .PARAMETER WorkingHoursSetting
         If specified, only the settings for the days of the week and hours in a
         specific time zone that the user works are displayed.
+
+    .PARAMETER ArchiveFolderSetting
+        If specified, only the archive folder settings from the users mailbox are displayed.
 
     .PARAMETER User
         The user-account to access. Defaults to the main user connected as.
@@ -68,10 +71,17 @@
         Return only the timezone settings for the user connected to through the registered token.
 
     .EXAMPLE
-        PS C:\> Get-MgaMailboxSetting -WorkingHourSetting
+        PS C:\> Get-MgaMailboxSetting -WorkingHoursSetting
 
         Return only the settings for the days of the week and hours in a specific time zone
         the user connected to through the registered token works.
+
+    .EXAMPLE
+        PS C:\> Get-MgaMailboxSetting -ArchiveFolderSetting
+
+        Return only the settings for the folder where mails are archived in the user
+        connected to through the registered token works.
+
     #>
     [CmdletBinding(ConfirmImpact = 'Low', DefaultParameterSetName = 'AllSettings')]
     param (

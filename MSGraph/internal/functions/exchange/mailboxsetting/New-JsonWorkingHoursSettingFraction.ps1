@@ -1,19 +1,19 @@
 ﻿function New-JsonWorkingHoursSettingFraction {
     <#
     .SYNOPSIS
-        Creates a json object from LocaleInfoSetting (LanguageSetting) object
+        Creates a json object from WorkingHoursSetting object
 
     .DESCRIPTION
-        Creates a json object from LocaleInfoSetting (LanguageSetting) object used for Microsoft Graph REST api
+        Creates a json object from WorkingHoursSetting object used for Microsoft Graph REST api
         Helper function used for internal commands.
 
-    .PARAMETER LanguageSetting
+    .PARAMETER WorkingHoursSetting
         The object to convert to json
 
     .EXAMPLE
-        PS C:\> New-JsonWorkingHoursSettingFraction -LanguageSetting $languageSetting
+        PS C:\> New-JsonWorkingHoursSettingFraction -WorkingHoursSetting $workingHoursSetting
 
-        Creates a json object from LanguageSetting object used for Microsoft Graph REST api
+        Creates a json object from WorkingHoursSetting object used for Microsoft Graph REST api
 
     #>
     [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseShouldProcessForStateChangingFunctions", "")]

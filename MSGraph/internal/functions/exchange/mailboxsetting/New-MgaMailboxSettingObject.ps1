@@ -28,6 +28,7 @@
         Create a MSGraph.Exchange.MailboxSetting.MailboxSettings object from data in variable $output
     #>
     [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseShouldProcessForStateChangingFunctions", "")]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseOutputTypeCorrectly", "")]
     [CmdletBinding()]
     param (
         $RestData,
@@ -117,7 +118,8 @@
             $outputHash.Add("ScheduledStartDateTimeUTC", [MSGraph.Exchange.DateTimeTimeZone]$autoReplySetting.ScheduledStartDateTime)
             $outputHash.Add("ScheduledEndDateTimeUTC", [MSGraph.Exchange.DateTimeTimeZone]$autoReplySetting.ScheduledEndDateTime)
 
-            New-Object -TypeName MSGraph.Exchange.MailboxSetting.AutomaticRepliesSetting -Property $outputHash
+            $output = New-Object -TypeName MSGraph.Exchange.MailboxSetting.AutomaticRepliesSetting -Property $outputHash
+            $output
             Remove-Variable -Name autoReplySetting -Force -WhatIf:$false -Confirm:$false -Verbose:$false -Debug:$false -WarningAction Ignore -ErrorAction Ignore
         }
 
@@ -127,14 +129,16 @@
             $outputHash.Add("Locale", [cultureinfo]$languageSetting.locale)
             $outputHash.Add("DisplayName", $languageSetting.displayName)
 
-            New-Object -TypeName MSGraph.Exchange.MailboxSetting.LocaleInfoSetting -Property $outputHash
+            $output = New-Object -TypeName MSGraph.Exchange.MailboxSetting.LocaleInfoSetting -Property $outputHash
+            $output
             Remove-Variable -Name languageSetting -Force -WhatIf:$false -Confirm:$false -Verbose:$false -Debug:$false -WarningAction Ignore -ErrorAction Ignore
         }
 
         'TimeZoneSetting' {
             # create timeZone object
             if($RestData.timeZone) { $timeZoneSetting = $RestData.timeZone } else { $timeZoneSetting = $RestData }
-            [System.TimeZoneInfo]::FindSystemTimeZoneById($timeZoneSetting)
+            $output = [System.TimeZoneInfo]::FindSystemTimeZoneById($timeZoneSetting)
+            $output
             Remove-Variable -Name timeZoneSetting -Force -WhatIf:$false -Confirm:$false -Verbose:$false -Debug:$false -WarningAction Ignore -ErrorAction Ignore
         }
 
@@ -146,7 +150,8 @@
             $outputHash.Add("EndTime", [datetime]$workingHourSetting.endTime)
             $outputHash.Add("TimeZone", [MSGraph.Exchange.TimeZoneBase]::new($workingHourSetting.timeZone.name))
 
-            New-Object -TypeName MSGraph.Exchange.MailboxSetting.WorkingHoursSetting -Property $outputHash
+            $output = New-Object -TypeName MSGraph.Exchange.MailboxSetting.WorkingHoursSetting -Property $outputHash
+            $output
             Remove-Variable -Name workingHourSetting -Force -WhatIf:$false -Confirm:$false -Verbose:$false -Debug:$false -WarningAction Ignore -ErrorAction Ignore
         }
 
@@ -154,5 +159,4 @@
             Stop-PSFFunction -Message "Unable to output a valid MailboxSetting object, because of unhandled type '$($Type)'. Developer mistake." -EnableException $true -Category InvalidData -FunctionName $MyInvocation.MyCommand
         }
     }
-
 }

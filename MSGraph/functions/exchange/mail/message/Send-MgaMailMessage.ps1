@@ -228,7 +228,6 @@
             'DirectSend' {
                 #region Put parameters (JSON Parts) into a valid "message"-JSON-object together
                 $jsonParams = @{}
-                $bodyJsonParts = @()
 
                 $names = "Subject", "Sender", "From", "ToRecipients", "CCRecipients", "BCCRecipients", "ReplyTo", "Body", "Categories", "Importance", "InferenceClassification", "IsDeliveryReceiptRequested", "IsReadReceiptRequested"
                 foreach ($name in $names) {

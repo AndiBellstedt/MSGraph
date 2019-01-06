@@ -24,7 +24,7 @@
     .PARAMETER TimeZone
         If specified, the command will set TimeZone settings
 
-    .PARAMETER WorkingHour
+    .PARAMETER WorkingHours
         If specified, the command will set WorkingHour settings
 
     .PARAMETER User
@@ -70,7 +70,7 @@
         Set
 
     .EXAMPLE
-        PS C:\> Get-MgaMailboxSetting -WorkingHour
+        PS C:\> Get-MgaMailboxSetting -WorkingHours
 
         Set
     #>
