@@ -1,5 +1,4 @@
-﻿function New-HttpClient
-{
+﻿function New-HttpClient {
     <#
     .SYNOPSIS
         Generates a HTTP Client.
@@ -42,8 +41,7 @@
         $HeaderType = "application/json"
     )
 
-    process
-    {
+    process {
         $header = New-Object System.Net.Http.Headers.MediaTypeWithQualityHeaderValue($HeaderType)
         $userAgent = New-Object System.Net.Http.Headers.ProductInfoHeaderValue($UserAgentName, $userAgentVersion)
 

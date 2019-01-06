@@ -59,8 +59,7 @@
         if ($RestData.from.emailAddress.name -like $RestData.from.emailAddress.address) {
             # if emailaddress is same in address and in name field, only use address field
             $from = $RestData.from.emailAddress | ForEach-Object { [mailaddress]$_.address } -ErrorAction Continue
-        }
-        else {
+        } else {
             $from = $RestData.from.emailAddress | ForEach-Object { [mailaddress]"$($_.name) $($_.address)"} -ErrorAction Continue
         }
         $hash.Add("from", $from)
@@ -69,8 +68,7 @@
         if ($RestData.Sender.emailAddress.name -like $RestData.Sender.emailAddress.address) {
             # if emailaddress is same in address and in name field, only use address field
             $senderaddress = $RestData.Sender.emailAddress | ForEach-Object { [mailaddress]$_.address } -ErrorAction Continue
-        }
-        else {
+        } else {
             $senderaddress = $RestData.Sender.emailAddress | ForEach-Object { [mailaddress]"$($_.name) $($_.address)"} -ErrorAction Continue
         }
         $hash.Add("Sender", $senderaddress)
@@ -79,8 +77,7 @@
         if ($RestData.bccRecipients.emailAddress.name -like $RestData.bccRecipients.emailAddress.address) {
             # if emailaddress is same in address and in name field, only use address field
             [array]$bccRecipients = $RestData.bccRecipients.emailAddress | ForEach-Object { [mailaddress]$_.address } -ErrorAction Continue
-        }
-        else {
+        } else {
             [array]$bccRecipients = $RestData.bccRecipients.emailAddress | ForEach-Object { [mailaddress]"$($_.name) $($_.address)"} -ErrorAction Continue
         }
         $hash.Add("bccRecipients", [array]$bccRecipients)
@@ -89,8 +86,7 @@
         if ($RestData.ccRecipients.emailAddress.name -like $RestData.ccRecipients.emailAddress.address) {
             # if emailaddress is same in address and in name field, only use address field
             [array]$ccRecipients = $RestData.ccRecipients.emailAddress | ForEach-Object { [mailaddress]$_.address } -ErrorAction Continue
-        }
-        else {
+        } else {
             [array]$ccRecipients = $RestData.ccRecipients.emailAddress | ForEach-Object { [mailaddress]"$($_.name) $($_.address)"} -ErrorAction Continue
         }
         $hash.Add("ccRecipients", [array]$ccRecipients)
@@ -99,8 +95,7 @@
         if ($RestData.replyTo.emailAddress.name -like $RestData.replyTo.emailAddress.address) {
             # if emailaddress is same in address and in name field, only use address field
             [array]$replyTo = $RestData.replyTo.emailAddress | ForEach-Object { [mailaddress]$_.address } -ErrorAction Continue
-        }
-        else {
+        } else {
             [array]$replyTo = $RestData.replyTo.emailAddress | ForEach-Object { [mailaddress]"$($_.name) $($_.address)"} -ErrorAction Continue
         }
         $hash.Add("replyTo", [array]$replyTo)
@@ -109,8 +104,7 @@
         if ($RestData.toRecipients.emailAddress.name -like $RestData.toRecipients.emailAddress.address) {
             # if emailaddress is same in address and in name field, only use address field
             [array]$toRecipients = $RestData.toRecipients.emailAddress | ForEach-Object { [mailaddress]$_.address } -ErrorAction Continue
-        }
-        else {
+        } else {
             [array]$toRecipients = $RestData.toRecipients.emailAddress | ForEach-Object { [mailaddress]"$($_.name) $($_.address)"} -ErrorAction Continue
         }
         $hash.Add("toRecipients", [array]$toRecipients)

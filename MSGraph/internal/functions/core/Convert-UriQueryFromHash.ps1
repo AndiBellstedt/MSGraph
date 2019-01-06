@@ -44,10 +44,9 @@
         }
         $elementString = [string]::Join("&", $elements)
 
-        if($NoQuestionMark) {
+        if ($NoQuestionMark) {
             "$elementString"
-        }
-        else {
+        } else {
             "?$elementString"
         }
     }

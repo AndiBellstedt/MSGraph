@@ -2,8 +2,7 @@
 using System.Management.Automation;
 using System.Security;
 
-namespace MSGraph.Core
-{
+namespace MSGraph.Core {
     /// <summary>
     /// Token used to authenticate against azure with
     /// 
@@ -11,8 +10,7 @@ namespace MSGraph.Core
     /// 
     /// </summary>
     [Serializable]
-    public class AzureAccessToken
-    {
+    public class AzureAccessToken {
         /// <summary>
         /// Specifies the endpoint version of the logon platform (Microsoft identity platform) where to connect for logon.
         /// Use 2.0 if you want to login with a Microsoft Account.
@@ -89,25 +87,22 @@ namespace MSGraph.Core
         /// <summary>
         /// Whether the token is valid for connections
         /// </summary>
-        public bool IsValid
-        {
-            get
-            {
-                if (TokenType.ToLower() != "bearer")
+        public bool IsValid {
+            get {
+                if(TokenType.ToLower() != "bearer")
                     return false;
-                if (ValidUntil < DateTime.Now)
+                if(ValidUntil < DateTime.Now)
                     return false;
-                if (Scope == null)
+                if(Scope == null)
                     return false;
-                if (Scope.Length == 0)
+                if(Scope.Length == 0)
                     return false;
-                if (AccessToken == null)
+                if(AccessToken == null)
                     return false;
                 return true;
             }
 
-            set
-            {
+            set {
             }
         }
 
@@ -119,121 +114,95 @@ namespace MSGraph.Core
         /// <summary>
         /// The owner of the Token extracted from the JWT
         /// </summary>
-        public String TokenOwner
-        {
-            get
-            {
+        public String TokenOwner {
+            get {
                 return AccessTokenInfo.Name;
             }
 
-            set
-            {
+            set {
             }
         }
 
         /// <summary>
         /// The user principal in the Token extracted from the JWT
         /// </summary>
-        public String UserprincipalName
-        {
-            get
-            {
+        public String UserprincipalName {
+            get {
                 return AccessTokenInfo.UPN;
             }
 
-            set
-            {
+            set {
             }
         }
 
         /// <summary>
         /// Tenant ID for the Application in Azure (extracted from the JWT)
         /// </summary>
-        public Guid TenantID
-        {
-            get
-            {
+        public Guid TenantID {
+            get {
                 return AccessTokenInfo.TenantID;
             }
 
-            set
-            {
+            set {
             }
         }
 
         /// <summary>
         /// The Application Name in Azure (extracted from the JWT)
         /// </summary>
-        public string AppName
-        {
-            get
-            {
+        public string AppName {
+            get {
                 return AccessTokenInfo.ApplicationName;
             }
 
-            set
-            {
+            set {
             }
         }
 
         /// <summary>
         /// The Lifetime of the Access Token
         /// </summary>
-        public TimeSpan AccessTokenLifeTime
-        {
-            get
-            {
-                return  ValidUntil.Subtract ( ValidFrom );
+        public TimeSpan AccessTokenLifeTime {
+            get {
+                return ValidUntil.Subtract(ValidFrom);
             }
 
-            set
-            {
+            set {
             }
         }
 
         /// <summary>
         /// Remaining time of the token Lifetime
         /// </summary>
-        public TimeSpan TimeRemaining
-        {
-            get
-            {
-                if (ValidUntil > DateTime.Now )
-                {
+        public TimeSpan TimeRemaining {
+            get {
+                if(ValidUntil > DateTime.Now) {
                     TimeSpan timeSpan = ValidUntil - DateTime.Now;
                     return TimeSpan.Parse(timeSpan.ToString(@"dd\.hh\:mm\:ss"));
-                }
-                else {
+                } else {
                     TimeSpan timeSpan = TimeSpan.Parse("0:0:0:0");
                     return timeSpan;
                 }
             }
 
-            set
-            {
+            set {
             }
         }
 
         /// <summary>
         /// Percentage value of the Tokenlifetime
         /// </summary>
-        public Int16 PercentRemaining
-        {
-            get
-            {
-                if (ValidUntil > DateTime.Now)
-                {
-                    Int16 percentage = (Int16)(Math.Round( TimeRemaining.TotalMilliseconds / AccessTokenLifeTime.TotalMilliseconds * 100 , 0 ));
+        public Int16 PercentRemaining {
+            get {
+                if(ValidUntil > DateTime.Now) {
+                    Int16 percentage = (Int16)(Math.Round(TimeRemaining.TotalMilliseconds / AccessTokenLifeTime.TotalMilliseconds * 100, 0));
                     return percentage;
-                }
-                else
-                {
+                } else {
                     return 0;
                 }
             }
 
-            set
-            {
+            set {
             }
         }
     }

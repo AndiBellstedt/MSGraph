@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace MSGraph.Exchange.Mail
-{
+namespace MSGraph.Exchange.Mail {
     /// <summary>
     /// Class for a body object from a message
     /// https://docs.microsoft.com/en-us/graph/api/resources/itembody?view=graph-rest-1.0
     /// </summary>
     [Serializable]
-    public class MessageBody
-    {
+    public class MessageBody {
         #region Properties
         /// <summary>
         /// The type of the content. Possible values are Text and HTML.
@@ -29,8 +27,7 @@ namespace MSGraph.Exchange.Mail
         /// Overrides the default ToString() method 
         /// </summary>
         /// <returns></returns>
-        public override string ToString()
-        {
+        public override string ToString() {
             return content;
         }
 
@@ -42,26 +39,21 @@ namespace MSGraph.Exchange.Mail
         /// MessageBody input
         /// </summary>
         /// <param name="Body"></param>
-        public MessageBody(MessageBody Body)
-        {
+        public MessageBody(MessageBody Body) {
             contentType = Body.contentType;
             content = Body.content;
         }
-            
+
         /// <summary>
         /// String input parser
         /// </summary>
         /// <param name="Body"></param>
-        public MessageBody(String Body)
-        {
-            Match match = Regex.Match(Body, @"^<html>.*|(`r|`n|`t)*<\/html>$", RegexOptions.IgnoreCase );
-            if (match.Success)
-            {
+        public MessageBody(String Body) {
+            Match match = Regex.Match(Body, @"^<html>.*|(`r|`n|`t)*<\/html>$", RegexOptions.IgnoreCase);
+            if(match.Success) {
                 contentType = "html";
                 content = Body;
-            }
-            else
-            {
+            } else {
                 contentType = "text";
                 content = Body;
             }
@@ -71,8 +63,7 @@ namespace MSGraph.Exchange.Mail
         /// <summary>
         /// empty object
         /// </summary>
-        public MessageBody()
-        {
+        public MessageBody() {
         }
         #endregion Constructors
     }

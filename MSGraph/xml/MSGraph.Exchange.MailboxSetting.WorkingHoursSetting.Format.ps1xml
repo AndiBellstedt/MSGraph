@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Configuration>
+    <ViewDefinitions>
+
+        <View>
+            <Name>MSGraph.Exchange.MailboxSetting.WorkingHoursSetting_table</Name>
+            <ViewSelectedBy>
+                <TypeName>MSGraph.Exchange.MailboxSetting.WorkingHoursSetting</TypeName>
+            </ViewSelectedBy>
+            <TableControl>
+                <AutoSize/>
+                <TableHeaders>
+                    <TableColumnHeader />
+                    <TableColumnHeader />
+                    <TableColumnHeader />
+                    <TableColumnHeader />
+                    <TableColumnHeader />
+                </TableHeaders>
+                <TableRowEntries>
+                    <TableRowEntry>
+                        <Wrap/>
+                        <TableColumnItems>
+                            <TableColumnItem>
+                                <PropertyName>DaysOfWeek</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>StartTime</PropertyName>
+                                <FormatString>{0:T}</FormatString>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>EndTime</PropertyName>
+                                <FormatString>{0:T}</FormatString>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>TimeZone</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>Name</PropertyName>
+                            </TableColumnItem>
+                        </TableColumnItems>
+                    </TableRowEntry>
+                </TableRowEntries>
+            </TableControl>
+        </View>
+
+        <View>
+            <Name>MSGraph.Exchange.MailboxSetting.WorkingHoursSetting_list</Name>
+            <ViewSelectedBy>
+                <TypeName>MSGraph.Exchange.MailboxSetting.WorkingHoursSetting</TypeName>
+            </ViewSelectedBy>
+            <ListControl>
+                <ListEntries>
+                    <ListEntry>
+                        <ListItems>
+                            <ListItem>
+                                <PropertyName>Name</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>DaysOfWeek</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>StartTime</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>EndTime</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>StartTimeUTC</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>EndTimeUTC</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>TimeZone</PropertyName>
+                            </ListItem>
+                        </ListItems>
+                    </ListEntry>
+                </ListEntries>
+            </ListControl>
+        </View>
+
+    </ViewDefinitions>
+</Configuration>

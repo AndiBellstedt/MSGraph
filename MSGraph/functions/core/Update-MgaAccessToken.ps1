@@ -52,7 +52,7 @@
         $Token = Resolve-Token -Token $Token -FunctionName $MyInvocation.MyCommand
 
         $Credential = $Token.Credential
-        $ClientId = $Token.ClientId #$Token.AccessTokenInfo.ApplicationID.Guid
+        $ClientId = $Token.ClientId
         $RedirectUrl = $Token.AppRedirectUrl.ToString()
         $ResourceUri = $Token.Resource.ToString().TrimEnd('/')
         $Permission = ($Token.Scope | Where-Object { $_ -notin "offline_access", "openid", "profile", "email" })
@@ -118,8 +118,7 @@
         $jsonResponse = ConvertFrom-Json -InputObject $clientResult.Result.Content.ReadAsStringAsync().Result -ErrorAction Ignore
         if ($clientResult.Result.StatusCode -eq [System.Net.HttpStatusCode]"OK") {
             Write-PSFMessage -Level Verbose -Message "AccessToken renewal successful. $($clientResult.Result.StatusCode.value__) ($($clientResult.Result.StatusCode)) $($clientResult.Result.ReasonPhrase)" -Tag "Authorization"
-        }
-        else {
+        } else {
             $httpClient.CancelPendingRequests()
             $msg = "Request for AccessToken failed. $($clientResult.Result.StatusCode.value__) ($($clientResult.Result.StatusCode)) $($clientResult.Result.ReasonPhrase) `n$($jsonResponse.error_description)"
             Stop-PSFFunction -Message $msg -Tag "Authorization" -EnableException $true -Exception ([System.Management.Automation.RuntimeException]::new($msg))
@@ -181,12 +180,10 @@
             if ($Register) {
                 $script:msgraph_Token = $resultObject
                 if ($PassThru) { $resultObject }
-            }
-            else {
+            } else {
                 $resultObject
             }
-        }
-        else {
+        } else {
             Stop-PSFFunction -Message "Token failure. Acquired token is not valid" -EnableException $true -Tag "Authorization"
         }
     }

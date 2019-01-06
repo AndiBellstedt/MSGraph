@@ -1,13 +1,11 @@
 ﻿using System;
 
-namespace MSGraph.Exchange.Mail
-{
+namespace MSGraph.Exchange.Mail {
     /// <summary>
     /// Mail folder in exchange online
     /// </summary>
     [Serializable]
-    public class Folder
-    {
+    public class Folder {
         #region Properties
         /// <summary>
         /// The mailFolder's unique identifier.
@@ -22,10 +20,8 @@ namespace MSGraph.Exchange.Mail
         /// <summary>
         /// Alias property from display name.
         /// </summary>
-        public string Name
-        {
-            get
-            {
+        public string Name {
+            get {
                 return DisplayName;
             }
 
@@ -70,17 +66,12 @@ namespace MSGraph.Exchange.Mail
         /// <summary>
         /// Percentage of unread items in mailFolder.
         /// </summary>
-        public Double UnreadInPercent
-        {
-            get
-            {
-                if (TotalItemCount > 0)
-                {
+        public Double UnreadInPercent {
+            get {
+                if(TotalItemCount > 0) {
                     Double percentage = Math.Round(Double.Parse(UnreadItemCount.ToString()) / Double.Parse(TotalItemCount.ToString()) * 100, 2);
                     return percentage;
-                }
-                else
-                {
+                } else {
                     return Double.Parse("0");
                 }
             }
@@ -103,18 +94,12 @@ namespace MSGraph.Exchange.Mail
         /// Overrides the default ToString() method 
         /// </summary>
         /// <returns></returns>
-        public override string ToString()
-        {
-            if (!string.IsNullOrEmpty(DisplayName))
-            {
+        public override string ToString() {
+            if(!string.IsNullOrEmpty(DisplayName)) {
                 _returnValue = DisplayName;
-            }
-            else if (!string.IsNullOrEmpty(Id))
-            {
+            } else if(!string.IsNullOrEmpty(Id)) {
                 _returnValue = Id;
-            }
-            else 
-            {
+            } else {
                 _returnValue = this.GetType().Name;
             }
 

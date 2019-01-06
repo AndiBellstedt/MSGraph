@@ -97,13 +97,12 @@
             # set data
             if ($Force) {
                 $proceed = $true
-            }
-            else {
+            } else {
                 $proceed = $pscmdlet.ShouldProcess($categoryItem.Name, "Delete")
             }
             if ($proceed) {
                 Write-PSFMessage -Level Verbose -Message "Delete category '$($categoryItem)'." -Tag "RemoveData"
-                Invoke-MgaDeleteMethod @invokeParam
+                Invoke-MgaRestMethodDelete @invokeParam
             }
 
             #region output data

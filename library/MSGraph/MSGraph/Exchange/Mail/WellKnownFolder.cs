@@ -1,5 +1,4 @@
-﻿namespace MSGraph.Exchange.Mail
-{
+﻿namespace MSGraph.Exchange.Mail {
     /// <summary>
     /// name of well-known-folders in a outlook mailboxes
     /// 
@@ -9,8 +8,7 @@
     /// 
     /// For example, you can get the Drafts folder using its well-known name with the following query.
     /// </summary>
-    public enum WellKnownFolder
-    {
+    public enum WellKnownFolder {
         /// <summary>
         /// Represent all folders in the mailbox.
         /// </summary>

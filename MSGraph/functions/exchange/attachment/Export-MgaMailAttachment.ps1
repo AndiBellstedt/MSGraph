@@ -45,8 +45,7 @@
             if (-not (Test-Path -Path $Path -PathType Container)) {
                 Stop-PSFFunction -Message "Specified path is a file and not a path. Please specify a directory." -EnableException $true -Category "InvalidPath" -Tag "Attachment"
             }
-        }
-        else {
+        } else {
             Stop-PSFFunction -Message "Specified path is not valid. Please specify a valid directory." -EnableException $true -Category "InvalidPath" -Tag "Attachment"
         }
         $Path = Resolve-Path -Path $Path

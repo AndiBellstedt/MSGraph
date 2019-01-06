@@ -37,8 +37,7 @@
 
         if ($Token) {
             $Token
-        }
-        else {
+        } else {
             Stop-PSFFunction -Message "Not connected! Use New-MgaAccessToken to create a Token and either register it or specifs it" -EnableException $true -Category AuthenticationError -FunctionName $FunctionName
         }
     }

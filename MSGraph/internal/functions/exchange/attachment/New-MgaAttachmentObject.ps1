@@ -78,7 +78,7 @@
                 "ApiVersion"   = $ApiVersion
                 "FunctionName" = $FunctionName
             }
-            $itemData = Invoke-MgaGetMethod @invokeParam
+            $itemData = Invoke-MgaRestMethodGet @invokeParam
 
             $outputHash.BaseObject = $itemData
             $outputHash.Id = $itemData.id

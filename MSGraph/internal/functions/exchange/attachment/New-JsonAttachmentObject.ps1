@@ -157,18 +157,18 @@
         #region variable definition
         $boundParameters = @()
         $bodyHash = [ordered]@{}
-        $variableNames = @("Name","Size","IsInline","LastModifiedDateTime","ContentType")
+        $variableNames = @("Name", "Size", "IsInline", "LastModifiedDateTime", "ContentType")
         switch ($PSCmdlet.ParameterSetName) {
             'FileAttachment' { $variableNames = $variableNames + @("contentBytes", "contentLocation") }
             'ItemAttachment' { $variableNames = $variableNames + @("item") }
-            'ReferenceAttachment' { $variableNames = $variableNames + @("SourceUrl","ProviderType","ThumbnailUrl","PreviewUrl","Permission","IsFolder") }
+            'ReferenceAttachment' { $variableNames = $variableNames + @("SourceUrl", "ProviderType", "ThumbnailUrl", "PreviewUrl", "Permission", "IsFolder") }
         }
         #endregion variable definition
 
         #region Parsing string and boolean parameters to json data parts
         Write-PSFMessage -Level VeryVerbose -Message "Parsing parameters to json data parts ($([string]::Join(", ", $variableNames)))" -Tag "ParameterParsing" -FunctionName $FunctionName
 
-        $bodyHash.Add("@odata.type","""#microsoft.graph.$($PSCmdlet.ParameterSetName)""")
+        $bodyHash.Add("@odata.type", """#microsoft.graph.$($PSCmdlet.ParameterSetName)""")
 
         foreach ($variableName in $variableNames) {
             if (Test-PSFParameterBinding -ParameterName $variableName) {
@@ -179,17 +179,9 @@
         }
         #endregion Parsing string and boolean parameters to json data parts
 
-        #region Put parameters (JSON Parts) into a valid "message"-JSON-object together
-        $bodyJsonParts = @()
-        foreach ($key in $bodyHash.Keys) {
-            $bodyJsonParts = $bodyJsonParts + """$($key)"" : $($bodyHash[$Key])"
-        }
-        $bodyJSON = "{`n" + ([string]::Join(",`n", $bodyJsonParts)) + "`n}"
-        #endregion Put parameters (JSON Parts) into a valid "message"-JSON-object together
-
-        #region output created object
+        # Put parameters (JSON Parts) into a valid JSON-object together and output the result
+        $bodyJSON = Merge-HashToJson $bodyHash
         $bodyJSON
-        #endregion output created object
     }
 
     end {

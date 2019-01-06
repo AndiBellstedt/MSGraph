@@ -177,8 +177,7 @@
                         $mailAddress = (Get-Variable -Name $Name -Scope 0).Value | ForEach-Object { [mailaddress]$_ } -ErrorAction Stop -ErrorVariable parseError
                         Set-Variable -Name "$($name)Addresses" -Value $mailAddress
                         Remove-Variable mailaddress -Force -WhatIf:$false -Confirm:$false -Verbose:$false -Debug:$false -ErrorAction Ignore
-                    }
-                    catch {
+                    } catch {
                         Stop-PSFFunction -Message "Unable to parse $($name) to a mailaddress. String should be 'name@domain.topleveldomain' or 'displayname name@domain.topleveldomain'. Error: $($parseError[0].Exception.Message)" -Tag "ParameterParsing" -Category InvalidData -EnableException $true -Exception $parseError[0].Exception -FunctionName $FunctionName
                     }
                 }
@@ -224,8 +223,7 @@
                             }
                         }
                     }
-                }
-                else {
+                } else {
                     # place an empty mail address object in, if no address is specified (this will clear the field in the message)
                     [array]$addresses = [PSCustomObject]@{
                         emailAddress = [PSCustomObject]@{
@@ -240,29 +238,19 @@
                     if ($addresses.Count -eq 1) {
                         # hardly format JSON object as an array, because ConvertTo-JSON will output a single object-json-string on an array with count 1 (PSVersion 5.1.17134.407 | PSVersion 6.1.1)
                         $bodyHash.Add($name, ("[" + ($addresses | ConvertTo-Json) + "]") )
-                    }
-                    else {
+                    } else {
                         $bodyHash.Add($name, ($addresses | ConvertTo-Json) )
                     }
-                }
-                else {
+                } else {
                     $bodyHash.Add($name, ($addresses | ConvertTo-Json) )
                 }
             }
         }
         #endregion Parsing mailaddress parameters to json data parts
 
-        #region Put parameters (JSON Parts) into a valid "message"-JSON-object together
-        $bodyJsonParts = @()
-        foreach ($key in $bodyHash.Keys) {
-            $bodyJsonParts = $bodyJsonParts + """$($key)"" : $($bodyHash[$Key])"
-        }
-        $bodyJSON = "{`n" + ([string]::Join(",`n", $bodyJsonParts)) + "`n}"
-        #endregion Put parameters (JSON Parts) into a valid "message"-JSON-object together
-
-        #region output created object
+        # Put parameters (JSON Parts) into a valid JSON-object together and output the result
+        $bodyJSON = Merge-HashToJson $bodyHash
         $bodyJSON
-        #endregion output created object
     }
 
     end {

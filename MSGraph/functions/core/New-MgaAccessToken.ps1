@@ -123,8 +123,7 @@
         if ($IdentityPlatformVersion -like '1.0' -and $Permission) {
             Write-PSFMessage -Level Warning -Message "Individual pemissions are not supported in combination with IdentityPlatformVersion 1.0. Specified Permission ($([String]::Join(", ", $Permission))) in parameter will be ignored" -Tag "ParameterSetHandling"
             $Permission = ""
-        }
-        elseif ($IdentityPlatformVersion -like '2.0' -and (-not $Permission)) {
+        } elseif ($IdentityPlatformVersion -like '2.0' -and (-not $Permission)) {
             $Permission = @("Mail.ReadWrite.Shared")
         }
     }
@@ -136,8 +135,7 @@
             '2.0' {
                 if ($Credential -and $Tenant -notlike "organizations") {
                     $endpointUri = "$($endpointBaseUri)/organizations/oauth2/V2.0"
-                }
-                else {
+                } else {
                     $endpointUri = "$($endpointBaseUri)/$($Tenant)/oauth2/V2.0"
                 }
             }
@@ -180,12 +178,12 @@
                     if ($ShowLoginWindow) { $queryHash.Add("prompt", "login") }
                 }
             }
-            
+
             # Show login windows (web form)
             $phase1auth = Show-OAuthWindow -Url ($endpointUriAuthorize + (Convert-UriQueryFromHash $queryHash))
-            if(-not $phase1auth.code) {
+            if (-not $phase1auth.code) {
                 $msg = "Authentication failed. Unable to obtain AccessToken.`n$($phase1auth.error_description)"
-                if($phase1auth.error) { $msg = $phase1auth.error.ToUpperInvariant() + " - " + $msg }
+                if ($phase1auth.error) { $msg = $phase1auth.error.ToUpperInvariant() + " - " + $msg }
                 Stop-PSFFunction -Message $msg -Tag "Authorization" -EnableException $true -Exception ([System.Management.Automation.RuntimeException]::new($msg))
             }
 
@@ -201,8 +199,7 @@
                 '2.0' { $tokenQueryHash.Add("scope", [uri]::EscapeDataString($scope)) }
             }
             $authorizationPostRequest = Convert-UriQueryFromHash $tokenQueryHash -NoQuestionmark
-        }
-        else {
+        } else {
             # build authorization string with plain text credentials
             # Info https://docs.microsoft.com/en-us/azure/active-directory/develop/v1-oauth2-client-creds-grant-flow#request-an-access-token
             Write-PSFMessage -Level Verbose -Message "Authentication is done by specified credentials. (No TwoFactor-Authentication supported!)" -Tag "Authorization"
@@ -229,8 +226,7 @@
         $jsonResponse = ConvertFrom-Json -InputObject $clientResult.Result.Content.ReadAsStringAsync().Result -ErrorAction Ignore
         if ($clientResult.Result.StatusCode -eq [System.Net.HttpStatusCode]"OK") {
             Write-PSFMessage -Level Verbose -Message "AccessToken granted. $($clientResult.Result.StatusCode.value__) ($($clientResult.Result.StatusCode)) $($clientResult.Result.ReasonPhrase)" -Tag "Authorization"
-        }
-        else {
+        } else {
             $httpClient.CancelPendingRequests()
             $msg = "Request for AccessToken failed. $($clientResult.Result.StatusCode.value__) ($($clientResult.Result.StatusCode)) $($clientResult.Result.ReasonPhrase) `n$($jsonResponse.error_description)"
             Stop-PSFFunction -Message $msg -Tag "Authorization" -EnableException $true -Exception ([System.Management.Automation.RuntimeException]::new($msg))
@@ -292,12 +288,10 @@
             if ($Register) {
                 $script:msgraph_Token = $resultObject
                 if ($PassThru) { $resultObject }
-            }
-            else {
+            } else {
                 $resultObject
             }
-        }
-        else {
+        } else {
             Stop-PSFFunction -Message "Token failure. Acquired token is not valid" -EnableException $true -Tag "Authorization"
         }
     }

@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Linq;
 
-namespace MSGraph.Exchange.Mail
-{
+namespace MSGraph.Exchange.Mail {
     /// <summary>
     /// Mail message parameter class for convinient pipeline 
     /// input on parameters in *-MgaMail* commands
     /// </summary>
     [Serializable]
-    public class MessageParameter
-    {
+    public class MessageParameter {
         #region Properties
         /// <summary>
         /// message or folder id
@@ -24,10 +22,8 @@ namespace MSGraph.Exchange.Mail
         /// <summary>
         /// The type name of inputobject
         /// </summary>
-        public string TypeName
-        {
-            get
-            {
+        public string TypeName {
+            get {
                 return _typeName;
             }
 
@@ -50,18 +46,12 @@ namespace MSGraph.Exchange.Mail
         /// Overrides the default ToString() method 
         /// </summary>
         /// <returns></returns>
-        public override string ToString()
-        {
-            if (!string.IsNullOrEmpty(Name))
-            {
+        public override string ToString() {
+            if(!string.IsNullOrEmpty(Name)) {
                 _returnValue = Name;
-            }
-            else if (!string.IsNullOrEmpty(Id))
-            {
+            } else if(!string.IsNullOrEmpty(Id)) {
                 _returnValue = Id;
-            }
-            else
-            {
+            } else {
                 _returnValue = InputObject.ToString();
             }
 
@@ -74,8 +64,7 @@ namespace MSGraph.Exchange.Mail
         /// <summary>
         /// Mail message input
         /// </summary>
-        public MessageParameter(Message Message)
-        {
+        public MessageParameter(Message Message) {
             InputObject = Message;
             _typeName = InputObject.GetType().ToString();
             Id = Message.Id;
@@ -85,17 +74,13 @@ namespace MSGraph.Exchange.Mail
         /// <summary>
         /// String input
         /// </summary>
-        public MessageParameter(string Text)
-        {
+        public MessageParameter(string Text) {
             InputObject = Text;
             _typeName = InputObject.GetType().ToString();
 
-            if (Text.Length == 152 || Text.Length == 136)
-            {
+            if(Text.Length == 152 || Text.Length == 136) {
                 Id = Text;
-            }
-            else
-            {
+            } else {
                 Name = Text;
             }
         }

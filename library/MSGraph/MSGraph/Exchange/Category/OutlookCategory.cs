@@ -2,8 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace MSGraph.Exchange.Category
-{
+namespace MSGraph.Exchange.Category {
     /// <summary>
     /// Category in exchange online
     /// 
@@ -13,8 +12,7 @@ namespace MSGraph.Exchange.Category
     /// https://docs.microsoft.com/en-us/graph/api/resources/outlookcategory?view=graph-rest-1.0
     /// </summary>
     [Serializable]
-    public class OutlookCategory
-    {
+    public class OutlookCategory {
         #region Properties
         /// <summary>
         /// 
@@ -29,14 +27,11 @@ namespace MSGraph.Exchange.Category
         /// <summary>
         /// 
         /// </summary>
-        public String Name
-        {
-            get
-            {
+        public String Name {
+            get {
                 return DisplayName;
             }
-            set
-            {
+            set {
                 this.DisplayName = value;
             }
         }
@@ -49,20 +44,15 @@ namespace MSGraph.Exchange.Category
         /// <summary>
         /// 
         /// </summary>
-        public ColorName ColorName
-        {
-            get
-            {
-                if ( ColorTable.ContainsKey(Color.ToString().ToLower()) )
-                {
+        public ColorName ColorName {
+            get {
+                if(ColorTable.ContainsKey(Color.ToString().ToLower())) {
                     string name = (string)ColorTable[Color.ToString().ToLower()];
                     return (ColorName)Enum.Parse(typeof(ColorName), name, true);
-                }
-                else
-                {
+                } else {
                     return (ColorName)Enum.Parse(typeof(ColorName), @"NoColorMapped", true);
                 }
-                
+
             }
             set { }
         }
@@ -70,16 +60,11 @@ namespace MSGraph.Exchange.Category
         /// <summary>
         /// 
         /// </summary>
-        public String ColorCode
-        {
-            get
-            {
-                if (ColorCodeTable.ContainsKey(Color.ToString().ToLower()))
-                {
+        public String ColorCode {
+            get {
+                if(ColorCodeTable.ContainsKey(Color.ToString().ToLower())) {
                     return (string)ColorCodeTable[Color.ToString().ToLower()];
-                }
-                else
-                {
+                } else {
                     return @"";
                 }
 
@@ -97,10 +82,8 @@ namespace MSGraph.Exchange.Category
         /// </summary>
         public object BaseObject;
 
-        private static Hashtable ColorTable
-        {
-            get
-            {
+        private static Hashtable ColorTable {
+            get {
                 Hashtable table = new Hashtable
                 {
                     { "none", "NoColorMapped" },
@@ -135,10 +118,8 @@ namespace MSGraph.Exchange.Category
             set { }
         }
 
-        private static Hashtable ColorNameTable
-        {
-            get
-            {
+        private static Hashtable ColorNameTable {
+            get {
                 Hashtable table = new Hashtable
                 {
                     { "nocolormapped", "None"},
@@ -173,10 +154,8 @@ namespace MSGraph.Exchange.Category
             set { }
         }
 
-        private static Hashtable ColorCodeTable
-        {
-            get
-            {
+        private static Hashtable ColorCodeTable {
+            get {
                 Hashtable table = new Hashtable
                 {
                     { "none", "" },
@@ -219,24 +198,21 @@ namespace MSGraph.Exchange.Category
         /// Overrides the default ToString() method 
         /// </summary>
         /// <returns></returns>
-        public override string ToString()
-        {
+        public override string ToString() {
             return DisplayName;
         }
 
         /// <summary>
         /// 
         /// </summary>
-        public static string Parse(String Color)
-        {
+        public static string Parse(String Color) {
             return (string)ColorTable[Color.ToString().ToLower()];
         }
 
         /// <summary>
         /// 
         /// </summary>
-        public static ColorName Parse(ColorKey ColorKey)
-        {
+        public static ColorName Parse(ColorKey ColorKey) {
             string name = (string)ColorTable[ColorKey.ToString().ToLower()];
             return (ColorName)Enum.Parse(typeof(ColorName), name, true);
         }
@@ -244,8 +220,7 @@ namespace MSGraph.Exchange.Category
         /// <summary>
         /// 
         /// </summary>
-        public static ColorKey Parse(ColorName ColorName)
-        {
+        public static ColorKey Parse(ColorName ColorName) {
             string name = (string)ColorNameTable[ColorName.ToString().ToLower()];
             return (ColorKey)Enum.Parse(typeof(ColorKey), name, true);
         }
@@ -257,39 +232,34 @@ namespace MSGraph.Exchange.Category
         /// <summary>
         /// empty
         /// </summary>
-        public OutlookCategory()
-        {
+        public OutlookCategory() {
         }
 
         /// <summary>
         /// Only name input
         /// </summary>
-        public OutlookCategory(String Name)
-        {
+        public OutlookCategory(String Name) {
             this.DisplayName = Name;
         }
 
         /// <summary>
         /// Only Id input
         /// </summary>
-        public OutlookCategory(Guid Id)
-        {
+        public OutlookCategory(Guid Id) {
             this.Id = Id;
         }
 
         /// <summary>
         /// Only ColorKey
         /// </summary>
-        public OutlookCategory(ColorKey Color)
-        {
+        public OutlookCategory(ColorKey Color) {
             this.Color = Color;
         }
 
         /// <summary>
         /// All relevant properties
         /// </summary>
-        public OutlookCategory(Guid Id, String DisplayName, ColorKey Color, String User)
-        {
+        public OutlookCategory(Guid Id, String DisplayName, ColorKey Color, String User) {
             this.Id = Id;
             this.DisplayName = DisplayName;
             this.Color = Color;
@@ -299,8 +269,7 @@ namespace MSGraph.Exchange.Category
         /// <summary>
         /// All relevant properties including Baseobject
         /// </summary>
-        public OutlookCategory(Guid Id, String DisplayName, ColorKey Color, String User, object BaseObject)
-        {
+        public OutlookCategory(Guid Id, String DisplayName, ColorKey Color, String User, object BaseObject) {
             this.Id = Id;
             this.DisplayName = DisplayName;
             this.Color = Color;

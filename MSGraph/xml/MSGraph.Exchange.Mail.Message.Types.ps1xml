@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Types>
+
+    <Type>
+        <Name>Deserialized.MSGraph.Exchange.Mail.Message</Name>
+        <Members>
+            <MemberSet>
+                <Name>PSStandardMembers</Name>
+                <Members>
+                    <NoteProperty>
+                        <Name>
+                            TargetTypeForDeserialization
+                        </Name>
+                        <Value>
+                            MSGraph.Exchange.Mail.Message
+                        </Value>
+                    </NoteProperty>
+                </Members>
+            </MemberSet>
+        </Members>
+    </Type>
+
+    <Type>
+        <Name>MSGraph.Exchange.Mail.Message</Name>
+        <Members>
+            <AliasProperty>
+                <Name>Created</Name>
+                <ReferencedMemberName>
+                    createdDateTime
+                </ReferencedMemberName>
+            </AliasProperty>
+
+            <AliasProperty>
+                <Name>DeliveryReceiptRequested</Name>
+                <ReferencedMemberName>
+                    IsDeliveryReceiptRequested
+                </ReferencedMemberName>
+            </AliasProperty>
+
+            <AliasProperty>
+                <Name>ReadReceiptRequested</Name>
+                <ReferencedMemberName>
+                    isReadReceiptRequested
+                </ReferencedMemberName>
+            </AliasProperty>
+
+            <AliasProperty>
+                <Name>Received</Name>
+                <ReferencedMemberName>
+                    ReceivedDateTime
+                </ReferencedMemberName>
+            </AliasProperty>
+
+            <AliasProperty>
+                <Name>Sent</Name>
+                <ReferencedMemberName>
+                    SentDateTime
+                </ReferencedMemberName>
+            </AliasProperty>
+
+            <AliasProperty>
+                <Name>Name</Name>
+                <ReferencedMemberName>
+                    Subject
+                </ReferencedMemberName>
+            </AliasProperty>
+
+            <AliasProperty>
+                <Name>To</Name>
+                <ReferencedMemberName>
+                    ToRecipients
+                </ReferencedMemberName>
+            </AliasProperty>
+
+            <AliasProperty>
+                <Name>Recipients</Name>
+                <ReferencedMemberName>
+                    ToRecipients
+                </ReferencedMemberName>
+            </AliasProperty>
+
+            <CodeProperty IsHidden="true">
+                <Name>SerializationData</Name>
+                <GetCodeReference>
+                    <TypeName>PSFramework.Serialization.SerializationTypeConverter</TypeName>
+                    <MethodName>GetSerializationData</MethodName>
+                </GetCodeReference>
+            </CodeProperty>
+        </Members>
+
+        <TypeConverter>
+            <TypeName>PSFramework.Serialization.SerializationTypeConverter</TypeName>
+        </TypeConverter>
+    </Type>
+
+</Types>

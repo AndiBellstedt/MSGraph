@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Types>
+
+    <Type>
+        <Name>Deserialized.MSGraph.Exchange.Mail.Folder</Name>
+        <Members>
+            <MemberSet>
+                <Name>PSStandardMembers</Name>
+                <Members>
+                    <NoteProperty>
+                        <Name>
+                            TargetTypeForDeserialization
+                        </Name>
+                        <Value>
+                            MSGraph.Exchange.Mail.Folder
+                        </Value>
+                    </NoteProperty>
+                </Members>
+            </MemberSet>
+        </Members>
+    </Type>
+
+    <Type>
+        <Name>MSGraph.Exchange.Mail.Folder</Name>
+        <Members>
+            <AliasProperty>
+                <Name>Folder</Name>
+                <ReferencedMemberName>
+                    DisplayName
+                </ReferencedMemberName>
+            </AliasProperty>
+
+            <ScriptProperty>
+                <Name>FullName</Name>
+                <GetScriptBlock>
+                    $names = New-Object -TypeName System.object[]($this.HierarchyLevel)
+                    for ($i = ($this.HierarchyLevel - 1); $i -ge 0 ; $i--) {
+                        $names[$i] = $this.DisplayName
+                        $this = $this.ParentFolder
+                    }
+                    $path = "."
+                    for ($i = 0; $i -lt $names.Count; $i++) {
+                        $path = Join-Path -Path $path -ChildPath $names[$i]
+                    }
+                    $path
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>ParentPath</Name>
+                <GetScriptBlock>
+                    Split-Path -Path $this.FullName
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <CodeProperty IsHidden="true">
+                <Name>SerializationData</Name>
+                <GetCodeReference>
+                    <TypeName>PSFramework.Serialization.SerializationTypeConverter</TypeName>
+                    <MethodName>GetSerializationData</MethodName>
+                </GetCodeReference>
+            </CodeProperty>
+        </Members>
+
+        <TypeConverter>
+            <TypeName>PSFramework.Serialization.SerializationTypeConverter</TypeName>
+        </TypeConverter>
+    </Type>
+
+</Types>
