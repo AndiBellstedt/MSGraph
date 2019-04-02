@@ -1,4 +1,9 @@
 # Changelog
+# 1.2.9.0
+- Fix: Command Export-MgaMailAttachment
+    - bugfixing type checking for attachments to export. Types are renamed in version 1.2.8.3 and the command test for the old type names
+
+
 # 1.2.8.5
 - New: Command Get-MgaMailboxSettings
     - returns the settings from the exchange online mailbox

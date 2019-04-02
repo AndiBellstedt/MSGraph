@@ -55,20 +55,20 @@
         foreach ($attachmentItem in $Attachment) {
             #switching between different types to export
             switch ($attachmentItem.TypeName) {
-                "MSGraph.Exchange.Mail.Attachment.FileAttachment" {
+                "MSGraph.Exchange.Attachment.FileAttachment" {
                     if ($pscmdlet.ShouldProcess($attachmentItem, "Export to $($Path.Path)")) {
-                        Write-PSFMessage -Level Verbose -Message "Exporting attachment '$($attachmentItem)' to $($Path.Path)" -Tag "ExportData"
+                        Write-PSFMessage -Level Verbose -Message "Exporting attachment '$($attachmentItem)' to '$($Path.ToString())'" -Tag "ExportData"
                         $attachmentItem.InputObject.ContentBytes | Set-Content -Path (Join-Path -Path $Path -ChildPath $attachmentItem.Name) -Encoding Byte
                     }
                 }
 
-                "MSGraph.Exchange.Mail.Attachment.ItemAttachment" {
+                "MSGraph.Exchange.Attachment.ItemAttachment" {
                     if ($pscmdlet.ShouldProcess($attachmentItem, "Export to $($Path.Path)")) {
                         Write-PSFMessage -Level Important -Message "Export of $($attachmentItem.TypeName) is not implemented, yet. Could not export '$($attachmentItem.InputObject)'" -Tag "ExportData"
                     }
                 }
 
-                "MSGraph.Exchange.Mail.Attachment.ReferenceAttachment" {
+                "MSGraph.Exchange.Attachment.ReferenceAttachment" {
                     if ($pscmdlet.ShouldProcess($attachmentItem, "Export to $($Path.Path)")) {
                         $shell = New-Object -ComObject ("WScript.Shell")
                         $shortCut = $shell.CreateShortcut("$($Path.Path)\$($attachmentItem.InputObject.Name).lnk")
@@ -77,7 +77,7 @@
                     }
                 }
 
-                "MSGraph.Exchange.Mail.Attachment.Attachment" {
+                "MSGraph.Exchange.Attachment.Attachment" {
                     Write-PSFMessage -Level Warning -Message "$($attachmentItem) is not a exportable attachment." -Tag "ParameterSetHandling"
                 }
 
