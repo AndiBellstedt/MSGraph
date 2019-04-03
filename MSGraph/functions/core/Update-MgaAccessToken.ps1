@@ -141,8 +141,8 @@
                 $resultObject.Scope = $jsonResponse.scope -split " "
                 $resultObject.ValidUntilUtc = $baselineTimestamp.AddSeconds($jsonResponse.expires_on).ToUniversalTime()
                 $resultObject.ValidFromUtc = $baselineTimestamp.AddSeconds($jsonResponse.not_before).ToUniversalTime()
-                $resultObject.ValidUntil = $baselineTimestamp.AddSeconds($jsonResponse.expires_on).ToLocalTime()
-                $resultObject.ValidFrom = $baselineTimestamp.AddSeconds($jsonResponse.not_before).ToLocalTime()
+                $resultObject.ValidUntil = $baselineTimestamp.AddSeconds($jsonResponse.expires_on).ToLocalTime().AddHours( [int]$baselineTimestamp.AddSeconds($jsonResponse.expires_on).ToLocalTime().IsDaylightSavingTime() )
+                $resultObject.ValidFrom = $baselineTimestamp.AddSeconds($jsonResponse.not_before).ToLocalTime().AddHours( [int]$baselineTimestamp.AddSeconds($jsonResponse.not_before).ToLocalTime().IsDaylightSavingTime() )
             }
             '2.0' {
                 $resultObject.Scope = $jsonResponse.scope.Replace("$ResourceUri/", '') -split " "
@@ -170,8 +170,8 @@
         if ($resultObject.AccessTokenInfo -and $resultObject.AccessTokenInfo.TenantID.ToString() -notlike "9188040d-6c67-4c5b-b112-36a304b66dad") {
             $resultObject.ValidUntilUtc = $resultObject.AccessTokenInfo.ExpirationTime.ToUniversalTime()
             $resultObject.ValidFromUtc = $resultObject.AccessTokenInfo.NotBefore.ToUniversalTime()
-            $resultObject.ValidUntil = $resultObject.AccessTokenInfo.ExpirationTime.ToLocalTime()
-            $resultObject.ValidFrom = $resultObject.AccessTokenInfo.NotBefore.ToLocalTime()
+            $resultObject.ValidUntil = $resultObject.AccessTokenInfo.ExpirationTime.ToLocalTime().AddHours( [int]$resultObject.AccessTokenInfo.ExpirationTime.ToLocalTime().IsDaylightSavingTime() )
+            $resultObject.ValidFrom = $resultObject.AccessTokenInfo.NotBefore.ToLocalTime().AddHours( [int]$resultObject.AccessTokenInfo.NotBefore.ToLocalTime().IsDaylightSavingTime() )
         }
 
         # Checking if token is valid
