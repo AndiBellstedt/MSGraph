@@ -1,4 +1,8 @@
 # Changelog
+# 1.2.9.1
+- Fix: Command New-MgaAccessToken, Update-MgaAccessToken
+    - bugfixing validation of token lifetime within daylightsaving areas. validation time was not converted to daylightsaving time, so token was interpreted as already expired, even within the moment it was gathered.
+
 # 1.2.9.0
 - Fix: Command Export-MgaMailAttachment
     - bugfixing type checking for attachments to export. Types are renamed in version 1.2.8.3 and the command test for the old type names
