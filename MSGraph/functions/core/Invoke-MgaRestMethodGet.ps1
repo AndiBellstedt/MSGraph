@@ -20,6 +20,10 @@
     .PARAMETER DeltaLink
         Specifies the uri to query for delta objects on a query.
 
+    .PARAMETER UserUnspecific
+        Specfies that no user name or "me" should be added in uri for api call.
+        This is used for calling "all company data" like "available teams" or such things.
+
     .PARAMETER ResultSize
         The user to execute this under. Defaults to the user the token belongs to.
 
@@ -47,6 +51,8 @@
         [string]
         $Field,
 
+        [Parameter(ParameterSetName = 'Default')]
+        [Parameter(ParameterSetName = 'DeltaLink')]
         [string]
         $User,
 
@@ -57,6 +63,11 @@
         [Parameter(ParameterSetName = 'DeltaLink')]
         [string]
         $DeltaLink,
+
+        [Parameter(ParameterSetName = 'UserUnspecific')]
+        [Alias('NoUserName', "NoUser", "NoUserSpecific")]
+        [switch]
+        $UserUnspecific,
 
         [Int64]
         $ResultSize = (Get-PSFConfigValue -FullName 'MSGraph.Query.ResultSize' -Fallback 100),
@@ -83,6 +94,8 @@
         $restUri = $DeltaLink
         $Delta = $true
         $User = ([uri]$restUri).AbsolutePath.split('/')[2]
+    } elseif ($PSCmdlet.ParameterSetName -like "UserUnspecific") {
+        $restUri = "$($ApiConnection)/$($ApiVersion)/$($Field)"
     } else {
         if (-not $User) { $User = $Token.UserprincipalName }
         $restUri = "$($ApiConnection)/$($ApiVersion)/$(Resolve-UserString -User $User)/$($Field)"
