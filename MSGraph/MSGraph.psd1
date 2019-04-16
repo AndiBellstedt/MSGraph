@@ -3,7 +3,7 @@
     RootModule         = 'MSGraph.psm1'
 
     # Version number of this module.
-    ModuleVersion      = '1.2.9.1'
+    ModuleVersion      = '1.2.9.2'
 
     # ID used to uniquely identify this module
     GUID               = '5f61c229-95d0-4423-ab50-938c0723ad21'
@@ -202,16 +202,16 @@
             )
 
             # A URL to the license for this module.
-            LicenseUri   = 'https://github.com/FriedrichWeinmann/MSGraph/blob/master/LICENSE'
+            LicenseUri   = 'https://github.com/AndiBellstedt/MSGraph/blob/master/LICENSE'
 
             # A URL to the main website for this project.
-            ProjectUri   = 'https://github.com/FriedrichWeinmann/MSGraph'
+            ProjectUri   = 'https://github.com/AndiBellstedt/MSGraph'
 
             # A URL to an icon representing this module.
             IconUri      = 'https://github.com/AndiBellstedt/MSGraph/tree/Development/MSGraph/assets/MSGraph_128x128.png'
 
             # ReleaseNotes of this module
-            ReleaseNotes = 'https://github.com/FriedrichWeinmann/MSGraph/blob/master/MSGraph/changelog.md'
+            ReleaseNotes = 'https://github.com/AndiBellstedt/MSGraph/blob/master/MSGraph/changelog.md'
 
         } # End of PSData hashtable
 
