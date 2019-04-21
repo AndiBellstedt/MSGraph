@@ -64,7 +64,7 @@
         If the user has permissions is indicated by the property "Accessible".
 
     .EXAMPLE
-        PS C:\> Get-MgaMailFolder -Name "Sales*" -ListAll
+        PS C:\> Get-MgaTeam -Name "Sales*" -ListAll
 
         Returns all teams in the tenant starting with  name "Sales".
         Detailed information about configuration for the team is only listed, when the connected user
@@ -73,7 +73,7 @@
         If the user has permissions is indicated by the property "Accessible".
 
     .EXAMPLE
-        PS C:\> Get-MgaMailFolder -ResultSize 5 -Token $Token
+        PS C:\> Get-MgaTeam -ResultSize 5 -Token $Token
 
         Retrieves only the first 5 teams for the connected user with the token represented in the variable $token.
     #>
