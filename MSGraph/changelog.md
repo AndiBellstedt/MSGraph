@@ -5,6 +5,7 @@
     - list by default only teams the connected user is joined to
     - switch "ListAll" available for listing all teams in the tenant/organisation
 - Upd: Manifest information update, while taking ownership for github project from @FredWeinman - thank you Fred!
+- Fix: Parameter dokumentation on various commands for parameter "ResultSize"
 
 # 1.2.9.1
 - Fix: Command New-MgaAccessToken, Update-MgaAccessToken

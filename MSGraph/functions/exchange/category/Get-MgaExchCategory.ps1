@@ -28,7 +28,12 @@
         Can be any primary email name of any user the connected token has access to.
 
     .PARAMETER ResultSize
-        The user to execute this under. Defaults to the user the token belongs to.
+        The amount of objects to query within API calls to MSGraph.
+        To avoid long waitings while query a large number of items, the graph api only
+        query a special amount of items within one call.
+
+        A value of 0 represents "unlimited" and results in query all items wihtin a call.
+        The default is 100.
 
     .PARAMETER Token
         The token representing an established connection to the Microsoft Graph Api.
