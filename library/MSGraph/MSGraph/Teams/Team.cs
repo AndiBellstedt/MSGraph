@@ -79,9 +79,14 @@ namespace MSGraph.Teams {
         }
 
         /// <summary>
+        /// Indicates, that the info in the class is queried by joinedTeams API call
+        /// </summary>
+        public bool InfoFromJoinedTeam;
+
+        /// <summary>
         /// 
         /// </summary>
-        public Uri webUrl;
+        public Uri WebUrl;
 
         /// <summary>
         /// 
@@ -138,24 +143,27 @@ namespace MSGraph.Teams {
         /// <summary>
         /// minimal information
         /// </summary>
-        public Team(String Id, String DisplayName, String Description, String User, bool IsArchived) {
+        public Team(String Id, String DisplayName, String Description, String User, bool IsArchived, bool InfoFromJoinedTeam) {
             this.Id = Id;
             this.DisplayName = DisplayName;
             this.Description = Description;
             this.User = User;
             this.IsArchived = IsArchived;
+            this.InfoFromJoinedTeam = InfoFromJoinedTeam;
         }
 
         /// <summary>
         /// full information
         /// </summary>
-        public Team(String Id, String DisplayName, String Description, String User, bool IsArchived,string InternalId, object BaseObject) {
+        public Team(String Id, string InternalId, String DisplayName, String Description, String User, bool IsArchived, bool InfoFromJoinedTeam, Uri WebUrl, object BaseObject) {
             this.Id = Id;
             this.InternalId = InternalId;
             this.DisplayName = DisplayName;
             this.Description = Description;
             this.User = User;
             this.IsArchived = IsArchived;
+            this.InfoFromJoinedTeam = InfoFromJoinedTeam;
+            this.WebUrl = WebUrl;
             this.BaseObject = BaseObject;
         }
 

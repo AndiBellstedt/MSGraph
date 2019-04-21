@@ -4,24 +4,34 @@
         Get Microsoft Teams Team
 
     .DESCRIPTION
-        Get joined Microsoft Teams Team(s) with current settings via Microsoft Graph API
+        Get Microsoft Teams Team(s) with current settings via Microsoft Graph API
+
+        The command can gather teams where the current connected user is joined,
+        or list all existing teams in the tenant. Detailed settings for a team are
+        only showed, if the connected user has appropriate permissions for the team.
 
     .PARAMETER Name
         The name of the team(s) to query.
+        (Client Side filtering)
+
+    .PARAMETER Id
+        The Id of the team(s) to query.
+        (Client Side filtering)
+
+    .PARAMETER InputObject
+        A team object piped in to refresh data.
 
     .PARAMETER ListAll
         Show all available teams in the whole tenant.
         As default behaviour, only teams where the current user is joined will be shown.
 
-    .PARAMETER Filter
-        The name to filter by.
-        (Client Side filtering)
-
-        Try to avoid, when filtering on single name, use parameter -Name instead of -Filter.
-
     .PARAMETER ResultSize
-        The user to execute this under.
-        Defaults to the user the token belongs to.
+        The amount of objects to query within API calls to MSGraph.
+        To avoid long waitings while query a large number of items, the graph api only
+        query a special amount of items within one call.
+
+        A value of 0 represents "unlimited" and results in query all items wihtin a call.
+        The default is 100.
 
     .PARAMETER Token
         The token representing an established connection to the Microsoft Graph Api.
@@ -34,7 +44,12 @@
         Returns all teams the connected user is joined to.
 
     .EXAMPLE
-        PS C:\> Get-MgaTeam -Name $team
+        PS C:\> Get-MgaTeam -Name "MyTeam*"
+
+        Returns all teams starting with name "MyTeam" where the connected user is joined to.
+
+    .EXAMPLE
+        PS C:\> Get-MgaTeam -InputObject $team
 
         Returns refreshed info for the team out of the variable $team.
         Assuming that the variable $team is representing a team queried earlier by Get-MgaTeam
@@ -46,29 +61,41 @@
         Detailed information about configuration for the team is only listed, when the connected user
         has appropriate permissions (administrative permissions or joined member of the team).
 
-    .EXAMPLE
-        PS C:\> Get-MgaMailFolder -Filter "My*"
+        If the user has permissions is indicated by the property "Accessible".
 
-        Returns all joined teams by the connected user matching the name "My" at the begin of the team.
+    .EXAMPLE
+        PS C:\> Get-MgaMailFolder -Name "Sales*" -ListAll
+
+        Returns all teams in the tenant starting with  name "Sales".
+        Detailed information about configuration for the team is only listed, when the connected user
+        has appropriate permissions (administrative permissions or joined member of the team).
+
+        If the user has permissions is indicated by the property "Accessible".
 
     .EXAMPLE
         PS C:\> Get-MgaMailFolder -ResultSize 5 -Token $Token
 
         Retrieves only the first 5 teams for the connected user with the token represented in the variable $token.
     #>
-    [CmdletBinding(DefaultParameterSetName = 'Default')]
-    #[OutputType([MSGraph.Teams.Team])]
+    [CmdletBinding(DefaultParameterSetName = 'ByName')]
+    [OutputType([MSGraph.Teams.Team])]
     param (
         [Parameter(ParameterSetName = 'ByInputOBject', ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true, Position = 0)]
-        [Alias('Team', 'TeamName', 'Id')]
+        [Alias('Team')]
         [MSGraph.Teams.TeamParameter[]]
         $InputObject,
 
-        [Parameter(ParameterSetName = 'Default', ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $false, Position = 0)]
-        [Parameter(ParameterSetName = 'ListAll', ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $false, Position = 0)]
+        [Parameter(ParameterSetName = 'ByName', ValueFromPipeline = $false, ValueFromPipelineByPropertyName = $false, Mandatory = $false, Position = 0)]
+        [Parameter(ParameterSetName = 'ListAll', ValueFromPipeline = $false, ValueFromPipelineByPropertyName = $false, Mandatory = $false)]
         [Alias('Filter', 'NameFilter', 'FilterName', 'DisplayName')]
         [string]
         $Name,
+
+        [Parameter(ParameterSetName = 'ListAll', ValueFromPipeline = $false, ValueFromPipelineByPropertyName = $false, Mandatory = $false)]
+        [Parameter(ParameterSetName = 'ById', ValueFromPipeline = $false, ValueFromPipelineByPropertyName = $false, Mandatory = $false)]
+        [Alias('IdFilter', 'FilterId')]
+        [string]
+        $Id,
 
         [Parameter(ParameterSetName = 'ListAll', ValueFromPipeline = $false, ValueFromPipelineByPropertyName = $false, Mandatory = $false)]
         [switch]
@@ -119,58 +146,79 @@
     process {
         Write-PSFMessage -Level VeryVerbose -Message "Gettings team(s) by parameterset $($PSCmdlet.ParameterSetName)" -Tag "ParameterSetHandling"
         [array]$data = @()
+        $invokeParam = @{
+            "Token"        = $Token
+            "ResultSize"   = $ResultSize
+            "FunctionName" = $MyInvocation.MyCommand
+        }
         switch ($PSCmdlet.ParameterSetName) {
-            "Default" {
+            {$_ -in 'ByName', 'ById'} {
                 Write-PSFMessage -Level Verbose -Message "Gettings joined team(s) for user $($token.UserprincipalName)" -Tag "QueryData"
-                $invokeParam = @{
-                    "Field"        = 'joinedTeams'
-                    "Token"        = $Token
-                    "User"         = "me"
-                    "ResultSize"   = $ResultSize
-                    "FunctionName" = $MyInvocation.MyCommand
-                }
+                $invokeParam.Add('Field', 'joinedTeams')
+                $invokeParam.Add('User', 'me')
                 [array]$teamList = Invoke-MgaRestMethodGet @invokeParam
-                if ($Name) { [array]$teamList = $teamList | Where-Object displayName -Like $Name }
+
+                if ($PSCmdlet.ParameterSetName -like 'ByName' -and $Name) { [array]$teamList = $teamList | Where-Object displayName -Like $Name }
+                if ($PSCmdlet.ParameterSetName -like 'ById' -and $Id) { [array]$teamList = $teamList | Where-Object Id -Like $Id }
 
                 if ($teamList) {
                     Write-PSFMessage -Level VeryVerbose -Message "Found $($teamList.Count) team(s) for user $($token.UserprincipalName)" -Tag "QueryData"
-                    $data = $data + (invoke-internalMgaGetTeamsDetail -teamList $teamList -token $Token -resultSize $ResultSize -functionName $MyInvocation.MyCommand)
+                    $teamList = invoke-internalMgaGetTeamsDetail -teamList $teamList -token $Token -resultSize $ResultSize -functionName $MyInvocation.MyCommand
+
+                    $teamList = $teamList | Add-Member -MemberType NoteProperty -Name "InfoFromJoinedTeam" -Value $true -PassThru
+                    $data = $data + $teamList
                 } else {
                     Stop-PSFFunction -Message "No joined teams found for user $($token.TokenOwner)" -Tag "QueryData"
                 }
             }
 
-            "ListAll" {
+            'ListAll' {
                 Write-PSFMessage -Level Verbose -Message "Gettings all team(s) from the tenant" -Tag "QueryData"
                 #Write-PSFMessage -Level Important -Message "This command uses beta version of Microsoft Graph API. Be aware, that this is not supported in production! Use carefully." -Tag "QueryData"
-                $invokeParam = @{
-                    "Field"          = "groups?`$select=id,displayname,description,resourceProvisioningOptions"
-                    "Token"          = $Token
-                    "UserUnspecific" = $true
-                    "ResultSize"     = $ResultSize
-                    "FunctionName"   = $MyInvocation.MyCommand
-                }
-
+                $invokeParam.Add('Field', "groups?`$select=id,displayname,description,resourceProvisioningOptions")
+                $invokeParam.Add('UserUnspecific', $true)
                 [array]$teamList = Invoke-MgaRestMethodGet @invokeParam | Where-Object resourceProvisioningOptions -like "Team"
+
                 if ($Name) { [array]$teamList = $teamList | Where-Object displayName -Like $Name }
+                if ($Id) { [array]$teamList = $teamList | Where-Object Id -Like $Id }
 
                 if ($teamList) {
                     Write-PSFMessage -Level VeryVerbose -Message "Found $($teamList.Count) team(s) in tenant" -Tag "QueryData"
-                    $data = $data + (invoke-internalMgaGetTeamsDetail -teamList $teamList -token $Token -resultSize $ResultSize -functionName $MyInvocation.MyCommand)
+                    $teamList = invoke-internalMgaGetTeamsDetail -teamList $teamList -token $Token -resultSize $ResultSize -functionName $MyInvocation.MyCommand
+
+                    $teamList = $teamList | Add-Member -MemberType NoteProperty -Name "InfoFromJoinedTeam" -Value $false -PassThru
+                    $data = $data + $teamList
                 } else {
                     Stop-PSFFunction -Message "Unexpected Error while getting all teams team information from the tenant." -Tag "QueryData"
                 }
             }
 
-            "ByInputOBject" {
-                foreach ($team in $ByInputOBject) {
-                    Write-PSFMessage -Level Important -Message "not implemented yet" -Tag "ParameterSetHandling"
-                    #Write-PSFMessage -Level Verbose -Message "Getting team '$( if($team.Name){$team.Name}else{$team.Id} )'" -Tag "ParameterSetHandling"
-                    #$data = $data + (invoke-internalMgaGetTeamsDetail -teamList $teamList -token $Token -resultSize $ResultSize -functionName $MyInvocation.MyCommand)
+            'ByInputOBject' {
+                foreach ($team in $InputOBject) {
+                    Write-PSFMessage -Level Verbose -Message "Getting team '$($team)'" -Tag "ParameterSetHandling"
+                    # resolve team via name
+                    if ($team.TypeName -like "System.String") {
+                        if($team.Name) {
+                            # get team by name
+                            $teamQueried = Get-MgaTeam -Name $team.Name -ListAll -ResultSize 0 -Token $Token
+                        } else {
+                            # get team by Id
+                            $teamQueried = Get-MgaTeam -Id $team.Id -ListAll -ResultSize 0 -Token $Token
+                        }
+                    } else {
+                        # a previsouly query team is piped in
+                        if($team.InputObject.InfoFromJoinedTeam) {
+                            $teamQueried = Get-MgaTeam -Name $team.Name -Token $Token
+                        } else {
+                            $teamQueried = Get-MgaTeam -Name $team.Name -ListAll -ResultSize 0 -Token $Token
+                        }
+                    }
 
-                    #if (-not $data) {
-                    #    Stop-PSFFunction -Message "Unexpected Error while getting information on team '$($team)'" -Tag "QueryData"
-                    #}
+                    if ($teamQueried) {
+                        $teamQueried
+                    } else {
+                        Stop-PSFFunction -Message "Unexpected Error while getting information on team '$($team)'" -Tag "QueryData"
+                    }
                 }
             }
 
@@ -184,11 +232,13 @@
                 # team object with accessible information
                 $teamObject = [MSGraph.Teams.Team]::new(
                     $output.id,
+                    $output.internalId,
                     $output.displayName,
                     $output.description,
                     $output.user,
                     $output.isArchived,
-                    $output.internalId,
+                    $output.InfoFromJoinedTeam,
+                    $output.webUrl,
                     $output
                 )
 
@@ -230,7 +280,8 @@
                     $output.displayName,
                     $output.description,
                     $output.user,
-                    $output.isArchived
+                    $output.isArchived,
+                    $output.InfoFromJoinedTeam
                 )
             }
             #$teamObject = $output

@@ -71,9 +71,65 @@
                             <ListItem>
                                 <PropertyName>IsArchived</PropertyName>
                             </ListItem>
+                            <!-- Alias properties for team messaging settings -->
                             <ListItem>
-                                <PropertyName>User</PropertyName>
+                                <PropertyName>MsgSettingAllowUserEditMessages</PropertyName>
                             </ListItem>
+                            <ListItem>
+                                <PropertyName>MsgSettingAllowUserDeleteMessages</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>MsgSettingAllowOwnerDeleteMessages</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>MsgSettingAllowTeamMentions</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>MsgSettingAllowChannelMentions</PropertyName>
+                            </ListItem>
+                            <!-- Alias properties for team member settings -->
+                            <ListItem>
+                                <PropertyName>MemberAllowCreateUpdateChannels</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>MemberAllowDeleteChannels</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>MemberAllowAddRemoveApps</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>MemberAllowCreateUpdateRemoveTabs</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>MemberAllowCreateUpdateRemoveConnectors</PropertyName>
+                            </ListItem>
+                            <!-- Alias properties for team guest settings -->
+                            <ListItem>
+                                <PropertyName>GuestAllowCreateUpdateChannels</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>GuestAllowDeleteChannels</PropertyName>
+                            </ListItem>
+                            <!-- Alias properties for team fun settings -->
+                            <ListItem>
+                                <PropertyName>FunSettingAllowGiphy</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>FunSettingGiphyContentRating</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>FunSettingAllowStickersAndMemes</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>FunSettingAllowCustomMemes</PropertyName>
+                            </ListItem>
+
+
+                            <!--
+                            <ListItem>
+                                <PropertyName></PropertyName>
+                            </ListItem>
+                            /!-->
                         </ListItems>
                     </ListEntry>
                 </ListEntries>

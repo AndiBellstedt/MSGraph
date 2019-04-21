@@ -2346,7 +2346,12 @@
             the description are received from the directory.
             </summary>
         </member>
-        <member name="F:MSGraph.Teams.Team.webUrl">
+        <member name="F:MSGraph.Teams.Team.InfoFromJoinedTeam">
+            <summary>
+            Indicates, that the info in the class is queried by joinedTeams API call
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.Team.WebUrl">
             <summary>
             
             </summary>
@@ -2382,12 +2387,12 @@
             empty
             </summary>
         </member>
-        <member name="M:MSGraph.Teams.Team.#ctor(System.String,System.String,System.String,System.String,System.Boolean)">
+        <member name="M:MSGraph.Teams.Team.#ctor(System.String,System.String,System.String,System.String,System.Boolean,System.Boolean)">
             <summary>
             minimal information
             </summary>
         </member>
-        <member name="M:MSGraph.Teams.Team.#ctor(System.String,System.String,System.String,System.String,System.Boolean,System.String,System.Object)">
+        <member name="M:MSGraph.Teams.Team.#ctor(System.String,System.String,System.String,System.String,System.String,System.Boolean,System.Boolean,System.Uri,System.Object)">
             <summary>
             full information
             </summary>

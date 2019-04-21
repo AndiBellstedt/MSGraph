@@ -2,7 +2,7 @@
 # 1.2.9.2
 - New: Command Get-MgaTeam
     - returns information about Microsoft Teams team(s)
-    - list by default only teams the connect ed user is joined to
+    - list by default only teams the connected user is joined to
     - switch "ListAll" available for listing all teams in the tenant/organisation
 - Upd: Manifest information update, while taking ownership for github project from @FredWeinman - thank you Fred!
 
