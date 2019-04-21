@@ -2098,5 +2098,299 @@
             
             </summary>
         </member>
+        <member name="T:MSGraph.Teams.TeamFunSettings">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.TeamFunSettings.allowGiphy">
+            <summary>
+            If set to true, enables Giphy use.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.TeamFunSettings.giphyContentRating">
+            <summary>
+            Giphy content rating. Possible values are: moderate, strict.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.TeamFunSettings.allowStickersAndMemes">
+            <summary>
+            If set to true, enables users to include stickers and memes.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.TeamFunSettings.allowCustomMemes">
+            <summary>
+            If set to true, enables users to include custom memes.
+            </summary>
+        </member>
+        <member name="M:MSGraph.Teams.TeamFunSettings.#ctor">
+            <summary>
+            empty
+            </summary>
+        </member>
+        <member name="M:MSGraph.Teams.TeamFunSettings.#ctor(System.Boolean,System.String,System.Boolean,System.Boolean)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:MSGraph.Teams.TeamMessagingSettings">
+            <summary>
+            Team parameter class for convinient pipeline 
+            input on parameters in *-MgaTeam commands
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.TeamMessagingSettings.allowUserEditMessages">
+            <summary>
+            If set to true, users can edit their messages.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.TeamMessagingSettings.allowUserDeleteMessages">
+            <summary>
+            If set to true, users can delete their messages.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.TeamMessagingSettings.allowOwnerDeleteMessages">
+            <summary>
+            If set to true, owners can delete any message.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.TeamMessagingSettings.allowTeamMentions">
+            <summary>
+            If set to true, @team mentions are allowed.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.TeamMessagingSettings.allowChannelMentions">
+            <summary>
+            If set to true, @channel mentions are allowed.
+            </summary>
+        </member>
+        <member name="M:MSGraph.Teams.TeamMessagingSettings.#ctor">
+            <summary>
+            empty
+            </summary>
+        </member>
+        <member name="M:MSGraph.Teams.TeamMessagingSettings.#ctor(System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean)">
+            <summary>
+            String input
+            </summary>
+        </member>
+        <member name="T:MSGraph.Teams.TeamMemberSettings">
+            <summary>
+            Team parameter class for convinient pipeline 
+            input on parameters in *-MgaTeam commands
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.TeamMemberSettings.allowCreateUpdateChannels">
+            <summary>
+            If set to true, members can add and update channels.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.TeamMemberSettings.allowDeleteChannels">
+            <summary>
+            If set to true, members can delete channels.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.TeamMemberSettings.allowAddRemoveApps">
+            <summary>
+            If set to true, members can add and remove apps.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.TeamMemberSettings.allowCreateUpdateRemoveTabs">
+            <summary>
+            If set to true, members can add, update, and remove tabs.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.TeamMemberSettings.allowCreateUpdateRemoveConnectors">
+            <summary>
+            If set to true, members can add, update, and remove connectors.
+            </summary>
+        </member>
+        <member name="M:MSGraph.Teams.TeamMemberSettings.#ctor">
+            <summary>
+            empty
+            </summary>
+        </member>
+        <member name="M:MSGraph.Teams.TeamMemberSettings.#ctor(System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:MSGraph.Teams.TeamGuestSettings">
+            <summary>
+            Team parameter class for convinient pipeline 
+            input on parameters in *-MgaTeam commands
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.TeamGuestSettings.allowCreateUpdateChannels">
+            <summary>
+            If set to true, guests can add and update channels.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.TeamGuestSettings.allowDeleteChannels">
+            <summary>
+            If set to true, guests can delete channels.
+            </summary>
+        </member>
+        <member name="M:MSGraph.Teams.TeamGuestSettings.#ctor">
+            <summary>
+            empty
+            </summary>
+        </member>
+        <member name="M:MSGraph.Teams.TeamGuestSettings.#ctor(System.Boolean,System.Boolean)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:MSGraph.Teams.TeamParameter">
+            <summary>
+            Team parameter class for convinient pipeline 
+            input on parameters in *-MgaTeam commands
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.TeamParameter.Id">
+            <summary>
+            category id
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.TeamParameter.Name">
+            <summary>
+            name of the category
+            </summary>
+        </member>
+        <member name="P:MSGraph.Teams.TeamParameter.TypeName">
+            <summary>
+            The type name of inputobject
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.TeamParameter.InputObject">
+            <summary>
+            carrier object for the input object
+            </summary>
+        </member>
+        <member name="M:MSGraph.Teams.TeamParameter.ToString">
+            <summary>
+            Overrides the default ToString() method 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MSGraph.Teams.TeamParameter.#ctor(MSGraph.Teams.Team)">
+            <summary>
+            Mail Folderinput
+            </summary>
+        </member>
+        <member name="M:MSGraph.Teams.TeamParameter.#ctor(System.Guid)">
+            <summary>
+            String input
+            </summary>
+        </member>
+        <member name="M:MSGraph.Teams.TeamParameter.#ctor(System.String)">
+            <summary>
+            String input
+            </summary>
+        </member>
+        <member name="T:MSGraph.Teams.Team">
+             <summary>
+             Team in MS Graph API
+            
+             A team in Microsoft Teams is a collection of channel objects. A channel represents a topic,
+             and therefore a logical isolation of discussion, within a team. Every team is associated 
+             with a group. The group has the same ID as the team.
+             
+             https://docs.microsoft.com/en-us/graph/api/resources/team?view=graph-rest-1.0
+             </summary>
+        </member>
+        <member name="F:MSGraph.Teams.Team.BaseObject">
+            <summary>
+            data carrier object
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.Team.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.Team.InternalId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.Team.DisplayName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:MSGraph.Teams.Team.Name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.Team.Description">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.Team.IsArchived">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.Team.User">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:MSGraph.Teams.Team.Accessible">
+            <summary>
+            Indicator if the team is accessible by the connected user.
+            If a team is not accessible, only basic information like the name and 
+            the description are received from the directory.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.Team.webUrl">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.Team.memberSettings">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.Team.guestSettings">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.Team.messagingSettings">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.Team.funSettings">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MSGraph.Teams.Team.ToString">
+            <summary>
+            Overrides the default ToString() method
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MSGraph.Teams.Team.#ctor">
+            <summary>
+            empty
+            </summary>
+        </member>
+        <member name="M:MSGraph.Teams.Team.#ctor(System.String,System.String,System.String,System.String,System.Boolean)">
+            <summary>
+            minimal information
+            </summary>
+        </member>
+        <member name="M:MSGraph.Teams.Team.#ctor(System.String,System.String,System.String,System.String,System.Boolean,System.String,System.Object)">
+            <summary>
+            full information
+            </summary>
+        </member>
     </members>
 </doc>

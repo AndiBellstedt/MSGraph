@@ -68,7 +68,7 @@ namespace MSGraph.Exchange.Mail {
         /// </summary>
         public Double UnreadInPercent {
             get {
-                if(TotalItemCount > 0) {
+                if (TotalItemCount > 0) {
                     Double percentage = Math.Round(Double.Parse(UnreadItemCount.ToString()) / Double.Parse(TotalItemCount.ToString()) * 100, 2);
                     return percentage;
                 } else {
@@ -95,9 +95,9 @@ namespace MSGraph.Exchange.Mail {
         /// </summary>
         /// <returns></returns>
         public override string ToString() {
-            if(!string.IsNullOrEmpty(DisplayName)) {
+            if (!string.IsNullOrEmpty(DisplayName)) {
                 _returnValue = DisplayName;
-            } else if(!string.IsNullOrEmpty(Id)) {
+            } else if (!string.IsNullOrEmpty(Id)) {
                 _returnValue = Id;
             } else {
                 _returnValue = this.GetType().Name;

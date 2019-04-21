@@ -1,4 +1,11 @@
 # Changelog
+# 1.2.9.2
+- New: Command Get-MgaTeam
+    - returns information about Microsoft Teams team(s)
+    - list by default only teams the connect ed user is joined to
+    - switch "ListAll" available for listing all teams in the tenant/organisation
+- Upd: Manifest information update, while taking ownership for github project from @FredWeinman - thank you Fred!
+
 # 1.2.9.1
 - Fix: Command New-MgaAccessToken, Update-MgaAccessToken
     - bugfixing validation of token lifetime within daylightsaving areas. validation time was not converted to daylightsaving time, so token was interpreted as already expired, even within the moment it was gathered.

@@ -77,6 +77,12 @@
     <Compile Include="Exchange\Mail\WellKnownFolder.cs" />
     <Compile Include="Exchange\TimeZoneBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Teams\TeamFunSettings.cs" />
+    <Compile Include="Teams\TeamMessagingSettings.cs" />
+    <Compile Include="Teams\TeamMemberSettings.cs" />
+    <Compile Include="Teams\TeamGuestSettings .cs" />
+    <Compile Include="Teams\TeamParameter.cs" />
+    <Compile Include="Teams\Team.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -52,9 +52,9 @@ namespace MSGraph.Exchange.Mail {
         /// </summary>
         /// <returns></returns>
         public override string ToString() {
-            if(!string.IsNullOrEmpty(Name)) {
+            if (!string.IsNullOrEmpty(Name)) {
                 _returnValue = Name;
-            } else if(!string.IsNullOrEmpty(Id)) {
+            } else if (!string.IsNullOrEmpty(Id)) {
                 _returnValue = Id;
             } else {
                 _returnValue = InputObject.ToString();
@@ -84,11 +84,11 @@ namespace MSGraph.Exchange.Mail {
             string[] names = Enum.GetNames(typeof(WellKnownFolder));
             _typeName = InputObject.GetType().ToString();
 
-            if(names.Contains(Text, StringComparer.InvariantCultureIgnoreCase)) {
+            if (names.Contains(Text, StringComparer.InvariantCultureIgnoreCase)) {
                 IsWellKnownName = true;
                 Name = Text.ToLower();
                 Id = Name;
-            } else if(Text.Length == 120 || Text.Length == 104) {
+            } else if (Text.Length == 120 || Text.Length == 104) {
                 IsWellKnownName = false;
                 Id = Text;
             } else {

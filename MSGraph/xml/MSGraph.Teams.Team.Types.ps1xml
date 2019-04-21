@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Types>
+
+    <Type>
+        <Name>Deserialized.MSGraph.Teams.Team</Name>
+        <Members>
+            <MemberSet>
+                <Name>PSStandardMembers</Name>
+                <Members>
+                    <NoteProperty>
+                        <Name>
+                            TargetTypeForDeserialization
+                        </Name>
+                        <Value>
+                            MSGraph.Teams.Team
+                        </Value>
+                    </NoteProperty>
+                </Members>
+            </MemberSet>
+        </Members>
+    </Type>
+
+    <Type>
+        <Name>MSGraph.Teams.Team</Name>
+        <Members>
+            <ScriptProperty>
+                <Name>AllowUserEditMessages</Name>
+                <GetScriptBlock>
+                    if($this.messagingSettings) {
+                        $this.messagingSettings.allowUserEditMessages
+                    }
+                </GetScriptBlock>
+                <SetScriptBlock>
+                    param (
+                        [Parameter(Mandatory=$true)]
+                        [bool]
+                        $AllowUserEditMessages
+                    )
+                    if($this.messagingSettings) {
+                        $this.messagingSettings.allowUserEditMessages = $AllowUserEditMessages
+                    }
+                </SetScriptBlock>
+            </ScriptProperty>
+
+            <CodeProperty IsHidden="true">
+                <Name>SerializationData</Name>
+                <GetCodeReference>
+                    <TypeName>PSFramework.Serialization.SerializationTypeConverter</TypeName>
+                    <MethodName>GetSerializationData</MethodName>
+                </GetCodeReference>
+            </CodeProperty>
+        </Members>
+
+        <TypeConverter>
+            <TypeName>PSFramework.Serialization.SerializationTypeConverter</TypeName>
+        </TypeConverter>
+    </Type>
+
+</Types>
