@@ -77,7 +77,7 @@
 
         Retrieves only the first 5 teams for the connected user with the token represented in the variable $token.
     #>
-    [CmdletBinding(DefaultParameterSetName = 'ByName')]
+    [CmdletBinding(ConfirmImpact = 'Low', DefaultParameterSetName = 'ByName')]
     [OutputType([MSGraph.Teams.Team])]
     param (
         [Parameter(ParameterSetName = 'ByInputOBject', ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true, Position = 0)]
@@ -125,7 +125,7 @@
                     "FunctionName"   = $functionName
                 }
 
-                $teamInfo = [PSCustomObject]@{}
+                $teamInfo = [PSCustomObject]@{ }
                 try {
                     $teamInfo = Invoke-MgaRestMethodGet @invokeParam
                 } catch {
@@ -152,7 +152,7 @@
             "FunctionName" = $MyInvocation.MyCommand
         }
         switch ($PSCmdlet.ParameterSetName) {
-            {$_ -in 'ByName', 'ById'} {
+            { $_ -in 'ByName', 'ById' } {
                 Write-PSFMessage -Level Verbose -Message "Gettings joined team(s) for user $($token.UserprincipalName)" -Tag "QueryData"
                 $invokeParam.Add('Field', 'joinedTeams')
                 $invokeParam.Add('User', 'me')
@@ -198,7 +198,7 @@
                     Write-PSFMessage -Level Verbose -Message "Getting team '$($team)'" -Tag "ParameterSetHandling"
                     # resolve team via name
                     if ($team.TypeName -like "System.String") {
-                        if($team.Name) {
+                        if ($team.Name) {
                             # get team by name
                             $teamQueried = Get-MgaTeam -Name $team.Name -ListAll -ResultSize 0 -Token $Token
                         } else {
@@ -207,7 +207,7 @@
                         }
                     } else {
                         # a previsouly query team is piped in
-                        if($team.InputObject.InfoFromJoinedTeam) {
+                        if ($team.InputObject.InfoFromJoinedTeam) {
                             $teamQueried = Get-MgaTeam -Name $team.Name -Token $Token
                         } else {
                             $teamQueried = Get-MgaTeam -Name $team.Name -ListAll -ResultSize 0 -Token $Token
@@ -228,7 +228,7 @@
         #region output data
         Write-PSFMessage -Level VeryVerbose -Message "Output $($data.Count) objects." -Tag "OutputData"
         foreach ($output in $data) {
-            if($output.memberSettings) {
+            if ($output.memberSettings) {
                 # team object with accessible information
                 $teamObject = [MSGraph.Teams.Team]::new(
                     $output.id,
@@ -284,7 +284,7 @@
                     $output.InfoFromJoinedTeam
                 )
             }
-            #$teamObject = $output
+
             Write-PSFMessage -Level Debug -Message "Output new object '$($teamObject)'." -Tag "OutputData"
             $teamObject
         }

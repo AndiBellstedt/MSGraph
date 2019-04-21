@@ -72,7 +72,8 @@
         'xml\MSGraph.Exchange.MailboxSetting.LocaleInfoSetting.Format.ps1xml'
 
         # Teams
-        'xml\MSGraph.Teams.Team.Format.ps1xml'
+        'xml\MSGraph.Teams.Team.Format.ps1xml',
+        'xml\MSGraph.Teams.TeamChannel.Format.ps1xml'
     )
 
     # Type files (.ps1xml) to be loaded when importing this module
@@ -97,6 +98,7 @@
 
         # Teams
         'xml\MSGraph.Teams.Team.Types.ps1xml'
+        'xml\MSGraph.Teams.TeamChannel.Types.ps1xml'
     )
 
     # Modules to import as nested modules of the module specified in
@@ -141,7 +143,11 @@
         'Set-MgaMailboxSetting',
 
         # Teams
+        ## Team
         'Get-MgaTeam',
+
+        ## Teamchannel
+        'Get-MgaTeamChannel',
 
         # Core
         'Invoke-MgaRestMethodGet',
