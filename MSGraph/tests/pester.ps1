@@ -10,6 +10,9 @@
 
     $Exclude = ""
 )
+Write-PSFMessage -Level Important -Message "Importing Module Pester"
+Remove-Module Pester -Force
+Import-Module Pester -MinimumVersion 4.1.0 -ErrorAction Stop
 
 Write-PSFMessage -Level Important -Message "Starting Tests"
 
