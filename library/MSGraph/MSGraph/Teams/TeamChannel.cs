@@ -16,17 +16,17 @@ namespace MSGraph.Teams {
     public class TeamChannel {
         #region Properties
         /// <summary>
-        /// 
+        /// The channels's unique identifier. Read-only.
         /// </summary>
         public String Id;
 
         /// <summary>
-        /// 
+        /// Channel name as it will appear to the user in Microsoft Teams.
         /// </summary>
         public String DisplayName;
 
         /// <summary>
-        /// 
+        /// Alias property on Displayname
         /// </summary>
         public String Name {
             get {
@@ -38,22 +38,26 @@ namespace MSGraph.Teams {
         }
 
         /// <summary>
-        /// 
+        /// Optional textual description for the channel.
         /// </summary>
         public String Description;
 
         /// <summary>
-        /// 
+        /// Whether the channel should automatically be marked 'favorite' for all members of the team.
+        /// Default: false.
         /// </summary>
         public bool isFavoriteByDefault;
 
         /// <summary>
-        /// 
+        /// A hyperlink that will navigate to the channel in Microsoft Teams.
+        /// This is the URL that you get when you right-click a channel in Microsoft Teams
+        /// and select Get link to channel. This URL should be treated as an opaque blob,
+        /// and not parsed. Read-only.
         /// </summary>
         public Uri WebUrl;
 
         /// <summary>
-        /// 
+        /// The email address for sending messages to the channel. Read-only.
         /// </summary>
         public MailAddress Email;
 

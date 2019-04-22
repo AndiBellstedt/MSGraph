@@ -74,6 +74,9 @@
         # Teams
         'xml\MSGraph.Teams.Team.Format.ps1xml',
         'xml\MSGraph.Teams.TeamChannel.Format.ps1xml'
+
+        #AzureAD
+        'xml\MSGraph.AzureAD.Users.User.Format.ps1xml'
     )
 
     # Type files (.ps1xml) to be loaded when importing this module
@@ -99,6 +102,9 @@
         # Teams
         'xml\MSGraph.Teams.Team.Types.ps1xml'
         'xml\MSGraph.Teams.TeamChannel.Types.ps1xml'
+
+        #AzureAD
+        'xml\MSGraph.AzureAD.Users.User.Types.ps1xml'
     )
 
     # Modules to import as nested modules of the module specified in
@@ -145,6 +151,8 @@
         # Teams
         ## Team
         'Get-MgaTeam',
+        'Get-MgaTeamMember',
+        'Get-MgaTeamOwner,'
 
         ## Teamchannel
         'Get-MgaTeamChannel',

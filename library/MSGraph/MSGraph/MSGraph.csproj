@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AzureAD\Users\User.cs" />
     <Compile Include="Core\AzureAccessToken.cs" />
     <Compile Include="Core\JWTAccessTokenInfo.cs" />
     <Compile Include="Exchange\Attachment\ReferenceAttachment.cs" />

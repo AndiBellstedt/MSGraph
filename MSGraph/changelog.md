@@ -6,6 +6,10 @@
     - switch "ListAll" available for listing all teams in the tenant/organisation
 - New: Command Get-MgaTeamChannel
     - returns channel(s) from Microsoft Teams team(s)
+- New: Command Get-MgaTeamMember
+    - returns channel member(s) from Microsoft Teams team(s)
+- New: Command Get-MgaTeamOwner
+    - returns channel owner(s) from Microsoft Teams team(s)
 - Upd: Manifest information update, while taking ownership for github project from @FredWeinman - thank you Fred!
 - Fix: Parameter dokumentation on various commands for parameter "ResultSize"
 

@@ -1,20 +1,20 @@
-﻿function Get-MgaTeamChannel {
+﻿function Get-MgaTeamOwner {
     <#
     .SYNOPSIS
-        Get channels from a Microsoft Teams Team
+        Get owner(s) of a Microsoft Teams Team
 
     .DESCRIPTION
-        Get channel(s) from Microsoft Teams Team(s) with current settings via Microsoft Graph API
+        Get owner(s) of a Microsoft Teams Team(s) via Microsoft Graph API
 
     .PARAMETER InputObject
-        A team object piped in.
+        A team object where to get owner(s) from.
 
     .PARAMETER Name
-        The name of the team(s) to query.
+        Name filter for the owner(s) to query.
         (Client Side filtering)
 
     .PARAMETER Id
-        The Id of the team(s) to query.
+        Id filter for the owners(s) to query.
         (Client Side filtering)
 
     .PARAMETER ResultSize
@@ -31,25 +31,25 @@
         Can be omitted if a connection has been registered using the -Register parameter on New-MgaAccessToken.
 
     .EXAMPLE
-        PS C:\> Get-MgaTeamChannel $team
+        PS C:\> Get-MgaTeamOwner $team
 
-        Returns all channels from team in variable $team.
+        Returns all members from team in variable $team.
         Assuming that the variable $team is representing a team queried earlier by Get-MgaTeam
 
     .EXAMPLE
-        PS C:\> $team | Get-MgaTeamChannel -Name "General"
+        PS C:\> $team | Get-MgaTeamOwner -Name "*John*"
 
-        Returns the Channel "General" from team in variable $team.
+        Returns any member contains "John" in his name from team in variable $team.
         Assuming that the variable $team is representing a team queried earlier by Get-MgaTeam
 
     .EXAMPLE
-        PS C:\> $team | Get-MgaTeamChannel -ResultSize 5
+        PS C:\> $team | Get-MgaTeamOwner -ResultSize 5
 
-        Retrieves only the first 5 channels from team in variable $team.
+        Retrieves only the first 5 members from team in variable $team.
         Assuming that the variable $team is representing a team queried earlier by Get-MgaTeam
     #>
     [CmdletBinding(ConfirmImpact = 'Low', DefaultParameterSetName = 'Default')]
-    [OutputType([MSGraph.Teams.TeamChannel])]
+    [OutputType([MSGraph.AzureAD.Users.User])]
     param (
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Position = 0)]
         [Alias('InputObject', 'TeamName', 'TeamID')]
@@ -80,7 +80,7 @@
     }
 
     process {
-        Write-PSFMessage -Level VeryVerbose -Message "Gettings team(s) channel by parameterset $($PSCmdlet.ParameterSetName)" -Tag "ParameterSetHandling"
+        Write-PSFMessage -Level VeryVerbose -Message "Gettings team(s) owner(s) by parameterset $($PSCmdlet.ParameterSetName)" -Tag "ParameterSetHandling"
         Write-PSFMessage -Level Important -Message "This command uses beta version of Microsoft Graph API. Be aware, that this is not supported in production! Use carefully." -Tag "QueryData"
 
         foreach ($teamItem in $Team) {
@@ -94,14 +94,14 @@
 
             #region query data
             $invokeParam = @{
-                "Field"          = "groups/$($teamItem.Id)/channels"
+                "Field"          = "groups/$($teamItem.Id)/owners"
                 "Token"          = $Token
                 'UserUnspecific' = $true
                 "ResultSize"     = $ResultSize
                 "ApiVersion"     = "beta"
                 "FunctionName"   = $MyInvocation.MyCommand
             }
-            Write-PSFMessage -Level Verbose -Message "Getting channel from team '$($teamItem)'" -Tag "QueryData"
+            Write-PSFMessage -Level Verbose -Message "Getting team '$($teamItem)' owner(s)" -Tag "QueryData"
             $data = Invoke-MgaRestMethodGet @invokeParam
             if ($Name) { [array]$data = $data | Where-Object displayName -Like $Name }
             if ($Id) { [array]$data = $data | Where-Object Id -Like $Id }
@@ -112,20 +112,13 @@
             #region output data
             Write-PSFMessage -Level VeryVerbose -Message "Output $($data.Count) objects." -Tag "OutputData"
             foreach ($output in $data) {
-                if($output.Email) { $_email = [mailaddress]::new($output.Email) } else { $_email = $null }
-
-                $outputObject = [MSGraph.Teams.TeamChannel]::new(
-                    $output.Id,
-                    $output.DisplayName,
-                    $output.Description,
-                    $output.isFavoriteByDefault,
-                    $output.WebUrl,
-                    $_email,
-                    $output.User,
-                    $output
-                )
-
-                Write-PSFMessage -Level Debug -Message "Output channel '$($outputObject)'." -Tag "OutputData"
+                $outputObject = [MSGraph.AzureAD.Users.User]::new()
+                foreach($prop in ($output | Get-Member -MemberType NoteProperty | Where-Object name -notlike "extension_*" | Where-Object name -notlike "@*").Name) {
+                    if($output.$prop) {
+                        $outputObject.$prop = $output.$prop
+                    }
+                }
+                Write-PSFMessage -Level Debug -Message "Output owner '$($outputObject)'." -Tag "OutputData"
                 $outputObject
             }
             #endregion output data
