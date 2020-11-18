@@ -21,7 +21,7 @@
 param (
     $ModuleName,
 
-    $WorkingDirectory = "$($env:SYSTEM_DEFAULTWORKINGDIRECTORY)\_YAHW",
+    $WorkingDirectory = "$($env:SYSTEM_DEFAULTWORKINGDIRECTORY)\_MSGraph",
 
     $Repository = 'PSGallery',
 

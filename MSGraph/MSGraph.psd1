@@ -152,7 +152,7 @@
         ## Team
         'Get-MgaTeam',
         'Get-MgaTeamMember',
-        'Get-MgaTeamOwner,'
+        'Get-MgaTeamOwner',
 
         ## Teamchannel
         'Get-MgaTeamChannel',
