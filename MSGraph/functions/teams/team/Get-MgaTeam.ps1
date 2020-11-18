@@ -77,6 +77,7 @@
 
         Retrieves only the first 5 teams for the connected user with the token represented in the variable $token.
     #>
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSReviewUnusedParameter", "")]
     [CmdletBinding(ConfirmImpact = 'Low', DefaultParameterSetName = 'ByName')]
     [OutputType([MSGraph.Teams.Team])]
     param (

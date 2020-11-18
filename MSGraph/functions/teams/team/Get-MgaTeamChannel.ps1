@@ -52,9 +52,9 @@
     [OutputType([MSGraph.Teams.TeamChannel])]
     param (
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Position = 0)]
-        [Alias('InputObject', 'TeamName', 'TeamID')]
+        [Alias('Team', 'TeamName', 'TeamID')]
         [MSGraph.Teams.TeamParameter[]]
-        $Team,
+        $InputObject,
 
         [Alias('Filter', 'NameFilter', 'FilterName', 'DisplayName')]
         [string]
@@ -83,7 +83,7 @@
         Write-PSFMessage -Level VeryVerbose -Message "Gettings team(s) channel by parameterset $($PSCmdlet.ParameterSetName)" -Tag "ParameterSetHandling"
         Write-PSFMessage -Level Important -Message "This command uses beta version of Microsoft Graph API. Be aware, that this is not supported in production! Use carefully." -Tag "QueryData"
 
-        foreach ($teamItem in $Team) {
+        foreach ($teamItem in $InputObject) {
             #region checking input object type and query message if required
             if ($teamItem.TypeName -like "System.String") {
                 $teamItem = Resolve-MailObjectFromString -Object $teamItem -User $User -Token $Token -NoNameResolving -FunctionName $MyInvocation.MyCommand

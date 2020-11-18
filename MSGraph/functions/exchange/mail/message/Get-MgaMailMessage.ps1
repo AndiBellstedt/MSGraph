@@ -79,7 +79,8 @@
         PS C:\> Get-MgaMailMessage -FolderName "MyFolder" -Subject "Important*"
 
         Return emails where the subject starts with "Important" from the folder "MyFolder" of the user connected to through a token.
-#>
+    #>
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSReviewUnusedParameter", "")]
     [CmdletBinding(DefaultParameterSetName = 'ByInputObject')]
     [OutputType([MSGraph.Exchange.Mail.Message])]
     param (

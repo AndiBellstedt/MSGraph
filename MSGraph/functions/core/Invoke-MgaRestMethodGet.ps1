@@ -44,6 +44,7 @@
 
         Retrieves a list of email folders for the user $User, using the token stored in $Token
     #>
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSReviewUnusedParameter", "")]
     [CmdletBinding(DefaultParameterSetName = 'Default')]
     [Alias('Invoke-MgaGetMethod')]
     param (

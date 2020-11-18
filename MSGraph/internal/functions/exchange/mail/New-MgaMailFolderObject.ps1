@@ -26,6 +26,7 @@
         Create a MSGraph.Exchange.Mail.Folder object from data in variable $output
     #>
     [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseShouldProcessForStateChangingFunctions", "")]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSReviewUnusedParameter", "")]
     [OutputType([MSGraph.Exchange.Mail.Folder])]
     [CmdletBinding()]
     param (

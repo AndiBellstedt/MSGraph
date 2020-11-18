@@ -12,7 +12,7 @@
     .PARAMETER DestinationFolder
         The destination folder where to copy the message to
 
-        .PARAMETER User
+    .PARAMETER User
         The user-account to access. Defaults to the main user connected as.
         Can be any primary email name of any user the connected token has access to.
 

@@ -49,6 +49,7 @@
 
         Return also "inline" attachments, like pictures in html mails from all emails in the inbox of the user connected to through a token.
     #>
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSReviewUnusedParameter", "")]
     [CmdletBinding(ConfirmImpact = 'Low', DefaultParameterSetName = 'Default')]
     param (
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Position = 0)]
@@ -73,6 +74,7 @@
         [MSGraph.Core.AzureAccessToken]
         $Token
     )
+
     begin {
         $requiredPermission = "Mail.Read"
         $Token = Invoke-TokenScopeValidation -Token $Token -Scope $requiredPermission -FunctionName $MyInvocation.MyCommand
