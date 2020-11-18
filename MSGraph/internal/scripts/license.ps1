@@ -1,5 +1,5 @@
-﻿New-PSFLicense -Product 'MSGraph' -Manufacturer 'Friedrich Weinmann, Andreas Bellstedt' -ProductVersion $ModuleVersion -ProductType Module -Name MIT -Version "1.0.0.0" -Date (Get-Date "2018-08-28") -Text @"
-Copyright (c) 2018 Friedrich Weinmann, Andreas Bellstedt
+﻿New-PSFLicense -Product 'MSGraph' -Manufacturer 'Andreas Bellstedt, Friedrich Weinmann' -ProductVersion $ModuleVersion -ProductType Module -Name MIT -Version "1.0.0.0" -Date (Get-Date "2018-08-28") -Text @"
+Copyright (c) 2018 Andreas Bellstedt, Friedrich Weinmann
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

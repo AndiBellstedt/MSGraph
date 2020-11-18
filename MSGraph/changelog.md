@@ -1,4 +1,8 @@
 # Changelog
+## 1.2.9.3 (2020-11-18)
+- No functional changes
+- Fix: Fixing some typos
+- Upd: Add plattform and statistic information to readme file.
 # 1.2.9.2
 - New: Command Get-MgaTeam
     - returns information about Microsoft Teams team(s)

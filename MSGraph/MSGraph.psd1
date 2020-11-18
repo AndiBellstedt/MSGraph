@@ -15,7 +15,7 @@
     CompanyName        = ''
 
     # Copyright statement for this module
-    Copyright          = 'Copyright (c) 2018 Friedrich Weinmann, Andreas Bellstedt'
+    Copyright          = 'Copyright (c) 2018 Andreas Bellstedt, Friedrich Weinmann'
 
     # Description of the functionality provided by this module
     Description        = 'Tools for interacting with the Microsoft Graph Api'
@@ -221,7 +221,9 @@
                 'Outlook',
                 'Messages',
                 'Mail',
-                "Email"
+                "Email",
+                'PSEdition_Desktop',
+                'Windows'
             )
 
             # A URL to the license for this module.
