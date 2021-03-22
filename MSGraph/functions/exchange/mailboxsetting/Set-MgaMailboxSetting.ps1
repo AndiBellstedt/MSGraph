@@ -74,6 +74,7 @@
 
         Set
     #>
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSReviewUnusedParameter", "")]
     [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'Medium', DefaultParameterSetName = 'InputObject')]
     param (
         [Parameter(ParameterSetName = 'InputObject')]

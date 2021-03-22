@@ -4,6 +4,378 @@
         <name>MSGraph</name>
     </assembly>
     <members>
+        <member name="T:MSGraph.AzureAD.Users.User">
+             <summary>
+             User in MS Graph API
+            
+             Represents an Azure AD user account.
+             
+             https://docs.microsoft.com/en-us/graph/api/resources/user?view=graph-rest-beta
+             </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.AboutMe">
+            <summary>
+            A freeform text entry field for the user to describe themselves.
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.AccountEnabled">
+            <summary>
+            true if the account is enabled; otherwise, false. This property is required when a user is created. Supports $filter.
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.AgeGroup">
+            <summary>
+            Sets the age group of the user. Allowed values: null, minor, notAdult and adult. Refer to the legal age group property definitions for further information.
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.AssignedLicenses">
+            <summary>
+            The licenses that are assigned to the user. Not nullable.
+            assignedLicense collection
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.AssignedPlans">
+            <summary>
+            The plans that are assigned to the user. Read-only. Not nullable.
+            assignedPlan collection
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.Birthday">
+            <summary>
+            The birthday of the user. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 would look like this: '2014-01-01T00:00:00Z'
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.businessPhones">
+            <summary>
+            The birthday of the user. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 would look like this: '2014-01-01T00:00:00Z'
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.City">
+            <summary>
+            The city in which the user is located. Supports $filter.
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.CompanyName">
+            <summary>
+            The company name which the user is associated. This property can be useful for describing the company that an external user comes from.
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.ConsentProvidedForMinor">
+            <summary>
+            Sets whether consent has been obtained for minors. Allowed values: null, granted, denied and notRequired. Refer to the legal age group property definitions for further information.
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.Country">
+            <summary>
+            The country/region in which the user is located; for example, "US" or "UK". Supports $filter.
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.CreatedDateTime">
+            <summary>
+            The date and time the user was created. The value cannot be modified and is automatically populated when the entity is created. The DateTimeOffset type represents date and time information using ISO 8601 format and is always in UTC time. Property is nullable. A null value indicates that an accurate creation time couldn't be determined for the user. Read-only. Supports $filter.
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.DeletedDateTime">
+            <summary>
+            The date and time the user was deleted.
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.Department">
+            <summary>
+            The name for the department in which the user works. Supports $filter.
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.DeviceKeys">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.DisplayName">
+            <summary>
+            The name displayed in the address book for the user. This value is usually the combination of the user's first name, middle initial, and last name. This property is required when a user is created and it cannot be cleared during updates. Supports $filter and $orderby.
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.EmployeeId">
+            <summary>
+            The employee identifier assigned to the user by the organization. Supports $filter.
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.ExternalUserState">
+            <summary>
+            For an external user invited to the tenant using the invitation API, this property represents the invited user's invitation status. For invited users, the state can be 'PendingAcceptance' or 'Accepted', or null for all other users. Supports $filter with the supported values. For example: $filter=externalUserState eq 'PendingAcceptance'.
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.ExternalUserStateChangeDateTime">
+            <summary>
+            Shows the timestamp for the latest change to the externalUserState property.
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.FaxNumber">
+            <summary>
+            The fax number of the user.
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.GivenName">
+            <summary>
+            The given name (first name) of the user. Supports $filter.
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.HireDate">
+            <summary>
+            The hire date of the user. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 would look like this: '2014-01-01T00:00:00Z'
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.Id">
+            <summary>
+            The unique identifier for the user. Inherited from directoryObject. Key. Not nullable. Read-only.
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.Interests">
+            <summary>
+            A list for the user to describe their interests.
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.ImAddresses">
+            <summary>
+            A list for the user to describe their interests.
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.IsResourceAccount">
+            <summary>
+            true if the user is a resource account; otherwise, false. Null value should be considered false.
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.JobTitle">
+            <summary>
+            The user?s job title. Supports $filter.
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.LegalAgeGroupClassification">
+            <summary>
+            Used by enterprise applications to determine the legal age group of the user. This property is read-only and calculated based on ageGroup and consentProvidedForMinor properties. Allowed values: null, minorWithOutParentalConsent, minorWithParentalConsent, minorNoParentalConsentRequired, notAdult and adult. Refer to the legal age group property definitions for further information.)
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.LicenseAssignmentStates">
+            <summary>
+            State of license assignments for this user. Read-only.
+            licenseAssignmentState collection
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.Mail">
+            <summary>
+            The SMTP address for the user, for example, "jeff@contoso.onmicrosoft.com". Read-Only. Supports $filter.
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.MailboxSettings">
+            <summary>
+            Settings for the primary mailbox of the signed-in user. You can get or update settings for sending automatic replies to incoming messages, locale, and time zone.
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.MailNickname">
+            <summary>
+            The mail alias for the user. This property must be specified when a user is created. Supports $filter.
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.MobilePhone">
+            <summary>
+            The primary cellular telephone number for the user.
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.MySite">
+            <summary>
+            The URL for the user's personal site.
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.OfficeLocation">
+            <summary>
+            The office location in the user's place of business.
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.OnPremisesDistinguishedName">
+            <summary>
+            Contains the on-premises Active Directory distinguished name or DN. The property is only populated for customers who are synchronizing their on-premises directory to Azure Active Directory via Azure AD Connect. Read-only.
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.OnPremisesDomainName">
+            <summary>
+            Contains the on-premises domainFQDN, also called dnsDomainName synchronized from the on-premises directory. The property is only populated for customers who are synchronizing their on-premises directory to Azure Active Directory via Azure AD Connect. Read-only.
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.OnPremisesExtensionAttributes">
+            <summary>
+            Contains extensionAttributes 1-15 for the user. Note that the individual extension attributes are neither selectable nor filterable. For an onPremisesSyncEnabled user, this set of properties is mastered on-premises and is read-only. For a cloud-only user (where onPremisesSyncEnabled is false), these properties may be set during creation or update.
+            OnPremisesExtensionAttributes 
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.OnPremisesImmutableId">
+            <summary>
+            This property is used to associate an on-premises Active Directory user account to their Azure AD user object. This property must be specified when creating a new user account in the Graph if you are using a federated domain for the user?s userPrincipalName (UPN) property. Important: The $ and _ characters cannot be used when specifying this property. Supports $filter.
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.OnPremisesLastSyncDateTime">
+            <summary>
+            Indicates the last time at which the object was synced with the on-premises directory; for example: "2013-02-16T03:04:54Z". The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 would look like this: '2014-01-01T00:00:00Z'. Read-only.
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.OnPremisesProvisioningErrors">
+            <summary>
+            Errors when using Microsoft synchronization product during provisioning.
+            onPremisesProvisioningError collection
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.OnPremisesSamAccountName">
+            <summary>
+            Contains the on-premises sAMAccountName synchronized from the on-premises directory. The property is only populated for customers who are synchronizing their on-premises directory to Azure Active Directory via Azure AD Connect. Read-only.
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.OnPremisesSecurityIdentifier">
+            <summary>
+            Contains the on-premises security identifier (SID) for the user that was synchronized from on-premises to the cloud. Read-only.
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.OnPremisesSyncEnabled">
+            <summary>
+            true if this object is synced from an on-premises directory; false if this object was originally synced from an on-premises directory but is no longer synced; null if this object has never been synced from an on-premises directory (default). Read-only
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.OnPremisesUserPrincipalName">
+            <summary>
+            Contains the on-premises userPrincipalName synchronized from the on-premises directory. The property is only populated for customers who are synchronizing their on-premises directory to Azure Active Directory via Azure AD Connect. Read-only.
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.OtherMails">
+            <summary>
+            A list of additional email addresses for the user; for example: ["bob@contoso.com", "Robert@fabrikam.com"]. Supports $filter.
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.PasswordPolicies">
+            <summary>
+            Specifies password policies for the user. This value is an enumeration with one possible value being ?DisableStrongPassword?, which allows weaker passwords than the default policy to be specified. ?DisablePasswordExpiration? can also be specified. The two may be specified together; for example: "DisablePasswordExpiration, DisableStrongPassword".
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.PasswordProfile">
+            <summary>
+            Specifies the password profile for the user. The profile contains the user?s password. This property is required when a user is created. The password in the profile must satisfy minimum requirements as specified by the passwordPolicies property. By default, a strong password is required.
+            PasswordProfile
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.PastProjects">
+            <summary>
+            A list for the user to enumerate their past projects.
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.PostalCode">
+            <summary>
+            The postal code for the user's postal address. The postal code is specific to the user's country/region. In the United States of America, this attribute contains the ZIP code.
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.PreferredDataLocation">
+            <summary>
+            The preferred data location for the user. For more information, see OneDrive Online Multi-Geo.
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.PreferredLanguage">
+            <summary>
+            The preferred language for the user. Should follow ISO 639-1 Code; for example "en-US".
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.PreferredName">
+            <summary>
+            The preferred name for the user.
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.ProvisionedPlans">
+            <summary>
+            The plans that are provisioned for the user. Read-only. Not nullable.
+            ProvisionedPlan
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.ProxyAddresses">
+            <summary>
+            For example: ["SMTP: bob@contoso.com", "smtp: bob@sales.contoso.com"] The any operator is required for filter expressions on multi-valued properties. Read-only, Not nullable. Supports $filter.
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.RefreshTokensValidFromDateTime">
+            <summary>
+            Any refresh tokens or sessions tokens (session cookies) issued before this time are invalid, and applications will get an error when using an invalid refresh or sessions token to acquire a delegated access token (to access APIs such as Microsoft Graph). If this happens, the application will need to acquire a new refresh token by making a request to the authorize endpoint. Read-only. Use invalidateAllRefreshTokens to reset.
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.Responsibilities">
+            <summary>
+            A list for the user to enumerate their responsibilities.
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.Schools">
+            <summary>
+            A list for the user to enumerate the schools they have attended.
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.ShowInAddressList">
+            <summary>
+            true if the Outlook global address list should contain this user, otherwise false. If not set, this will be treated as true. For users invited through the invitation manager, this property will be set to false.
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.SignInSessionsValidFromDateTime">
+            <summary>
+            Any refresh tokens or sessions tokens (session cookies) issued before this time are invalid, and applications will get an error when using an invalid refresh or sessions token to acquire a delegated access token (to access APIs such as Microsoft Graph). If this happens, the application will need to acquire a new refresh token by making a request to the authorize endpoint. Read-only. Use revokeSignInSessions to reset.
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.Skills">
+            <summary>
+            A list for the user to enumerate their skills.
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.State">
+            <summary>
+            The state or province in the user's address. Supports $filter.
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.StreetAddress">
+            <summary>
+            The street address of the user's place of business.
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.Surname">
+            <summary>
+            The user's surname (family name or last name). Supports $filter.
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.UsageLocation">
+            <summary>
+            A two letter country code (ISO standard 3166). Required for users that will be assigned licenses due to legal requirement to check for availability of services in countries. Examples include: "US", "JP", and "GB". Not nullable. Supports $filter.
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.UserPrincipalName">
+            <summary>
+            The user principal name (UPN) of the user. The UPN is an Internet-style login name for the user based on the Internet standard RFC 822. By convention, this should map to the user's email name. The general format is alias@domain, where domain must be present in the tenant?s collection of verified domains. This property is required when a user is created. The verified domains for the tenant can be accessed from the verifiedDomains property of organization. Supports $filter and $orderby.
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.UserType">
+            <summary>
+            A string value that can be used to classify user types in your directory, such as "Member" and "Guest". Supports $filter.
+            </summary>
+        </member>
+        <member name="P:MSGraph.AzureAD.Users.User.Name">
+            <summary>
+            Alias property on Displayname
+            </summary>
+        </member>
+        <member name="F:MSGraph.AzureAD.Users.User.BaseObject">
+            <summary>
+            data carrier object
+            </summary>
+        </member>
+        <member name="M:MSGraph.AzureAD.Users.User.ToString">
+            <summary>
+            Overrides the default ToString() method
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MSGraph.AzureAD.Users.User.#ctor">
+            <summary>
+            empty
+            </summary>
+        </member>
         <member name="T:MSGraph.Core.AzureAccessToken">
             <summary>
             Token used to authenticate against azure with
@@ -2096,6 +2468,382 @@
         <member name="M:MSGraph.Exchange.TimeZoneBase.#ctor(System.String)">
             <summary>
             
+            </summary>
+        </member>
+        <member name="T:MSGraph.Teams.TeamChannel">
+             <summary>
+             TeamChannel in MS Graph API
+            
+             Teams are made up of channels, which are the conversations you have with your teammates. 
+             Each channel is dedicated to a specific topic, department, or project. Channels are where 
+             the work actually gets done - where text, audio, and video conversations open to the 
+             whole team happen, where files are shared, and where tabs are added.
+             
+             https://docs.microsoft.com/en-us/graph/api/resources/channel?view=graph-rest-beta
+             </summary>
+        </member>
+        <member name="F:MSGraph.Teams.TeamChannel.Id">
+            <summary>
+            The channels's unique identifier. Read-only.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.TeamChannel.DisplayName">
+            <summary>
+            Channel name as it will appear to the user in Microsoft Teams.
+            </summary>
+        </member>
+        <member name="P:MSGraph.Teams.TeamChannel.Name">
+            <summary>
+            Alias property on Displayname
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.TeamChannel.Description">
+            <summary>
+            Optional textual description for the channel.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.TeamChannel.isFavoriteByDefault">
+            <summary>
+            Whether the channel should automatically be marked 'favorite' for all members of the team.
+            Default: false.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.TeamChannel.WebUrl">
+            <summary>
+            A hyperlink that will navigate to the channel in Microsoft Teams.
+            This is the URL that you get when you right-click a channel in Microsoft Teams
+            and select Get link to channel. This URL should be treated as an opaque blob,
+            and not parsed. Read-only.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.TeamChannel.Email">
+            <summary>
+            The email address for sending messages to the channel. Read-only.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.TeamChannel.User">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.TeamChannel.BaseObject">
+            <summary>
+            data carrier object
+            </summary>
+        </member>
+        <member name="M:MSGraph.Teams.TeamChannel.ToString">
+            <summary>
+            Overrides the default ToString() method
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MSGraph.Teams.TeamChannel.#ctor">
+            <summary>
+            empty
+            </summary>
+        </member>
+        <member name="M:MSGraph.Teams.TeamChannel.#ctor(System.String,System.String,System.String,System.Boolean,System.Uri,System.Net.Mail.MailAddress,System.String,System.Object)">
+            <summary>
+            full object
+            </summary>
+        </member>
+        <member name="T:MSGraph.Teams.TeamFunSettings">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.TeamFunSettings.allowGiphy">
+            <summary>
+            If set to true, enables Giphy use.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.TeamFunSettings.giphyContentRating">
+            <summary>
+            Giphy content rating. Possible values are: moderate, strict.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.TeamFunSettings.allowStickersAndMemes">
+            <summary>
+            If set to true, enables users to include stickers and memes.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.TeamFunSettings.allowCustomMemes">
+            <summary>
+            If set to true, enables users to include custom memes.
+            </summary>
+        </member>
+        <member name="M:MSGraph.Teams.TeamFunSettings.#ctor">
+            <summary>
+            empty
+            </summary>
+        </member>
+        <member name="M:MSGraph.Teams.TeamFunSettings.#ctor(System.Boolean,System.String,System.Boolean,System.Boolean)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:MSGraph.Teams.TeamMessagingSettings">
+            <summary>
+            Team parameter class for convinient pipeline 
+            input on parameters in *-MgaTeam commands
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.TeamMessagingSettings.allowUserEditMessages">
+            <summary>
+            If set to true, users can edit their messages.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.TeamMessagingSettings.allowUserDeleteMessages">
+            <summary>
+            If set to true, users can delete their messages.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.TeamMessagingSettings.allowOwnerDeleteMessages">
+            <summary>
+            If set to true, owners can delete any message.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.TeamMessagingSettings.allowTeamMentions">
+            <summary>
+            If set to true, @team mentions are allowed.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.TeamMessagingSettings.allowChannelMentions">
+            <summary>
+            If set to true, @channel mentions are allowed.
+            </summary>
+        </member>
+        <member name="M:MSGraph.Teams.TeamMessagingSettings.#ctor">
+            <summary>
+            empty
+            </summary>
+        </member>
+        <member name="M:MSGraph.Teams.TeamMessagingSettings.#ctor(System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean)">
+            <summary>
+            String input
+            </summary>
+        </member>
+        <member name="T:MSGraph.Teams.TeamMemberSettings">
+            <summary>
+            Team parameter class for convinient pipeline 
+            input on parameters in *-MgaTeam commands
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.TeamMemberSettings.allowCreateUpdateChannels">
+            <summary>
+            If set to true, members can add and update channels.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.TeamMemberSettings.allowDeleteChannels">
+            <summary>
+            If set to true, members can delete channels.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.TeamMemberSettings.allowAddRemoveApps">
+            <summary>
+            If set to true, members can add and remove apps.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.TeamMemberSettings.allowCreateUpdateRemoveTabs">
+            <summary>
+            If set to true, members can add, update, and remove tabs.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.TeamMemberSettings.allowCreateUpdateRemoveConnectors">
+            <summary>
+            If set to true, members can add, update, and remove connectors.
+            </summary>
+        </member>
+        <member name="M:MSGraph.Teams.TeamMemberSettings.#ctor">
+            <summary>
+            empty
+            </summary>
+        </member>
+        <member name="M:MSGraph.Teams.TeamMemberSettings.#ctor(System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:MSGraph.Teams.TeamGuestSettings">
+            <summary>
+            Team parameter class for convinient pipeline 
+            input on parameters in *-MgaTeam commands
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.TeamGuestSettings.allowCreateUpdateChannels">
+            <summary>
+            If set to true, guests can add and update channels.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.TeamGuestSettings.allowDeleteChannels">
+            <summary>
+            If set to true, guests can delete channels.
+            </summary>
+        </member>
+        <member name="M:MSGraph.Teams.TeamGuestSettings.#ctor">
+            <summary>
+            empty
+            </summary>
+        </member>
+        <member name="M:MSGraph.Teams.TeamGuestSettings.#ctor(System.Boolean,System.Boolean)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:MSGraph.Teams.TeamParameter">
+            <summary>
+            Team parameter class for convinient pipeline 
+            input on parameters in *-MgaTeam commands
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.TeamParameter.Id">
+            <summary>
+            category id
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.TeamParameter.Name">
+            <summary>
+            name of the category
+            </summary>
+        </member>
+        <member name="P:MSGraph.Teams.TeamParameter.TypeName">
+            <summary>
+            The type name of inputobject
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.TeamParameter.InputObject">
+            <summary>
+            carrier object for the input object
+            </summary>
+        </member>
+        <member name="M:MSGraph.Teams.TeamParameter.ToString">
+            <summary>
+            Overrides the default ToString() method 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MSGraph.Teams.TeamParameter.#ctor(MSGraph.Teams.Team)">
+            <summary>
+            Mail Folderinput
+            </summary>
+        </member>
+        <member name="M:MSGraph.Teams.TeamParameter.#ctor(System.Guid)">
+            <summary>
+            String input
+            </summary>
+        </member>
+        <member name="M:MSGraph.Teams.TeamParameter.#ctor(System.String)">
+            <summary>
+            String input
+            </summary>
+        </member>
+        <member name="T:MSGraph.Teams.Team">
+             <summary>
+             Team in MS Graph API
+            
+             A team in Microsoft Teams is a collection of channel objects. A channel represents a topic,
+             and therefore a logical isolation of discussion, within a team. Every team is associated 
+             with a group. The group has the same ID as the team.
+             
+             https://docs.microsoft.com/en-us/graph/api/resources/team?view=graph-rest-1.0
+             </summary>
+        </member>
+        <member name="F:MSGraph.Teams.Team.BaseObject">
+            <summary>
+            data carrier object
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.Team.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.Team.InternalId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.Team.DisplayName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:MSGraph.Teams.Team.Name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.Team.Description">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.Team.IsArchived">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.Team.User">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:MSGraph.Teams.Team.Accessible">
+            <summary>
+            Indicator if the team is accessible by the connected user.
+            If a team is not accessible, only basic information like the name and 
+            the description are received from the directory.
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.Team.InfoFromJoinedTeam">
+            <summary>
+            Indicates, that the info in the class is queried by joinedTeams API call
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.Team.WebUrl">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.Team.memberSettings">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.Team.guestSettings">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.Team.messagingSettings">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:MSGraph.Teams.Team.funSettings">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MSGraph.Teams.Team.ToString">
+            <summary>
+            Overrides the default ToString() method
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MSGraph.Teams.Team.#ctor">
+            <summary>
+            empty
+            </summary>
+        </member>
+        <member name="M:MSGraph.Teams.Team.#ctor(System.String,System.String,System.String,System.String,System.Boolean,System.Boolean)">
+            <summary>
+            minimal information
+            </summary>
+        </member>
+        <member name="M:MSGraph.Teams.Team.#ctor(System.String,System.String,System.String,System.String,System.String,System.Boolean,System.Boolean,System.Uri,System.Object)">
+            <summary>
+            full information
             </summary>
         </member>
     </members>

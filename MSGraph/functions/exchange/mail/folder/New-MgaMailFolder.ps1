@@ -43,6 +43,7 @@
         Creates a new folder named "MyFolder" inside the folder passed in with the variable $folder
 
     #>
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSReviewUnusedParameter", "")]
     [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'Medium', DefaultParameterSetName = 'Default')]
     [OutputType([MSGraph.Exchange.Mail.Folder])]
     param (

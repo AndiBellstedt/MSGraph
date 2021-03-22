@@ -15,7 +15,7 @@ This is important when testing for paths.
 
 # Detect whether at some level loading individual module files, rather than the compiled module was enforced
 $importIndividualFiles = Get-PSFConfigValue -FullName MSGraph.Import.IndividualFiles -Fallback $false
-if ($MSGraph_importIndividualFiles) { $importIndividualFiles = $true }
+if ($PoShPRTG_importIndividualFiles) { $importIndividualFiles = $true }
 if (Test-Path (Resolve-PSFPath -Path "$($script:ModuleRoot)\..\.git" -SingleItem -NewChild)) { $importIndividualFiles = $true }
 if ("<was not compiled>" -eq '<was not compiled>') { $importIndividualFiles = $true }
 
@@ -44,14 +44,20 @@ function Import-ModuleFile {
         $Path
     )
 
-    if ($doDotSource) { . (Resolve-Path $Path) }
-    else { $ExecutionContext.InvokeCommand.InvokeScript($false, ([scriptblock]::Create([io.file]::ReadAllText((Resolve-Path $Path)))), $null, $null) }
+    $resolvedPath = $ExecutionContext.SessionState.Path.GetResolvedPSPathFromPSPath($Path).ProviderPath
+    if ($doDotSource) {
+        . $resolvedPath
+    } else {
+        $ExecutionContext.InvokeCommand.InvokeScript($false, ([scriptblock]::Create([io.file]::ReadAllText($resolvedPath))), $null, $null)
+    }
 }
 
 #region Load individual files
 if ($importIndividualFiles) {
     # Execute Preimport actions
-    . Import-ModuleFile -Path "$ModuleRoot\internal\scripts\preimport.ps1"
+    foreach ($path in (& "$ModuleRoot\internal\scripts\preimport.ps1")) {
+        . Import-ModuleFile -Path $path
+    }
 
     # Import all internal functions
     foreach ($function in (Get-ChildItem "$ModuleRoot\internal\functions" -Filter "*.ps1" -Recurse -ErrorAction Ignore)) {
@@ -64,7 +70,9 @@ if ($importIndividualFiles) {
     }
 
     # Execute Postimport actions
-    . Import-ModuleFile -Path "$ModuleRoot\internal\scripts\postimport.ps1"
+    foreach ($path in (& "$ModuleRoot\internal\scripts\postimport.ps1")) {
+        . Import-ModuleFile -Path $path
+    }
 
     # End it here, do not load compiled code below
     return

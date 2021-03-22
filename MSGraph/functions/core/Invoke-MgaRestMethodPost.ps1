@@ -84,7 +84,7 @@
         Body    = $Body
         Headers = @{
             "Authorization" = "Bearer $( [System.Runtime.InteropServices.Marshal]::PtrToStringAuto([System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($token.AccessToken)) )"
-            "Content-Type"  = "application/json"
+            "Content-Type"  = $ContentType
         }
     }
 

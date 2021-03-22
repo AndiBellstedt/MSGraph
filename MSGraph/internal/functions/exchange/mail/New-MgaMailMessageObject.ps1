@@ -19,6 +19,7 @@
         Create a MSGraph.Exchange.Mail.Message object from data in variable $output
     #>
     [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseShouldProcessForStateChangingFunctions", "")]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSReviewUnusedParameter", "")]
     [OutputType([MSGraph.Exchange.Mail.Message])]
     [CmdletBinding()]
     param (

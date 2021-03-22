@@ -1,0 +1,335 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Types>
+
+    <Type>
+        <Name>Deserialized.MSGraph.Teams.Team</Name>
+        <Members>
+            <MemberSet>
+                <Name>PSStandardMembers</Name>
+                <Members>
+                    <NoteProperty>
+                        <Name>
+                            TargetTypeForDeserialization
+                        </Name>
+                        <Value>
+                            MSGraph.Teams.Team
+                        </Value>
+                    </NoteProperty>
+                </Members>
+            </MemberSet>
+        </Members>
+    </Type>
+
+    <Type>
+        <Name>MSGraph.Teams.Team</Name>
+        <Members>
+            <!-- Alias properties for team messaging settings -->
+            <ScriptProperty>
+                <Name>MsgSettingAllowUserEditMessages</Name>
+                <GetScriptBlock>
+                    if($this.messagingSettings) {
+                        $this.messagingSettings.allowUserEditMessages
+                    }
+                </GetScriptBlock>
+                <SetScriptBlock>
+                    param (
+                        [Parameter(Mandatory=$true)]
+                        [bool]
+                        $Enabled
+                    )
+                    if($this.messagingSettings) {
+                        $this.messagingSettings.allowUserEditMessages = $Enabled
+                    }
+                </SetScriptBlock>
+            </ScriptProperty>
+            <ScriptProperty>
+                <Name>MsgSettingAllowUserDeleteMessages</Name>
+                <GetScriptBlock>
+                    if($this.messagingSettings) {
+                        $this.messagingSettings.AllowUserDeleteMessages
+                    }
+                </GetScriptBlock>
+                <SetScriptBlock>
+                    param (
+                        [Parameter(Mandatory=$true)]
+                        [bool]
+                        $Enabled
+                    )
+                    if($this.messagingSettings) {
+                        $this.messagingSettings.allowUserDeleteMessages = $Enabled
+                    }
+                </SetScriptBlock>
+            </ScriptProperty>
+            <ScriptProperty>
+                <Name>MsgSettingAllowOwnerDeleteMessages</Name>
+                <GetScriptBlock>
+                    if($this.messagingSettings) {
+                        $this.messagingSettings.AllowOwnerDeleteMessages
+                    }
+                </GetScriptBlock>
+                <SetScriptBlock>
+                    param (
+                        [Parameter(Mandatory=$true)]
+                        [bool]
+                        $Enabled
+                    )
+                    if($this.messagingSettings) {
+                        $this.messagingSettings.AllowOwnerDeleteMessages = $Enabled
+                    }
+                </SetScriptBlock>
+            </ScriptProperty>
+            <ScriptProperty>
+                <Name>MsgSettingAllowTeamMentions</Name>
+                <GetScriptBlock>
+                    if($this.messagingSettings) {
+                        $this.messagingSettings.AllowTeamMentions
+                    }
+                </GetScriptBlock>
+                <SetScriptBlock>
+                    param (
+                        [Parameter(Mandatory=$true)]
+                        [bool]
+                        $Enabled
+                    )
+                    if($this.messagingSettings) {
+                        $this.messagingSettings.AllowTeamMentions = $Enabled
+                    }
+                </SetScriptBlock>
+            </ScriptProperty>
+            <ScriptProperty>
+                <Name>MsgSettingAllowChannelMentions</Name>
+                <GetScriptBlock>
+                    if($this.messagingSettings) {
+                        $this.messagingSettings.AllowChannelMentions
+                    }
+                </GetScriptBlock>
+                <SetScriptBlock>
+                    param (
+                        [Parameter(Mandatory=$true)]
+                        [bool]
+                        $Enabled
+                    )
+                    if($this.messagingSettings) {
+                        $this.messagingSettings.AllowChannelMentions = $Enabled
+                    }
+                </SetScriptBlock>
+            </ScriptProperty>
+            <!-- Alias properties for team member settings -->
+            <ScriptProperty>
+                <Name>MemberAllowCreateUpdateChannels</Name>
+                <GetScriptBlock>
+                    if($this.memberSettings) {
+                        $this.memberSettings.AllowCreateUpdateChannels
+                    }
+                </GetScriptBlock>
+                <SetScriptBlock>
+                    param (
+                        [Parameter(Mandatory=$true)]
+                        [bool]
+                        $Enabled
+                    )
+                    if($this.memberSettings) {
+                        $this.memberSettings.AllowCreateUpdateChannels = $Enabled
+                    }
+                </SetScriptBlock>
+            </ScriptProperty>
+            <ScriptProperty>
+                <Name>MemberAllowDeleteChannels</Name>
+                <GetScriptBlock>
+                    if($this.memberSettings) {
+                        $this.memberSettings.AllowDeleteChannels
+                    }
+                </GetScriptBlock>
+                <SetScriptBlock>
+                    param (
+                        [Parameter(Mandatory=$true)]
+                        [bool]
+                        $Enabled
+                    )
+                    if($this.memberSettings) {
+                        $this.memberSettings.AllowDeleteChannels = $Enabled
+                    }
+                </SetScriptBlock>
+            </ScriptProperty>
+            <ScriptProperty>
+                <Name>MemberAllowAddRemoveApps</Name>
+                <GetScriptBlock>
+                    if($this.memberSettings) {
+                        $this.memberSettings.AllowAddRemoveApps
+                    }
+                </GetScriptBlock>
+                <SetScriptBlock>
+                    param (
+                        [Parameter(Mandatory=$true)]
+                        [bool]
+                        $Enabled
+                    )
+                    if($this.memberSettings) {
+                        $this.memberSettings.AllowAddRemoveApps = $Enabled
+                    }
+                </SetScriptBlock>
+            </ScriptProperty>
+            <ScriptProperty>
+                <Name>MemberAllowCreateUpdateRemoveTabs</Name>
+                <GetScriptBlock>
+                    if($this.memberSettings) {
+                        $this.memberSettings.AllowCreateUpdateRemoveTabs
+                    }
+                </GetScriptBlock>
+                <SetScriptBlock>
+                    param (
+                        [Parameter(Mandatory=$true)]
+                        [bool]
+                        $Enabled
+                    )
+                    if($this.memberSettings) {
+                        $this.memberSettings.AllowCreateUpdateRemoveTabs = $Enabled
+                    }
+                </SetScriptBlock>
+            </ScriptProperty>
+            <ScriptProperty>
+                <Name>MemberAllowCreateUpdateRemoveConnectors</Name>
+                <GetScriptBlock>
+                    if($this.memberSettings) {
+                        $this.memberSettings.AllowCreateUpdateRemoveConnectors
+                    }
+                </GetScriptBlock>
+                <SetScriptBlock>
+                    param (
+                        [Parameter(Mandatory=$true)]
+                        [bool]
+                        $Enabled
+                    )
+                    if($this.memberSettings) {
+                        $this.memberSettings.AllowCreateUpdateRemoveConnectors = $Enabled
+                    }
+                </SetScriptBlock>
+            </ScriptProperty>
+            <!-- Alias properties for team guest settings -->
+            <ScriptProperty>
+                <Name>GuestAllowCreateUpdateChannels</Name>
+                <GetScriptBlock>
+                    if($this.guestSettings) {
+                        $this.guestSettings.AllowCreateUpdateChannels
+                    }
+                </GetScriptBlock>
+                <SetScriptBlock>
+                    param (
+                        [Parameter(Mandatory=$true)]
+                        [bool]
+                        $Enabled
+                    )
+                    if($this.guestSettings) {
+                        $this.guestSettings.AllowCreateUpdateChannels = $Enabled
+                    }
+                </SetScriptBlock>
+            </ScriptProperty>
+            <ScriptProperty>
+                <Name>GuestAllowDeleteChannels</Name>
+                <GetScriptBlock>
+                    if($this.guestSettings) {
+                        $this.guestSettings.AllowDeleteChannels
+                    }
+                </GetScriptBlock>
+                <SetScriptBlock>
+                    param (
+                        [Parameter(Mandatory=$true)]
+                        [bool]
+                        $Enabled
+                    )
+                    if($this.guestSettings) {
+                        $this.guestSettings.AllowDeleteChannels = $Enabled
+                    }
+                </SetScriptBlock>
+            </ScriptProperty>
+            <!-- Alias properties for team fun settings -->
+            <ScriptProperty>
+                <Name>FunSettingAllowGiphy</Name>
+                <GetScriptBlock>
+                    if($this.funSettings) {
+                        $this.funSettings.AllowGiphy
+                    }
+                </GetScriptBlock>
+                <SetScriptBlock>
+                    param (
+                        [Parameter(Mandatory=$true)]
+                        [bool]
+                        $Enabled
+                    )
+                    if($this.funSettings) {
+                        $this.funSettings.AllowGiphy = $Enabled
+                    }
+                </SetScriptBlock>
+            </ScriptProperty>
+            <ScriptProperty>
+                <Name>FunSettingGiphyContentRating</Name>
+                <GetScriptBlock>
+                    if($this.funSettings) {
+                        $this.funSettings.GiphyContentRating
+                    }
+                </GetScriptBlock>
+                <SetScriptBlock>
+                    param (
+                        [Parameter(Mandatory=$true)]
+                        [ValidateSet("moderate", "strict", "unknownFutureValue")]
+                        [String]
+                        $Setting
+                    )
+                    if($this.funSettings) {
+                        $this.funSettings.GiphyContentRating = $Setting
+                    }
+                </SetScriptBlock>
+            </ScriptProperty>
+            <ScriptProperty>
+                <Name>FunSettingAllowStickersAndMemes</Name>
+                <GetScriptBlock>
+                    if($this.funSettings) {
+                        $this.funSettings.AllowStickersAndMemes
+                    }
+                </GetScriptBlock>
+                <SetScriptBlock>
+                    param (
+                        [Parameter(Mandatory=$true)]
+                        [bool]
+                        $Enabled
+                    )
+                    if($this.funSettings) {
+                        $this.funSettings.AllowStickersAndMemes = $Enabled
+                    }
+                </SetScriptBlock>
+            </ScriptProperty>
+            <ScriptProperty>
+                <Name>FunSettingAllowCustomMemes</Name>
+                <GetScriptBlock>
+                    if($this.funSettings) {
+                        $this.funSettings.AllowCustomMemes
+                    }
+                </GetScriptBlock>
+                <SetScriptBlock>
+                    param (
+                        [Parameter(Mandatory=$true)]
+                        [bool]
+                        $Enabled
+                    )
+                    if($this.funSettings) {
+                        $this.funSettings.AllowCustomMemes = $Enabled
+                    }
+                </SetScriptBlock>
+            </ScriptProperty>
+
+
+            <CodeProperty IsHidden="true">
+                <Name>SerializationData</Name>
+                <GetCodeReference>
+                    <TypeName>PSFramework.Serialization.SerializationTypeConverter</TypeName>
+                    <MethodName>GetSerializationData</MethodName>
+                </GetCodeReference>
+            </CodeProperty>
+        </Members>
+
+        <TypeConverter>
+            <TypeName>PSFramework.Serialization.SerializationTypeConverter</TypeName>
+        </TypeConverter>
+    </Type>
+
+</Types>

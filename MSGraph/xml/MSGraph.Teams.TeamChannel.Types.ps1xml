@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Types>
+
+    <Type>
+        <Name>Deserialized.MSGraph.Teams.TeamChannel</Name>
+        <Members>
+            <MemberSet>
+                <Name>PSStandardMembers</Name>
+                <Members>
+                    <NoteProperty>
+                        <Name>
+                            TargetTypeForDeserialization
+                        </Name>
+                        <Value>
+                            MSGraph.Teams.TeamChannel
+                        </Value>
+                    </NoteProperty>
+                </Members>
+            </MemberSet>
+        </Members>
+    </Type>
+
+    <Type>
+        <Name>MSGraph.Teams.TeamChannel</Name>
+        <Members>
+            <CodeProperty IsHidden="true">
+                <Name>SerializationData</Name>
+                <GetCodeReference>
+                    <TypeName>PSFramework.Serialization.SerializationTypeConverter</TypeName>
+                    <MethodName>GetSerializationData</MethodName>
+                </GetCodeReference>
+            </CodeProperty>
+        </Members>
+
+        <TypeConverter>
+            <TypeName>PSFramework.Serialization.SerializationTypeConverter</TypeName>
+        </TypeConverter>
+    </Type>
+
+</Types>

@@ -70,6 +70,7 @@
 
     #>
     [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseShouldProcessForStateChangingFunctions", "")]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSReviewUnusedParameter", "")]
     [CmdletBinding(SupportsShouldProcess = $false, ConfirmImpact = 'Low', DefaultParameterSetName = 'FileAttachment')]
     [OutputType([String])]
     param (

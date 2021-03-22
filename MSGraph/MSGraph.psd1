@@ -3,19 +3,19 @@
     RootModule         = 'MSGraph.psm1'
 
     # Version number of this module.
-    ModuleVersion      = '1.2.9.1'
+    ModuleVersion      = '1.3.0.0'
 
     # ID used to uniquely identify this module
     GUID               = '5f61c229-95d0-4423-ab50-938c0723ad21'
 
     # Author of this module
-    Author             = 'Friedrich Weinmann, Andreas Bellstedt'
+    Author             = 'Andreas Bellstedt, Friedrich Weinmann'
 
     # Company or vendor of this module
     CompanyName        = ''
 
     # Copyright statement for this module
-    Copyright          = 'Copyright (c) 2018 Friedrich Weinmann, Andreas Bellstedt'
+    Copyright          = 'Copyright (c) 2018 Andreas Bellstedt, Friedrich Weinmann'
 
     # Description of the functionality provided by this module
     Description        = 'Tools for interacting with the Microsoft Graph Api'
@@ -70,6 +70,13 @@
         'xml\MSGraph.Exchange.MailboxSetting.AutomaticRepliesSetting.Format.ps1xml',
         'xml\MSGraph.Exchange.MailboxSetting.WorkingHoursSetting.Format.ps1xml',
         'xml\MSGraph.Exchange.MailboxSetting.LocaleInfoSetting.Format.ps1xml'
+
+        # Teams
+        'xml\MSGraph.Teams.Team.Format.ps1xml',
+        'xml\MSGraph.Teams.TeamChannel.Format.ps1xml'
+
+        #AzureAD
+        'xml\MSGraph.AzureAD.Users.User.Format.ps1xml'
     )
 
     # Type files (.ps1xml) to be loaded when importing this module
@@ -90,7 +97,14 @@
         'xml\MSGraph.Exchange.MailboxSetting.MailboxSettings.Types.ps1xml'
         'xml\MSGraph.Exchange.MailboxSetting.AutomaticRepliesSetting.Types.ps1xml',
         'xml\MSGraph.Exchange.MailboxSetting.WorkingHoursSetting.Types.ps1xml',
-        'xml\MSGraph.Exchange.MailboxSetting.LocaleInfoSetting.Types.ps1xml'
+        'xml\MSGraph.Exchange.MailboxSetting.LocaleInfoSetting.Types.ps1xml',
+
+        # Teams
+        'xml\MSGraph.Teams.Team.Types.ps1xml'
+        'xml\MSGraph.Teams.TeamChannel.Types.ps1xml'
+
+        #AzureAD
+        'xml\MSGraph.AzureAD.Users.User.Types.ps1xml'
     )
 
     # Modules to import as nested modules of the module specified in
@@ -133,6 +147,15 @@
         ## MailboxSettings
         'Get-MgaMailboxSetting',
         'Set-MgaMailboxSetting',
+
+        # Teams
+        ## Team
+        'Get-MgaTeam',
+        'Get-MgaTeamMember',
+        'Get-MgaTeamOwner',
+
+        ## Teamchannel
+        'Get-MgaTeamChannel',
 
         # Core
         'Invoke-MgaRestMethodGet',
@@ -198,20 +221,22 @@
                 'Outlook',
                 'Messages',
                 'Mail',
-                "Email"
+                "Email",
+                'PSEdition_Desktop',
+                'Windows'
             )
 
             # A URL to the license for this module.
-            LicenseUri   = 'https://github.com/FriedrichWeinmann/MSGraph/blob/master/LICENSE'
+            LicenseUri   = 'https://github.com/AndiBellstedt/MSGraph/blob/master/LICENSE'
 
             # A URL to the main website for this project.
-            ProjectUri   = 'https://github.com/FriedrichWeinmann/MSGraph'
+            ProjectUri   = 'https://github.com/AndiBellstedt/MSGraph'
 
             # A URL to an icon representing this module.
             IconUri      = 'https://github.com/AndiBellstedt/MSGraph/tree/Development/MSGraph/assets/MSGraph_128x128.png'
 
             # ReleaseNotes of this module
-            ReleaseNotes = 'https://github.com/FriedrichWeinmann/MSGraph/blob/master/MSGraph/changelog.md'
+            ReleaseNotes = 'https://github.com/AndiBellstedt/MSGraph/blob/master/MSGraph/changelog.md'
 
         } # End of PSData hashtable
 

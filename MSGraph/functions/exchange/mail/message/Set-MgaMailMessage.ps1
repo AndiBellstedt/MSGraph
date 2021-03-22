@@ -122,6 +122,8 @@
 
 
     #>
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSAvoidAssignmentToAutomaticVariable", "")]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSReviewUnusedParameter", "")]
     [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'Medium', DefaultParameterSetName = 'Default')]
     [Alias("Update-MgaMailMessage")]
     [OutputType([MSGraph.Exchange.Mail.Message])]

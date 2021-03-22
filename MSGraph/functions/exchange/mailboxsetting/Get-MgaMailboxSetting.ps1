@@ -83,6 +83,7 @@
         connected to through the registered token works.
 
     #>
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSReviewUnusedParameter", "")]
     [CmdletBinding(ConfirmImpact = 'Low', DefaultParameterSetName = 'AllSettings')]
     param (
         [Parameter(ParameterSetName = 'AutomaticReplySetting')]

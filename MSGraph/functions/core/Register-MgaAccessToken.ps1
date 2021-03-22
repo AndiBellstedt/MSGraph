@@ -30,8 +30,14 @@
 
     )
 
-    $script:msgraph_Token = $Token
-    if ($PassThru) {
-        $script:msgraph_Token
+    begin {}
+
+    process{
+        $script:msgraph_Token = $Token
+        if ($PassThru) {
+            $script:msgraph_Token
+        }
     }
+
+    end {}
 }
