@@ -81,11 +81,11 @@
 
     process {
         Write-PSFMessage -Level VeryVerbose -Message "Gettings team(s) channel by parameterset $($PSCmdlet.ParameterSetName)" -Tag "ParameterSetHandling"
-        Write-PSFMessage -Level Important -Message "This command uses beta version of Microsoft Graph API. Be aware, that this is not supported in production! Use carefully." -Tag "QueryData"
+        #Write-PSFMessage -Level Important -Message "This command uses beta version of Microsoft Graph API. Be aware, that this is not supported in production! Use carefully." -Tag "QueryData"
 
         foreach ($teamItem in $InputObject) {
             #region checking input object type and query message if required
-            if ($teamItem.TypeName -like "System.String") {
+            if ($teamItem.psobject.TypeNames[0] -like "System.String") {
                 $teamItem = Resolve-MailObjectFromString -Object $teamItem -User $User -Token $Token -NoNameResolving -FunctionName $MyInvocation.MyCommand
                 if (-not $teamItem) { continue }
             }
@@ -94,11 +94,11 @@
 
             #region query data
             $invokeParam = @{
-                "Field"          = "groups/$($teamItem.Id)/channels"
+                "Field"          = "teams/$($teamItem.Id)/channels"
                 "Token"          = $Token
                 'UserUnspecific' = $true
                 "ResultSize"     = $ResultSize
-                "ApiVersion"     = "beta"
+                "ApiVersion"     = "v1.0"
                 "FunctionName"   = $MyInvocation.MyCommand
             }
             Write-PSFMessage -Level Verbose -Message "Getting channel from team '$($teamItem)'" -Tag "QueryData"

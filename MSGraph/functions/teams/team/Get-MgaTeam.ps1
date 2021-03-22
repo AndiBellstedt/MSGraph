@@ -113,6 +113,9 @@
         $requiredPermission = "Group.Read.All"
         $Token = Invoke-TokenScopeValidation -Token $Token -Scope $requiredPermission -FunctionName $MyInvocation.MyCommand
 
+        $requiredPermission = "Team.ReadBasic.All"
+        $Token = Invoke-TokenScopeValidation -Token $Token -Scope $requiredPermission -FunctionName $MyInvocation.MyCommand
+
         #region helper subfunctions
         function invoke-internalMgaGetTeamsDetail ([psobject[]]$teamList, $token, $resultSize, [String]$functionName) {
             # Subfunction for query team information
@@ -135,8 +138,8 @@
                     $teamInfo | Add-Member -MemberType NoteProperty -Name isArchived -Value $teamListItem.isArchived
                     $teamInfo | Add-Member -MemberType NoteProperty -Name User -Value $teamListItem.User
                 }
-                $teamInfo | Add-Member -MemberType NoteProperty -Name displayName -Value $teamListItem.displayName
-                $teamInfo | Add-Member -MemberType NoteProperty -Name description -Value $teamListItem.description
+                $teamInfo | Add-Member -MemberType NoteProperty -Name displayName -Value "$($teamListItem.displayName)" -ErrorAction SilentlyContinue
+                $teamInfo | Add-Member -MemberType NoteProperty -Name description -Value "$($teamListItem.description)" -ErrorAction SilentlyContinue
 
                 $teamInfo
             }
@@ -155,8 +158,8 @@
         switch ($PSCmdlet.ParameterSetName) {
             { $_ -in 'ByName', 'ById' } {
                 Write-PSFMessage -Level Verbose -Message "Gettings joined team(s) for user $($token.UserprincipalName)" -Tag "QueryData"
-                $invokeParam.Add('Field', 'joinedTeams')
-                $invokeParam.Add('User', 'me')
+                $invokeParam.Add('Field', 'me/joinedTeams')
+                $invokeParam.Add('UserUnspecific', $true)
                 [array]$teamList = Invoke-MgaRestMethodGet @invokeParam
 
                 if ($PSCmdlet.ParameterSetName -like 'ByName' -and $Name) { [array]$teamList = $teamList | Where-Object displayName -Like $Name }
