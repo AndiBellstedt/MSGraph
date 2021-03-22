@@ -1,9 +1,5 @@
 # Changelog
-## 1.2.9.3 (2020-11-18)
-- No functional changes
-- Fix: Fixing some typos
-- Upd: Add plattform and statistic information to readme file.
-# 1.2.9.2
+## 1.3.0.0
 - New: Command Get-MgaTeam
     - returns information about Microsoft Teams team(s)
     - list by default only teams the connected user is joined to
@@ -15,17 +11,18 @@
 - New: Command Get-MgaTeamOwner
     - returns channel owner(s) from Microsoft Teams team(s)
 - Upd: Manifest information update, while taking ownership for github project from @FredWeinman - thank you Fred!
-- Fix: Parameter dokumentation on various commands for parameter "ResultSize"
-
-# 1.2.9.1
+- Upd: Add plattform and statistic information to readme file.
+- Fix: Parameter documentation on various commands for parameter "ResultSize"
+- Fix: Fixing some typos
+## 1.2.9.1
 - Fix: Command New-MgaAccessToken, Update-MgaAccessToken
     - bugfixing validation of token lifetime within daylightsaving areas. validation time was not converted to daylightsaving time, so token was interpreted as already expired, even within the moment it was gathered.
 
-# 1.2.9.0
+## 1.2.9.0
 - Fix: Command Export-MgaMailAttachment
     - bugfixing type checking for attachments to export. Types are renamed in version 1.2.8.3 and the command test for the old type names
 
-# 1.2.8.5
+## 1.2.8.5
 - New: Command Get-MgaMailboxSettings
     - returns the settings from the exchange online mailbox
     - switch parameters available, for return only a subset of settings
@@ -48,7 +45,7 @@
     - module folder structure update
     - split type- and format-files
 
-# 1.2.8.4
+## 1.2.8.4
 - New: command Get-MgaExchCategory
     - Query categories within exchange mailbox
     - Convinient object output including "translated" colors to readable ColorNames
@@ -66,7 +63,7 @@
 - Upd: WellKnownFolder Enum
     - Add "AllItems" to Enum
 
-# 1.2.8.3
+## 1.2.8.3
 - New: Command Add-MgaMailAttachment
 - New: Command Add-MgaMailReplyMessage
 - New: Command Add-MgaMailForwardMessage
@@ -100,7 +97,7 @@
 - Fix: internal command New-MgaMailMessageObject
     - fixing address conversion error, when name field is the same then address field
 
-# 1.2.8.2
+## 1.2.8.2
 - New: Command New-MgaMailFolder
 - New: Command Move-MgaMailFolder
 - New: Command Remove-MgaMailFolder
@@ -111,7 +108,7 @@
     - example documentation on
 - Upd: internal code refactoring for better object checking on message and folder functions
 
-# 1.2.8.0
+## 1.2.8.0
 - New: Command Rename-MgaMailFolder
     - allows to rename a folder
 - New: Command Copy-MgaMailMessage
@@ -119,7 +116,7 @@
 - Upd: Command Get-MgaMailFolder
     - Bugfix (clientside) filtering, that filter only applies to direct queried objects and not invokes on the subfolders (if additionally queried)
 
-# 1.2.7.1
+## 1.2.7.1
 - New: Token scope validation on commands
     - Mga-commands inspect token scope information to check if they are able to run against the api. If Identity Platform Version 2.0 is use, a new token will be aquired, with the appropriate scopes to run.
         - Get-MgaMailAttachment
