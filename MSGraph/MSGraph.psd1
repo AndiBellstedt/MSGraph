@@ -9,7 +9,7 @@
     GUID               = '5f61c229-95d0-4423-ab50-938c0723ad21'
 
     # Author of this module
-    Author             = 'Friedrich Weinmann, Andreas Bellstedt'
+    Author             = 'Andreas Bellstedt, Friedrich Weinmann'
 
     # Company or vendor of this module
     CompanyName        = ''

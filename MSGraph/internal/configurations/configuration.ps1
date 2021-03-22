@@ -12,7 +12,7 @@ Set-PSFConfig -Module 'MSGraph' -Name 'Import.IndividualFiles' -Value $false -In
 
 #region Settings inside the module
 # Azure Active Directory App
-Set-PSFConfig -Module 'MSGraph' -Name 'Tenant.Application.ClientID' -Value "bbc256f6-f642-44a4-add5-7f665e8b90cb" -Initialize -Validation 'string' -Description "Well known ClientID from registered Application in Azure tenant"
+Set-PSFConfig -Module 'MSGraph' -Name 'Tenant.Application.ClientID' -Value "5e79add2-6288-4d91-bebc-cae920227404" -Initialize -Validation 'string' -Description "Well known ClientID from registered Application in Azure tenant"
 Set-PSFConfig -Module 'MSGraph' -Name 'Tenant.Application.RedirectUrl' -Value "https://login.microsoftonline.com/common/oauth2/nativeclient" -Initialize -Validation 'string' -Description "Redirection URL specified in MS Azure Application portal for the registered application"
 Set-PSFConfig -Module 'MSGraph' -Name 'Tenant.Application.DefaultPermission' -Value @("Mail.ReadWrite.Shared") -Initialize -Validation 'string' -Description "The default permission to consent when getting a token"
 Set-PSFConfig -Module 'MSGraph' -Name 'Tenant.ApiConnection' -Value "https://graph.microsoft.com" -Initialize -Validation 'string' -Description "The App ID URI of the target web API (secured resource). To find the App ID URI, in the Azure Portal, click Azure Active Directory, click Application registrations, open the application's Settings page, then click Properties."
