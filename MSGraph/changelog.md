@@ -1,4 +1,8 @@
 # Changelog
+## 1.3.0.1
+- New: Alias Connect-MgaGraph
+    - Introducing a alias on command New-MgaAccessToken, for convinience
+- Fix: Fixing some typos
 ## 1.3.0.0
 - New: Command Get-MgaTeam
     - returns information about Microsoft Teams team(s)

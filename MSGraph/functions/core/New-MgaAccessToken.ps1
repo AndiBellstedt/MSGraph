@@ -80,6 +80,7 @@
     [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSAvoidUsingConvertToSecureStringWithPlainText", "")]
     [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseShouldProcessForStateChangingFunctions", "")]
     [CmdletBinding(DefaultParameterSetName = "LoginWithWebForm")]
+    [Alias('Connect-MgaGraph')]
     param (
         [Parameter(ParameterSetName = 'LoginWithCredentialObject')]
         [PSCredential]

@@ -105,8 +105,10 @@
         try {
             $data = Invoke-RestMethod @invokeParam -ErrorVariable "restError" -ErrorAction Stop -Verbose:$false -UseBasicParsing
         } catch {
+            Remove-Variable -Name invokeParam -Force -WhatIf:$false -Confirm:$false -Verbose:$false -Debug:$false -ErrorAction:SilentlyContinue
             Stop-PSFFunction -Tag "RestDataError" -Message $_.Exception.Message -Exception $_.Exception -ErrorRecord $_ -EnableException $true -Category ConnectionError -FunctionName $FunctionName
         }
+        Remove-Variable -Name invokeParam -Force -WhatIf:$false -Confirm:$false -Verbose:$false -Debug:$false -ErrorAction:SilentlyContinue
     }
 
     if ($data) {

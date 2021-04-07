@@ -3,7 +3,7 @@
     RootModule         = 'MSGraph.psm1'
 
     # Version number of this module.
-    ModuleVersion      = '1.3.0.0'
+    ModuleVersion      = '1.3.0.1'
 
     # ID used to uniquely identify this module
     GUID               = '5f61c229-95d0-4423-ab50-938c0723ad21'
@@ -179,7 +179,8 @@
         ## Attachments
         'Save-MgaMailAttachment',
 
-        # COre
+        # Core
+        'Connect-MgaGraph',
         'Invoke-MgaDeleteMethod'
         'Invoke-MgaGetMethod',
         'Invoke-MgaPatchMethod',
