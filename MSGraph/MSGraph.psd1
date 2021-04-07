@@ -234,7 +234,7 @@
             ProjectUri   = 'https://github.com/AndiBellstedt/MSGraph'
 
             # A URL to an icon representing this module.
-            IconUri      = 'https://github.com/AndiBellstedt/MSGraph/tree/Development/MSGraph/assets/MSGraph_128x128.png'
+            IconUri      = 'https://github.com/AndiBellstedt/MSGraph/raw/master/assets/MSGraph_128x128.png'
 
             # ReleaseNotes of this module
             ReleaseNotes = 'https://github.com/AndiBellstedt/MSGraph/blob/master/MSGraph/changelog.md'
