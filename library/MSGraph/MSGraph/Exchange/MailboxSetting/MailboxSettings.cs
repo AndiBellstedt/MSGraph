@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace MSGraph.Exchange.MailboxSetting {
     /// <summary>
