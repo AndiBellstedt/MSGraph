@@ -76,16 +76,12 @@ namespace MSGraph.Core {
         public DateTime IssuedAt;
 
         /// <summary>
-        /// Alias property from Audience
+        /// Identifies the issuer, or "authorization server" that constructs and returns the token.
+        /// It also identifies the tenant for which the user was authenticated.
+        /// If the token was issued by the v2.0 endpoint, the URI ends in /v2.0.
+        /// The GUID that indicates that the user is a consumer user from a Microsoft account is 9188040d-6c67-4c5b-b112-36a304b66dad.
         /// </summary>
-        public String Issuer {
-            get {
-                return Audience;
-            }
-
-            set {
-            }
-        }
+        public String Issuer;
 
         /// <summary>
         /// Provides a human-readable value that identifies the subject of the token.

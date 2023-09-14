@@ -574,9 +574,12 @@
             "Issued At" indicates when the authentication for this token occurred.
             </summary>
         </member>
-        <member name="P:MSGraph.Core.JWTAccessTokenInfo.Issuer">
+        <member name="F:MSGraph.Core.JWTAccessTokenInfo.Issuer">
             <summary>
-            Alias property from Audience
+            Identifies the issuer, or "authorization server" that constructs and returns the token.
+            It also identifies the tenant for which the user was authenticated.
+            If the token was issued by the v2.0 endpoint, the URI ends in /v2.0.
+            The GUID that indicates that the user is a consumer user from a Microsoft account is 9188040d-6c67-4c5b-b112-36a304b66dad.
             </summary>
         </member>
         <member name="F:MSGraph.Core.JWTAccessTokenInfo.Name">

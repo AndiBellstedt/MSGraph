@@ -51,6 +51,7 @@
     $resultObject.Type = $tokenHeaderJSON.typ
     if ($tokenPayloadJSON.appid) { $resultObject.ApplicationID = $tokenPayloadJSON.appid }
     $resultObject.ApplicationName = $tokenPayloadJSON.app_displayname
+    $resultObject.Issuer = $tokenPayloadJSON.iss
     $resultObject.Audience = $tokenPayloadJSON.aud
     $resultObject.AuthenticationMethod = $tokenPayloadJSON.amr
     $resultObject.ExpirationTime = ([datetime]"1970-01-01Z00:00:00").AddSeconds($tokenPayloadJSON.exp).ToUniversalTime()
