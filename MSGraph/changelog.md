@@ -1,4 +1,10 @@
 # Changelog
+## 1.3.0.2
+- Fix:
+    - Fixing date issue on Mail-Items in PS7 (PS5.1 was working fine)
+- Upd:
+    - Change default permission for New-MgaAccessToken (Connect-MgaGraph)\
+    Function is connecting with simple "login" permissions by default. Previously Mail.Read was default. Due to the fact, that there are other functions in the module, this might be a permission not necessary and it would not follow “least-privilege”, the permission was removed
 ## 1.3.0.1
 - New: Alias Connect-MgaGraph
     - Introducing a alias on command New-MgaAccessToken, for convinience
