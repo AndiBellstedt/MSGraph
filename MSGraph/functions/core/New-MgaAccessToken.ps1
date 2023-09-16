@@ -80,6 +80,7 @@
     [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSAvoidUsingConvertToSecureStringWithPlainText", "")]
     [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseShouldProcessForStateChangingFunctions", "")]
     [CmdletBinding(DefaultParameterSetName = "LoginWithWebForm")]
+    [Alias('Connect-MgaGraph')]
     param (
         [Parameter(ParameterSetName = 'LoginWithCredentialObject')]
         [PSCredential]
@@ -116,6 +117,7 @@
         [switch]
         $PassThru
     )
+
     begin {
         $baselineTimestamp = [datetime]"1970-01-01Z00:00:00"
         $endpointBaseUri = (Get-PSFConfigValue -FullName MSGraph.Tenant.Authentiation.Endpoint -Fallback 'https://login.microsoftonline.com')
@@ -123,17 +125,15 @@
         if ($IdentityPlatformVersion -like '1.0' -and $Permission) {
             Write-PSFMessage -Level Warning -Message "Individual pemissions are not supported in combination with IdentityPlatformVersion 1.0. Specified Permission ($([String]::Join(", ", $Permission))) in parameter will be ignored" -Tag "ParameterSetHandling"
             $Permission = ""
-        } elseif ($IdentityPlatformVersion -like '2.0' -and (-not $Permission)) {
-            $Permission = @("Mail.ReadWrite.Shared")
         }
     }
 
     process {
-        # variable definitions
+        #region variable definitions
         switch ($IdentityPlatformVersion) {
             '1.0' { $endpointUri = "$($endpointBaseUri)/$($Tenant)/oauth2" }
             '2.0' {
-                if ($Credential -and $Tenant -notlike "organizations") {
+                if ($Credential -and ($Tenant -notlike "organizations")) {
                     $endpointUri = "$($endpointBaseUri)/organizations/oauth2/V2.0"
                 } else {
                     $endpointUri = "$($endpointBaseUri)/$($Tenant)/oauth2/V2.0"
@@ -155,6 +155,8 @@
             Remove-Variable -Name scopes -Force -WhatIf:$false -Confirm:$false -Verbose:$false -Debug:$false
             Write-PSFMessage -Level VeryVerbose -Message "Using scope: $($scope)" -Tag "Authorization"
         }
+        #endregion variable definitions
+
 
         #region Request an authorization code (login procedure)
         if (-not $Credential) {
@@ -180,12 +182,14 @@
             }
 
             # Show login windows (web form)
-            $phase1auth = Show-OAuthWindow -Url ($endpointUriAuthorize + (Convert-UriQueryFromHash $queryHash))
+            [string]$url = $endpointUriAuthorize + (Convert-UriQueryFromHash $queryHash)
+            $phase1auth = Show-OAuthWindow -Url $url
             if (-not $phase1auth.code) {
                 $msg = "Authentication failed. Unable to obtain AccessToken.`n$($phase1auth.error_description)"
                 if ($phase1auth.error) { $msg = $phase1auth.error.ToUpperInvariant() + " - " + $msg }
                 Stop-PSFFunction -Message $msg -Tag "Authorization" -EnableException $true -Exception ([System.Management.Automation.RuntimeException]::new($msg))
             }
+            Remove-Variable -Name url -Force -WhatIf:$false -Confirm:$false -Verbose:$false -Debug:$false
 
             # build authorization string with authentication code from web form auth
             $tokenQueryHash = [ordered]@{
@@ -219,11 +223,11 @@
         }
         #endregion Request an authorization code  (login procedure)
 
-        # Request an access token
-        $content = New-Object System.Net.Http.StringContent($authorizationPostRequest, [System.Text.Encoding]::UTF8, "application/x-www-form-urlencoded")
+
+        #region Request an access token
+        $content = New-Object -TypeName "System.Net.Http.StringContent" -ArgumentList ($authorizationPostRequest, [System.Text.Encoding]::UTF8, "application/x-www-form-urlencoded")
         $httpClient = New-HttpClient
         $clientResult = $httpClient.PostAsync([Uri]($endpointUriToken), $content)
-        $jsonResponse = ConvertFrom-Json -InputObject $clientResult.Result.Content.ReadAsStringAsync().Result -ErrorAction Ignore
         if ($clientResult.Result.StatusCode -eq [System.Net.HttpStatusCode]"OK") {
             Write-PSFMessage -Level Verbose -Message "AccessToken granted. $($clientResult.Result.StatusCode.value__) ($($clientResult.Result.StatusCode)) $($clientResult.Result.ReasonPhrase)" -Tag "Authorization"
         } else {
@@ -231,8 +235,12 @@
             $msg = "Request for AccessToken failed. $($clientResult.Result.StatusCode.value__) ($($clientResult.Result.StatusCode)) $($clientResult.Result.ReasonPhrase) `n$($jsonResponse.error_description)"
             Stop-PSFFunction -Message $msg -Tag "Authorization" -EnableException $true -Exception ([System.Management.Automation.RuntimeException]::new($msg))
         }
+        #endregion Request an access token
 
-        # Build output object
+
+        #region Build output object
+        $jsonResponse = ConvertFrom-Json -InputObject $clientResult.Result.Content.ReadAsStringAsync().Result -ErrorAction Ignore
+
         $resultObject = New-Object -TypeName MSGraph.Core.AzureAccessToken -Property @{
             IdentityPlatformVersion = $IdentityPlatformVersion
             TokenType               = $jsonResponse.token_type
@@ -244,6 +252,7 @@
             Resource                = $resourceUri
             AppRedirectUrl          = $RedirectUrl
         }
+
         switch ($IdentityPlatformVersion) {
             '1.0' {
                 $resultObject.Scope = $jsonResponse.scope -split " "
@@ -262,7 +271,9 @@
         }
 
         # Insert token data into output object. done as secure string to prevent text output of tokens
-        if ($jsonResponse.psobject.Properties.name -contains "refresh_token") { $resultObject.RefreshToken = ($jsonResponse.refresh_token | ConvertTo-SecureString -AsPlainText -Force) }
+        if ($jsonResponse.psobject.Properties.name -contains "refresh_token") {
+            $resultObject.RefreshToken = ($jsonResponse.refresh_token | ConvertTo-SecureString -AsPlainText -Force)
+        }
         if ($jsonResponse.psobject.Properties.name -contains "id_token") {
             $resultObject.IDToken = ($jsonResponse.id_token | ConvertTo-SecureString -AsPlainText -Force)
             $resultObject.AccessTokenInfo = ConvertFrom-JWTtoken -Token $jsonResponse.id_token
@@ -275,13 +286,18 @@
         }
 
         # Getting validity period out of AccessToken information
-        if ($resultObject.AccessTokenInfo -and $resultObject.AccessTokenInfo.TenantID.ToString() -notlike "9188040d-6c67-4c5b-b112-36a304b66dad") {
+        if ($resultObject.AccessTokenInfo -and
+            ($resultObject.AccessTokenInfo.TenantID.ToString() -notlike "9188040d-6c67-4c5b-b112-36a304b66dad")
+        ) {
             $resultObject.ValidUntilUtc = $resultObject.AccessTokenInfo.ExpirationTime.ToUniversalTime()
             $resultObject.ValidFromUtc = $resultObject.AccessTokenInfo.NotBefore.ToUniversalTime()
             $resultObject.ValidUntil = $resultObject.AccessTokenInfo.ExpirationTime.ToLocalTime().AddHours( [int]$resultObject.AccessTokenInfo.ExpirationTime.ToLocalTime().IsDaylightSavingTime() )
             $resultObject.ValidFrom = $resultObject.AccessTokenInfo.NotBefore.ToLocalTime().AddHours( [int]$resultObject.AccessTokenInfo.NotBefore.ToLocalTime().IsDaylightSavingTime() )
         }
+        #endregion Build output object
 
+
+        #region Output the object
         # Checking if token is valid
         # ToDo implement "validating token information" -> https://docs.microsoft.com/en-us/azure/active-directory/develop/access-tokens#validating-tokens
         if ($resultObject.IsValid) {
@@ -294,5 +310,8 @@
         } else {
             Stop-PSFFunction -Message "Token failure. Acquired token is not valid" -EnableException $true -Tag "Authorization"
         }
+        #endregion Output the object
     }
+
+    end {}
 }

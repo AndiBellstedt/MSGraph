@@ -29,6 +29,41 @@
         $FunctionName
     )
 
+    #region Handle dates
+    if ($RestData.createdDateTime.psobject.TypeNames[0] -like "System.DateTime") {
+        $createdDateTime = $RestData.createdDateTime
+    } else {
+        $createdDateTime = [datetime]::Parse($RestData.createdDateTime)
+    }
+
+    if ($RestData.lastModifiedDateTime.psobject.TypeNames[0] -like "System.DateTime") {
+        $lastModifiedDateTime = $RestData.lastModifiedDateTime
+    } else {
+        $lastModifiedDateTime = [datetime]::Parse($RestData.lastModifiedDateTime)
+    }
+
+    if ($RestData.receivedDateTime.psobject.TypeNames[0] -like "System.DateTime") {
+        $receivedDateTime = $RestData.receivedDateTime
+    } else {
+        if($RestData.receivedDateTime) {
+            $receivedDateTime = [datetime]::Parse($RestData.receivedDateTime)
+        } else {
+            $receivedDateTime = ""
+        }
+    }
+
+    if ($RestData.sentDateTime.psobject.TypeNames[0] -like "System.DateTime") {
+        $sentDateTime = $RestData.sentDateTime
+    } else {
+        if($RestData.sentDateTime) {
+            $sentDateTime = [datetime]::Parse($RestData.sentDateTime)
+        } else {
+            $sentDateTime = ""
+        }
+    }
+
+    #endregion Handle dates
+
     $hash = [ordered]@{
         BaseObject                 = $RestData
         Subject                    = $RestData.subject
@@ -37,7 +72,7 @@
         Categories                 = $RestData.categories
         ChangeKey                  = $RestData.changeKey
         ConversationId             = $RestData.conversationId
-        CreatedDateTime            = [datetime]::Parse($RestData.createdDateTime)
+        CreatedDateTime            = $createdDateTime
         Flag                       = $RestData.flag.flagStatus
         HasAttachments             = $RestData.hasAttachments
         Id                         = $RestData.id
@@ -48,20 +83,20 @@
         IsDraft                    = $RestData.isDraft
         IsRead                     = $RestData.isRead
         isReadReceiptRequested     = $RestData.isReadReceiptRequested
-        lastModifiedDateTime       = [datetime]::Parse($RestData.lastModifiedDateTime)
+        lastModifiedDateTime       = $lastModifiedDateTime
         MeetingMessageType         = $RestData.meetingMessageType
         ParentFolderId             = $RestData.parentFolderId
         WebLink                    = $RestData.webLink
         User                       = $RestData.User
     }
-    if ($RestData.receivedDateTime) { $hash.Add("ReceivedDateTime", [datetime]::Parse($RestData.receivedDateTime)) }
-    if ($RestData.sentDateTime) { $hash.Add("SentDateTime", [datetime]::Parse($RestData.sentDateTime)) }
+    if ($RestData.receivedDateTime) { $hash.Add("ReceivedDateTime", $receivedDateTime) }
+    if ($RestData.sentDateTime) { $hash.Add("SentDateTime", $sentDateTime) }
     if ($RestData.from.emailAddress) {
         if ($RestData.from.emailAddress.name -like $RestData.from.emailAddress.address) {
             # if emailaddress is same in address and in name field, only use address field
             $from = $RestData.from.emailAddress | ForEach-Object { [mailaddress]$_.address } -ErrorAction Continue
         } else {
-            $from = $RestData.from.emailAddress | ForEach-Object { [mailaddress]"$($_.name) $($_.address)"} -ErrorAction Continue
+            $from = $RestData.from.emailAddress | ForEach-Object { [mailaddress]"$($_.name) $($_.address)" } -ErrorAction Continue
         }
         $hash.Add("from", $from)
     }
@@ -70,7 +105,7 @@
             # if emailaddress is same in address and in name field, only use address field
             $senderaddress = $RestData.Sender.emailAddress | ForEach-Object { [mailaddress]$_.address } -ErrorAction Continue
         } else {
-            $senderaddress = $RestData.Sender.emailAddress | ForEach-Object { [mailaddress]"$($_.name) $($_.address)"} -ErrorAction Continue
+            $senderaddress = $RestData.Sender.emailAddress | ForEach-Object { [mailaddress]"$($_.name) $($_.address)" } -ErrorAction Continue
         }
         $hash.Add("Sender", $senderaddress)
     }
@@ -79,7 +114,7 @@
             # if emailaddress is same in address and in name field, only use address field
             [array]$bccRecipients = $RestData.bccRecipients.emailAddress | ForEach-Object { [mailaddress]$_.address } -ErrorAction Continue
         } else {
-            [array]$bccRecipients = $RestData.bccRecipients.emailAddress | ForEach-Object { [mailaddress]"$($_.name) $($_.address)"} -ErrorAction Continue
+            [array]$bccRecipients = $RestData.bccRecipients.emailAddress | ForEach-Object { [mailaddress]"$($_.name) $($_.address)" } -ErrorAction Continue
         }
         $hash.Add("bccRecipients", [array]$bccRecipients)
     }
@@ -88,7 +123,7 @@
             # if emailaddress is same in address and in name field, only use address field
             [array]$ccRecipients = $RestData.ccRecipients.emailAddress | ForEach-Object { [mailaddress]$_.address } -ErrorAction Continue
         } else {
-            [array]$ccRecipients = $RestData.ccRecipients.emailAddress | ForEach-Object { [mailaddress]"$($_.name) $($_.address)"} -ErrorAction Continue
+            [array]$ccRecipients = $RestData.ccRecipients.emailAddress | ForEach-Object { [mailaddress]"$($_.name) $($_.address)" } -ErrorAction Continue
         }
         $hash.Add("ccRecipients", [array]$ccRecipients)
     }
@@ -97,7 +132,7 @@
             # if emailaddress is same in address and in name field, only use address field
             [array]$replyTo = $RestData.replyTo.emailAddress | ForEach-Object { [mailaddress]$_.address } -ErrorAction Continue
         } else {
-            [array]$replyTo = $RestData.replyTo.emailAddress | ForEach-Object { [mailaddress]"$($_.name) $($_.address)"} -ErrorAction Continue
+            [array]$replyTo = $RestData.replyTo.emailAddress | ForEach-Object { [mailaddress]"$($_.name) $($_.address)" } -ErrorAction Continue
         }
         $hash.Add("replyTo", [array]$replyTo)
     }
@@ -106,7 +141,7 @@
             # if emailaddress is same in address and in name field, only use address field
             [array]$toRecipients = $RestData.toRecipients.emailAddress | ForEach-Object { [mailaddress]$_.address } -ErrorAction Continue
         } else {
-            [array]$toRecipients = $RestData.toRecipients.emailAddress | ForEach-Object { [mailaddress]"$($_.name) $($_.address)"} -ErrorAction Continue
+            [array]$toRecipients = $RestData.toRecipients.emailAddress | ForEach-Object { [mailaddress]"$($_.name) $($_.address)" } -ErrorAction Continue
         }
         $hash.Add("toRecipients", [array]$toRecipients)
     }

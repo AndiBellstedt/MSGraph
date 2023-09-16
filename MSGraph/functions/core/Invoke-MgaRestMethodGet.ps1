@@ -103,7 +103,6 @@
         if ($Delta) { $restUri = $restUri + "/delta" }
     }
     if ($ResultSize -eq 0) { $ResultSize = [Int64]::MaxValue }
-    #if ($ResultSize -le 10 -and $restUri -notmatch '\$top=') { $restUri = $restUri + "?`$top=$($ResultSize)" }
     [Int64]$i = 0
     [Int64]$overResult = 0
     $tooManyItems = $false
@@ -127,8 +126,10 @@
         try {
             $data = Invoke-RestMethod @invokeParam -ErrorVariable "restError" -ErrorAction Stop -Verbose:$false -UseBasicParsing
         } catch {
+            Remove-Variable -Name invokeParam -Force -WhatIf:$false -Confirm:$false -Verbose:$false -Debug:$false -ErrorAction:SilentlyContinue
             Stop-PSFFunction -Tag "RestDataError" -Message $_.Exception.Message -Exception $_.Exception -ErrorRecord $_ -EnableException $true -Category ConnectionError -FunctionName $FunctionName
         }
+        Remove-Variable -Name invokeParam -Force -WhatIf:$false -Confirm:$false -Verbose:$false -Debug:$false -ErrorAction:SilentlyContinue
 
         if ("Value" -in $data.psobject.Properties.Name) {
             # Multi object with value property returned by api call
@@ -144,7 +145,7 @@
                 Write-PSFMessage -Tag "ResultSize" -Level Verbose -Message "Resultsize ($ResultSize) exeeded. Output $($overResult) object(s) in record set."
             }
         } else {
-            # Multi object with value property returned by api call
+            # Single object without value property returned by api call
             Write-PSFMessage -Tag "RestData" -Level VeryVerbose -Message "Single item retrived. Outputting data."
             [array]$value = $data
             $restUri = ""
@@ -158,8 +159,7 @@
                 $output = $output + $Value
             }
         }
-    }
-    while ($restUri)
+    } while ($restUri)
     #endregion query data
 
     #region output data

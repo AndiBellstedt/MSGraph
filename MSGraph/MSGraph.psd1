@@ -3,7 +3,7 @@
     RootModule         = 'MSGraph.psm1'
 
     # Version number of this module.
-    ModuleVersion      = '1.3.0.0'
+    ModuleVersion      = '1.3.0.2'
 
     # ID used to uniquely identify this module
     GUID               = '5f61c229-95d0-4423-ab50-938c0723ad21'
@@ -179,7 +179,8 @@
         ## Attachments
         'Save-MgaMailAttachment',
 
-        # COre
+        # Core
+        'Connect-MgaGraph',
         'Invoke-MgaDeleteMethod'
         'Invoke-MgaGetMethod',
         'Invoke-MgaPatchMethod',
@@ -233,7 +234,7 @@
             ProjectUri   = 'https://github.com/AndiBellstedt/MSGraph'
 
             # A URL to an icon representing this module.
-            IconUri      = 'https://github.com/AndiBellstedt/MSGraph/tree/Development/MSGraph/assets/MSGraph_128x128.png'
+            IconUri      = 'https://github.com/AndiBellstedt/MSGraph/raw/master/assets/MSGraph_128x128.png'
 
             # ReleaseNotes of this module
             ReleaseNotes = 'https://github.com/AndiBellstedt/MSGraph/blob/master/MSGraph/changelog.md'
