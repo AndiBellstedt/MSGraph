@@ -234,9 +234,8 @@
             }
         }
 
-        if ($output) {
-            $output
-        } else {
+        $output
+        if(-not $output){
             Write-PSFMessage -Level Warning -Message "Message not found." -Tag "QueryData"
         }
     }
