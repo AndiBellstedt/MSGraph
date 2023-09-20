@@ -102,8 +102,7 @@
             #region output data
             foreach ($output in $data) {
                 if ($output.User) { $User = $output.User }
-                $categoryObject = [MSGraph.Exchange.Category.OutlookCategory]::new( $output.id, $output.displayName, $output.color, $User, $output)
-                $categoryObject
+                [MSGraph.Exchange.Category.OutlookCategory]::new( $output.id, $output.displayName, $output.color, $User, $output)
             }
             #endregion output data
         }
