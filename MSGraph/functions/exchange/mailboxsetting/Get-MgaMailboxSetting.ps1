@@ -146,8 +146,7 @@
 
         #region output data
         foreach ($output in $data) {
-            $mailboxSettingObject = New-MgaMailboxSettingObject -RestData $output -Type $PSCmdlet.ParameterSetName -User $User -Token $Token -FunctionName $MyInvocation.MyCommand
-            $mailboxSettingObject
+            New-MgaMailboxSettingObject -RestData $output -Type $PSCmdlet.ParameterSetName -User $User -Token $Token -FunctionName $MyInvocation.MyCommand
         }
         #endregion output data
     }
