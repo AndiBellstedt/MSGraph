@@ -144,8 +144,7 @@
             #region output data
             if($PassThru) {
                 foreach ($output in $data) {
-                    $mailboxSettingObject = New-MgaMailboxSettingObject -RestData $output -Type $InputObject.Name -User $User -Token $Token -FunctionName $MyInvocation.MyCommand
-                    $mailboxSettingObject
+                    New-MgaMailboxSettingObject -RestData $output -Type $InputObject.Name -User $User -Token $Token -FunctionName $MyInvocation.MyCommand
                 }
             }
             #endregion output data
