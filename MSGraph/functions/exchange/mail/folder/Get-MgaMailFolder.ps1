@@ -114,9 +114,8 @@
 
         function get-childfolder ($output, [int]$level, $invokeParam) {
             $FoldersWithChilds = $output | Where-Object ChildFolderCount -gt 0
-            $childFolders = @()
 
-            do {
+            $childFolders = do {
                 $level = $level + 1
                 foreach ($folderItem in $FoldersWithChilds) {
                     if ($folderItem.ChildFolderCount -gt 0) {
@@ -125,7 +124,7 @@
                         $childFolderOutput = invoke-internalMgaGetMethod -invokeParam $invokeParam -level $level -parentFolder $folderItem -FunctionName $MyInvocation.MyCommand
 
                         $FoldersWithChilds = $childFolderOutput | Where-Object ChildFolderCount -gt 0
-                        $childFolders = $childFolders + $childFolderOutput
+                        $childFolderOutput
                     }
                 }
             } while ($Recurse -and $FoldersWithChilds)

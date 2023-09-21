@@ -207,8 +207,7 @@
             #region output data
             foreach ($output in $data) {
                 if ($PassThru) {
-                    $AttachmentObject = New-MgaAttachmentObject -RestData $output -ParentObject $messageItem.InputObject -ApiVersion "beta" -ResultSize $ResultSize -User $User -Token $Token -FunctionName $MyInvocation.MyCommand
-                    $AttachmentObject
+                    New-MgaAttachmentObject -RestData $output -ParentObject $messageItem.InputObject -ApiVersion "beta" -ResultSize $ResultSize -User $User -Token $Token -FunctionName $MyInvocation.MyCommand
                 }
             }
             #endregion output data
